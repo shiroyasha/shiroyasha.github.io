@@ -1,0 +1,169 @@
+<!doctype html>
+<html itemscope itemtype="http://schema.org/Article">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
+    <link rel="alternate" type="application/atom+xml" title="Igors Path to Enlightment" href="/feed.xml" />
+    
+    <link rel="shortcut icon" href="favicon.ico">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Update your html tag to include the itemscope and itemtype attributes. -->
+    <title>Thor - Awesome CLI applications - Igor Šarčević</title>
+
+    <!-- Place this data between the <head> tags of your website -->
+      <meta name="description" content="<p>Have you ever wanted to create an awesome command line application but was lost in the sea of options parsing? Well, if you did, and even if you didn...</p>" />
+
+      <!-- Schema.org markup for Google+ -->
+      <meta itemprop="name" content="Thor - Awesome CLI applications">
+      <meta itemprop="description" content="<p>Have you ever wanted to create an awesome command line application but was lost in the sea of options parsing? Well, if you did, and even if you didn...</p>">
+      <meta itemprop="image" content="http://shiroyasha.github.io/images/thor-awesome-cli-apps.png">
+
+      <!-- Twitter Card data -->
+      <meta name="twitter:card" content="summary_large_image">
+      <meta name="twitter:site" content="@igor_sarcevic">
+      <meta name="twitter:title" content="Thor - Awesome CLI applications">
+      <meta name="twitter:description" content="<p>Have you ever wanted to create an awesome command line application but was lost in the sea of options parsing? Well, if you did, and even if you didn...</p>">
+      <meta name="twitter:creator" content="@igor_sarcevic">
+      <!-- Twitter summary card with large image must be at least 280x150px -->
+      <meta name="twitter:image:src" content="http://shiroyasha.github.io/images/thor-awesome-cli-apps.png">
+
+      <!-- Open Graph data -->
+      <meta property="og:title" content="Thor - Awesome CLI applications" />
+      <meta property="og:type" content="article" />
+      <meta property="og:url" content="http://" />
+      <meta property="og:image" content="http://shiroyasha.github.io/images/thor-awesome-cli-apps.png" />
+      <meta property="og:description" content="<p>Have you ever wanted to create an awesome command line application but was lost in the sea of options parsing? Well, if you did, and even if you didn...</p>" />
+      <meta property="article:published_time" content="2014-11-04 00:00:00 UTC" />
+
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link href="/stylesheets/style.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    
+    <div id="main" role="main">
+        <div class='top-navigation'>
+    <a href="/">&#8592; Other articles</a>
+  </div>
+
+  <article>
+      <img class="top-image" src="/images/thor-awesome-cli-apps.png">
+
+    <div class="header">
+      <div class="subtitle">
+        <span>Igor Šarčević</span>
+        &mdash;
+        <time>November  4, 2014</time>
+      </div>
+
+      <h1>Thor - Awesome CLI applications</h1>
+    </div>
+
+    <p>Have you ever wanted to create an awesome command line application but was lost in the sea of options parsing? Well, if you did, and even if you didn&rsquo;t, Thor is here to help you.</p>
+
+<p>But what is Thor exactly? It is a powerful toolkit for writing command line applications in ruby that is used in various well known projects such as Rails, Vagrant, Bundler, and similar. It can even be used as a replacement for rake for creating task like methods and functions.</p>
+
+<h2>Baby steps with Thor</h2>
+
+<p>When I stumble across something cool, my first instinct is to share and point out the most awesome parts of that thing. Usually, this is the worst approach for presenting things to other people. So now, I will try to hold back my geek instincts and start out simple. With a hello awesome world application. Here it is.</p>
+<pre class="highlight ruby"><code><span class="nb">require</span> <span class="s2">"thor"</span>
+
+<span class="k">class</span>  <span class="nc">AwesomeHelloWorld</span> <span class="o">&lt;</span> <span class="no">Thor</span>
+
+  <span class="n">desc</span> <span class="s2">"hello PLANET"</span><span class="p">,</span> <span class="s2">"say hello to PLANET"</span>
+  <span class="k">def</span> <span class="nf">hello</span><span class="p">(</span><span class="n">planet</span><span class="p">)</span>
+    <span class="nb">puts</span> <span class="s2">"Hello </span><span class="si">#{</span><span class="n">planet</span><span class="si">}</span><span class="s2">"</span>
+  <span class="k">end</span>
+
+<span class="k">end</span>
+
+<span class="no">AwesomeHelloWorld</span><span class="p">.</span><span class="nf">start</span><span class="p">(</span><span class="no">ARGV</span><span class="p">)</span>
+</code></pre>
+
+<p>Save it to an appropriately named file <code>ahw.rb</code> and try to run it.</p>
+<pre class="highlight shell"><code><span class="gp">$ </span>ruby ahw.rb
+
+Tasks:
+ahw hello PLANET   <span class="c"># say hello to PLANET</span>
+ahw <span class="nb">help</span> <span class="o">[</span>TASK]    <span class="c"># Describe available tasks or one specific task</span>
+</code></pre>
+<pre class="highlight shell"><code><span class="gp">$ </span>ruby ahw.rb hello uranus
+hello uranus
+</code></pre>
+
+<p>As you can see in the above script has done so much instead of us. It created a help screen, it has a description for all of our tasks, and it can even parse and execute them appropriately.</p>
+
+<h2>Digging deeper</h2>
+
+<p>Let&rsquo;s explore more of this awesomeness. Every task in a Thor application can accept command line flags with single or double dashes. To demonstrate this capability I will add a <code>--reverse</code> flag to our little hello task.</p>
+<pre class="highlight shell"><code>desc <span class="s2">"hello PLANET"</span>, <span class="s2">"say hello to PLANET"</span>
+options :reverse <span class="o">=</span>&gt; :boolean
+def hello<span class="o">(</span>planet<span class="o">)</span>
+  puts <span class="s2">"Hello #{options{:reverse] ? planet.reverse : planet}"</span>
+end
+</code></pre>
+
+<p>Now if we call our task with the reverse flag it should display the name of the planet in reverse.</p>
+<pre class="highlight plaintext"><code>$ ruby ahw.sh hello MARS --reverse
+hello SRAM
+</code></pre>
+
+<h2>Summary</h2>
+
+<p>Thor is one of the great tools to keep in your arsenal. I am frequently facing a task where I need to create a simple script but the one who will use it will be someone else. In those cases Thor comes in very handy.</p>
+
+<p>Happy hacking!</p>
+
+  </article>
+
+  <hr>
+
+  <aside class="showcase cf">
+  <div class="image">
+      <img src="/images/sinatra-app-with-rspec.png">
+  </div>
+
+  <div class="summary">
+    <p class="next">Read this next</p>
+
+    <h1>Sinatra applications with RSpec</h1>
+
+    <p>There are times when the only thing I want to create is a simple API. In the Ruby ecosystem the standard for creating something simple is Sinatra. But, there are a lot of things you miss in Sinatra that you have predefined in Rails. Sinatra let’s you...</p>
+    <a href="/sinatra-app-with-rspec.html">Continue reading &#8594;</a>
+  </div>
+</aside>
+ 
+
+  <hr>
+
+
+
+    </div>
+
+    <aside class="follow">
+  <img height="50px" src="https://g.twimg.com/Twitter_logo_blue.png">
+  You should 
+  <a href="https://twitter.com/igor_sarcevic">follow me on Twitter.</a>
+</aside>
+
+
+    <hr class="footer">
+    <footer class="footer">
+  Written by <a href="https://twitter.com/igor_sarcevic">Igor Šarčević</a>.
+  Tested and deployed with <a href="https://semaphoreapp.com">Semaphore</a>. 
+</footer>
+
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+           })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-57223799-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+    
+  </body>
+</html>

@@ -1,0 +1,213 @@
+<!doctype html>
+<html itemscope itemtype="http://schema.org/Article">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
+    <link rel="alternate" type="application/atom+xml" title="Igors Path to Enlightment" href="/feed.xml" />
+    
+    <link rel="shortcut icon" href="favicon.ico">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Update your html tag to include the itemscope and itemtype attributes. -->
+    <title>What can you learn from production.log? - Igor Šarčević</title>
+
+    <!-- Place this data between the <head> tags of your website -->
+      <meta name="description" content="<p>Many developers fail to realize that using the basic Unix tools, you can find
+on any server, you can find and collect valuable data from your logs....</p>" />
+
+      <!-- Schema.org markup for Google+ -->
+      <meta itemprop="name" content="What can you learn from production.log?">
+      <meta itemprop="description" content="<p>Many developers fail to realize that using the basic Unix tools, you can find
+on any server, you can find and collect valuable data from your logs....</p>">
+      <meta itemprop="image" content="http://shiroyasha.github.io/images/what-can-you-learn-from-production-log.png">
+
+      <!-- Twitter Card data -->
+      <meta name="twitter:card" content="summary_large_image">
+      <meta name="twitter:site" content="@igor_sarcevic">
+      <meta name="twitter:title" content="What can you learn from production.log?">
+      <meta name="twitter:description" content="<p>Many developers fail to realize that using the basic Unix tools, you can find
+on any server, you can find and collect valuable data from your logs....</p>">
+      <meta name="twitter:creator" content="@igor_sarcevic">
+      <!-- Twitter summary card with large image must be at least 280x150px -->
+      <meta name="twitter:image:src" content="http://shiroyasha.github.io/images/what-can-you-learn-from-production-log.png">
+
+      <!-- Open Graph data -->
+      <meta property="og:title" content="What can you learn from production.log?" />
+      <meta property="og:type" content="article" />
+      <meta property="og:url" content="http://" />
+      <meta property="og:image" content="http://shiroyasha.github.io/images/what-can-you-learn-from-production-log.png" />
+      <meta property="og:description" content="<p>Many developers fail to realize that using the basic Unix tools, you can find
+on any server, you can find and collect valuable data from your logs....</p>" />
+      <meta property="article:published_time" content="2015-02-10 00:00:00 UTC" />
+
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link href="/stylesheets/style.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    
+    <div id="main" role="main">
+        <div class='top-navigation'>
+    <a href="/">&#8592; Other articles</a>
+  </div>
+
+  <article>
+      <img class="top-image" src="/images/what-can-you-learn-from-production-log.png">
+
+    <div class="header">
+      <div class="subtitle">
+        <span>Igor Šarčević</span>
+        &mdash;
+        <time>February 10, 2015</time>
+      </div>
+
+      <h1>What can you learn from production.log?</h1>
+    </div>
+
+    <p>Many developers fail to realize that using the basic Unix tools, you can find
+on any server, you can find and collect valuable data from your logs. Often the
+data you need can be found without using any external services, including but
+not limited to service measurements.</p>
+
+<p><em>This is a start of a series of posts that will try to show some of the nice
+things you can achieve with the Rails log from the command line.</em></p>
+
+<h2>The basics</h2>
+
+<p>Let&rsquo;s star with the simplest one &mdash; following the incoming logs:</p>
+<pre class="highlight shell"><code>tail -f log/production.log
+</code></pre>
+
+<p>We could of course show the complete log with <code>cat</code>, but often it is far longer
+than we would expect and following the logs tends to be much nicer. On the other 
+hand <code>cat</code> can be handy when combined with <code>grep</code> and <code>tail</code>. </p>
+
+<h2>Filtering</h2>
+
+<p>The first thing we want to learn is to filter the log from the information
+we don&rsquo;t need for the current measurement. Filtering is all about recognizing
+the patterns in the text and cutting out everything that doesn&rsquo;t match it.
+A common thing is to display only the CRUD request logs, or to filter everything
+out except database actions.</p>
+
+<p>A nice scheme for creating complex filters (and the one we will be 
+using in the examples) is the following:</p>
+<pre class="highlight shell"><code>cat log/production.log | &lt;filters&gt; | tail
+</code></pre>
+
+<p>In the above command the <code>cat</code> command <em>pushes</em> the logs into the 
+filters, and the <code>tail</code> command shows a portion of the result. An
+alternative for the <code>tail</code> - that shows the end of the results - can
+be the <code>head</code> command that shows the start. By default, both commands
+display only 10 results, but can be tweaked to show more with the <code>-n</code>
+option. For example to list the last 20 lines we can use the following
+scheme:</p>
+<pre class="highlight shell"><code>cat log/production.log | &lt;filters&gt; | tail -n 20
+</code></pre>
+
+<p>But enough with the boring details, let&rsquo;s define a filter. The following
+example shows only incoming <code>POST</code> requests.</p>
+<pre class="highlight shell"><code>cat log/production.log | grep <span class="s1">'method=POST'</span> | tail -n 20
+</code></pre>
+
+<p>In the above example we used the <code>grep</code> command that returns only the lines
+that have the provided string or regular expression in them. We can also
+combine multiple <code>grep</code> commands, where the second <code>grep</code> will only work
+on the lines that the first <code>grep</code> returned.</p>
+
+<p>For example, the following command shows only the <code>POST</code> requests that had
+a HTTP status <code>200</code> as their answer:</p>
+<pre class="highlight shell"><code>cat log/production.log | grep <span class="s1">'method=POST'</span> 
+                       | grep <span class="s1">'status=200'</span> 
+                       | tail -n 20
+</code></pre>
+
+<p>Similarly to the previous ones, we can easily show only the logs that were
+created yesterday:</p>
+<pre class="highlight shell"><code>cat log/production.log | grep <span class="s1">'method=POST'</span> 
+                       | grep <span class="s1">'status=200'</span> 
+                       | grep <span class="s1">'time=2015-02-10'</span> 
+                       | tail -n 20
+</code></pre>
+
+<p>As the final example I will demonstrate something more complicated. We will list
+only the POST requests that had a duration longer than 10 milliseconds.
+Unfortunately, we can&rsquo;t use the previous technique anymore because the string
+that we are matching are different on each line (somewhere the duration is 13
+milliseconds, somewhere it is 114 milliseconds&hellip;).</p>
+
+<p>Fortunately, we can use regular expressions with the <code>grep</code> command.
+What we need is actually more than one digit in the duration that will
+give us a number larger or equal to 10. To match a digit we will use the
+<code>[0-9]</code> notation, and to match 0 or more of them we will write <code>[0-9]*</code>.</p>
+<pre class="highlight shell"><code>cat log/production.log | grep <span class="s1">'method=POST'</span> 
+                       | grep <span class="s1">'duration=[0-9]*[0-9][0-9]'</span> 
+                       | tail -n 20
+</code></pre>
+
+<p>In the above example we used <code>[0-9][0-9]</code> to match two digits and <code>[0-9]*</code>
+to match the remaining.</p>
+
+<h2>Final words</h2>
+
+<p>I hope you enjoyed this tutorial, I will give my best to finish the next
+one soon, where I will be talking about counting.</p>
+
+<p>Happy hacking!</p>
+
+  </article>
+
+  <hr>
+
+  <aside class="showcase cf">
+  <div class="image">
+      <img src="/images/running-shell-commands-from-ruby.png">
+  </div>
+
+  <div class="summary">
+    <p class="next">Read this next</p>
+
+    <h1>Running shell commands from Ruby</h1>
+
+    <p>Ruby is an excellent language offering us a simple and human friendly
+interface, however for system administration or simple task automation the
+shell is a much better alternative. Luckily, combining them is easy. </p>
+
+<p>There are many ways to interact...</p>
+    <a href="/running-shell-commands-from-ruby.html">Continue reading &#8594;</a>
+  </div>
+</aside>
+ 
+
+  <hr>
+
+
+
+    </div>
+
+    <aside class="follow">
+  <img height="50px" src="https://g.twimg.com/Twitter_logo_blue.png">
+  You should 
+  <a href="https://twitter.com/igor_sarcevic">follow me on Twitter.</a>
+</aside>
+
+
+    <hr class="footer">
+    <footer class="footer">
+  Written by <a href="https://twitter.com/igor_sarcevic">Igor Šarčević</a>.
+  Tested and deployed with <a href="https://semaphoreapp.com">Semaphore</a>. 
+</footer>
+
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+           })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-57223799-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+    
+  </body>
+</html>

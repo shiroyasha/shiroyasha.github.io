@@ -1,0 +1,203 @@
+<!doctype html>
+<html itemscope itemtype="http://schema.org/Article">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
+    <link rel="alternate" type="application/atom+xml" title="Igors Path to Enlightment" href="/feed.xml" />
+    
+    <link rel="shortcut icon" href="favicon.ico">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Update your html tag to include the itemscope and itemtype attributes. -->
+    <title>Escape Sequences - A Quick Guide - Igor Šarčević</title>
+
+    <!-- Place this data between the <head> tags of your website -->
+      <meta name="description" content="<p>Two years ago I thought I knew a lot about the Linux command line. Then I started digging deeper. Replaced Bash with Zsh, learned about jobs, started...</p>" />
+
+      <!-- Schema.org markup for Google+ -->
+      <meta itemprop="name" content="Escape Sequences - A Quick Guide">
+      <meta itemprop="description" content="<p>Two years ago I thought I knew a lot about the Linux command line. Then I started digging deeper. Replaced Bash with Zsh, learned about jobs, started...</p>">
+      <meta itemprop="image" content="http://shiroyasha.github.io/images/escape-sequences-a-quick-guide.png">
+
+      <!-- Twitter Card data -->
+      <meta name="twitter:card" content="summary_large_image">
+      <meta name="twitter:site" content="@igor_sarcevic">
+      <meta name="twitter:title" content="Escape Sequences - A Quick Guide">
+      <meta name="twitter:description" content="<p>Two years ago I thought I knew a lot about the Linux command line. Then I started digging deeper. Replaced Bash with Zsh, learned about jobs, started...</p>">
+      <meta name="twitter:creator" content="@igor_sarcevic">
+      <!-- Twitter summary card with large image must be at least 280x150px -->
+      <meta name="twitter:image:src" content="http://shiroyasha.github.io/images/escape-sequences-a-quick-guide.png">
+
+      <!-- Open Graph data -->
+      <meta property="og:title" content="Escape Sequences - A Quick Guide" />
+      <meta property="og:type" content="article" />
+      <meta property="og:url" content="http://" />
+      <meta property="og:image" content="http://shiroyasha.github.io/images/escape-sequences-a-quick-guide.png" />
+      <meta property="og:description" content="<p>Two years ago I thought I knew a lot about the Linux command line. Then I started digging deeper. Replaced Bash with Zsh, learned about jobs, started...</p>" />
+      <meta property="article:published_time" content="2014-11-24 00:00:00 UTC" />
+
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link href="/stylesheets/style.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    
+    <div id="main" role="main">
+        <div class='top-navigation'>
+    <a href="/">&#8592; Other articles</a>
+  </div>
+
+  <article>
+      <img class="top-image" src="/images/escape-sequences-a-quick-guide.png">
+
+    <div class="header">
+      <div class="subtitle">
+        <span>Igor Šarčević</span>
+        &mdash;
+        <time>November 24, 2014</time>
+      </div>
+
+      <h1>Escape Sequences - A Quick Guide</h1>
+    </div>
+
+    <p>Two years ago I thought I knew a lot about the Linux command line. Then I started digging deeper. Replaced Bash with Zsh, learned about jobs, started writing shell scripts, and even ditched Sublime text in favor of editing with command line Vim. Again I thought I know a lot about the Linux command line. Then I started digging deeper again&hellip;</p>
+
+<p>A few weeks ago I wrote a blog post that described <a href="http://shiroyasha.svbtle.com/processbar-for-console-applications">how to create progress bars for command line application</a>. There I have described how to stay on the same line, and thus simulate a filling progress bar. That blog post made me wonder if there is a way to change multiple lines of text at once. I started looking for a solution, but what I found was more amazing than I ever thought it would be.</p>
+
+<p>The thing I have found was a way to insert escape characters in the output of your commands that would tell the terminal to do all sorts of crazy things, like move your cursor up several lines, blink the output, change the color, etc&hellip;</p>
+
+<p>Like the tittle of the blog posts describes, escape sequences start with pressing the <code>ESC</code> key on your keyboard followed by a sequence of actions you want your terminal to execute. For example inserting the following would move your cursor up 5 lines and write &ldquo;Hello&rdquo;:</p>
+<pre class="highlight shell"><code>ESC  <span class="o">[</span>  5  A Hello
+</code></pre>
+
+<p>Before I start explaining the actions in details, I should show you how to output these commands from a program. To output the <code>ESC</code> character write the <code>\e</code> sequence. That way the above becomes the following in ruby:</p>
+<pre class="highlight ruby"><code><span class="nb">puts</span> <span class="s2">"</span><span class="se">\e</span><span class="s2">[5AHello"</span>
+</code></pre>
+
+<h2>Movement</h2>
+
+<p>The four basic movements are the following:</p>
+<pre class="highlight ruby"><code><span class="nb">puts</span> <span class="s2">"</span><span class="se">\e</span><span class="s2">[3A"</span> <span class="c1"># up - moves 3 lines up</span>
+<span class="nb">puts</span> <span class="s2">"</span><span class="se">\e</span><span class="s2">[6B"</span> <span class="c1"># down - moves 6 lines down</span>
+<span class="nb">puts</span> <span class="s2">"</span><span class="se">\e</span><span class="s2">[2C"</span> <span class="c1"># forward - moves 2 characters forward</span>
+<span class="nb">puts</span> <span class="s2">"</span><span class="se">\e</span><span class="s2">[1D"</span> <span class="c1"># backward - moves 1 character backward</span>
+</code></pre>
+
+<p>Moving to the beginning of lines:</p>
+<pre class="highlight ruby"><code><span class="nb">puts</span> <span class="s2">"</span><span class="se">\e</span><span class="s2">[2E"</span> <span class="c1"># move to the beginning of 2 lines down </span>
+<span class="nb">puts</span> <span class="s2">"</span><span class="se">\e</span><span class="s2">[4F"</span> <span class="c1"># move to the beginning of 4 lines up</span>
+</code></pre>
+
+<p>Moving to columns:</p>
+<pre class="highlight ruby"><code><span class="nb">puts</span> <span class="s2">"</span><span class="se">\e</span><span class="s2">[16F"</span> <span class="c1"># move to 16th column</span>
+</code></pre>
+
+<p>Precise movement can be achieved with <code>\e[n;mG</code> where <code>n &amp; m</code> represent the n-th row and m-th column.</p>
+<pre class="highlight ruby"><code><span class="nb">puts</span> <span class="s2">"</span><span class="se">\e</span><span class="s2">[3;9G"</span> <span class="c1"># moves cursor to the 3rd row 9th column</span>
+</code></pre>
+
+<p>Scrolling can be achieved with the the following:</p>
+<pre class="highlight ruby"><code><span class="nb">puts</span> <span class="s2">"</span><span class="se">\e</span><span class="s2">[2S"</span> <span class="c1"># scroll 2 lines up</span>
+<span class="nb">puts</span> <span class="s2">"</span><span class="se">\e</span><span class="s2">[4T"</span> <span class="c1"># scroll 4 lines down</span>
+</code></pre>
+
+<h2>Erasing the screen</h2>
+
+<p>The J and K keys are responsible for clearing portions of the screens. To clear the whole screen, write the following:</p>
+<pre class="highlight ruby"><code><span class="nb">puts</span> <span class="s2">"</span><span class="se">\e</span><span class="s2">[0J"</span> <span class="c1"># Clear screen from cursor to the end</span>
+<span class="nb">puts</span> <span class="s2">"</span><span class="se">\e</span><span class="s2">[1J"</span> <span class="c1"># Clear screen upto the cursor</span>
+<span class="nb">puts</span> <span class="s2">"</span><span class="se">\e</span><span class="s2">[2J"</span> <span class="c1"># Clear entire screen</span>
+</code></pre>
+
+<p>Clearing the line is done with the K command:</p>
+<pre class="highlight ruby"><code><span class="nb">puts</span> <span class="s2">"</span><span class="se">\e</span><span class="s2">[0K"</span> <span class="c1"># Clear line from cursor to the end</span>
+<span class="nb">puts</span> <span class="s2">"</span><span class="se">\e</span><span class="s2">[1K"</span> <span class="c1"># Clear line upto the cursor</span>
+<span class="nb">puts</span> <span class="s2">"</span><span class="se">\e</span><span class="s2">[2K"</span> <span class="c1"># Clear entire line</span>
+</code></pre>
+
+<h2>Cursor operations</h2>
+
+<p>To show and hide the cursor</p>
+<pre class="highlight ruby"><code><span class="nb">puts</span> <span class="s2">"</span><span class="se">\e</span><span class="s2">[?25h"</span> <span class="c1"># show cursor</span>
+<span class="nb">puts</span> <span class="s2">"</span><span class="se">\e</span><span class="s2">[?25l"</span> <span class="c1"># hide cursor</span>
+</code></pre>
+
+<p>To save the position of the cursor and then restore it back</p>
+<pre class="highlight ruby"><code><span class="nb">puts</span> <span class="s2">"</span><span class="se">\e</span><span class="s2">[s"</span> <span class="c1"># save the position of the cursor</span>
+<span class="nb">puts</span> <span class="s2">"</span><span class="se">\e</span><span class="s2">[u"</span> <span class="c1"># restore the position of the cursor</span>
+</code></pre>
+
+<h2>Graphical elements</h2>
+
+<p>The most complex command you can send to a terminal with the escape sequence is the Select Graphic Rendition parameter that is issued with the <code>m</code> command. The following scheme describes how to pass arguments to the action.</p>
+<pre class="highlight ruby"><code><span class="nb">puts</span> <span class="s2">"</span><span class="se">\e</span><span class="s2">[a;b;c;dm"</span> <span class="c1"># where a, b, c, d are parameters</span>
+</code></pre>
+
+<p>Notice how the parameters are delimited with the ; symbol. You can write as many parameters as you want. Here are some nice examples:</p>
+<pre class="highlight ruby"><code><span class="nb">puts</span> <span class="s2">"</span><span class="se">\e</span><span class="s2">[31mtest"</span>        <span class="c1"># output red test</span>
+<span class="nb">puts</span> <span class="s2">"</span><span class="se">\e</span><span class="s2">[31;47mtest"</span>     <span class="c1"># output red test with white background</span>
+<span class="nb">puts</span> <span class="s2">"</span><span class="se">\e</span><span class="s2">[1;4;31;47mtest"</span> <span class="c1"># output red on white, bold, underlined test</span>
+</code></pre>
+
+<p>A great resource for finding arguments for the above command is <a href="http://en.wikipedia.org/wiki/ANSI_escape_code#CSI_codes">the Wikipedia article describing escape sequences</a>.</p>
+
+<h2>Summary</h2>
+
+<p>These control characters may seem complicated at first glance, but once you play around with them they become simple and powerful. With this knowledge you can finally understand the PS1 environment variable, have beautiful command line applications, or as in my case, make a nyancat run through your screen representing the progress of your test suite.</p>
+
+<p>Happy hacking!</p>
+
+  </article>
+
+  <hr>
+
+  <aside class="showcase cf">
+  <div class="image">
+      <img src="/images/thor-awesome-cli-apps.png">
+  </div>
+
+  <div class="summary">
+    <p class="next">Read this next</p>
+
+    <h1>Thor - Awesome CLI applications</h1>
+
+    <p>Have you ever wanted to create an awesome command line application but was lost in the sea of options parsing? Well, if you did, and even if you didn’t, Thor is here to help you.</p>
+
+<p>But what is Thor exactly? It is a powerful toolkit for writing command...</p>
+    <a href="/thor-awesome-cli-apps.html">Continue reading &#8594;</a>
+  </div>
+</aside>
+ 
+
+  <hr>
+
+
+
+    </div>
+
+    <aside class="follow">
+  <img height="50px" src="https://g.twimg.com/Twitter_logo_blue.png">
+  You should 
+  <a href="https://twitter.com/igor_sarcevic">follow me on Twitter.</a>
+</aside>
+
+
+    <hr class="footer">
+    <footer class="footer">
+  Written by <a href="https://twitter.com/igor_sarcevic">Igor Šarčević</a>.
+  Tested and deployed with <a href="https://semaphoreapp.com">Semaphore</a>. 
+</footer>
+
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+           })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-57223799-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+    
+  </body>
+</html>

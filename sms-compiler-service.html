@@ -1,0 +1,229 @@
+<!doctype html>
+<html itemscope itemtype="http://schema.org/Article">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
+    <link rel="alternate" type="application/atom+xml" title="Igors Path to Enlightment" href="/feed.xml" />
+    
+    <link rel="shortcut icon" href="favicon.ico">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Update your html tag to include the itemscope and itemtype attributes. -->
+    <title>Sms compiler service - Igor Šarčević</title>
+
+    <!-- Place this data between the <head> tags of your website -->
+      <meta name="description" content="<p>The majority of today’s development is oriented around the web or around desktop/mobile applications. For the average programmer it could even seem...</p>" />
+
+      <!-- Schema.org markup for Google+ -->
+      <meta itemprop="name" content="Sms compiler service">
+      <meta itemprop="description" content="<p>The majority of today’s development is oriented around the web or around desktop/mobile applications. For the average programmer it could even seem...</p>">
+      <meta itemprop="image" content="http://shiroyasha.github.io/images/sms.png">
+
+      <!-- Twitter Card data -->
+      <meta name="twitter:card" content="summary_large_image">
+      <meta name="twitter:site" content="@igor_sarcevic">
+      <meta name="twitter:title" content="Sms compiler service">
+      <meta name="twitter:description" content="<p>The majority of today’s development is oriented around the web or around desktop/mobile applications. For the average programmer it could even seem...</p>">
+      <meta name="twitter:creator" content="@igor_sarcevic">
+      <!-- Twitter summary card with large image must be at least 280x150px -->
+      <meta name="twitter:image:src" content="http://shiroyasha.github.io/images/sms.png">
+
+      <!-- Open Graph data -->
+      <meta property="og:title" content="Sms compiler service" />
+      <meta property="og:type" content="article" />
+      <meta property="og:url" content="http://" />
+      <meta property="og:image" content="http://shiroyasha.github.io/images/sms.png" />
+      <meta property="og:description" content="<p>The majority of today’s development is oriented around the web or around desktop/mobile applications. For the average programmer it could even seem...</p>" />
+      <meta property="article:published_time" content="2014-12-08 00:00:00 UTC" />
+
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link href="/stylesheets/style.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    
+    <div id="main" role="main">
+        <div class='top-navigation'>
+    <a href="/">&#8592; Other articles</a>
+  </div>
+
+  <article>
+      <img class="top-image" src="/images/sms.png">
+
+    <div class="header">
+      <div class="subtitle">
+        <span>Igor Šarčević</span>
+        &mdash;
+        <time>December  8, 2014</time>
+      </div>
+
+      <h1>Sms compiler service</h1>
+    </div>
+
+    <p>The majority of today&rsquo;s development is oriented around the web or around desktop/mobile applications. For the average programmer it could even seem like there is no other programming area out there. However, there is actually a huge number of programs developed for cars, televisions, phones, and similar everyday technologies. This article is focused on a small fraction of those areas &mdash; sms messages.</p>
+
+<h2>The code executor</h2>
+
+<p>Two or three months ago I watched <a href="http://shiroyasha.github.io/sinatra-app-with-rspec.html">an episode on Computerphile</a>, where a young programmer demonstrated his applications that receives code through sms messages, runs that code, and answers him back on his phone. I was fascinated with his applications, and today I will try to demonstrate the basics of this process, using a service that connects sms messages to web applications &mdash; <a href="https://www.twilio.com/">Twilio</a>. In a nutshell:</p>
+
+<blockquote>
+<p>Create a web application that receives ruby code from sms messages,
+executes that code, and sends back an sms with the output.</p>
+</blockquote>
+
+<h2>Bootstrap</h2>
+
+<p>To achieve the above we will use the Sinatra web framework, and Twilio&rsquo;s
+gem to receive SMS messages. Our Gemfile should look like this:</p>
+<pre class="highlight ruby"><code><span class="n">source</span> <span class="s2">"https://rubygems.org"</span>
+
+<span class="n">gem</span> <span class="s2">"rack"</span>
+<span class="n">gem</span> <span class="s2">"sinatra"</span>
+<span class="n">gem</span> <span class="s2">"activesupport"</span>
+<span class="n">gem</span> <span class="s2">"twilio-ruby"</span>
+
+<span class="n">group</span> <span class="ss">:test</span> <span class="k">do</span>
+  <span class="n">gem</span> <span class="s2">"rspec"</span>
+  <span class="n">gem</span> <span class="s2">"rack-test"</span>
+<span class="k">end</span>
+</code></pre>
+
+<p>Also, we will set up a Sinatra route that will receive Twilio&rsquo;s webhooks 
+in our main application file.</p>
+<pre class="highlight ruby"><code><span class="n">post</span> <span class="s2">"/sms-code"</span> <span class="k">do</span>
+  <span class="s2">"Hello human!"</span>
+<span class="k">end</span>
+</code></pre>
+
+<h2>Responding to sms messages</h2>
+
+<p>To respond to sms messages, we will have to use Twilio&rsquo;s <code>twiml</code> language,
+and construct an XML response that Twilio can understand. To answer 
+<code>Hello human!</code> to every incoming message we can do the following:</p>
+<pre class="highlight ruby"><code><span class="n">post</span> <span class="s2">"/sms-code"</span> <span class="k">do</span>
+  <span class="n">twiml</span> <span class="o">=</span> <span class="no">Twilio</span><span class="o">::</span><span class="no">TwiML</span><span class="o">::</span><span class="no">Response</span><span class="p">.</span><span class="nf">new</span> <span class="k">do</span> <span class="o">|</span><span class="n">r</span><span class="o">|</span>
+    <span class="n">r</span><span class="o">.</span><span class="no">Message</span> <span class="s2">"Hello human!"</span>
+  <span class="k">end</span>
+
+  <span class="n">twiml</span><span class="p">.</span><span class="nf">text</span>
+<span class="k">end</span>
+</code></pre>
+
+<p>When we run our application and visit <code>/sms-code</code> we should see an output like this:</p>
+<pre class="highlight xml"><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="nt">&lt;Response&gt;</span>
+  <span class="nt">&lt;Message&gt;</span>Hello Human!<span class="nt">&lt;/Message&gt;</span>
+<span class="nt">&lt;/Response&gt;</span>
+</code></pre>
+
+<h2>Connecting this service to Twilio</h2>
+
+<p>At this point we should create a Twilio account with a phone number that will 
+receive the messages and a place to host our application online. For example a 
+<a href="https://www.heroku.com/">Heroku</a> dyno would be an excellent choice.</p>
+
+<p>After that we need to set up a webhook for our number on Twilio, where
+all the incoming messages will arrive. We should visit our number&rsquo;s settings
+and add the full URL to our sms handler. We will use the <code>POST</code> HTTP
+method so that Twilio won&rsquo;t cache our requests and responses.
+The setting screen should look similar to this:</p>
+
+<p><img alt="Webhook settings on Twilio" src="/images/twilio_number_setup.png" /></p>
+
+<p><strong>Note</strong>: If you want Twilio to cache your responses, use the <code>GET</code> method.
+In our use case we don&rsquo;t want that caching to happen so we use <code>POST</code>.</p>
+
+<h2>Receiving the message</h2>
+
+<p>The previous example responded <code>Hello human!</code> to every received sms message.
+We will now extend our application and use the body of the incoming sms 
+message.</p>
+
+<p>The following example takes the incoming message with <code>params[:Body]</code>
+and evaluates it as executable Ruby code.</p>
+<pre class="highlight ruby"><code><span class="c1">#</span>
+<span class="c1"># This is very dangerous, </span>
+<span class="c1"># Don't do it without adult supervision!</span>
+<span class="c1">#</span>
+<span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="n">code</span><span class="p">)</span>
+  <span class="nb">eval</span><span class="p">(</span><span class="n">code</span><span class="p">)[</span><span class="mi">0</span><span class="p">.</span><span class="nf">.</span><span class="mi">160</span><span class="p">]</span>
+<span class="k">end</span>
+
+<span class="n">post</span> <span class="s2">"/sms-code"</span> <span class="k">do</span>
+  <span class="n">twiml</span> <span class="o">=</span> <span class="no">Twilio</span><span class="o">::</span><span class="no">TwiML</span><span class="o">::</span><span class="no">Response</span><span class="p">.</span><span class="nf">new</span> <span class="k">do</span> <span class="o">|</span><span class="n">r</span><span class="o">|</span>
+    <span class="n">r</span><span class="o">.</span><span class="no">Message</span> <span class="n">execute</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="ss">:Body</span><span class="p">])</span>
+  <span class="k">end</span>
+
+  <span class="n">twiml</span><span class="p">.</span><span class="nf">text</span>
+<span class="k">end</span>
+</code></pre>
+
+<p>After deployment this code you should evaluate and return the results of
+incoming sms messages.</p>
+
+<p><strong>Note:</strong> The above code segment uses the body parameter of the sms message
+to evaluate some Ruby code. This is very dangerous, and is only used for 
+demonstration purposes.</p>
+
+<h2>Summary</h2>
+
+<p>Working with sms is really fun especially the part where your phone vibrates
+and shows the result of your code. This exercise can also serve as a great
+warm up before creating two factor authorization or similar sms bound systems.</p>
+
+<p>Check out the <a href="https://github.com/shiroyasha/sms-ruby-code">example repository on GitHub</a>.</p>
+
+<p>Happy hacking!</p>
+
+  </article>
+
+  <hr>
+
+  <aside class="showcase cf">
+  <div class="image">
+      <img src="/images/lambda.png">
+  </div>
+
+  <div class="summary">
+    <p class="next">Read this next</p>
+
+    <h1>Create a programming language</h1>
+
+    <p>I have been programming for a long time. Probably much longer than I  want to admit. Yet, for a long time, there was something mysterious about the way I created my programs. Yes, I could write a lot of stuff in programming languages, but I had no...</p>
+    <a href="/create-a-programming-language.html">Continue reading &#8594;</a>
+  </div>
+</aside>
+ 
+
+  <hr>
+
+
+
+    </div>
+
+    <aside class="follow">
+  <img height="50px" src="https://g.twimg.com/Twitter_logo_blue.png">
+  You should 
+  <a href="https://twitter.com/igor_sarcevic">follow me on Twitter.</a>
+</aside>
+
+
+    <hr class="footer">
+    <footer class="footer">
+  Written by <a href="https://twitter.com/igor_sarcevic">Igor Šarčević</a>.
+  Tested and deployed with <a href="https://semaphoreapp.com">Semaphore</a>. 
+</footer>
+
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+           })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-57223799-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+    
+  </body>
+</html>

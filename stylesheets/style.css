@@ -1,0 +1,495 @@
+/* line 1, /home/runner/blog-source/source/stylesheets/_body.scss */
+* {
+  box-sizing: border-box; }
+
+/* line 5, /home/runner/blog-source/source/stylesheets/_body.scss */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-size: 18px;
+  font-family: "Open Sans", sans-serif; }
+
+/* line 1, /home/runner/blog-source/source/stylesheets/_showcase.scss */
+.showcase {
+  width: 960px;
+  display: block;
+  clear: both;
+  margin: 100px auto; }
+  /* line 8, /home/runner/blog-source/source/stylesheets/_showcase.scss */
+  .showcase .image {
+    width: 360px;
+    float: left;
+    padding: 10px 30px; }
+    /* line 13, /home/runner/blog-source/source/stylesheets/_showcase.scss */
+    .showcase .image img {
+      width: 100%; }
+  /* line 18, /home/runner/blog-source/source/stylesheets/_showcase.scss */
+  .showcase .summary {
+    width: 600px;
+    float: left; }
+
+@media (max-width: 960px) {
+  /* line 25, /home/runner/blog-source/source/stylesheets/_showcase.scss */
+  .showcase {
+    width: 600px;
+    padding: 10px; }
+    /* line 29, /home/runner/blog-source/source/stylesheets/_showcase.scss */
+    .showcase .image {
+      padding: 0 50px 50px 50px;
+      width: 100%; }
+    /* line 34, /home/runner/blog-source/source/stylesheets/_showcase.scss */
+    .showcase .summary {
+      width: 100%; } }
+/* line 1, /home/runner/blog-source/source/stylesheets/_footer.scss */
+footer.footer {
+  text-align: center;
+  padding: 20px;
+  background: #222;
+  color: white;
+  font-size: 16px; }
+  /* line 9, /home/runner/blog-source/source/stylesheets/_footer.scss */
+  footer.footer a {
+    border-bottom-color: #444; }
+    /* line 12, /home/runner/blog-source/source/stylesheets/_footer.scss */
+    footer.footer a:hover {
+      border-bottom-color: deepskyblue; }
+
+/* line 1, /home/runner/blog-source/source/stylesheets/_navigation.scss */
+.top-navigation {
+  padding: 30px; }
+
+/* line 1, /home/runner/blog-source/source/stylesheets/_ruller.scss */
+hr {
+  border: 0;
+  border-bottom: 1px solid #eee;
+  width: 95%;
+  margin: 60px auto; }
+
+/* line 9, /home/runner/blog-source/source/stylesheets/_ruller.scss */
+hr.footer {
+  margin-top: 80px;
+  margin-bottom: 0; }
+
+/* line 1, /home/runner/blog-source/source/stylesheets/_clearfix.scss */
+.cf:before,
+.cf:after {
+  content: "";
+  display: table; }
+
+/* line 6, /home/runner/blog-source/source/stylesheets/_clearfix.scss */
+.cf:after {
+  clear: both; }
+
+/* line 9, /home/runner/blog-source/source/stylesheets/_clearfix.scss */
+.cf {
+  zoom: 1;
+  /* For IE 6/7 (trigger hasLayout) */ }
+
+/* line 1, /home/runner/blog-source/source/stylesheets/_links.scss */
+a {
+  text-decoration: none;
+  color: deepskyblue;
+  border-bottom: 1px solid white;
+  -webkit-transition: all 0.3s; }
+
+/* line 8, /home/runner/blog-source/source/stylesheets/_links.scss */
+a:hover {
+  border-bottom: 1px solid deepskyblue; }
+
+/* line 1, /home/runner/blog-source/source/stylesheets/_article_image.scss */
+img.top-image {
+  margin: 0px auto 100px auto;
+  display: block;
+  max-width: 100%;
+  max-height: 500px;
+  width: initial;
+  border: none; }
+  /* line 9, /home/runner/blog-source/source/stylesheets/_article_image.scss */
+  img.top-image.index {
+    margin: 100px auto; }
+
+/* line 1, /home/runner/blog-source/source/stylesheets/_code_highlight.css.scss */
+.highlight {
+  color: #573d25;
+  background: #fffff0;
+  font-size: 14px; }
+
+/* line 7, /home/runner/blog-source/source/stylesheets/_code_highlight.css.scss */
+.highlight + .highlight {
+  margin-top: 10px; }
+
+/* line 11, /home/runner/blog-source/source/stylesheets/_code_highlight.css.scss */
+.highlight .err {
+  color: #960050;
+  background-color: #1e0010; }
+
+/* Error */
+/* line 13, /home/runner/blog-source/source/stylesheets/_code_highlight.css.scss */
+.highlight .k {
+  font-weight: bold; }
+
+/* Keyword */
+/* line 14, /home/runner/blog-source/source/stylesheets/_code_highlight.css.scss */
+.highlight .nb {
+  font-weight: bold; }
+
+/* Keyword */
+/* line 16, /home/runner/blog-source/source/stylesheets/_code_highlight.css.scss */
+.highlight .l {
+  color: #ae81ff; }
+
+/* Literal */
+/* line 18, /home/runner/blog-source/source/stylesheets/_code_highlight.css.scss */
+.highlight .n {
+  color: #573d25; }
+
+/* Name */
+/* line 19, /home/runner/blog-source/source/stylesheets/_code_highlight.css.scss */
+.highlight .c {
+  color: #dfdab7; }
+
+/* Comment */
+/* line 21, /home/runner/blog-source/source/stylesheets/_code_highlight.css.scss */
+.highlight .cm {
+  color: #dfdab7; }
+
+/* Comment.Multiline */
+/* line 22, /home/runner/blog-source/source/stylesheets/_code_highlight.css.scss */
+.highlight .cp {
+  color: #d0d04f; }
+
+/* Comment.Preproc */
+/* line 23, /home/runner/blog-source/source/stylesheets/_code_highlight.css.scss */
+.highlight .c1 {
+  color: #dfdab7; }
+
+/* Comment.Single */
+/* line 24, /home/runner/blog-source/source/stylesheets/_code_highlight.css.scss */
+.highlight .cs {
+  color: #dfdab7; }
+
+/* Comment.Special */
+/* line 26, /home/runner/blog-source/source/stylesheets/_code_highlight.css.scss */
+.highlight .nc {
+  color: #e84526; }
+
+/* Name.Class */
+/* line 27, /home/runner/blog-source/source/stylesheets/_code_highlight.css.scss */
+.highlight .no {
+  color: #e84526; }
+
+/* Name.Constant */
+/* line 28, /home/runner/blog-source/source/stylesheets/_code_highlight.css.scss */
+.highlight .nd {
+  color: #e84526; }
+
+/* Name.Decorator */
+/* line 29, /home/runner/blog-source/source/stylesheets/_code_highlight.css.scss */
+.highlight .ni {
+  color: #fff9d4; }
+
+/* Name.Entity */
+/* line 30, /home/runner/blog-source/source/stylesheets/_code_highlight.css.scss */
+.highlight .ne {
+  color: #e84526; }
+
+/* Name.Exception */
+/* line 31, /home/runner/blog-source/source/stylesheets/_code_highlight.css.scss */
+.highlight .nl {
+  color: #fff9d4; }
+
+/* Name.Label */
+/* line 32, /home/runner/blog-source/source/stylesheets/_code_highlight.css.scss */
+.highlight .nn {
+  color: #e84526; }
+
+/* Name.Namespace */
+/* line 33, /home/runner/blog-source/source/stylesheets/_code_highlight.css.scss */
+.highlight .nx {
+  color: #fff9d4; }
+
+/* Name.Other */
+/* line 34, /home/runner/blog-source/source/stylesheets/_code_highlight.css.scss */
+.highlight .py {
+  color: #e84526; }
+
+/* Name.Property */
+/* line 35, /home/runner/blog-source/source/stylesheets/_code_highlight.css.scss */
+.highlight .nt {
+  color: #e99c29; }
+
+/* Name.Tag */
+/* line 36, /home/runner/blog-source/source/stylesheets/_code_highlight.css.scss */
+.highlight .nv {
+  color: #e84526; }
+
+/* Name.Variable */
+/* line 38, /home/runner/blog-source/source/stylesheets/_code_highlight.css.scss */
+.highlight .ge {
+  font-style: talic; }
+
+/* Generic.Emph */
+/* line 39, /home/runner/blog-source/source/stylesheets/_code_highlight.css.scss */
+.highlight .gs {
+  font-weight: bold; }
+
+/* Generic.Strong */
+/* line 40, /home/runner/blog-source/source/stylesheets/_code_highlight.css.scss */
+.highlight .kc {
+  color: #66d9ef; }
+
+/* Keyword.Constant */
+/* line 41, /home/runner/blog-source/source/stylesheets/_code_highlight.css.scss */
+.highlight .kd {
+  color: #66d9ef; }
+
+/* Keyword.Declaration */
+/* line 42, /home/runner/blog-source/source/stylesheets/_code_highlight.css.scss */
+.highlight .kn {
+  color: #f92672; }
+
+/* Keyword.Namespace */
+/* line 43, /home/runner/blog-source/source/stylesheets/_code_highlight.css.scss */
+.highlight .kp {
+  color: #e99c29; }
+
+/* Keyword.Pseudo */
+/* line 44, /home/runner/blog-source/source/stylesheets/_code_highlight.css.scss */
+.highlight .kr {
+  color: #66d9ef; }
+
+/* Keyword.Reserved */
+/* line 45, /home/runner/blog-source/source/stylesheets/_code_highlight.css.scss */
+.highlight .kt {
+  color: #66d9ef; }
+
+/* Keyword.Type */
+/* line 46, /home/runner/blog-source/source/stylesheets/_code_highlight.css.scss */
+.highlight .ld {
+  color: #e6db74; }
+
+/* Literal.Date */
+/* line 47, /home/runner/blog-source/source/stylesheets/_code_highlight.css.scss */
+.highlight .m {
+  color: #ae81ff; }
+
+/* Literal.Number */
+/* line 48, /home/runner/blog-source/source/stylesheets/_code_highlight.css.scss */
+.highlight .s {
+  color: #e6db74; }
+
+/* Literal.String */
+/* line 50, /home/runner/blog-source/source/stylesheets/_code_highlight.css.scss */
+.highlight .ow {
+  color: #f92672; }
+
+/* Operator.Word */
+/* line 52, /home/runner/blog-source/source/stylesheets/_code_highlight.css.scss */
+.highlight .mf {
+  color: #e99c29; }
+
+/* Literal.Number.Float */
+/* line 53, /home/runner/blog-source/source/stylesheets/_code_highlight.css.scss */
+.highlight .mh {
+  color: #e99c29; }
+
+/* Literal.Number.Hex */
+/* line 54, /home/runner/blog-source/source/stylesheets/_code_highlight.css.scss */
+.highlight .mi {
+  color: #e99c29; }
+
+/* Literal.Number.Integer */
+/* line 55, /home/runner/blog-source/source/stylesheets/_code_highlight.css.scss */
+.highlight .mo {
+  color: #d0d04f; }
+
+/* Literal.Number.Oct */
+/* line 56, /home/runner/blog-source/source/stylesheets/_code_highlight.css.scss */
+.highlight .sb {
+  color: #e99c29; }
+
+/* Literal.String.Backtick */
+/* line 57, /home/runner/blog-source/source/stylesheets/_code_highlight.css.scss */
+.highlight .sc {
+  color: #e6db74; }
+
+/* Literal.String.Char */
+/* line 58, /home/runner/blog-source/source/stylesheets/_code_highlight.css.scss */
+.highlight .sd {
+  color: #e6db74; }
+
+/* Literal.String.Doc */
+/* line 60, /home/runner/blog-source/source/stylesheets/_code_highlight.css.scss */
+.highlight .s2 {
+  color: #e99c29; }
+
+/* Literal.String.Double */
+/* line 61, /home/runner/blog-source/source/stylesheets/_code_highlight.css.scss */
+.highlight .se {
+  color: #e99c29; }
+
+/* Literal.String.Escape */
+/* line 62, /home/runner/blog-source/source/stylesheets/_code_highlight.css.scss */
+.highlight .ss {
+  color: #e99c29; }
+
+/* Literal.String.Symbol */
+/* line 63, /home/runner/blog-source/source/stylesheets/_code_highlight.css.scss */
+.highlight .sh {
+  color: #e99c29; }
+
+/* Literal.String.Heredoc */
+/* line 64, /home/runner/blog-source/source/stylesheets/_code_highlight.css.scss */
+.highlight .si {
+  color: #e99c29; }
+
+/* Literal.String.Interpol */
+/* line 65, /home/runner/blog-source/source/stylesheets/_code_highlight.css.scss */
+.highlight .sx {
+  color: #e99c29; }
+
+/* Literal.String.Other */
+/* line 66, /home/runner/blog-source/source/stylesheets/_code_highlight.css.scss */
+.highlight .sr {
+  color: #e99c29; }
+
+/* Literal.String.Regex */
+/* line 67, /home/runner/blog-source/source/stylesheets/_code_highlight.css.scss */
+.highlight .s1 {
+  color: #e99c29; }
+
+/* Literal.String.Single */
+/* line 69, /home/runner/blog-source/source/stylesheets/_code_highlight.css.scss */
+.highlight .bp {
+  color: #f8f8f2; }
+
+/* Name.Builtin.Pseudo */
+/* line 70, /home/runner/blog-source/source/stylesheets/_code_highlight.css.scss */
+.highlight .vc {
+  color: #f8f8f2; }
+
+/* Name.Variable.Class */
+/* line 71, /home/runner/blog-source/source/stylesheets/_code_highlight.css.scss */
+.highlight .il {
+  color: #ae81ff; }
+
+/* Literal.Number.Integer.Long */
+/* line 2, /home/runner/blog-source/source/stylesheets/_pagination.css.scss */
+.pagination a {
+  margin: 30px 100px; }
+/* line 5, /home/runner/blog-source/source/stylesheets/_pagination.css.scss */
+.pagination a.older {
+  float: left; }
+/* line 9, /home/runner/blog-source/source/stylesheets/_pagination.css.scss */
+.pagination a.newer {
+  float: right; }
+
+/* line 12, /home/runner/blog-source/source/stylesheets/style.css.scss */
+article {
+  padding-left: 10px;
+  padding-right: 10px; }
+  /* line 16, /home/runner/blog-source/source/stylesheets/style.css.scss */
+  article .header {
+    text-align: center;
+    margin-bottom: 70px; }
+    /* line 20, /home/runner/blog-source/source/stylesheets/style.css.scss */
+    article .header h1 {
+      font-size: 50px;
+      padding: 0;
+      margin-top: 15px;
+      margin-bottom: 15px;
+      margin-left: auto;
+      margin-right: auto;
+      max-width: 900px; }
+    /* line 30, /home/runner/blog-source/source/stylesheets/style.css.scss */
+    article .header .subtitle {
+      font-size: 20px;
+      color: #777; }
+  /* line 36, /home/runner/blog-source/source/stylesheets/style.css.scss */
+  article img {
+    width: 100%;
+    border: 10px solid #fffff0; }
+  /* line 41, /home/runner/blog-source/source/stylesheets/style.css.scss */
+  article h2 {
+    font-size: 25px;
+    margin: 70px auto 20px auto;
+    width: 620px;
+    max-width: 100%; }
+  /* line 48, /home/runner/blog-source/source/stylesheets/style.css.scss */
+  article p {
+    width: 620px;
+    max-width: 100%;
+    margin: auto;
+    margin-top: 25px;
+    margin-bottom: 15px;
+    line-height: 1.5;
+    color: #444; }
+    /* line 59, /home/runner/blog-source/source/stylesheets/style.css.scss */
+    article p code {
+      background: #fffff0;
+      color: #6b4e32;
+      padding: 2px 5px; }
+  /* line 67, /home/runner/blog-source/source/stylesheets/style.css.scss */
+  article pre {
+    width: 620px;
+    max-width: 100%;
+    margin: auto;
+    padding: 15px;
+    overflow-y: auto;
+    line-height: 1.5;
+    border-radius: 5px;
+    position: relative; }
+  /* line 79, /home/runner/blog-source/source/stylesheets/style.css.scss */
+  article blockquote p {
+    border-left: 8px solid #ff625a;
+    padding: 22px;
+    font-size: 22px; }
+
+/* line 86, /home/runner/blog-source/source/stylesheets/style.css.scss */
+aside, article.listing {
+  width: 620px;
+  margin: auto;
+  max-width: 100%;
+  padding: 10px 0; }
+  /* line 92, /home/runner/blog-source/source/stylesheets/style.css.scss */
+  aside h1, article.listing h1 {
+    font-size: 25px;
+    margin-top: 0px; }
+  /* line 97, /home/runner/blog-source/source/stylesheets/style.css.scss */
+  aside p.next, article.listing p.next {
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 15px;
+    margin: 0px; }
+  /* line 104, /home/runner/blog-source/source/stylesheets/style.css.scss */
+  aside p, article.listing p {
+    width: 620px;
+    max-width: 100%;
+    margin: auto;
+    margin-top: 25px;
+    margin-bottom: 15px;
+    line-height: 1.5;
+    color: #444; }
+    /* line 115, /home/runner/blog-source/source/stylesheets/style.css.scss */
+    aside p code, article.listing p code {
+      background: #fffce0;
+      color: #6b4e32;
+      padding: 2px 5px; }
+  /* line 122, /home/runner/blog-source/source/stylesheets/style.css.scss */
+  aside a, article.listing a {
+    text-decoration: none;
+    color: deepskyblue;
+    border-bottom: 1px solid white;
+    -webkit-transition: all 0.3s; }
+    /* line 128, /home/runner/blog-source/source/stylesheets/style.css.scss */
+    aside a:hover, article.listing a:hover {
+      border-bottom: 1px solid deepskyblue; }
+  /* line 133, /home/runner/blog-source/source/stylesheets/style.css.scss */
+  aside.follow, article.listing.follow {
+    text-align: center;
+    font-size: 20px;
+    margin-bottom: 50px; }
+    /* line 138, /home/runner/blog-source/source/stylesheets/style.css.scss */
+    aside.follow img, article.listing.follow img {
+      display: block;
+      margin: 30px auto; }

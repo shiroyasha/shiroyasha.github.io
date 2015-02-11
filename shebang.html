@@ -1,0 +1,163 @@
+<!doctype html>
+<html itemscope itemtype="http://schema.org/Article">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
+    <link rel="alternate" type="application/atom+xml" title="Igors Path to Enlightment" href="/feed.xml" />
+    
+    <link rel="shortcut icon" href="favicon.ico">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Update your html tag to include the itemscope and itemtype attributes. -->
+    <title>Shebang - Igor Šarčević</title>
+
+    <!-- Place this data between the <head> tags of your website -->
+      <meta name="description" content="<p>Unix systems are really smart when it comes to interpreting your application. Not only do  they provide you with an excellent environment for development...</p>" />
+
+      <!-- Schema.org markup for Google+ -->
+      <meta itemprop="name" content="Shebang">
+      <meta itemprop="description" content="<p>Unix systems are really smart when it comes to interpreting your application. Not only do  they provide you with an excellent environment for development...</p>">
+      <meta itemprop="image" content="http://shiroyasha.github.io/images/shebang.png">
+
+      <!-- Twitter Card data -->
+      <meta name="twitter:card" content="summary_large_image">
+      <meta name="twitter:site" content="@igor_sarcevic">
+      <meta name="twitter:title" content="Shebang">
+      <meta name="twitter:description" content="<p>Unix systems are really smart when it comes to interpreting your application. Not only do  they provide you with an excellent environment for development...</p>">
+      <meta name="twitter:creator" content="@igor_sarcevic">
+      <!-- Twitter summary card with large image must be at least 280x150px -->
+      <meta name="twitter:image:src" content="http://shiroyasha.github.io/images/shebang.png">
+
+      <!-- Open Graph data -->
+      <meta property="og:title" content="Shebang" />
+      <meta property="og:type" content="article" />
+      <meta property="og:url" content="http://" />
+      <meta property="og:image" content="http://shiroyasha.github.io/images/shebang.png" />
+      <meta property="og:description" content="<p>Unix systems are really smart when it comes to interpreting your application. Not only do  they provide you with an excellent environment for development...</p>" />
+      <meta property="article:published_time" content="2014-12-01 00:00:00 UTC" />
+
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link href="/stylesheets/style.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    
+    <div id="main" role="main">
+        <div class='top-navigation'>
+    <a href="/">&#8592; Other articles</a>
+  </div>
+
+  <article>
+      <img class="top-image" src="/images/shebang.png">
+
+    <div class="header">
+      <div class="subtitle">
+        <span>Igor Šarčević</span>
+        &mdash;
+        <time>December  1, 2014</time>
+      </div>
+
+      <h1>Shebang</h1>
+    </div>
+
+    <p>Unix systems are really smart when it comes to interpreting your application. Not only do  they provide you with an excellent environment for development, but also let you specify the interpreter in you source file. As it turns out, this technique lets you write an application in any programming language without forcing your end users to know the details of your implementation. This article is about describing this simple technique.</p>
+
+<p>Lets start with an example hello world application written in bash script.</p>
+<pre class="highlight shell"><code><span class="nb">echo</span> <span class="s2">"Hello world!"</span>
+</code></pre>
+
+<p>To execute such a program we must do two things. Make the program executable, and run it with the bash interpreter.</p>
+<pre class="highlight shell"><code><span class="gp">$ </span>chmod +x hello_world.sh
+<span class="gp">$ </span>bash hello_world.sh
+Hello world!
+</code></pre>
+
+<p>Now, we can add the shebang to the start of the program.</p>
+<pre class="highlight shell"><code><span class="c">#!/bin/bash</span>
+<span class="nb">echo</span> <span class="s2">"Hello world!"</span>
+</code></pre>
+
+<p>and with that simple addition we can now invoke our program without the bash interpreter</p>
+<pre class="highlight shell"><code><span class="gp">$ </span>./hello_world.sh
+</code></pre>
+
+<h2>Rules for the shebang</h2>
+
+<p>The shebang command must be the first line of the file and can contain any valid path for the interpreter, followed by an argument that the command will receive.</p>
+
+<p>The shebang line is read by the system before the execution of the program, but that line will not be automatically deleted. So if you want to write your own interpreter, you must manually handle that line.</p>
+
+<p>For example we can even write a program that outputs itself by writing</p>
+<pre class="highlight shell"><code><span class="c">#!/bin/cat</span>
+Answer to the ultimate question is 42!
+</code></pre>
+
+<h2>Better paths in the shebang</h2>
+
+<p>The above examples used absolute paths to address the commands in the shebang line. While this is <em>ok</em>, it would be a safer alternative to use the <code>/usr/bin/env</code> path like in the following example.</p>
+<pre class="highlight shell"><code><span class="c">#!/usr/bin/env cat</span>
+Answer to the ultimate question is 42!
+</code></pre>
+
+<p>The above can help you mitigate problems when the command is not in its expected folder by using the paths set in your environment variables.</p>
+
+<h2>Summary</h2>
+
+<p>This is one of the easiest things you can learn to write better scripts,  and it is invaluable if you never heard of it before.</p>
+
+<p>Happy hacking!</p>
+
+<p><em>Update:</em> <a href="https://github.com/maandree">maandree</a> pointed out that it is safer to use <code>/usr/bin/env</code> and that the shebang command takes only one argument</p>
+
+  </article>
+
+  <hr>
+
+  <aside class="showcase cf">
+  <div class="image">
+      <img src="/images/escape-sequences-a-quick-guide.png">
+  </div>
+
+  <div class="summary">
+    <p class="next">Read this next</p>
+
+    <h1>Escape Sequences - A Quick Guide</h1>
+
+    <p>Two years ago I thought I knew a lot about the Linux command line. Then I started digging deeper. Replaced Bash with Zsh, learned about jobs, started writing shell scripts, and even ditched Sublime text in favor of editing with command line Vim. Again...</p>
+    <a href="/escape-sequences-a-quick-guide.html">Continue reading &#8594;</a>
+  </div>
+</aside>
+ 
+
+  <hr>
+
+
+
+    </div>
+
+    <aside class="follow">
+  <img height="50px" src="https://g.twimg.com/Twitter_logo_blue.png">
+  You should 
+  <a href="https://twitter.com/igor_sarcevic">follow me on Twitter.</a>
+</aside>
+
+
+    <hr class="footer">
+    <footer class="footer">
+  Written by <a href="https://twitter.com/igor_sarcevic">Igor Šarčević</a>.
+  Tested and deployed with <a href="https://semaphoreapp.com">Semaphore</a>. 
+</footer>
+
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+           })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-57223799-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+    
+  </body>
+</html>

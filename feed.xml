@@ -1,0 +1,522 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>The path of coding enlightment</title>
+  <id>http://shiroyasha.github.io/</id>
+  <link href="http://shiroyasha.github.io/"/>
+  <link href="http://shiroyasha.github.io/feed.xml" rel="self"/>
+  <updated>2015-02-10T00:00:00+00:00</updated>
+  <author>
+    <name>Igor Šarčević</name>
+  </author>
+  <entry>
+    <title>What can you learn from production.log?</title>
+    <link rel="alternate" href="http://shiroyasha.github.io/what-can-you-learn-from-production-log.html"/>
+    <id>http://shiroyasha.github.io/what-can-you-learn-from-production-log.html</id>
+    <published>2015-02-10T00:00:00+00:00</published>
+    <updated>2015-02-11T17:43:55+00:00</updated>
+    <author>
+      <name>Igor Šarčević</name>
+    </author>
+    <summary type="html">&lt;p&gt;Many developers fail to realize that using the basic Unix tools, you can find
+on any server, you can find and collect valuable data from your logs. Often the
+data you need can be found without using any external services, including but
+not limited...&lt;/p&gt;</summary>
+    <content type="html">&lt;p&gt;Many developers fail to realize that using the basic Unix tools, you can find
+on any server, you can find and collect valuable data from your logs. Often the
+data you need can be found without using any external services, including but
+not limited to service measurements.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;This is a start of a series of posts that will try to show some of the nice
+things you can achieve with the Rails log from the command line.&lt;/em&gt;&lt;/p&gt;
+
+&lt;h2&gt;The basics&lt;/h2&gt;
+
+&lt;p&gt;Let&amp;rsquo;s star with the simplest one &amp;mdash; following the incoming logs:&lt;/p&gt;
+&lt;pre class="highlight shell"&gt;&lt;code&gt;tail -f log/production.log
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;We could of course show the complete log with &lt;code&gt;cat&lt;/code&gt;, but often it is far longer
+than we would expect and following the logs tends to be much nicer. On the other 
+hand &lt;code&gt;cat&lt;/code&gt; can be handy when combined with &lt;code&gt;grep&lt;/code&gt; and &lt;code&gt;tail&lt;/code&gt;. &lt;/p&gt;
+
+&lt;h2&gt;Filtering&lt;/h2&gt;
+
+&lt;p&gt;The first thing we want to learn is to filter the log from the information
+we don&amp;rsquo;t need for the current measurement. Filtering is all about recognizing
+the patterns in the text and cutting out everything that doesn&amp;rsquo;t match it.
+A common thing is to display only the CRUD request logs, or to filter everything
+out except database actions.&lt;/p&gt;
+
+&lt;p&gt;A nice scheme for creating complex filters (and the one we will be 
+using in the examples) is the following:&lt;/p&gt;
+&lt;pre class="highlight shell"&gt;&lt;code&gt;cat log/production.log | &amp;lt;filters&amp;gt; | tail
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;In the above command the &lt;code&gt;cat&lt;/code&gt; command &lt;em&gt;pushes&lt;/em&gt; the logs into the 
+filters, and the &lt;code&gt;tail&lt;/code&gt; command shows a portion of the result. An
+alternative for the &lt;code&gt;tail&lt;/code&gt; - that shows the end of the results - can
+be the &lt;code&gt;head&lt;/code&gt; command that shows the start. By default, both commands
+display only 10 results, but can be tweaked to show more with the &lt;code&gt;-n&lt;/code&gt;
+option. For example to list the last 20 lines we can use the following
+scheme:&lt;/p&gt;
+&lt;pre class="highlight shell"&gt;&lt;code&gt;cat log/production.log | &amp;lt;filters&amp;gt; | tail -n 20
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;But enough with the boring details, let&amp;rsquo;s define a filter. The following
+example shows only incoming &lt;code&gt;POST&lt;/code&gt; requests.&lt;/p&gt;
+&lt;pre class="highlight shell"&gt;&lt;code&gt;cat log/production.log | grep &lt;span class="s1"&gt;'method=POST'&lt;/span&gt; | tail -n 20
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;In the above example we used the &lt;code&gt;grep&lt;/code&gt; command that returns only the lines
+that have the provided string or regular expression in them. We can also
+combine multiple &lt;code&gt;grep&lt;/code&gt; commands, where the second &lt;code&gt;grep&lt;/code&gt; will only work
+on the lines that the first &lt;code&gt;grep&lt;/code&gt; returned.&lt;/p&gt;
+
+&lt;p&gt;For example, the following command shows only the &lt;code&gt;POST&lt;/code&gt; requests that had
+a HTTP status &lt;code&gt;200&lt;/code&gt; as their answer:&lt;/p&gt;
+&lt;pre class="highlight shell"&gt;&lt;code&gt;cat log/production.log | grep &lt;span class="s1"&gt;'method=POST'&lt;/span&gt; 
+                       | grep &lt;span class="s1"&gt;'status=200'&lt;/span&gt; 
+                       | tail -n 20
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Similarly to the previous ones, we can easily show only the logs that were
+created yesterday:&lt;/p&gt;
+&lt;pre class="highlight shell"&gt;&lt;code&gt;cat log/production.log | grep &lt;span class="s1"&gt;'method=POST'&lt;/span&gt; 
+                       | grep &lt;span class="s1"&gt;'status=200'&lt;/span&gt; 
+                       | grep &lt;span class="s1"&gt;'time=2015-02-10'&lt;/span&gt; 
+                       | tail -n 20
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;As the final example I will demonstrate something more complicated. We will list
+only the POST requests that had a duration longer than 10 milliseconds.
+Unfortunately, we can&amp;rsquo;t use the previous technique anymore because the string
+that we are matching are different on each line (somewhere the duration is 13
+milliseconds, somewhere it is 114 milliseconds&amp;hellip;).&lt;/p&gt;
+
+&lt;p&gt;Fortunately, we can use regular expressions with the &lt;code&gt;grep&lt;/code&gt; command.
+What we need is actually more than one digit in the duration that will
+give us a number larger or equal to 10. To match a digit we will use the
+&lt;code&gt;[0-9]&lt;/code&gt; notation, and to match 0 or more of them we will write &lt;code&gt;[0-9]*&lt;/code&gt;.&lt;/p&gt;
+&lt;pre class="highlight shell"&gt;&lt;code&gt;cat log/production.log | grep &lt;span class="s1"&gt;'method=POST'&lt;/span&gt; 
+                       | grep &lt;span class="s1"&gt;'duration=[0-9]*[0-9][0-9]'&lt;/span&gt; 
+                       | tail -n 20
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;In the above example we used &lt;code&gt;[0-9][0-9]&lt;/code&gt; to match two digits and &lt;code&gt;[0-9]*&lt;/code&gt;
+to match the remaining.&lt;/p&gt;
+
+&lt;h2&gt;Final words&lt;/h2&gt;
+
+&lt;p&gt;I hope you enjoyed this tutorial, I will give my best to finish the next
+one soon, where I will be talking about counting.&lt;/p&gt;
+
+&lt;p&gt;Happy hacking!&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Running shell commands from Ruby</title>
+    <link rel="alternate" href="http://shiroyasha.github.io/running-shell-commands-from-ruby.html"/>
+    <id>http://shiroyasha.github.io/running-shell-commands-from-ruby.html</id>
+    <published>2015-02-06T00:00:00+00:00</published>
+    <updated>2015-02-11T17:43:55+00:00</updated>
+    <author>
+      <name>Igor Šarčević</name>
+    </author>
+    <summary type="html">&lt;p&gt;Ruby is an excellent language offering us a simple and human friendly
+interface, however for system administration or simple task automation the
+shell is a much better alternative. Luckily, combining them is easy. &lt;/p&gt;
+
+&lt;p&gt;There are many ways to interact...&lt;/p&gt;</summary>
+    <content type="html">&lt;p&gt;Ruby is an excellent language offering us a simple and human friendly
+interface, however for system administration or simple task automation the
+shell is a much better alternative. Luckily, combining them is easy. &lt;/p&gt;
+
+&lt;p&gt;There are many ways to interact with the shell (back-ticks, system, exec,
+open3, &amp;hellip;), but I am not going to list and explain every one of them (go read
+the docs or &lt;a href="http://stackoverflow.com/a/2400/364938"&gt;this thread&lt;/a&gt;) and instead
+I will focus on the interaction of the two languages.&lt;/p&gt;
+
+&lt;p&gt;Let&amp;rsquo;s start with a simple example and list the content of the directory. In
+ruby we will use the back-ticks syntax to &lt;em&gt;capture the output&lt;/em&gt; of the &lt;code&gt;ls&lt;/code&gt;
+command:&lt;/p&gt;
+&lt;pre class="highlight ruby"&gt;&lt;code&gt;&lt;span class="n"&gt;output&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="sb"&gt;`ls`&lt;/span&gt;
+
+&lt;span class="nb"&gt;puts&lt;/span&gt; &lt;span class="n"&gt;output&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;OK, that was easy. In this next example let&amp;rsquo;s execute a shell action that will
+install &lt;a href="http://www.vim.org/"&gt;Vim&lt;/a&gt; on a &lt;a href="http://www.ubuntu.com/"&gt;Ubuntu&lt;/a&gt;
+machine. We will use the &lt;code&gt;system&lt;/code&gt; command instead of the back-ticks, so we can
+&lt;em&gt;join the output&lt;/em&gt; of the command with the output of our ruby script.&lt;/p&gt;
+&lt;pre class="highlight ruby"&gt;&lt;code&gt;&lt;span class="nb"&gt;system&lt;/span&gt; &lt;span class="s2"&gt;"sudo apt-get -y intall vim"&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This should work fine. But not always&amp;hellip;  If your internet connection is
+broken, or if the vim package changes its name, the above command will fail
+without our Ruby script knowing anything about it.&lt;/p&gt;
+
+&lt;p&gt;Hopefully, there is an easy solution. The &lt;code&gt;$?&lt;/code&gt; global variable always contains
+the status code of the last executed shell command. Let&amp;rsquo;s use to show an error
+message to the user:&lt;/p&gt;
+&lt;pre class="highlight ruby"&gt;&lt;code&gt;&lt;span class="nb"&gt;system&lt;/span&gt; &lt;span class="s2"&gt;"sudo apt-get -y intall vim"&lt;/span&gt;
+
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="vg"&gt;$?&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;exitstatus&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;
+  &lt;span class="nb"&gt;puts&lt;/span&gt; &lt;span class="s2"&gt;"I failed to install Vim, I am very sorry :'("&lt;/span&gt; 
+&lt;span class="k"&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;With the above knowledge you can do &lt;em&gt;a lot&lt;/em&gt;. But sooner or later you will
+stumble on one little detail &amp;mdash; the system and the back-ticks execute 
+&lt;code&gt;sh&lt;/code&gt; commands, and &lt;em&gt;not&lt;/em&gt; Bash commands. And there are a 
+&lt;a href="http://www.gnu.org/software/bash/manual/html_node/Major-Differences-From-The-Bourne-Shell.html"&gt;lot of differences&lt;/a&gt;
+between the two of them.&lt;/p&gt;
+
+&lt;p&gt;For example in Bash you have &lt;a href="http://en.wikipedia.org/wiki/Process_substitution"&gt;process
+substitution&lt;/a&gt; that is very
+handy, yet not available in Sh. Let&amp;rsquo;s write a Ruby script that uses it.&lt;/p&gt;
+
+&lt;p&gt;A good use case for process substitution is to check if two directories have
+the same files in them. In the command line we would write such a test like
+this:&lt;/p&gt;
+&lt;pre class="highlight shell"&gt;&lt;code&gt;cmp &amp;lt;&lt;span class="o"&gt;(&lt;/span&gt; ls ~/images &lt;span class="o"&gt;)&lt;/span&gt; &amp;lt;&lt;span class="o"&gt;(&lt;/span&gt; ls ~/images-backup &lt;span class="o"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Following the above example, a naive Ruby implementation would be:&lt;/p&gt;
+&lt;pre class="highlight shell"&gt;&lt;code&gt;system &lt;span class="s2"&gt;"cmp &amp;lt;( ls ~/images ) &amp;lt;( ls ~/images-backup )"&lt;/span&gt;
+
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nv"&gt;$?&lt;/span&gt;.exitstatus &lt;span class="o"&gt;==&lt;/span&gt; 0
+  puts &lt;span class="s2"&gt;"They are the same, yay!"&lt;/span&gt;
+&lt;span class="k"&gt;else
+  &lt;/span&gt;puts &lt;span class="s2"&gt;"They are not the same"&lt;/span&gt;
+end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;But this will fail with a weird error that looks similar to this:&lt;/p&gt;
+&lt;pre class="highlight shell"&gt;&lt;code&gt;sh: 1: Syntax error: &lt;span class="s2"&gt;"("&lt;/span&gt; unexpected
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Hopefully, the system command can take multiple arguments and will threat the
+first one as the command and the rest as its arguments. For example we can list
+the &lt;code&gt;/etc&lt;/code&gt; directory with:&lt;/p&gt;
+&lt;pre class="highlight shell"&gt;&lt;code&gt;system &lt;span class="s2"&gt;"ls"&lt;/span&gt;, &lt;span class="s2"&gt;"/etc"&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If you are familiar with the command line you probably know that you can run
+commands in an alternative shell with:&lt;/p&gt;
+&lt;pre class="highlight shell"&gt;&lt;code&gt;bash -c &lt;span class="s2"&gt;"echo 'running from bash shell!'"&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now let&amp;rsquo;s use the above knowledge to compare two directories from a Ruby
+script:&lt;/p&gt;
+&lt;pre class="highlight shell"&gt;&lt;code&gt;system &lt;span class="s2"&gt;"bash"&lt;/span&gt;, &lt;span class="s2"&gt;"-c"&lt;/span&gt;, &lt;span class="s2"&gt;"cmp &amp;lt;( ls ~/images ) &amp;lt;( ls ~/images-backup )"&lt;/span&gt;
+
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nv"&gt;$?&lt;/span&gt;.exitstatus &lt;span class="o"&gt;==&lt;/span&gt; 0
+  puts &lt;span class="s2"&gt;"They are the same, yay!"&lt;/span&gt;
+&lt;span class="k"&gt;else
+  &lt;/span&gt;puts &lt;span class="s2"&gt;"They are not the same"&lt;/span&gt;
+end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Hooray, this works!&lt;/p&gt;
+
+&lt;p&gt;I hope I have given you the incentive to go and explore this technology even
+further. Happy hacking!&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Sms compiler service</title>
+    <link rel="alternate" href="http://shiroyasha.github.io/sms-compiler-service.html"/>
+    <id>http://shiroyasha.github.io/sms-compiler-service.html</id>
+    <published>2014-12-08T00:00:00+00:00</published>
+    <updated>2015-02-11T17:43:55+00:00</updated>
+    <author>
+      <name>Igor Šarčević</name>
+    </author>
+    <summary type="html">&lt;p&gt;The majority of today’s development is oriented around the web or around desktop/mobile applications. For the average programmer it could even seem like there is no other programming area out there. However, there is actually a huge number of programs...&lt;/p&gt;</summary>
+    <content type="html">&lt;p&gt;The majority of today&amp;rsquo;s development is oriented around the web or around desktop/mobile applications. For the average programmer it could even seem like there is no other programming area out there. However, there is actually a huge number of programs developed for cars, televisions, phones, and similar everyday technologies. This article is focused on a small fraction of those areas &amp;mdash; sms messages.&lt;/p&gt;
+
+&lt;h2&gt;The code executor&lt;/h2&gt;
+
+&lt;p&gt;Two or three months ago I watched &lt;a href="http://shiroyasha.github.io/sinatra-app-with-rspec.html"&gt;an episode on Computerphile&lt;/a&gt;, where a young programmer demonstrated his applications that receives code through sms messages, runs that code, and answers him back on his phone. I was fascinated with his applications, and today I will try to demonstrate the basics of this process, using a service that connects sms messages to web applications &amp;mdash; &lt;a href="https://www.twilio.com/"&gt;Twilio&lt;/a&gt;. In a nutshell:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Create a web application that receives ruby code from sms messages,
+executes that code, and sends back an sms with the output.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2&gt;Bootstrap&lt;/h2&gt;
+
+&lt;p&gt;To achieve the above we will use the Sinatra web framework, and Twilio&amp;rsquo;s
+gem to receive SMS messages. Our Gemfile should look like this:&lt;/p&gt;
+&lt;pre class="highlight ruby"&gt;&lt;code&gt;&lt;span class="n"&gt;source&lt;/span&gt; &lt;span class="s2"&gt;"https://rubygems.org"&lt;/span&gt;
+
+&lt;span class="n"&gt;gem&lt;/span&gt; &lt;span class="s2"&gt;"rack"&lt;/span&gt;
+&lt;span class="n"&gt;gem&lt;/span&gt; &lt;span class="s2"&gt;"sinatra"&lt;/span&gt;
+&lt;span class="n"&gt;gem&lt;/span&gt; &lt;span class="s2"&gt;"activesupport"&lt;/span&gt;
+&lt;span class="n"&gt;gem&lt;/span&gt; &lt;span class="s2"&gt;"twilio-ruby"&lt;/span&gt;
+
+&lt;span class="n"&gt;group&lt;/span&gt; &lt;span class="ss"&gt;:test&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
+  &lt;span class="n"&gt;gem&lt;/span&gt; &lt;span class="s2"&gt;"rspec"&lt;/span&gt;
+  &lt;span class="n"&gt;gem&lt;/span&gt; &lt;span class="s2"&gt;"rack-test"&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Also, we will set up a Sinatra route that will receive Twilio&amp;rsquo;s webhooks 
+in our main application file.&lt;/p&gt;
+&lt;pre class="highlight ruby"&gt;&lt;code&gt;&lt;span class="n"&gt;post&lt;/span&gt; &lt;span class="s2"&gt;"/sms-code"&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
+  &lt;span class="s2"&gt;"Hello human!"&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;Responding to sms messages&lt;/h2&gt;
+
+&lt;p&gt;To respond to sms messages, we will have to use Twilio&amp;rsquo;s &lt;code&gt;twiml&lt;/code&gt; language,
+and construct an XML response that Twilio can understand. To answer 
+&lt;code&gt;Hello human!&lt;/code&gt; to every incoming message we can do the following:&lt;/p&gt;
+&lt;pre class="highlight ruby"&gt;&lt;code&gt;&lt;span class="n"&gt;post&lt;/span&gt; &lt;span class="s2"&gt;"/sms-code"&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
+  &lt;span class="n"&gt;twiml&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;Twilio&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="no"&gt;TwiML&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="no"&gt;Response&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;new&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;
+    &lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="no"&gt;Message&lt;/span&gt; &lt;span class="s2"&gt;"Hello human!"&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+
+  &lt;span class="n"&gt;twiml&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;text&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;When we run our application and visit &lt;code&gt;/sms-code&lt;/code&gt; we should see an output like this:&lt;/p&gt;
+&lt;pre class="highlight xml"&gt;&lt;code&gt;&lt;span class="cp"&gt;&amp;lt;?xml version="1.0" encoding="UTF-8"?&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;Response&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;Message&amp;gt;&lt;/span&gt;Hello Human!&lt;span class="nt"&gt;&amp;lt;/Message&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/Response&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;Connecting this service to Twilio&lt;/h2&gt;
+
+&lt;p&gt;At this point we should create a Twilio account with a phone number that will 
+receive the messages and a place to host our application online. For example a 
+&lt;a href="https://www.heroku.com/"&gt;Heroku&lt;/a&gt; dyno would be an excellent choice.&lt;/p&gt;
+
+&lt;p&gt;After that we need to set up a webhook for our number on Twilio, where
+all the incoming messages will arrive. We should visit our number&amp;rsquo;s settings
+and add the full URL to our sms handler. We will use the &lt;code&gt;POST&lt;/code&gt; HTTP
+method so that Twilio won&amp;rsquo;t cache our requests and responses.
+The setting screen should look similar to this:&lt;/p&gt;
+
+&lt;p&gt;&lt;img alt="Webhook settings on Twilio" src="/images/twilio_number_setup.png" /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: If you want Twilio to cache your responses, use the &lt;code&gt;GET&lt;/code&gt; method.
+In our use case we don&amp;rsquo;t want that caching to happen so we use &lt;code&gt;POST&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2&gt;Receiving the message&lt;/h2&gt;
+
+&lt;p&gt;The previous example responded &lt;code&gt;Hello human!&lt;/code&gt; to every received sms message.
+We will now extend our application and use the body of the incoming sms 
+message.&lt;/p&gt;
+
+&lt;p&gt;The following example takes the incoming message with &lt;code&gt;params[:Body]&lt;/code&gt;
+and evaluates it as executable Ruby code.&lt;/p&gt;
+&lt;pre class="highlight ruby"&gt;&lt;code&gt;&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="c1"&gt;# This is very dangerous, &lt;/span&gt;
+&lt;span class="c1"&gt;# Don't do it without adult supervision!&lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;execute&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;code&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="nb"&gt;eval&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;code&lt;/span&gt;&lt;span class="p"&gt;)[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;160&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+
+&lt;span class="n"&gt;post&lt;/span&gt; &lt;span class="s2"&gt;"/sms-code"&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
+  &lt;span class="n"&gt;twiml&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;Twilio&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="no"&gt;TwiML&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="no"&gt;Response&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;new&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;
+    &lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="no"&gt;Message&lt;/span&gt; &lt;span class="n"&gt;execute&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;params&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="ss"&gt;:Body&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+
+  &lt;span class="n"&gt;twiml&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;text&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;After deployment this code you should evaluate and return the results of
+incoming sms messages.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; The above code segment uses the body parameter of the sms message
+to evaluate some Ruby code. This is very dangerous, and is only used for 
+demonstration purposes.&lt;/p&gt;
+
+&lt;h2&gt;Summary&lt;/h2&gt;
+
+&lt;p&gt;Working with sms is really fun especially the part where your phone vibrates
+and shows the result of your code. This exercise can also serve as a great
+warm up before creating two factor authorization or similar sms bound systems.&lt;/p&gt;
+
+&lt;p&gt;Check out the &lt;a href="https://github.com/shiroyasha/sms-ruby-code"&gt;example repository on GitHub&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Happy hacking!&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Create a programming language</title>
+    <link rel="alternate" href="http://shiroyasha.github.io/create-a-programming-language.html"/>
+    <id>http://shiroyasha.github.io/create-a-programming-language.html</id>
+    <published>2014-12-04T00:00:00+00:00</published>
+    <updated>2015-02-11T17:43:55+00:00</updated>
+    <author>
+      <name>Igor Šarčević</name>
+    </author>
+    <summary type="html">&lt;p&gt;I have been programming for a long time. Probably much longer than I  want to admit. Yet, for a long time, there was something mysterious about the way I created my programs. Yes, I could write a lot of stuff in programming languages, but I had no...&lt;/p&gt;</summary>
+    <content type="html">&lt;p&gt;I have been programming for a long time. Probably much longer than I  want to admit. Yet, for a long time, there was something mysterious about the way I created my programs. Yes, I could write a lot of stuff in programming languages, but I had no idea how to create a programming language itself. &lt;/p&gt;
+
+&lt;p&gt;With time, and some healthy logic, I kinda deducted how that process could be achieved, but at the beginning of this year I actually wrote a programming language prototype of my own. This is a story that shows how I crated a Lisp like programming language prototype called Bracket.&lt;/p&gt;
+
+&lt;h2&gt;Programs are only strings in a file&lt;/h2&gt;
+
+&lt;p&gt;What I mean by this title, is that from the standpoint of the interpreter or a compiler a program written in a programming language is just a string. It needs to read in from a file, broken down to little pieces, and then reassembled into meaningful actions.&lt;/p&gt;
+
+&lt;p&gt;Let&amp;rsquo;s say I have a file named &lt;code&gt;example.br&lt;/code&gt; that contains the following source code written in my new programming language.&lt;/p&gt;
+&lt;pre class="highlight plaintext"&gt;&lt;code&gt;(+ 1 2 (* 2 3 ))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Which, if you are familiar with Lisp, should evaluate to &lt;code&gt;9&lt;/code&gt;. The first thing our interpreter needs to do with the above &lt;em&gt;string&lt;/em&gt; is to break it into small logical elements. This process is usually called parsing which result should resemble something like the following.&lt;/p&gt;
+&lt;pre class="highlight ruby"&gt;&lt;code&gt;&lt;span class="p"&gt;[&lt;/span&gt; &lt;span class="s2"&gt;"("&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"+"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"1"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;  &lt;span class="s2"&gt;"2"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;  &lt;span class="s2"&gt;"("&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"*"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;  &lt;span class="s2"&gt;"2"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;  &lt;span class="s2"&gt;"3"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;")"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;")"&lt;/span&gt; &lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Is this just an array of strings? Exactly! A simple array of strings. Onto the next step.&lt;/p&gt;
+
+&lt;h2&gt;Turning lists into lists&lt;/h2&gt;
+
+&lt;p&gt;This will be a mind boggling task. I will transform the above list of strings into a list of lists of strings. &lt;/p&gt;
+
+&lt;p&gt;My objective is to recognize the &lt;code&gt;&amp;quot;(&amp;quot;&lt;/code&gt; and &lt;code&gt;&amp;quot;)&amp;quot;&lt;/code&gt; elements in the array, remove them, and place the elements in the between them into a new array.&lt;/p&gt;
+
+&lt;p&gt;This task will output the following result.&lt;/p&gt;
+&lt;pre class="highlight ruby"&gt;&lt;code&gt;&lt;span class="p"&gt;[[&lt;/span&gt; &lt;span class="s2"&gt;"+"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"1"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;  &lt;span class="s2"&gt;"2"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;  &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;"*"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;  &lt;span class="s2"&gt;"2"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;  &lt;span class="s2"&gt;"3"&lt;/span&gt;&lt;span class="p"&gt;]]]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;Recognizing the types of data&lt;/h2&gt;
+
+&lt;p&gt;There is one thing missing before we start to calculate the result of the above expression. We need to transform the string representation of the numbers into actual numbers.&lt;/p&gt;
+
+&lt;p&gt;This one is actually quite easy. Simply turn every element except the first one into a number.&lt;/p&gt;
+&lt;pre class="highlight ruby"&gt;&lt;code&gt;&lt;span class="p"&gt;[[&lt;/span&gt; &lt;span class="s2"&gt;"+"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;  &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;  &lt;span class="p"&gt;[&lt;/span&gt; &lt;span class="s2"&gt;"*"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;  &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;  &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;]]]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;I skipped the first element in every array, because it is a name of a function, not data.&lt;/p&gt;
+
+&lt;h2&gt;Calculating the result&lt;/h2&gt;
+
+&lt;p&gt;Now is the big finally. Here is how we will do it.&lt;/p&gt;
+
+&lt;p&gt;We will take the most deeply nested array from the above array, and calculate its value. The most deeply nested array in the above example is&lt;/p&gt;
+&lt;pre class="highlight ruby"&gt;&lt;code&gt; &lt;span class="p"&gt;[&lt;/span&gt; &lt;span class="s2"&gt;"*"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;  &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;  &lt;span class="mi"&gt;3&lt;/span&gt; &lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;We must notice that it has no sub arrays. In other words we can just execute a function named &lt;code&gt;product&lt;/code&gt; and pass it all the elements from the above list.&lt;/p&gt;
+&lt;pre class="highlight ruby"&gt;&lt;code&gt;&lt;span class="n"&gt;product&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;        &lt;span class="c1"&gt;# =&amp;gt; 6&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And yes the result is &lt;code&gt;6&lt;/code&gt;. Now we take that number and pluck it back into the original array.&lt;/p&gt;
+&lt;pre class="highlight ruby"&gt;&lt;code&gt;&lt;span class="p"&gt;[[&lt;/span&gt; &lt;span class="s2"&gt;"+"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;  &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;6&lt;/span&gt;&lt;span class="p"&gt;]]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And repeat the process again, until we have a sub-arrays in our array.&lt;/p&gt;
+&lt;pre class="highlight ruby"&gt;&lt;code&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;9&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And then read out the result as the first thing in our array. That is 9. Eureka!&lt;/p&gt;
+
+&lt;h2&gt;Summary&lt;/h2&gt;
+
+&lt;p&gt;This is a very rough sketch that should give you an idea what an actual interpreter does. Of course it is much smarter, and can recognize other datatypes, not just numbers, but at its core it does something similar to this.&lt;/p&gt;
+
+&lt;p&gt;Also you can check out my source code &lt;a href="https://github.com/shiroyasha/bracket"&gt;at GitHub&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Happy hacking!&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>A challenge</title>
+    <link rel="alternate" href="http://shiroyasha.github.io/a-challenge.html"/>
+    <id>http://shiroyasha.github.io/a-challenge.html</id>
+    <published>2014-12-02T00:00:00+00:00</published>
+    <updated>2015-02-11T17:43:55+00:00</updated>
+    <author>
+      <name>Igor Šarčević</name>
+    </author>
+    <summary type="html">&lt;p&gt;Not so long ago, while reading an article on hacker news, I came across a strange little programming puzzle that seemed silly and trivial. I was sure I could solve it in a matter of minutes if I just sit down and think about it a little. Yet, the problem...&lt;/p&gt;</summary>
+    <content type="html">&lt;p&gt;Not so long ago, while reading an article on hacker news, I came across a strange little programming puzzle that seemed silly and trivial. I was sure I could solve it in a matter of minutes if I just sit down and think about it a little. Yet, the problem haunted me for weeks, and in one moment I just had to sit down and solve it. And what can I say, it was really hard, way harder than I tough. Here are the rules of the challenge.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;You have to write a program that will output itself. You can write it in any  programming language, but you have to make sure that it has at least one character in its source file i.e it can&amp;rsquo;t be an empty file.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Of course, it is considered cheating if you just open the file and print it out. So you can&amp;rsquo;t do that either.&lt;/p&gt;
+
+&lt;p&gt;I will not give you the answer, it is way more fun to try it out personally.&lt;/p&gt;
+
+&lt;h2&gt;Why would I do this?&lt;/h2&gt;
+
+&lt;p&gt;When you become a programmer that can actually earn a living by writing code you will probably have the skills to solve many of the programming challenges you get on a daily basis. The only things that stop you are time, and the quality of code you are writing, but if you ignore that, you can probably just write an ugly, unmaintainable, brute force, yet working solution for any problem.&lt;/p&gt;
+
+&lt;p&gt;When you start solving this problem, you will soon realize that your usual brute force approach only leads to trouble.&lt;/p&gt;
+
+&lt;p&gt;If you consider yourself a hacker or a programming geek you must feel the urge to solve puzzles. I can&amp;rsquo;t guarantee great insight, or some groundbreaking learning experience, only a heart warming feeling when you finally get your program to output itself.&lt;/p&gt;
+
+&lt;p&gt;Happy hacking!&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Shebang</title>
+    <link rel="alternate" href="http://shiroyasha.github.io/shebang.html"/>
+    <id>http://shiroyasha.github.io/shebang.html</id>
+    <published>2014-12-01T00:00:00+00:00</published>
+    <updated>2015-02-11T17:43:55+00:00</updated>
+    <author>
+      <name>Igor Šarčević</name>
+    </author>
+    <summary type="html">&lt;p&gt;Unix systems are really smart when it comes to interpreting your application. Not only do  they provide you with an excellent environment for development, but also let you specify the interpreter in you source file. As it turns out, this technique...&lt;/p&gt;</summary>
+    <content type="html">&lt;p&gt;Unix systems are really smart when it comes to interpreting your application. Not only do  they provide you with an excellent environment for development, but also let you specify the interpreter in you source file. As it turns out, this technique lets you write an application in any programming language without forcing your end users to know the details of your implementation. This article is about describing this simple technique.&lt;/p&gt;
+
+&lt;p&gt;Lets start with an example hello world application written in bash script.&lt;/p&gt;
+&lt;pre class="highlight shell"&gt;&lt;code&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;"Hello world!"&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To execute such a program we must do two things. Make the program executable, and run it with the bash interpreter.&lt;/p&gt;
+&lt;pre class="highlight shell"&gt;&lt;code&gt;&lt;span class="gp"&gt;$ &lt;/span&gt;chmod +x hello_world.sh
+&lt;span class="gp"&gt;$ &lt;/span&gt;bash hello_world.sh
+Hello world!
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now, we can add the shebang to the start of the program.&lt;/p&gt;
+&lt;pre class="highlight shell"&gt;&lt;code&gt;&lt;span class="c"&gt;#!/bin/bash&lt;/span&gt;
+&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;"Hello world!"&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;and with that simple addition we can now invoke our program without the bash interpreter&lt;/p&gt;
+&lt;pre class="highlight shell"&gt;&lt;code&gt;&lt;span class="gp"&gt;$ &lt;/span&gt;./hello_world.sh
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;Rules for the shebang&lt;/h2&gt;
+
+&lt;p&gt;The shebang command must be the first line of the file and can contain any valid path for the interpreter, followed by an argument that the command will receive.&lt;/p&gt;
+
+&lt;p&gt;The shebang line is read by the system before the execution of the program, but that line will not be automatically deleted. So if you want to write your own interpreter, you must manually handle that line.&lt;/p&gt;
+
+&lt;p&gt;For example we can even write a program that outputs itself by writing&lt;/p&gt;
+&lt;pre class="highlight shell"&gt;&lt;code&gt;&lt;span class="c"&gt;#!/bin/cat&lt;/span&gt;
+Answer to the ultimate question is 42!
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;Better paths in the shebang&lt;/h2&gt;
+
+&lt;p&gt;The above examples used absolute paths to address the commands in the shebang line. While this is &lt;em&gt;ok&lt;/em&gt;, it would be a safer alternative to use the &lt;code&gt;/usr/bin/env&lt;/code&gt; path like in the following example.&lt;/p&gt;
+&lt;pre class="highlight shell"&gt;&lt;code&gt;&lt;span class="c"&gt;#!/usr/bin/env cat&lt;/span&gt;
+Answer to the ultimate question is 42!
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The above can help you mitigate problems when the command is not in its expected folder by using the paths set in your environment variables.&lt;/p&gt;
+
+&lt;h2&gt;Summary&lt;/h2&gt;
+
+&lt;p&gt;This is one of the easiest things you can learn to write better scripts,  and it is invaluable if you never heard of it before.&lt;/p&gt;
+
+&lt;p&gt;Happy hacking!&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Update:&lt;/em&gt; &lt;a href="https://github.com/maandree"&gt;maandree&lt;/a&gt; pointed out that it is safer to use &lt;code&gt;/usr/bin/env&lt;/code&gt; and that the shebang command takes only one argument&lt;/p&gt;
+</content>
+  </entry>
+</feed>

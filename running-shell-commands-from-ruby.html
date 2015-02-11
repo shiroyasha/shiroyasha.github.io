@@ -1,0 +1,217 @@
+<!doctype html>
+<html itemscope itemtype="http://schema.org/Article">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
+    <link rel="alternate" type="application/atom+xml" title="Igors Path to Enlightment" href="/feed.xml" />
+    
+    <link rel="shortcut icon" href="favicon.ico">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Update your html tag to include the itemscope and itemtype attributes. -->
+    <title>Running shell commands from Ruby - Igor Šarčević</title>
+
+    <!-- Place this data between the <head> tags of your website -->
+      <meta name="description" content="<p>Ruby is an excellent language offering us a simple and human friendly
+interface, however for system administration or simple task automation the
+shell...</p>" />
+
+      <!-- Schema.org markup for Google+ -->
+      <meta itemprop="name" content="Running shell commands from Ruby">
+      <meta itemprop="description" content="<p>Ruby is an excellent language offering us a simple and human friendly
+interface, however for system administration or simple task automation the
+shell...</p>">
+      <meta itemprop="image" content="http://shiroyasha.github.io/images/running-shell-commands-from-ruby.png">
+
+      <!-- Twitter Card data -->
+      <meta name="twitter:card" content="summary_large_image">
+      <meta name="twitter:site" content="@igor_sarcevic">
+      <meta name="twitter:title" content="Running shell commands from Ruby">
+      <meta name="twitter:description" content="<p>Ruby is an excellent language offering us a simple and human friendly
+interface, however for system administration or simple task automation the
+shell...</p>">
+      <meta name="twitter:creator" content="@igor_sarcevic">
+      <!-- Twitter summary card with large image must be at least 280x150px -->
+      <meta name="twitter:image:src" content="http://shiroyasha.github.io/images/running-shell-commands-from-ruby.png">
+
+      <!-- Open Graph data -->
+      <meta property="og:title" content="Running shell commands from Ruby" />
+      <meta property="og:type" content="article" />
+      <meta property="og:url" content="http://" />
+      <meta property="og:image" content="http://shiroyasha.github.io/images/running-shell-commands-from-ruby.png" />
+      <meta property="og:description" content="<p>Ruby is an excellent language offering us a simple and human friendly
+interface, however for system administration or simple task automation the
+shell...</p>" />
+      <meta property="article:published_time" content="2015-02-06 00:00:00 UTC" />
+
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link href="/stylesheets/style.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    
+    <div id="main" role="main">
+        <div class='top-navigation'>
+    <a href="/">&#8592; Other articles</a>
+  </div>
+
+  <article>
+      <img class="top-image" src="/images/running-shell-commands-from-ruby.png">
+
+    <div class="header">
+      <div class="subtitle">
+        <span>Igor Šarčević</span>
+        &mdash;
+        <time>February  6, 2015</time>
+      </div>
+
+      <h1>Running shell commands from Ruby</h1>
+    </div>
+
+    <p>Ruby is an excellent language offering us a simple and human friendly
+interface, however for system administration or simple task automation the
+shell is a much better alternative. Luckily, combining them is easy. </p>
+
+<p>There are many ways to interact with the shell (back-ticks, system, exec,
+open3, &hellip;), but I am not going to list and explain every one of them (go read
+the docs or <a href="http://stackoverflow.com/a/2400/364938">this thread</a>) and instead
+I will focus on the interaction of the two languages.</p>
+
+<p>Let&rsquo;s start with a simple example and list the content of the directory. In
+ruby we will use the back-ticks syntax to <em>capture the output</em> of the <code>ls</code>
+command:</p>
+<pre class="highlight ruby"><code><span class="n">output</span> <span class="o">=</span> <span class="sb">`ls`</span>
+
+<span class="nb">puts</span> <span class="n">output</span>
+</code></pre>
+
+<p>OK, that was easy. In this next example let&rsquo;s execute a shell action that will
+install <a href="http://www.vim.org/">Vim</a> on a <a href="http://www.ubuntu.com/">Ubuntu</a>
+machine. We will use the <code>system</code> command instead of the back-ticks, so we can
+<em>join the output</em> of the command with the output of our ruby script.</p>
+<pre class="highlight ruby"><code><span class="nb">system</span> <span class="s2">"sudo apt-get -y intall vim"</span>
+</code></pre>
+
+<p>This should work fine. But not always&hellip;  If your internet connection is
+broken, or if the vim package changes its name, the above command will fail
+without our Ruby script knowing anything about it.</p>
+
+<p>Hopefully, there is an easy solution. The <code>$?</code> global variable always contains
+the status code of the last executed shell command. Let&rsquo;s use to show an error
+message to the user:</p>
+<pre class="highlight ruby"><code><span class="nb">system</span> <span class="s2">"sudo apt-get -y intall vim"</span>
+
+<span class="k">if</span> <span class="vg">$?</span><span class="p">.</span><span class="nf">exitstatus</span> <span class="o">&gt;</span> <span class="mi">0</span>
+  <span class="nb">puts</span> <span class="s2">"I failed to install Vim, I am very sorry :'("</span> 
+<span class="k">end</span>
+</code></pre>
+
+<p>With the above knowledge you can do <em>a lot</em>. But sooner or later you will
+stumble on one little detail &mdash; the system and the back-ticks execute 
+<code>sh</code> commands, and <em>not</em> Bash commands. And there are a 
+<a href="http://www.gnu.org/software/bash/manual/html_node/Major-Differences-From-The-Bourne-Shell.html">lot of differences</a>
+between the two of them.</p>
+
+<p>For example in Bash you have <a href="http://en.wikipedia.org/wiki/Process_substitution">process
+substitution</a> that is very
+handy, yet not available in Sh. Let&rsquo;s write a Ruby script that uses it.</p>
+
+<p>A good use case for process substitution is to check if two directories have
+the same files in them. In the command line we would write such a test like
+this:</p>
+<pre class="highlight shell"><code>cmp &lt;<span class="o">(</span> ls ~/images <span class="o">)</span> &lt;<span class="o">(</span> ls ~/images-backup <span class="o">)</span>
+</code></pre>
+
+<p>Following the above example, a naive Ruby implementation would be:</p>
+<pre class="highlight shell"><code>system <span class="s2">"cmp &lt;( ls ~/images ) &lt;( ls ~/images-backup )"</span>
+
+<span class="k">if</span> <span class="nv">$?</span>.exitstatus <span class="o">==</span> 0
+  puts <span class="s2">"They are the same, yay!"</span>
+<span class="k">else
+  </span>puts <span class="s2">"They are not the same"</span>
+end
+</code></pre>
+
+<p>But this will fail with a weird error that looks similar to this:</p>
+<pre class="highlight shell"><code>sh: 1: Syntax error: <span class="s2">"("</span> unexpected
+</code></pre>
+
+<p>Hopefully, the system command can take multiple arguments and will threat the
+first one as the command and the rest as its arguments. For example we can list
+the <code>/etc</code> directory with:</p>
+<pre class="highlight shell"><code>system <span class="s2">"ls"</span>, <span class="s2">"/etc"</span>
+</code></pre>
+
+<p>If you are familiar with the command line you probably know that you can run
+commands in an alternative shell with:</p>
+<pre class="highlight shell"><code>bash -c <span class="s2">"echo 'running from bash shell!'"</span>
+</code></pre>
+
+<p>Now let&rsquo;s use the above knowledge to compare two directories from a Ruby
+script:</p>
+<pre class="highlight shell"><code>system <span class="s2">"bash"</span>, <span class="s2">"-c"</span>, <span class="s2">"cmp &lt;( ls ~/images ) &lt;( ls ~/images-backup )"</span>
+
+<span class="k">if</span> <span class="nv">$?</span>.exitstatus <span class="o">==</span> 0
+  puts <span class="s2">"They are the same, yay!"</span>
+<span class="k">else
+  </span>puts <span class="s2">"They are not the same"</span>
+end
+</code></pre>
+
+<p>Hooray, this works!</p>
+
+<p>I hope I have given you the incentive to go and explore this technology even
+further. Happy hacking!</p>
+
+  </article>
+
+  <hr>
+
+  <aside class="showcase cf">
+  <div class="image">
+      <img src="/images/sms.png">
+  </div>
+
+  <div class="summary">
+    <p class="next">Read this next</p>
+
+    <h1>Sms compiler service</h1>
+
+    <p>The majority of today’s development is oriented around the web or around desktop/mobile applications. For the average programmer it could even seem like there is no other programming area out there. However, there is actually a huge number of programs...</p>
+    <a href="/sms-compiler-service.html">Continue reading &#8594;</a>
+  </div>
+</aside>
+ 
+
+  <hr>
+
+
+
+    </div>
+
+    <aside class="follow">
+  <img height="50px" src="https://g.twimg.com/Twitter_logo_blue.png">
+  You should 
+  <a href="https://twitter.com/igor_sarcevic">follow me on Twitter.</a>
+</aside>
+
+
+    <hr class="footer">
+    <footer class="footer">
+  Written by <a href="https://twitter.com/igor_sarcevic">Igor Šarčević</a>.
+  Tested and deployed with <a href="https://semaphoreapp.com">Semaphore</a>. 
+</footer>
+
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+           })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-57223799-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+    
+  </body>
+</html>
