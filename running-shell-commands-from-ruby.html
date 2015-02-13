@@ -89,7 +89,7 @@ command:</p>
 install <a href="http://www.vim.org/">Vim</a> on a <a href="http://www.ubuntu.com/">Ubuntu</a>
 machine. We will use the <code>system</code> command instead of the back-ticks, so we can
 <em>join the output</em> of the command with the output of our ruby script.</p>
-<pre class="highlight ruby"><code><span class="nb">system</span> <span class="s2">"sudo apt-get -y intall vim"</span>
+<pre class="highlight ruby"><code><span class="nb">system</span> <span class="s2">"sudo apt-get -y install vim"</span>
 </code></pre>
 
 <p>This should work fine. But not always&hellip;  If your internet connection is
@@ -99,7 +99,7 @@ without our Ruby script knowing anything about it.</p>
 <p>Hopefully, there is an easy solution. The <code>$?</code> global variable always contains
 the status code of the last executed shell command. Let&rsquo;s use to show an error
 message to the user:</p>
-<pre class="highlight ruby"><code><span class="nb">system</span> <span class="s2">"sudo apt-get -y intall vim"</span>
+<pre class="highlight ruby"><code><span class="nb">system</span> <span class="s2">"sudo apt-get -y install vim"</span>
 
 <span class="k">if</span> <span class="vg">$?</span><span class="p">.</span><span class="nf">exitstatus</span> <span class="o">&gt;</span> <span class="mi">0</span>
   <span class="nb">puts</span> <span class="s2">"I failed to install Vim, I am very sorry :'("</span> 
