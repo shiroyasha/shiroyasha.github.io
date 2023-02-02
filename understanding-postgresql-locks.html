@@ -1,0 +1,400 @@
+<!doctype html>
+<html itemscope itemtype="http://schema.org/Article">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
+    <link rel="alternate" type="application/atom+xml" title="Morning Coffee" href="/feed.xml" />
+
+    <link rel="shortcut icon" href="favicon.svg">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+      <title>Understanding PostgreSQL locks &mdash; by Igor Šarčević</title>
+
+    <!-- Place this data between the <head> tags of your website -->
+      <meta name="description" content="Locking is an important topic in any kind of database. Without properly handling
+locks, an application might not only be slow, it might also be wrong and behave
+in some insane ways. Therefore, learning proper locking techniques is essential
+for good performance and correctness of our applications.
+
+" />
+
+      <!-- Schema.org markup for Google+ -->
+      <meta itemprop="name" content="Understanding PostgreSQL locks">
+      <meta itemprop="description" content="Locking is an important topic in any kind of database. Without properly handling
+locks, an application might not only be slow, it might also be wrong and behave
+in some insane ways. Therefore, learning proper locking techniques is essential
+for good performance and correctness of our applications.
+
+">
+      <meta itemprop="image" content="http://morningcoffee.io/images/2017-11-12-understanding-postgresql-locks.png">
+
+      <!-- Twitter Card data -->
+      <meta name="twitter:card" content="summary_large_image">
+      <meta name="twitter:site" content="@igor_sarcevic">
+      <meta name="twitter:title" content="Understanding PostgreSQL locks">
+      <meta name="twitter:description" content="Locking is an important topic in any kind of database. Without properly handling
+locks, an application might not only be slow, it might also be wrong and behave
+in some insane ways. Therefore, learning proper locking techniques is essential
+for good performance and correctness of our applications.
+
+">
+      <meta name="twitter:creator" content="@igor_sarcevic">
+      <!-- Twitter summary card with large image must be at least 280x150px -->
+      <meta name="twitter:image:src" content="http://morningcoffee.io/images/2017-11-12-understanding-postgresql-locks.png">
+
+      <!-- Open Graph data -->
+      <meta property="og:title" content="Understanding PostgreSQL locks" />
+      <meta property="og:type" content="article" />
+      <meta property="og:url" content="http://" />
+      <meta property="og:image" content="http://morningcoffee.io/images/2017-11-12-understanding-postgresql-locks.png" />
+      <meta property="og:description" content="Locking is an important topic in any kind of database. Without properly handling
+locks, an application might not only be slow, it might also be wrong and behave
+in some insane ways. Therefore, learning proper locking techniques is essential
+for good performance and correctness of our applications.
+
+" />
+      <meta property="article:published_time" content="2017-11-12 00:00:00 UTC" />
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Raleway:900&display=swap" rel="stylesheet">
+    <link href="/stylesheets/style.css" rel="stylesheet" />
+  </head>
+  <body>
+
+    <div id="main" role="main">
+      <nav class="navigation" style="padding: 10px;">
+  <div style="display: flex;justify-items: space-between;justify-content: space-between;">
+    <a style="font-size: 20px" href="/" style="color: crimson;">Home</a>
+    <a style="font-size: 20px" href="/about-me.html" style="color: crimson;">About</a>
+  </div>
+</nav>
+
+
+        <article class="article">
+    <div class="header">
+      <h1>Understanding PostgreSQL locks</h1>
+
+      <div class="subtitle">
+        Published on <time>November 12, 2017</time>
+      </div>
+    </div>
+
+    <p>Locking is an important topic in any kind of database. Without properly handling
+locks, an application might not only be slow, it might also be wrong and behave
+in some insane ways. Therefore, learning proper locking techniques is essential
+for good performance and correctness of our applications.</p>
+
+<p></p>
+
+<p><img src="/images/2017-11-12-understanding-postgresql-locks.png" alt="Blind Monks Examining an Elephant" /></p>
+
+<p>Let&rsquo;s explore the types of locks available in PostgreSQL, when they are used,
+and how to explore open locks in the system.</p>
+
+<h2>Setting up a sandbox environment</h2>
+
+<p>I strongly believe that in order to learn something, you need to try it out with
+your own hands. Following that thought, here is an easy way to set up a sandbox
+environment for PostgreSQL testing.</p>
+
+<p>Start by creating a test database a connect to it via <code>psql</code>:</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="nv">$ </span>createdb test-db-001
+
+<span class="nv">$ </span>psql <span class="nt">-d</span> test-db-001
+psql <span class="o">(</span>10.0<span class="o">)</span>
+Type <span class="s2">"help"</span> <span class="k">for </span>help.
+
+test-db-001<span class="o">=</span><span class="c">#</span>
+</code></pre></div>
+<p>In the database, create a <code>users</code> table with several records:</p>
+<div class="highlight"><pre class="highlight sql"><code><span class="n">test</span><span class="o">-</span><span class="n">db</span><span class="o">-</span><span class="mi">001</span><span class="o">=#</span> <span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">users</span> <span class="p">(</span><span class="n">id</span> <span class="n">int</span><span class="p">,</span> <span class="n">username</span> <span class="n">text</span><span class="p">);</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span>
+
+<span class="n">test</span><span class="o">-</span><span class="n">db</span><span class="o">-</span><span class="mi">001</span><span class="o">=#</span> <span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">users</span> <span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">username</span><span class="p">)</span>
+<span class="n">test</span><span class="o">-</span><span class="n">db</span><span class="o">-</span><span class="mi">001</span><span class="o">=#</span> <span class="k">VALUES</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">'igor'</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s1">'bob'</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s1">'john'</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s1">'susan'</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="mi">0</span> <span class="mi">4</span>
+
+<span class="n">test</span><span class="o">-</span><span class="n">db</span><span class="o">-</span><span class="mi">001</span><span class="o">=#</span> <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">users</span><span class="p">;</span>
+ <span class="n">id</span> <span class="o">|</span> <span class="n">username</span>
+<span class="c1">----+----------</span>
+  <span class="mi">1</span> <span class="o">|</span> <span class="n">igor</span>
+  <span class="mi">2</span> <span class="o">|</span> <span class="n">bob</span>
+  <span class="mi">3</span> <span class="o">|</span> <span class="n">john</span>
+  <span class="mi">4</span> <span class="o">|</span> <span class="n">susan</span>
+<span class="p">(</span><span class="mi">4</span> <span class="k">rows</span><span class="p">)</span>
+</code></pre></div>
+<p>I find a user table the best table for doing exercises, as it a relation that
+you will encounter in most most web applications.</p>
+
+<p>Quit the connection to the database:</p>
+<div class="highlight"><pre class="highlight sql"><code><span class="n">test</span><span class="o">-</span><span class="n">db</span><span class="o">-</span><span class="mi">001</span><span class="o">=#</span> <span class="err">\</span><span class="n">q</span>
+</code></pre></div>
+<h2>Test environment for learning about PostgreSQL locks</h2>
+
+<p>We will start two parallel connections to the database, one for starting and
+stopping transactions, and the other one for observing and listing locks that
+are created.</p>
+
+<p>For the sake of simplicity, we will call these two connection Alice and Bob. Bob
+will create transactions and locks, while Alice will be our administrator that
+observes the state of the database.</p>
+
+<p>Open two parallel terminal windows. In the first terminal, start a <code>psql</code>
+session a change the name of the prompt to <code>bob</code>:</p>
+<div class="highlight"><pre class="highlight sql"><code><span class="err">$</span> <span class="n">psql</span> <span class="o">-</span><span class="n">d</span> <span class="n">test</span><span class="o">-</span><span class="n">db</span><span class="o">-</span><span class="mi">001</span>
+<span class="n">psql</span> <span class="p">(</span><span class="mi">10</span><span class="p">.</span><span class="mi">0</span><span class="p">)</span>
+<span class="k">Type</span> <span class="nv">"help"</span> <span class="k">for</span> <span class="n">help</span><span class="p">.</span>
+
+<span class="n">test</span><span class="o">-</span><span class="n">db</span><span class="o">-</span><span class="mi">001</span><span class="o">=#</span> <span class="err">\</span><span class="k">set</span> <span class="n">PROMPT1</span> <span class="s1">'(bob) # '</span>
+<span class="p">(</span><span class="n">bob</span><span class="p">)</span> <span class="o">#</span>
+</code></pre></div>
+<p>In the second terminal window, open a new <code>psql</code> session and name it <code>alice</code>:</p>
+<div class="highlight"><pre class="highlight sql"><code><span class="err">$</span> <span class="n">psql</span> <span class="o">-</span><span class="n">d</span> <span class="n">test</span><span class="o">-</span><span class="n">db</span><span class="o">-</span><span class="mi">001</span>
+<span class="n">psql</span> <span class="p">(</span><span class="mi">10</span><span class="p">.</span><span class="mi">0</span><span class="p">)</span>
+<span class="k">Type</span> <span class="nv">"help"</span> <span class="k">for</span> <span class="n">help</span><span class="p">.</span>
+
+<span class="n">test</span><span class="o">-</span><span class="n">db</span><span class="o">-</span><span class="mi">001</span><span class="o">=#</span> <span class="err">\</span><span class="k">set</span> <span class="n">PROMPT1</span> <span class="s1">'(alice) # '</span>
+<span class="p">(</span><span class="n">alice</span><span class="p">)</span> <span class="o">#</span>
+</code></pre></div>
+<p>Everything is set up. We are ready to explore.</p>
+
+<h2>Exploring the pg_locks view</h2>
+
+<p>The <code>pg_locks</code> view provides access to information about the locks held by open
+transactions within the database server.</p>
+
+<p>Alice, our administrator, will start by describing the <code>pg_locks</code> view and
+listing the available columns.</p>
+<div class="highlight"><pre class="highlight sql"><code><span class="p">(</span><span class="n">alice</span><span class="p">)</span> <span class="o">#</span> <span class="err">\</span><span class="n">d</span> <span class="n">pg_locks</span><span class="p">;</span>
+                   <span class="k">View</span> <span class="nv">"pg_catalog.pg_locks"</span>
+       <span class="k">Column</span>       <span class="o">|</span>   <span class="k">Type</span>   <span class="o">|</span> <span class="k">Collation</span> <span class="o">|</span> <span class="k">Nullable</span> <span class="o">|</span> <span class="k">Default</span>
+<span class="c1">--------------------+----------+-----------+----------+---------</span>
+ <span class="n">locktype</span>           <span class="o">|</span> <span class="n">text</span>     <span class="o">|</span>           <span class="o">|</span>          <span class="o">|</span>
+ <span class="k">database</span>           <span class="o">|</span> <span class="n">oid</span>      <span class="o">|</span>           <span class="o">|</span>          <span class="o">|</span>
+ <span class="n">relation</span>           <span class="o">|</span> <span class="n">oid</span>      <span class="o">|</span>           <span class="o">|</span>          <span class="o">|</span>
+ <span class="n">page</span>               <span class="o">|</span> <span class="n">integer</span>  <span class="o">|</span>           <span class="o">|</span>          <span class="o">|</span>
+ <span class="n">tuple</span>              <span class="o">|</span> <span class="n">smallint</span> <span class="o">|</span>           <span class="o">|</span>          <span class="o">|</span>
+ <span class="n">virtualxid</span>         <span class="o">|</span> <span class="n">text</span>     <span class="o">|</span>           <span class="o">|</span>          <span class="o">|</span>
+ <span class="n">transactionid</span>      <span class="o">|</span> <span class="n">xid</span>      <span class="o">|</span>           <span class="o">|</span>          <span class="o">|</span>
+ <span class="n">classid</span>            <span class="o">|</span> <span class="n">oid</span>      <span class="o">|</span>           <span class="o">|</span>          <span class="o">|</span>
+ <span class="n">objid</span>              <span class="o">|</span> <span class="n">oid</span>      <span class="o">|</span>           <span class="o">|</span>          <span class="o">|</span>
+ <span class="n">objsubid</span>           <span class="o">|</span> <span class="n">smallint</span> <span class="o">|</span>           <span class="o">|</span>          <span class="o">|</span>
+ <span class="n">virtualtransaction</span> <span class="o">|</span> <span class="n">text</span>     <span class="o">|</span>           <span class="o">|</span>          <span class="o">|</span>
+ <span class="n">pid</span>                <span class="o">|</span> <span class="n">integer</span>  <span class="o">|</span>           <span class="o">|</span>          <span class="o">|</span>
+ <span class="k">mode</span>               <span class="o">|</span> <span class="n">text</span>     <span class="o">|</span>           <span class="o">|</span>          <span class="o">|</span>
+ <span class="k">granted</span>            <span class="o">|</span> <span class="n">boolean</span>  <span class="o">|</span>           <span class="o">|</span>          <span class="o">|</span>
+ <span class="n">fastpath</span>           <span class="o">|</span> <span class="n">boolean</span>  <span class="o">|</span>           <span class="o">|</span>          <span class="o">|</span>
+</code></pre></div>
+<p>Let&rsquo;s look into open locks in the database with the <code>select</code> command:</p>
+<div class="highlight"><pre class="highlight sql"><code><span class="p">(</span><span class="n">alice</span><span class="p">)</span> <span class="o">#</span> <span class="k">SELECT</span> <span class="n">locktype</span><span class="p">,</span> <span class="n">relation</span><span class="p">,</span> <span class="k">mode</span><span class="p">,</span> <span class="n">pid</span> <span class="k">FROM</span> <span class="n">pg_locks</span><span class="p">;</span>
+
+  <span class="n">locktype</span>  <span class="o">|</span> <span class="n">relation</span> <span class="o">|</span>      <span class="k">mode</span>       <span class="o">|</span>  <span class="n">pid</span>
+<span class="c1">------------+----------+-----------------+-------</span>
+ <span class="n">relation</span>   <span class="o">|</span>    <span class="mi">11577</span> <span class="o">|</span> <span class="n">AccessShareLock</span> <span class="o">|</span> <span class="mi">16524</span>
+ <span class="n">virtualxid</span> <span class="o">|</span>          <span class="o">|</span> <span class="n">ExclusiveLock</span>   <span class="o">|</span> <span class="mi">16524</span>
+
+<span class="p">(</span><span class="mi">2</span> <span class="k">rows</span><span class="p">)</span>
+</code></pre></div>
+<p>The <code>11577</code> relation is not descriptive enough. We will use <code>::regclass</code> to cast
+the number to the name of the relation:</p>
+<div class="highlight"><pre class="highlight sql"><code><span class="p">(</span><span class="n">alice</span><span class="p">)</span> <span class="o">#</span> <span class="k">SELECT</span> <span class="n">locktype</span><span class="p">,</span> <span class="n">relation</span><span class="p">::</span><span class="n">regclass</span><span class="p">,</span> <span class="k">mode</span><span class="p">,</span> <span class="n">pid</span> <span class="k">FROM</span> <span class="n">pg_locks</span><span class="p">;</span>
+
+  <span class="n">locktype</span>  <span class="o">|</span> <span class="n">relation</span> <span class="o">|</span>      <span class="k">mode</span>       <span class="o">|</span>  <span class="n">pid</span>
+<span class="c1">------------+----------+-----------------+-------</span>
+ <span class="n">relation</span>   <span class="o">|</span> <span class="n">pg_locks</span> <span class="o">|</span> <span class="n">AccessShareLock</span> <span class="o">|</span> <span class="mi">16524</span>
+ <span class="n">virtualxid</span> <span class="o">|</span>          <span class="o">|</span> <span class="n">ExclusiveLock</span>   <span class="o">|</span> <span class="mi">16524</span>
+
+<span class="p">(</span><span class="mi">2</span> <span class="k">rows</span><span class="p">)</span>
+</code></pre></div>
+<p>This is clearer. The open lock in the database is the result of the <code>select</code>
+statement that lists the locks. Let&rsquo;s filter that lock out of the resulting
+list:</p>
+<div class="highlight"><pre class="highlight sql"><code><span class="p">(</span><span class="n">alice</span><span class="p">)</span> <span class="o">#</span> <span class="k">SELECT</span> <span class="n">locktype</span><span class="p">,</span> <span class="n">relation</span><span class="p">::</span><span class="n">regclass</span><span class="p">,</span> <span class="k">mode</span><span class="p">,</span> <span class="n">pid</span>
+<span class="p">(</span><span class="n">alice</span><span class="p">)</span> <span class="o">#</span> <span class="k">FROM</span> <span class="n">pg_locks</span> <span class="k">WHERE</span> <span class="n">pid</span> <span class="o">!=</span> <span class="n">pg_backend_pid</span><span class="p">();</span>
+
+ <span class="n">locktype</span> <span class="o">|</span> <span class="n">relation</span> <span class="o">|</span> <span class="k">mode</span> <span class="o">|</span> <span class="n">pid</span>
+<span class="c1">----------+----------+------+-----</span>
+<span class="p">(</span><span class="mi">0</span> <span class="k">rows</span><span class="p">)</span>
+
+<span class="p">(</span><span class="n">alice</span><span class="p">)</span> <span class="o">#</span>
+</code></pre></div>
+<p>We used the <code>pg_backend_pid()</code> to filter out all locks that are created from
+Alice&rsquo;s session. With that change, we can see that there are no open locks in
+the database.</p>
+
+<h2>Exploring lock modes</h2>
+
+<p>Bob, our user, steps in to the game. He will open some transactions to help us
+to learn about the various lock modes.</p>
+
+<p>Bob will now open a transaction with <code>BEGIN</code>, and select all users. However, he
+will not close the transaction. This will help Alice to look into the lock that
+is implicitly created with Bob&rsquo;s <code>SELECT</code> statement.</p>
+<div class="highlight"><pre class="highlight sql"><code><span class="p">(</span><span class="n">bob</span><span class="p">)</span> <span class="o">#</span> <span class="k">BEGIN</span><span class="p">;</span>
+<span class="p">(</span><span class="n">bob</span><span class="p">)</span> <span class="o">#</span> <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">users</span><span class="p">;</span>
+</code></pre></div>
+<p>Alice now sweeps in and lists the locks:</p>
+<div class="highlight"><pre class="highlight sql"><code><span class="p">(</span><span class="n">alice</span><span class="p">)</span> <span class="o">#</span> <span class="k">select</span> <span class="n">locktype</span><span class="p">,</span> <span class="n">relation</span><span class="p">::</span><span class="n">regclass</span><span class="p">,</span> <span class="k">mode</span>
+<span class="p">(</span><span class="n">alice</span><span class="p">)</span> <span class="o">#</span> <span class="k">FROM</span> <span class="n">pg_locks</span> <span class="k">WHERE</span> <span class="n">pid</span> <span class="o">!=</span> <span class="n">pg_backend_pid</span><span class="p">();</span>
+
+  <span class="n">locktype</span>  <span class="o">|</span> <span class="n">relation</span> <span class="o">|</span>      <span class="k">mode</span>
+<span class="c1">------------+----------+-----------------</span>
+ <span class="n">relation</span>   <span class="o">|</span> <span class="n">users</span>    <span class="o">|</span> <span class="n">AccessShareLock</span>
+ <span class="n">virtualxid</span> <span class="o">|</span>          <span class="o">|</span> <span class="n">ExclusiveLock</span>
+
+<span class="p">(</span><span class="mi">2</span> <span class="k">rows</span><span class="p">)</span>
+</code></pre></div>
+<p>The <code>SELECT</code> statement creates a <em>AccessShareLock</em>. This is type of lock that is
+generally created by queries that <em>read</em> a table but do not <em>modify</em> it.</p>
+
+<p>The <em>AccessShareLock</em> conflicts with the <em>AccessExclusiveLock</em>. That means that
+if another transactions puts a <em>AccessExclusiveLock</em> lock on the table, select
+statements will not work.</p>
+
+<p>Bob will now end the open transaction, releasing the lock, and he will try to
+acquire a <em>AccessExclusiveLock</em> for the user table. Adding a new column to the
+table does just that, it locks up the table with exclusive access.</p>
+<div class="highlight"><pre class="highlight sql"><code><span class="p">(</span><span class="n">bob</span><span class="p">)</span> <span class="o">#</span> <span class="k">END</span><span class="p">;</span>
+
+<span class="p">(</span><span class="n">bob</span><span class="p">)</span> <span class="o">#</span> <span class="k">BEGIN</span><span class="p">;</span>
+<span class="p">(</span><span class="n">bob</span><span class="p">)</span> <span class="o">#</span> <span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">users</span> <span class="k">ADD</span> <span class="n">age</span> <span class="n">int</span><span class="p">;</span>
+</code></pre></div><div class="highlight"><pre class="highlight sql"><code><span class="p">(</span><span class="n">alice</span><span class="p">)</span> <span class="o">#</span> <span class="k">SELECT</span> <span class="n">locktype</span><span class="p">,</span> <span class="n">relation</span><span class="p">::</span><span class="n">regclass</span><span class="p">,</span> <span class="k">mode</span><span class="p">,</span> <span class="n">pid</span>
+<span class="p">(</span><span class="n">alice</span><span class="p">)</span> <span class="o">#</span> <span class="k">FROM</span> <span class="n">pg_locks</span> <span class="k">WHERE</span> <span class="n">pid</span> <span class="o">!=</span> <span class="n">pg_backend_pid</span><span class="p">();</span>
+
+   <span class="n">locktype</span>    <span class="o">|</span> <span class="n">relation</span> <span class="o">|</span>        <span class="k">mode</span>         <span class="o">|</span>  <span class="n">pid</span>
+<span class="c1">---------------+----------+---------------------+-------</span>
+ <span class="n">virtualxid</span>    <span class="o">|</span>          <span class="o">|</span> <span class="n">ExclusiveLock</span>       <span class="o">|</span> <span class="mi">16537</span>
+ <span class="n">transactionid</span> <span class="o">|</span>          <span class="o">|</span> <span class="n">ExclusiveLock</span>       <span class="o">|</span> <span class="mi">16537</span>
+ <span class="n">relation</span>      <span class="o">|</span> <span class="n">users</span>    <span class="o">|</span> <span class="n">AccessExclusiveLock</span> <span class="o">|</span> <span class="mi">16537</span>
+<span class="p">(</span><span class="mi">3</span> <span class="k">rows</span><span class="p">)</span>
+
+<span class="p">(</span><span class="n">alice</span><span class="p">)</span> <span class="o">#</span>
+</code></pre></div>
+<p>What happens if Alice tries to list the content of the <code>users</code> table at this
+moment?</p>
+<div class="highlight"><pre class="highlight sql"><code><span class="p">(</span><span class="n">alice</span><span class="p">)</span> <span class="o">#</span> <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">users</span><span class="p">;</span>
+</code></pre></div>
+<p>The command never finishes. It waits for Bob&rsquo;s <em>AccessExclusiveLock</em> to be
+released. We can hit <code>CTRL+C</code> to cancel the select statement:</p>
+<div class="highlight"><pre class="highlight sql"><code><span class="p">(</span><span class="n">alice</span><span class="p">)</span> <span class="o">#</span> <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">users</span><span class="p">;</span>
+<span class="o">^</span><span class="n">CCancel</span> <span class="n">request</span> <span class="n">sent</span>
+<span class="n">ERROR</span><span class="p">:</span>  <span class="n">canceling</span> <span class="k">statement</span> <span class="n">due</span> <span class="k">to</span> <span class="k">user</span> <span class="n">request</span>
+</code></pre></div>
+<p>Let&rsquo;s also stop Bob&rsquo;s <code>ALTER TABLE</code> statement:</p>
+<div class="highlight"><pre class="highlight sql"><code><span class="p">(</span><span class="n">bob</span><span class="p">)</span> <span class="o">#</span> <span class="k">ROLLBACK</span><span class="p">;</span>
+</code></pre></div>
+<h2>Lock Modes in PostgreSQL</h2>
+
+<p>We have learned about two locks modes so far. The <code>AccessShareLock</code> that is
+created for read queries like the <code>select</code> statements, and <code>AccessExclusiveLock</code>
+that is created for operations that modify the whole table.</p>
+
+<p>There are several more lock modes in PostgreSQL.</p>
+
+<p><strong>ACCESS SHARE</strong> — Acquired by queries that only read from a table but do not
+modify it. Typically, this is a <em>select</em> query.</p>
+
+<p><strong>ROW SHARE</strong> — Acquired by the <em>SELECT FOR UPDATE</em> and <em>SELECT FOR SHARE</em> queries.</p>
+
+<p><strong>ROW EXCLUSIVE</strong> — Acquired by queries that modify the data in a table.
+Typically, <em>update</em>, <em>delete</em>, and <em>insert</em> queries.</p>
+
+<p><strong>SHARE UPDATE EXCLUSIVE</strong> — Acquired by <em>vacuum</em>, concurrent indexes, statistics,
+and some variants of the <em>alter table</em> commands.  This mode protects a table
+against concurrent schema changes and <em>vacuum</em> runs.</p>
+
+<p><strong>SHARE</strong> — Acquired by <em>create index</em> that is not executed in concurrent mode.
+This mode protects a table against concurrent data changes.</p>
+
+<p><strong>SHARE ROW EXCLUSIVE</strong> — This mode protects a table against concurrent data
+changes, and is self-exclusive so that only one session can hold it at a time.
+Acquired by <em>create collation</em>, <em>create trigger</em>, and many forms of <em>alter table</em>.</p>
+
+<p><strong>EXCLUSIVE</strong> — This mode allows only concurrent ACCESS SHARE locks, i.e., only
+reads from the table can proceed in parallel with a transaction holding this
+lock mode.</p>
+
+<p><strong>ACCESS EXCLUSIVE</strong> — This mode guarantees that the holder is the only
+transaction accessing the table in any way. Acquired by <em>DROP TABLE</em>, <em>ALTER
+TABLE</em>, <em>VACUUM FULl</em> commands.</p>
+
+<h2>Explicit locking</h2>
+
+<p>In the previous sections, we have learned that all of the typical SQL commands
+acquire some sort of lock implicitly. We can also acquire locks explicitly with
+the <code>WITH LOCK</code> statement.</p>
+
+<p>Let&rsquo;s observe Bob as he acquires an explicit lock.</p>
+<div class="highlight"><pre class="highlight sql"><code><span class="p">(</span><span class="n">bob</span><span class="p">)</span> <span class="o">#</span> <span class="k">begin</span><span class="p">;</span>
+<span class="p">(</span><span class="n">bob</span><span class="p">)</span> <span class="o">#</span> <span class="k">LOCK</span> <span class="k">TABLE</span> <span class="n">users</span><span class="p">;</span>
+</code></pre></div>
+<p>When Alice lists open locks we will see that an <em>AccessExclusiveLock</em> lock was
+acquired for the users table. This is the default for the <code>LOCK TABLE</code>
+statement.</p>
+<div class="highlight"><pre class="highlight sql"><code><span class="p">(</span><span class="n">alice</span><span class="p">)</span> <span class="o">#</span> <span class="k">SELECT</span> <span class="n">locktype</span><span class="p">,</span> <span class="n">relation</span><span class="p">::</span><span class="n">regclass</span><span class="p">,</span> <span class="k">mode</span><span class="p">,</span> <span class="n">pid</span>
+<span class="p">(</span><span class="n">alice</span><span class="p">)</span> <span class="o">#</span> <span class="k">FROM</span> <span class="n">pg_locks</span> <span class="k">WHERE</span> <span class="n">pid</span> <span class="o">!=</span> <span class="n">pg_backend_pid</span><span class="p">();</span>
+
+   <span class="n">locktype</span>    <span class="o">|</span> <span class="n">relation</span> <span class="o">|</span>        <span class="k">mode</span>         <span class="o">|</span>  <span class="n">pid</span>
+<span class="c1">---------------+----------+---------------------+-------</span>
+ <span class="n">virtualxid</span>    <span class="o">|</span>          <span class="o">|</span> <span class="n">ExclusiveLock</span>       <span class="o">|</span> <span class="mi">22546</span>
+ <span class="n">relation</span>      <span class="o">|</span> <span class="n">users</span>    <span class="o">|</span> <span class="n">AccessExclusiveLock</span> <span class="o">|</span> <span class="mi">22546</span>
+ <span class="n">transactionid</span> <span class="o">|</span>          <span class="o">|</span> <span class="n">ExclusiveLock</span>       <span class="o">|</span> <span class="mi">22546</span>
+<span class="p">(</span><span class="mi">3</span> <span class="k">rows</span><span class="p">)</span>
+</code></pre></div>
+<p>Bob can acquire any lock mode with the <code>WITH LOCK</code> statement. For example, to
+acquire with a <em>Share Update Exclusive</em> mode he would enter:</p>
+<div class="highlight"><pre class="highlight sql"><code><span class="p">(</span><span class="n">bob</span><span class="p">)</span> <span class="o">#</span> <span class="k">LOCK</span> <span class="k">TABLE</span> <span class="n">users</span> <span class="k">IN</span> <span class="k">SHARE</span> <span class="k">UPDATE</span> <span class="k">EXCLUSIVE</span> <span class="k">MODE</span><span class="p">;</span>
+</code></pre></div>
+<p>The locks are granted until the transaction ends.</p>
+
+<p><em>Did you like this article? Or, do you maybe have a helpful hint to share?
+Please leave it in the comment section bellow.</em></p>
+
+
+
+  </article>
+
+
+      <div class="footer">
+  <div class="content">
+    <p>
+      <strong>❈</strong><br>
+      <br>
+
+      Follow me on <a href="https://twitter.com/igor_sarcevic">Twitter</a> and <a href="https://rs.linkedin.com/in/igorsarcevic">LinkedIn</a>.<br>
+      Copyright ©2014-2023 Igor Šarčević. All rights reserved.</br>
+      <br>
+      Enjoy the rest of your day!
+    </p>
+  </div>
+<div>
+
+    </div>
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+           })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-57223799-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+
+    <script>
+      /**
+      * Function that tracks a click on an outbound link in Analytics.
+      * This function takes a valid URL string as an argument, and uses that URL string
+      * as the event label. Setting the transport method to 'beacon' lets the hit be sent
+      * using 'navigator.sendBeacon' in browser that support it.
+      */
+      var trackOutboundLink = function(url) {
+        ga('send', 'event', 'outbound', 'click', url, {
+          'transport': 'beacon',
+          'hitCallback': function(){document.location = url;}
+        });
+      }
+    </script>
+
+  </body>
+</html>

@@ -1,0 +1,265 @@
+<!doctype html>
+<html itemscope itemtype="http://schema.org/Article">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
+    <link rel="alternate" type="application/atom+xml" title="Morning Coffee" href="/feed.xml" />
+
+    <link rel="shortcut icon" href="favicon.svg">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+      <title>Arithmetic in the Shell &mdash; by Igor Šarčević</title>
+
+    <!-- Place this data between the <head> tags of your website -->
+      <meta name="description" content="I remember the first time I tried to use the shell.
+It was weird that I had to type in things and not just
+click around to get things done. But gradually I got
+used to it, and after a while it became my primary way
+to interact with my computer.
+
+" />
+
+      <!-- Schema.org markup for Google+ -->
+      <meta itemprop="name" content="Arithmetic in the Shell">
+      <meta itemprop="description" content="I remember the first time I tried to use the shell.
+It was weird that I had to type in things and not just
+click around to get things done. But gradually I got
+used to it, and after a while it became my primary way
+to interact with my computer.
+
+">
+      <meta itemprop="image" content="http://morningcoffee.io/images/arithmetic.png">
+
+      <!-- Twitter Card data -->
+      <meta name="twitter:card" content="summary_large_image">
+      <meta name="twitter:site" content="@igor_sarcevic">
+      <meta name="twitter:title" content="Arithmetic in the Shell">
+      <meta name="twitter:description" content="I remember the first time I tried to use the shell.
+It was weird that I had to type in things and not just
+click around to get things done. But gradually I got
+used to it, and after a while it became my primary way
+to interact with my computer.
+
+">
+      <meta name="twitter:creator" content="@igor_sarcevic">
+      <!-- Twitter summary card with large image must be at least 280x150px -->
+      <meta name="twitter:image:src" content="http://morningcoffee.io/images/arithmetic.png">
+
+      <!-- Open Graph data -->
+      <meta property="og:title" content="Arithmetic in the Shell" />
+      <meta property="og:type" content="article" />
+      <meta property="og:url" content="http://" />
+      <meta property="og:image" content="http://morningcoffee.io/images/arithmetic.png" />
+      <meta property="og:description" content="I remember the first time I tried to use the shell.
+It was weird that I had to type in things and not just
+click around to get things done. But gradually I got
+used to it, and after a while it became my primary way
+to interact with my computer.
+
+" />
+      <meta property="article:published_time" content="2015-03-05 00:00:00 UTC" />
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Raleway:900&display=swap" rel="stylesheet">
+    <link href="/stylesheets/style.css" rel="stylesheet" />
+  </head>
+  <body>
+
+    <div id="main" role="main">
+      <nav class="navigation" style="padding: 10px;">
+  <div style="display: flex;justify-items: space-between;justify-content: space-between;">
+    <a style="font-size: 20px" href="/" style="color: crimson;">Home</a>
+    <a style="font-size: 20px" href="/about-me.html" style="color: crimson;">About</a>
+  </div>
+</nav>
+
+
+        <article class="article">
+    <div class="header">
+      <h1>Arithmetic in the Shell</h1>
+
+      <div class="subtitle">
+        Published on <time>March  5, 2015</time>
+      </div>
+    </div>
+
+    <p>I remember the first time I tried to use the shell.
+It was weird that I had to type in things and not just
+click around to get things done. But gradually I got
+used to it, and after a while it became my primary way
+to interact with my computer.</p>
+
+<p></p>
+
+<p>It didn&rsquo;t pass much time till I figured out that the
+commands that I am typing in are actually part of a
+programming language named Bash. That of course changed
+everything! Starting from that moment I could combine
+the thing I love ( programming ) with the boring chore
+of keeping my system in a sane condition. That moment
+a new kind of passion for computers was born in my hearth.</p>
+
+<p>But wait! If Bash is a programming language it must be
+able to count and do basic arithmetic. This article is
+precisely about that &mdash; calculations in the shell.</p>
+
+<h2>Expr</h2>
+
+<p>This task is actually really simple, but there are as always
+in Unix, several ways to do it. The oldest method is to use
+<code>expr</code> to evaluate expressions. For example to add 2 and 4
+we can write the following:</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="nv">$ </span>expr 2 + 4
+6
+</code></pre></div>
+<p>This seems really easy, but there is a catch. If you try to
+multiply numbers using <code>*</code> Bash will throw you back an error:</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="nv">$ </span>expr 2 <span class="k">*</span> 4
+expr: syntax error
+</code></pre></div>
+<p>In this case Bash sees <code>*</code> as wildcard operator so you must
+use a backslash before the asterisk sign:</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="nv">$ </span>expr 2 <span class="se">\*</span> 4
+8
+</code></pre></div>
+<p>At this point you will probably try to surround the expression
+with quotes, but that will also fail:</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="nv">$ </span>expr <span class="s2">"2 * 4"</span>
+2 <span class="k">*</span> 4
+
+<span class="nv">$ </span>expr <span class="s1">'2 * 4'</span>
+2 <span class="k">*</span> 4
+</code></pre></div>
+<p>Apart from this little annoyance, <code>expr</code> is quite powerful. It can
+even do boolean arithmetic:</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="nv">$ </span>expr 2 <span class="se">\&lt;</span> 4
+1
+
+<span class="nv">$ </span>expr 4 <span class="se">\&lt;</span> 2
+0
+</code></pre></div>
+<h2>Arithmetic expansion</h2>
+
+<p>There exists a better alternative for <code>expr</code> but is unfortunately
+not available in the original Bourne Shell only in the POSIX
+compliant one &mdash; arithmetic expansion.</p>
+
+<p>It can also, like <code>expr</code>, take an arithmetic expression, but
+instead of printing out the result, it will substitute itself with the
+resulting value.  To print out the result we must use <code>echo</code> or <code>print</code>. For
+example to multiply 2 and 4 we can write the following:</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="nv">$ </span><span class="nb">echo</span> <span class="k">$((</span> <span class="m">4</span> <span class="o">*</span> <span class="m">2</span> <span class="k">))</span>
+8
+</code></pre></div>
+<p>Without an <code>echo</code> this command would fail with:</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="nv">$ </span><span class="k">$((</span> <span class="m">4</span> <span class="o">*</span> <span class="m">2</span> <span class="k">))</span>
+sh: 1: 8: not found
+</code></pre></div>
+<p>As you can see in the above example, Bash tried to execute the result
+of the expression as a standard command.</p>
+
+<p>Note: There is an older variant of arithmetic expansion that uses the
+following less verbose form <code>$[ 1 + 4 ]</code> but is now deprecated.</p>
+
+<h2>Euclid&rsquo;s Algorithm in the Shell</h2>
+
+<p>Now let&rsquo;s do something more challenging and try to implement Euclid&rsquo;s
+greatest common divisor algorithm in a shell script.</p>
+
+<p>Note: This part will be a little bit advanced and will require you to
+be familiar with other common things in Bash like loops and variables.</p>
+
+<p>Let&rsquo;s start by creating a shell script and giving it executable
+permissions:</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="nv">$ </span>touch gcd.sh
+<span class="nv">$ </span>chmod +x gcd.sh
+</code></pre></div>
+<p>My goal is to invoke my script with two command line arguments and
+expect it to print out the greatest common divisor like this:</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="nv">$ </span>./gcd.sh 14 4
+2
+</code></pre></div>
+<p>To achieve this we will first need to capture the two incoming numbers
+with <code>$1</code> and <code>$2</code>:</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="c">#!/bin/sh</span>
+
+<span class="nv">a</span><span class="o">=</span><span class="nv">$1</span>
+<span class="nv">b</span><span class="o">=</span><span class="nv">$2</span>
+</code></pre></div>
+<p>The remainder of the script is the basic implementation of the Euclid&rsquo;s
+algorithm that I presume every programmer recognizes:</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="c">#!/bin/sh</span>
+
+<span class="nv">a</span><span class="o">=</span><span class="nv">$1</span>
+<span class="nv">b</span><span class="o">=</span><span class="nv">$2</span>
+
+<span class="k">while</span> <span class="o">[</span> <span class="nv">$b</span> <span class="nt">-ne</span> 0 <span class="o">]</span><span class="p">;</span> <span class="k">do
+  </span><span class="nv">remainder</span><span class="o">=</span><span class="k">$((</span> <span class="nv">$a</span> <span class="o">%</span> <span class="nv">$b</span> <span class="k">))</span>
+  <span class="nv">a</span><span class="o">=</span><span class="nv">$b</span>
+  <span class="nv">b</span><span class="o">=</span><span class="nv">$remainder</span>
+<span class="k">done
+
+</span><span class="nb">echo</span> <span class="nv">$a</span>
+</code></pre></div>
+<p>Note: Shame on you if you don&rsquo;t recognize the following algorithm,
+go and Google it. This is probably the most basic algorithm out there.
+Also, sorry for the harsh words :3</p>
+
+<h2>Final words</h2>
+
+<p>I hope you enjoyed this article and also that I have shown you
+something new and exciting.</p>
+
+<p>Stay awesome!</p>
+
+<p>By the way, I started using drawing tablet instead of the old
+paper + photo + gimp approach. I hope you like this new art style.</p>
+
+
+
+  </article>
+
+
+      <div class="footer">
+  <div class="content">
+    <p>
+      <strong>❈</strong><br>
+      <br>
+
+      Follow me on <a href="https://twitter.com/igor_sarcevic">Twitter</a> and <a href="https://rs.linkedin.com/in/igorsarcevic">LinkedIn</a>.<br>
+      Copyright ©2014-2023 Igor Šarčević. All rights reserved.</br>
+      <br>
+      Enjoy the rest of your day!
+    </p>
+  </div>
+<div>
+
+    </div>
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+           })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-57223799-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+
+    <script>
+      /**
+      * Function that tracks a click on an outbound link in Analytics.
+      * This function takes a valid URL string as an argument, and uses that URL string
+      * as the event label. Setting the transport method to 'beacon' lets the hit be sent
+      * using 'navigator.sendBeacon' in browser that support it.
+      */
+      var trackOutboundLink = function(url) {
+        ga('send', 'event', 'outbound', 'click', url, {
+          'transport': 'beacon',
+          'hitCallback': function(){document.location = url;}
+        });
+      }
+    </script>
+
+  </body>
+</html>

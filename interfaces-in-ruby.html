@@ -1,0 +1,375 @@
+<!doctype html>
+<html itemscope itemtype="http://schema.org/Article">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
+    <link rel="alternate" type="application/atom+xml" title="Morning Coffee" href="/feed.xml" />
+
+    <link rel="shortcut icon" href="favicon.svg">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+      <title>The Power of Interfaces in Ruby &mdash; by Igor Šarčević</title>
+
+    <!-- Place this data between the <head> tags of your website -->
+      <meta name="description" content="Ruby is not the fastest language, nor is it the simplest language, but damn it,
+it is definitely one of the most fun languages out there. For someone like me,
+who enjoys programming maybe a bit too much, a language that puts little or no
+limitations on the things I can tweak feels very natural and an obvious choice
+when it comes to solving complex issues.
+
+" />
+
+      <!-- Schema.org markup for Google+ -->
+      <meta itemprop="name" content="The Power of Interfaces in Ruby">
+      <meta itemprop="description" content="Ruby is not the fastest language, nor is it the simplest language, but damn it,
+it is definitely one of the most fun languages out there. For someone like me,
+who enjoys programming maybe a bit too much, a language that puts little or no
+limitations on the things I can tweak feels very natural and an obvious choice
+when it comes to solving complex issues.
+
+">
+      <meta itemprop="image" content="http://morningcoffee.io/images/interfaces-in-ruby.png">
+
+      <!-- Twitter Card data -->
+      <meta name="twitter:card" content="summary_large_image">
+      <meta name="twitter:site" content="@igor_sarcevic">
+      <meta name="twitter:title" content="The Power of Interfaces in Ruby">
+      <meta name="twitter:description" content="Ruby is not the fastest language, nor is it the simplest language, but damn it,
+it is definitely one of the most fun languages out there. For someone like me,
+who enjoys programming maybe a bit too much, a language that puts little or no
+limitations on the things I can tweak feels very natural and an obvious choice
+when it comes to solving complex issues.
+
+">
+      <meta name="twitter:creator" content="@igor_sarcevic">
+      <!-- Twitter summary card with large image must be at least 280x150px -->
+      <meta name="twitter:image:src" content="http://morningcoffee.io/images/interfaces-in-ruby.png">
+
+      <!-- Open Graph data -->
+      <meta property="og:title" content="The Power of Interfaces in Ruby" />
+      <meta property="og:type" content="article" />
+      <meta property="og:url" content="http://" />
+      <meta property="og:image" content="http://morningcoffee.io/images/interfaces-in-ruby.png" />
+      <meta property="og:description" content="Ruby is not the fastest language, nor is it the simplest language, but damn it,
+it is definitely one of the most fun languages out there. For someone like me,
+who enjoys programming maybe a bit too much, a language that puts little or no
+limitations on the things I can tweak feels very natural and an obvious choice
+when it comes to solving complex issues.
+
+" />
+      <meta property="article:published_time" content="2017-01-14 00:00:00 UTC" />
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Raleway:900&display=swap" rel="stylesheet">
+    <link href="/stylesheets/style.css" rel="stylesheet" />
+  </head>
+  <body>
+
+    <div id="main" role="main">
+      <nav class="navigation" style="padding: 10px;">
+  <div style="display: flex;justify-items: space-between;justify-content: space-between;">
+    <a style="font-size: 20px" href="/" style="color: crimson;">Home</a>
+    <a style="font-size: 20px" href="/about-me.html" style="color: crimson;">About</a>
+  </div>
+</nav>
+
+
+        <article class="article">
+    <div class="header">
+      <h1>The Power of Interfaces in Ruby</h1>
+
+      <div class="subtitle">
+        Published on <time>January 14, 2017</time>
+      </div>
+    </div>
+
+    <p>Ruby is not the fastest language, nor is it the simplest language, but damn it,
+it is definitely one of the most fun languages out there. For someone like me,
+who enjoys programming maybe a bit too much, a language that puts little or no
+limitations on the things I can tweak feels very natural and an obvious choice
+when it comes to solving complex issues.</p>
+
+<p></p>
+
+<p>While I really do love the Ruby language, sometimes I find myself missing
+features that are available elsewhere. For example, lightweight threads like in
+Go, or easy access to memory like in C.</p>
+
+<p>Lately, I started missing <em>interfaces</em> from Java.</p>
+
+<h2>Interfaces</h2>
+
+<p>I was never a big fan of Java, the syntax is a bit too verbose for my taste.
+However, I always found the concept of interfaces interesting. I think that they
+are an excellent tool to communicate intent and to set up constraints on the
+objects that implement them.</p>
+
+<p>For example, in Java, if I want to say that an object can be transformed to and
+from CSV (comma separated values) I could simply declare a CSV interface.</p>
+<div class="highlight"><pre class="highlight java"><code><span class="kd">interface</span> <span class="nc">CSV</span> <span class="o">{</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">fromCSV</span><span class="o">(</span><span class="n">String</span> <span class="n">line</span><span class="o">);</span>
+  <span class="kd">public</span> <span class="n">String</span> <span class="nf">toCSV</span><span class="o">();</span>
+<span class="o">}</span>
+</code></pre></div>
+<p>Now, I can be sure that every object that implements that interface can be
+transformed to and from a CSV file. Here are two examples:</p>
+<div class="highlight"><pre class="highlight java"><code><span class="kd">class</span> <span class="nc">User</span> <span class="kd">implements</span> <span class="n">CSV</span> <span class="o">{</span>
+  <span class="kd">public</span> <span class="n">String</span> <span class="nf">toCSV</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">+</span> <span class="s">","</span> <span class="o">+</span> <span class="k">this</span><span class="o">.</span><span class="na">age</span> <span class="o">+</span> <span class="s">","</span> <span class="o">+</span> <span class="k">this</span><span class="o">.</span><span class="na">password</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">fromCSV</span><span class="o">(</span><span class="n">String</span> <span class="n">csvLine</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">String</span><span class="o">[]</span> <span class="n">parts</span> <span class="o">=</span> <span class="n">csvLine</span><span class="o">.</span><span class="na">split</span><span class="o">(</span><span class="s">","</span><span class="o">);</span>
+
+    <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">parts</span><span class="o">[</span><span class="mi">0</span><span class="o">];</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">age</span> <span class="o">=</span> <span class="n">parts</span><span class="o">[</span><span class="mi">1</span><span class="o">];</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">password</span> <span class="o">=</span> <span class="n">parts</span><span class="o">[</span><span class="mi">2</span><span class="o">];</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nc">Book</span> <span class="kd">implements</span> <span class="n">CSV</span> <span class="o">{</span>
+  <span class="kd">public</span> <span class="n">String</span> <span class="nf">toCSV</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">title</span> <span class="o">+</span> <span class="s">","</span> <span class="o">+</span> <span class="k">this</span><span class="o">.</span><span class="na">author</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">fromCSV</span><span class="o">(</span><span class="n">String</span> <span class="n">csvLine</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">String</span><span class="o">[]</span> <span class="n">parts</span> <span class="o">=</span> <span class="n">csvLine</span><span class="o">.</span><span class="na">split</span><span class="o">(</span><span class="s">","</span><span class="o">);</span>
+
+    <span class="k">this</span><span class="o">.</span><span class="na">title</span> <span class="o">=</span> <span class="n">parts</span><span class="o">[</span><span class="mi">0</span><span class="o">];</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">author</span> <span class="o">=</span> <span class="n">parts</span><span class="o">[</span><span class="mi">1</span><span class="o">];</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+<p>Some people argue that interfaces are not important in Ruby, and that I should
+simply embrace the language and rely on duck typing.</p>
+
+<p>This is however in direct opposition of what Ruby is all about. The Ruby
+community is well known for not accepting the status quo, and not limiting
+itself by what is currently available in the core of the language.</p>
+
+<h2>Interfaces in Ruby with modules</h2>
+
+<p>The simplest way to emulate interfaces in Ruby is to declare a module with
+methods that raise a &ldquo;not implemented&rdquo; exception.</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="k">module</span> <span class="nn">CSV</span>
+
+  <span class="k">def</span> <span class="nf">to_csv</span>
+    <span class="k">raise</span> <span class="s2">"Not implemented"</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">from_csv</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="s2">"Not implemented"</span>
+  <span class="k">end</span>
+
+<span class="k">end</span>
+</code></pre></div>
+<p>Now, we can use that module to communicate what needs to be implemented on the
+objects in order to support CSV transformations.</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="k">class</span> <span class="nc">User</span>
+  <span class="kp">include</span> <span class="no">CSV</span>
+
+  <span class="k">def</span> <span class="nf">to_csv</span>
+    <span class="s2">"</span><span class="si">#{</span><span class="vi">@name</span><span class="si">}</span><span class="s2">,</span><span class="si">#{</span><span class="vi">@age</span><span class="si">}</span><span class="s2">"</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">from_csv</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+    <span class="n">parts</span> <span class="o">=</span> <span class="n">line</span><span class="p">.</span><span class="nf">split</span><span class="p">(</span><span class="s2">","</span><span class="p">)</span>
+
+    <span class="vi">@name</span> <span class="o">=</span> <span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="vi">@age</span> <span class="o">=</span> <span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+  <span class="k">end</span>
+
+<span class="k">end</span>
+</code></pre></div>
+<p>This looks and feels like interfaces in Java, however there is a huge downside.
+If we include the <code>CSV</code> module and forget to implement the <code>to_csv</code> method, we
+won&rsquo;t notice this mistake until we run our code and an exception pops up.</p>
+
+<p>This completely defeats the purpose of interfaces. I want to catch
+inconsistencies <strong>before</strong> I execute my code. If the <code>CSV</code> module can&rsquo;t
+guarantee that, than what is its purpose? Does it act like a simple todo list
+for the methods I need to implement, without any actual checks?</p>
+
+<h2>Describing behaviour</h2>
+
+<p>Instead of focusing on the syntax, it is probably better to focus on the
+semantics of interfaces. What I actually want, is a set of constraints that
+define the behaviour of an object, and check them before I run my application.</p>
+
+<p>When we put it that way, it is very obvious that what I want is actually a set
+of tests that describe my object. For the previous CSV example, we could write
+the following in RSpec:</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="n">shared_examples</span> <span class="s2">"a CSV serializable object"</span> <span class="k">do</span>
+  <span class="n">it</span> <span class="p">{</span> <span class="n">is_expected</span><span class="p">.</span><span class="nf">to</span> <span class="n">respond_to</span><span class="p">(</span><span class="ss">:to_csv</span><span class="p">)</span> <span class="p">}</span>
+  <span class="n">it</span> <span class="p">{</span> <span class="n">is_expected</span><span class="p">.</span><span class="nf">to</span> <span class="n">respond_to</span><span class="p">(</span><span class="ss">:from_csv</span><span class="p">)</span> <span class="p">}</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>This is exactly the constraint that I expect from my object.</p>
+
+<p>We can use the above definition as a substitute for interfaces in Ruby. If we
+want to enforce that an object can be transformed to and from CSV, we can simply
+drop a line in their specs:</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="n">describe</span> <span class="no">User</span> <span class="k">do</span>
+  <span class="n">it_behaves_like</span> <span class="s2">"a CSV serializable object"</span>
+<span class="k">end</span>
+
+<span class="n">describe</span> <span class="no">Book</span> <span class="k">do</span>
+  <span class="n">it_behaves_like</span> <span class="s2">"a CSV serializable object"</span>
+<span class="k">end</span>
+</code></pre></div>
+<h2>Tests are better than interfaces</h2>
+
+<p>Many things that are traditionally enforced with type systems are checked via
+unit tests in dynamically typed languages.</p>
+
+<p>Type systems can be helpful, but it is very hard to define a type system that is
+simple enough, and at the same time strong enough to actually help the developer
+to write correct code. From my experience, type systems are an excellent
+tool to let the compiler know where to optimize your code, but I still am not
+convinced that it actually helps the developers to write better code.</p>
+
+<p>The same is true for interfaces. They are able to describe the behaviour of an
+object, but they are fundamentally limited. Unit tests can describe much, much
+more about an object.</p>
+
+<p>For example, to describe the behaviour of objects that act as collections, we
+can write down the following:</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="n">shared_examples</span> <span class="s2">"a collection"</span> <span class="k">do</span>
+  <span class="n">it</span> <span class="p">{</span> <span class="n">is_expected</span><span class="p">.</span><span class="nf">to</span> <span class="n">respond_to</span><span class="p">(</span><span class="ss">:add</span><span class="p">).</span><span class="nf">with</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="nf">argument</span> <span class="p">}</span>
+  <span class="n">it</span> <span class="p">{</span> <span class="n">is_expected</span><span class="p">.</span><span class="nf">to</span> <span class="n">respond_to</span><span class="p">(</span><span class="ss">:remove</span><span class="p">).</span><span class="nf">with</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="nf">argument</span> <span class="p">}</span>
+  <span class="n">it</span> <span class="p">{</span> <span class="n">is_expected</span><span class="p">.</span><span class="nf">to</span> <span class="n">respond_to</span><span class="p">(</span><span class="ss">:include?</span><span class="p">).</span><span class="nf">with</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="nf">argument</span> <span class="p">}</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>This is roughly equivalent to an interface in Java, but why stop here? We can
+write down a lot more things that we expect from a collection.</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="n">shared_examples</span> <span class="s2">"a collection"</span> <span class="k">do</span>
+  <span class="n">it</span> <span class="p">{</span> <span class="n">is_expected</span><span class="p">.</span><span class="nf">to</span> <span class="n">respond_to</span><span class="p">(</span><span class="ss">:add</span><span class="p">).</span><span class="nf">with</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="nf">argument</span> <span class="p">}</span>
+  <span class="n">it</span> <span class="p">{</span> <span class="n">is_expected</span><span class="p">.</span><span class="nf">to</span> <span class="n">respond_to</span><span class="p">(</span><span class="ss">:remove</span><span class="p">).</span><span class="nf">with</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="nf">argument</span> <span class="p">}</span>
+  <span class="n">it</span> <span class="p">{</span> <span class="n">is_expected</span><span class="p">.</span><span class="nf">to</span> <span class="n">respond_to</span><span class="p">(</span><span class="ss">:include?</span><span class="p">).</span><span class="nf">with</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="nf">argument</span> <span class="p">}</span>
+
+  <span class="n">before</span> <span class="k">do</span>
+    <span class="vi">@collection</span> <span class="o">=</span> <span class="n">described_class</span><span class="p">.</span><span class="nf">new</span>
+  <span class="k">end</span>
+
+  <span class="n">describe</span> <span class="s2">".add"</span> <span class="k">do</span>
+    <span class="n">it</span> <span class="s2">"adds an element into the collection"</span> <span class="k">do</span>
+      <span class="vi">@collection</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+
+      <span class="n">expect</span><span class="p">(</span><span class="vi">@collection</span><span class="p">).</span><span class="nf">to</span> <span class="kp">include</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+    <span class="k">end</span>
+
+    <span class="n">it</span> <span class="s2">"returns the collection"</span> <span class="k">do</span>
+      <span class="n">expect</span><span class="p">(</span><span class="vi">@collection</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="mi">12</span><span class="p">)).</span><span class="nf">to</span> <span class="n">eq</span><span class="p">(</span><span class="vi">@collection</span><span class="p">)</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="n">describe</span> <span class="s2">".remove"</span> <span class="k">do</span>
+    <span class="n">context</span> <span class="s2">"the element is not present"</span> <span class="k">do</span>
+      <span class="n">it</span> <span class="s2">"doesn't raise an exception"</span> <span class="k">do</span>
+        <span class="n">expect</span> <span class="p">{</span> <span class="vi">@collection</span><span class="p">.</span><span class="nf">remove</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span> <span class="p">}.</span><span class="nf">to_not</span> <span class="n">raise_exception</span>
+      <span class="k">end</span>
+    <span class="k">end</span>
+
+    <span class="n">it</span> <span class="s2">"removes all the elements from the collection"</span> <span class="k">do</span>
+      <span class="vi">@collection</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+      <span class="vi">@collection</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+
+      <span class="n">expect</span><span class="p">(</span><span class="vi">@collection</span><span class="p">).</span><span class="nf">to</span> <span class="kp">include</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+
+      <span class="vi">@collection</span><span class="p">.</span><span class="nf">remove</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+      <span class="n">expect</span><span class="p">(</span><span class="vi">@collection</span><span class="p">).</span><span class="nf">to_not</span> <span class="kp">include</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+    <span class="k">end</span>
+
+    <span class="n">it</span> <span class="s2">"returns the collection"</span> <span class="k">do</span>
+      <span class="n">expect</span><span class="p">(</span><span class="vi">@collection</span><span class="p">.</span><span class="nf">remove</span><span class="p">(</span><span class="mi">12</span><span class="p">)).</span><span class="nf">to</span> <span class="n">eq</span><span class="p">(</span><span class="vi">@collection</span><span class="p">)</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Just look at the above example, and realize how much stronger are the above tests
+compared to a simple interface. We have successfully enforced and communicated
+to fellow developers the following:</p>
+
+<ul>
+<li>A collection must answer to <code>add</code>, <code>remove</code> and <code>include?</code> methods</li>
+<li>The arity of the methods and their return values</li>
+<li>The <code>remove</code> method removes all the values from the collection</li>
+<li>No exception is raised when <code>remove</code> is called on an empty collection</li>
+</ul>
+
+<h2>Avoiding mistakes and trusting unit tests</h2>
+
+<p>Until now, I frequently used the &ldquo;not implemented&rdquo; exception to communicate
+intent to other developers in my team. I used it to define interfaces, and also
+to define virtual methods on base abstract classes.</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="c1"># to define an interface</span>
+
+<span class="k">module</span> <span class="nn">JsonSerialization</span>
+  <span class="k">def</span> <span class="nf">to_json</span>
+    <span class="k">raise</span> <span class="s2">"Not Implemented"</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="c1"># to define virtual methods</span>
+
+<span class="k">class</span> <span class="nc">Vehicle</span>
+  <span class="k">def</span> <span class="nf">speed</span>
+    <span class="k">raise</span> <span class="s2">"Not Implemented"</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>I now realize that this was a mistake. Instead of doing this, I should have
+relied on the implicit <code>NoMethodError</code> that is raised by default in Ruby, and
+to use tests to describe the behaviour of my objects.</p>
+
+<p>That&rsquo;s all.<br>
+Keep learning, Ruby is great.</p>
+
+
+
+  </article>
+
+
+      <div class="footer">
+  <div class="content">
+    <p>
+      <strong>❈</strong><br>
+      <br>
+
+      Follow me on <a href="https://twitter.com/igor_sarcevic">Twitter</a> and <a href="https://rs.linkedin.com/in/igorsarcevic">LinkedIn</a>.<br>
+      Copyright ©2014-2023 Igor Šarčević. All rights reserved.</br>
+      <br>
+      Enjoy the rest of your day!
+    </p>
+  </div>
+<div>
+
+    </div>
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+           })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-57223799-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+
+    <script>
+      /**
+      * Function that tracks a click on an outbound link in Analytics.
+      * This function takes a valid URL string as an argument, and uses that URL string
+      * as the event label. Setting the transport method to 'beacon' lets the hit be sent
+      * using 'navigator.sendBeacon' in browser that support it.
+      */
+      var trackOutboundLink = function(url) {
+        ga('send', 'event', 'outbound', 'click', url, {
+          'transport': 'beacon',
+          'hitCallback': function(){document.location = url;}
+        });
+      }
+    </script>
+
+  </body>
+</html>

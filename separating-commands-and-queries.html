@@ -1,0 +1,195 @@
+<!doctype html>
+<html itemscope itemtype="http://schema.org/Article">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
+    <link rel="alternate" type="application/atom+xml" title="Morning Coffee" href="/feed.xml" />
+
+    <link rel="shortcut icon" href="favicon.svg">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+      <title>Separating Commands and Queries &mdash; by Igor Šarčević</title>
+
+    <!-- Place this data between the <head> tags of your website -->
+      <meta name="description" content="I have learned an important lesson this year. A clear separation between queries
+and commands can bring a lot of long term benefits to your code.
+
+" />
+
+      <!-- Schema.org markup for Google+ -->
+      <meta itemprop="name" content="Separating Commands and Queries">
+      <meta itemprop="description" content="I have learned an important lesson this year. A clear separation between queries
+and commands can bring a lot of long term benefits to your code.
+
+">
+      <meta itemprop="image" content="http://morningcoffee.io/images/separating-commands-and-queries.jpg">
+
+      <!-- Twitter Card data -->
+      <meta name="twitter:card" content="summary_large_image">
+      <meta name="twitter:site" content="@igor_sarcevic">
+      <meta name="twitter:title" content="Separating Commands and Queries">
+      <meta name="twitter:description" content="I have learned an important lesson this year. A clear separation between queries
+and commands can bring a lot of long term benefits to your code.
+
+">
+      <meta name="twitter:creator" content="@igor_sarcevic">
+      <!-- Twitter summary card with large image must be at least 280x150px -->
+      <meta name="twitter:image:src" content="http://morningcoffee.io/images/separating-commands-and-queries.jpg">
+
+      <!-- Open Graph data -->
+      <meta property="og:title" content="Separating Commands and Queries" />
+      <meta property="og:type" content="article" />
+      <meta property="og:url" content="http://" />
+      <meta property="og:image" content="http://morningcoffee.io/images/separating-commands-and-queries.jpg" />
+      <meta property="og:description" content="I have learned an important lesson this year. A clear separation between queries
+and commands can bring a lot of long term benefits to your code.
+
+" />
+      <meta property="article:published_time" content="2017-11-07 00:00:00 UTC" />
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Raleway:900&display=swap" rel="stylesheet">
+    <link href="/stylesheets/style.css" rel="stylesheet" />
+  </head>
+  <body>
+
+    <div id="main" role="main">
+      <nav class="navigation" style="padding: 10px;">
+  <div style="display: flex;justify-items: space-between;justify-content: space-between;">
+    <a style="font-size: 20px" href="/" style="color: crimson;">Home</a>
+    <a style="font-size: 20px" href="/about-me.html" style="color: crimson;">About</a>
+  </div>
+</nav>
+
+
+        <article class="article">
+    <div class="header">
+      <h1>Separating Commands and Queries</h1>
+
+      <div class="subtitle">
+        Published on <time>November  7, 2017</time>
+      </div>
+    </div>
+
+    <p>I have learned an important lesson this year. A clear separation between queries
+and commands can bring a lot of long term benefits to your code.</p>
+
+<p></p>
+
+<p><img src="/images/separating-commands-and-queries.jpg" alt="Separating Commands and Queries" /></p>
+
+<p>Let me start with an example to showcase the essence of this approach. In a book
+retail application, we want to lower the price of books that have sold less than
+100 copies this year. One approach to implement it would be the following:</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="k">def</span> <span class="nf">discount_poor_performing_books</span><span class="p">(</span><span class="n">books</span><span class="p">)</span>
+  <span class="n">books</span><span class="p">.</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">book</span><span class="o">|</span>
+    <span class="k">if</span> <span class="n">book</span><span class="p">.</span><span class="nf">copies_sold_this_year</span> <span class="o">&lt;</span> <span class="mi">100</span>
+      <span class="n">book</span><span class="p">.</span><span class="nf">price</span> <span class="o">=</span> <span class="n">book</span><span class="p">.</span><span class="nf">price</span> <span class="o">*</span> <span class="mf">0.8</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>How can we improve it?</p>
+
+<p>Imagine that you are an administrator of this book management system. Would you
+feel comfortable to click on a button that executes this change in your system?
+Probably not. You would first like to see a list the of books that will be
+affected by this change.</p>
+
+<p>Let&rsquo;s rewrite the above code to make this possible.</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="k">def</span> <span class="nf">books_for_discount</span><span class="p">(</span><span class="n">books</span><span class="p">)</span>
+  <span class="n">books</span><span class="p">.</span><span class="nf">select</span> <span class="p">{</span> <span class="o">|</span><span class="n">book</span><span class="o">|</span> <span class="n">book</span><span class="p">.</span><span class="nf">copies_sold_this_year</span> <span class="o">&lt;</span> <span class="mi">100</span> <span class="p">}</span>
+<span class="k">end</span>
+
+<span class="k">def</span> <span class="nf">give_discount</span><span class="p">(</span><span class="n">books</span><span class="p">)</span>
+  <span class="n">books</span><span class="p">.</span><span class="nf">each</span> <span class="p">{</span> <span class="o">|</span><span class="n">book</span><span class="o">|</span> <span class="n">book</span><span class="p">.</span><span class="nf">price</span> <span class="o">=</span> <span class="n">book</span><span class="p">.</span><span class="nf">price</span> <span class="o">*</span> <span class="mf">0.8</span> <span class="p">}</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Now, you can use the <code>books_for_discount</code> to display the list of books that will
+be affected when the button is clicked by our administrator. When the
+administrator decides to click on the button, we can execute <code>give_discount</code> on
+that list of books.</p>
+
+<h2>Generalizing the separation for a wide range of issues</h2>
+
+<p>There is an underlying pattern in the above example that can be generalized to a
+wide range of problems.</p>
+
+<p>The first implementation <code>discount_poor_performing_books</code> <em>combined</em> the
+selection of the books with the <em>update</em> on the books.</p>
+
+<p>The second approach, separated the <em>query</em> <code>books_for_discount</code> from the
+<em>execution</em> <code>give_discount</code>. This separation allowed us to gain more control
+over the process.</p>
+
+<p>As a rule of thumb, when I design background processes, I always make sure to
+separate these two concerns. I do this even if there is no immediate reason for
+this separation. This keeps my system modular and allows future maintainers to
+inject various observation or metric in the processes I develop.</p>
+
+<h2>Benefits of query command separation</h2>
+
+<p>Apart from the benefit described in the previous chapter, this separation has
+some other benefits that are worth noting.</p>
+
+<ol>
+<li><p>The query part of the process is usually side-effect free. This reduces the
+size of the code that can be potentially dangerous, and we can be more relaxed
+when invoking the query part of the process.</p></li>
+<li><p>The separation tends to make the code easier to test.</p></li>
+<li><p>Additional queries can be introduced in the process more easily. In the
+example from the start, this would allow giving discounts based on other
+criteria without changing the code that gives the discount.</p></li>
+</ol>
+
+<p><em>Did you like this article? Or, do you maybe have a helpful hint to share?
+Please leave it in the comment section bellow.</em></p>
+
+
+
+  </article>
+
+
+      <div class="footer">
+  <div class="content">
+    <p>
+      <strong>❈</strong><br>
+      <br>
+
+      Follow me on <a href="https://twitter.com/igor_sarcevic">Twitter</a> and <a href="https://rs.linkedin.com/in/igorsarcevic">LinkedIn</a>.<br>
+      Copyright ©2014-2023 Igor Šarčević. All rights reserved.</br>
+      <br>
+      Enjoy the rest of your day!
+    </p>
+  </div>
+<div>
+
+    </div>
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+           })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-57223799-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+
+    <script>
+      /**
+      * Function that tracks a click on an outbound link in Analytics.
+      * This function takes a valid URL string as an argument, and uses that URL string
+      * as the event label. Setting the transport method to 'beacon' lets the hit be sent
+      * using 'navigator.sendBeacon' in browser that support it.
+      */
+      var trackOutboundLink = function(url) {
+        ga('send', 'event', 'outbound', 'click', url, {
+          'transport': 'beacon',
+          'hitCallback': function(){document.location = url;}
+        });
+      }
+    </script>
+
+  </body>
+</html>

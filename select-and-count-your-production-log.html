@@ -1,0 +1,227 @@
+<!doctype html>
+<html itemscope itemtype="http://schema.org/Article">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
+    <link rel="alternate" type="application/atom+xml" title="Morning Coffee" href="/feed.xml" />
+
+    <link rel="shortcut icon" href="favicon.svg">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+      <title>Select and count your production.log! &mdash; by Igor Šarčević</title>
+
+    <!-- Place this data between the <head> tags of your website -->
+      <meta name="description" content="Last time, I have demonstrated how we can put together simple filters
+to show only the lines we are interested in. This time I will show
+you how you can manipulate these lines and select only the parts you
+really need.
+
+" />
+
+      <!-- Schema.org markup for Google+ -->
+      <meta itemprop="name" content="Select and count your production.log!">
+      <meta itemprop="description" content="Last time, I have demonstrated how we can put together simple filters
+to show only the lines we are interested in. This time I will show
+you how you can manipulate these lines and select only the parts you
+really need.
+
+">
+      <meta itemprop="image" content="http://morningcoffee.io/images/select-and-count-your-production-log.png">
+
+      <!-- Twitter Card data -->
+      <meta name="twitter:card" content="summary_large_image">
+      <meta name="twitter:site" content="@igor_sarcevic">
+      <meta name="twitter:title" content="Select and count your production.log!">
+      <meta name="twitter:description" content="Last time, I have demonstrated how we can put together simple filters
+to show only the lines we are interested in. This time I will show
+you how you can manipulate these lines and select only the parts you
+really need.
+
+">
+      <meta name="twitter:creator" content="@igor_sarcevic">
+      <!-- Twitter summary card with large image must be at least 280x150px -->
+      <meta name="twitter:image:src" content="http://morningcoffee.io/images/select-and-count-your-production-log.png">
+
+      <!-- Open Graph data -->
+      <meta property="og:title" content="Select and count your production.log!" />
+      <meta property="og:type" content="article" />
+      <meta property="og:url" content="http://" />
+      <meta property="og:image" content="http://morningcoffee.io/images/select-and-count-your-production-log.png" />
+      <meta property="og:description" content="Last time, I have demonstrated how we can put together simple filters
+to show only the lines we are interested in. This time I will show
+you how you can manipulate these lines and select only the parts you
+really need.
+
+" />
+      <meta property="article:published_time" content="2015-02-16 00:00:00 UTC" />
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Raleway:900&display=swap" rel="stylesheet">
+    <link href="/stylesheets/style.css" rel="stylesheet" />
+  </head>
+  <body>
+
+    <div id="main" role="main">
+      <nav class="navigation" style="padding: 10px;">
+  <div style="display: flex;justify-items: space-between;justify-content: space-between;">
+    <a style="font-size: 20px" href="/" style="color: crimson;">Home</a>
+    <a style="font-size: 20px" href="/about-me.html" style="color: crimson;">About</a>
+  </div>
+</nav>
+
+
+        <article class="article">
+    <div class="header">
+      <h1>Select and count your production.log!</h1>
+
+      <div class="subtitle">
+        Published on <time>February 16, 2015</time>
+      </div>
+    </div>
+
+    <p>Last time, I have demonstrated how we can put together simple filters
+to show only the lines we are interested in. This time I will show
+you how you can manipulate these lines and select only the parts you
+really need.</p>
+
+<p></p>
+
+<p><em>This post is the continuation to the
+<a href="/what-can-you-learn-from-production-log.html">What can you learn from production.log?</a>
+, and will continue where the last one stopped. Please read that post,
+before continuing to this one.</em></p>
+
+<h2>Enumeration and counting</h2>
+
+<p>You have finally managed to put together the right combination of
+<code>grep</code> filters to only get the lines you want. But what can you do
+with it?</p>
+
+<p>What I like to start with is a simple line count. For example, I can
+easily count the number of <code>POST</code> requests my server has received for
+this day, by executing the following filter:</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="nb">cat </span>log/production.log | <span class="nb">grep</span> <span class="s1">'method=POST'</span>
+                       | <span class="nb">grep</span> <span class="s1">'time=2015-02-16'</span>
+                       | wc <span class="nt">-l</span>
+</code></pre></div>
+<p>The above command should be pretty familiar by now except the last
+command in the pipe. To count lines, we can use the word count
+command <code>wc</code> and pass it the option <code>-l</code> to get the number of
+lines.</p>
+
+<p>Similarly to the above example we can enumerate the lines by using
+the <code>nl</code> command:</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="nb">cat </span>log/production.log | <span class="nb">grep</span> <span class="s1">'method=POST'</span>
+                       | <span class="nb">grep</span> <span class="s1">'time=2015-02-16'</span>
+                       | nl
+</code></pre></div>
+<p>This command doesn&rsquo;t look so useful as the above, but it can come handy
+for orientation when you share the output with a friend or when you
+combine it with some other interesting commands.</p>
+
+<h2>Manipulating the lines</h2>
+
+<p>Now let&rsquo;s do something more interesting. You have probably noticed
+that while we do remove the unnecessary lines, we do not remove
+the unnecessary noise from within the lines. For example let&rsquo;s say
+that a query for today&rsquo;s requests returned the following output:</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="nv">method</span><span class="o">=</span>POST <span class="nv">path</span><span class="o">=</span>/user <span class="nv">format</span><span class="o">=</span><span class="k">*</span>/<span class="k">*</span> <span class="nv">controller</span><span class="o">=</span>users <span class="nv">action</span><span class="o">=</span>create <span class="nv">status</span><span class="o">=</span>200 <span class="nv">duration</span><span class="o">=</span>19.4 <span class="nv">view</span><span class="o">=</span>0.00 <span class="nv">db</span><span class="o">=</span>3.91 <span class="nb">time</span><span class="o">=</span>2016-02-16 16:48:37 +0000
+<span class="nv">method</span><span class="o">=</span>GET <span class="nv">path</span><span class="o">=</span>/user <span class="nv">format</span><span class="o">=</span><span class="k">*</span>/<span class="k">*</span> <span class="nv">controller</span><span class="o">=</span>users <span class="nv">action</span><span class="o">=</span>create <span class="nv">status</span><span class="o">=</span>200 <span class="nv">duration</span><span class="o">=</span>19.4 <span class="nv">view</span><span class="o">=</span>0.00 <span class="nv">db</span><span class="o">=</span>3.91 <span class="nb">time</span><span class="o">=</span>2016-02-16 16:50:37 +0000
+<span class="nv">method</span><span class="o">=</span>POST <span class="nv">path</span><span class="o">=</span>/user <span class="nv">format</span><span class="o">=</span><span class="k">*</span>/<span class="k">*</span> <span class="nv">controller</span><span class="o">=</span>users <span class="nv">action</span><span class="o">=</span>create <span class="nv">status</span><span class="o">=</span>200 <span class="nv">duration</span><span class="o">=</span>19.4 <span class="nv">view</span><span class="o">=</span>0.00 <span class="nv">db</span><span class="o">=</span>3.91 <span class="nb">time</span><span class="o">=</span>2016-02-16 16:52:12 +0000
+</code></pre></div>
+<p>Ugh, that is a little overwhelming, especially if I only want to
+know the path and the method for example. Luckily, we can use
+<code>awk</code> to help us with pruning the above lines. But first let&rsquo;s see
+how <code>awk</code> works on a simpler example. This command is really handy
+for reorganizing and cutting of unnecessary parts of lines. Let&rsquo;s
+use the following line, and show only the first and the last entry.</p>
+<div class="highlight"><pre class="highlight shell"><code>dog <span class="nb">cat </span>fish
+</code></pre></div>
+<p>By default, <code>awk</code> separates the fields in a line on the and gives
+them back to us in the form of <code>$1</code>, <code>$2</code>, <code>$3</code>&hellip; To show only the
+first and the last entry, execute the following command:</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="nb">echo</span> <span class="s2">"dog cat fish"</span> | awk <span class="s1">'{ print $1 $2 }'</span>
+</code></pre></div>
+<p>In the above example I only used <code>echo</code> as a mean to push something
+into the <code>awk</code> command, but it can work on any output. But wait!
+This command has the following output, that is not what we want:</p>
+<div class="highlight"><pre class="highlight shell"><code>dogfish
+</code></pre></div>
+<p>Yes, we also have to put a separator between them:</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="nb">echo</span> <span class="s2">"dog cat fish"</span> | awk <span class="s1">'{ print $1 " " $2 }'</span>
+</code></pre></div>
+<p>We can of course put any string between them, like an arrow:</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="nb">echo</span> <span class="s2">"dog cat fish"</span> | awk <span class="s1">'{ print $1 " ---&gt; " $2 }'</span>
+</code></pre></div>
+<p>We can also reorganize the output:</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="nb">echo</span> <span class="s2">"dog cat fish"</span> | awk <span class="s1">'{ print $3 " ---&gt; " $1 " ---&gt; " $2 }'</span>
+</code></pre></div>
+<p>That will give us:</p>
+<div class="highlight"><pre class="highlight shell"><code>fish <span class="nt">---</span><span class="o">&gt;</span> dog <span class="nt">---</span><span class="o">&gt;</span> <span class="nb">cat</span>
+</code></pre></div>
+<p>Enough with the examples! Let&rsquo;s get back to our original objective
+&mdash; showing only the method and the path of today&rsquo;s request:</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="nb">cat </span>log/production.log | <span class="nb">grep</span> <span class="s1">'method=POST'</span>
+                       | <span class="nb">grep</span> <span class="s1">'time=2015-02-16'</span>
+                       | awk <span class="s1">'{ print $1 " " $2 }'</span>
+</code></pre></div>
+<p>Hooray, this just what we needed!</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="nv">method</span><span class="o">=</span>POST <span class="nv">path</span><span class="o">=</span>/user
+<span class="nv">method</span><span class="o">=</span>GET <span class="nv">path</span><span class="o">=</span>/user
+<span class="nv">method</span><span class="o">=</span>POST <span class="nv">path</span><span class="o">=</span>/user
+</code></pre></div>
+<h2>Final words</h2>
+
+<p>I hope you enjoyed this tutorial, I will give my best to finish the next
+one soon, where I will be talking about uniqueness and sorting.</p>
+
+<p>Happy hacking!</p>
+
+
+
+  </article>
+
+
+      <div class="footer">
+  <div class="content">
+    <p>
+      <strong>❈</strong><br>
+      <br>
+
+      Follow me on <a href="https://twitter.com/igor_sarcevic">Twitter</a> and <a href="https://rs.linkedin.com/in/igorsarcevic">LinkedIn</a>.<br>
+      Copyright ©2014-2023 Igor Šarčević. All rights reserved.</br>
+      <br>
+      Enjoy the rest of your day!
+    </p>
+  </div>
+<div>
+
+    </div>
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+           })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-57223799-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+
+    <script>
+      /**
+      * Function that tracks a click on an outbound link in Analytics.
+      * This function takes a valid URL string as an argument, and uses that URL string
+      * as the event label. Setting the transport method to 'beacon' lets the hit be sent
+      * using 'navigator.sendBeacon' in browser that support it.
+      */
+      var trackOutboundLink = function(url) {
+        ga('send', 'event', 'outbound', 'click', url, {
+          'transport': 'beacon',
+          'hitCallback': function(){document.location = url;}
+        });
+      }
+    </script>
+
+  </body>
+</html>

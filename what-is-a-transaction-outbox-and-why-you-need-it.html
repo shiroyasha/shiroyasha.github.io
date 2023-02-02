@@ -1,0 +1,352 @@
+<!doctype html>
+<html itemscope itemtype="http://schema.org/Article">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
+    <link rel="alternate" type="application/atom+xml" title="Morning Coffee" href="/feed.xml" />
+
+    <link rel="shortcut icon" href="favicon.svg">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+      <title>Transactional Outbox: What is it and why you need it? &mdash; by Igor Šarčević</title>
+
+    <!-- Place this data between the <head> tags of your website -->
+      <meta name="description" content="Receiving a request, saving it into a database, and finally publishing a message
+can be trickier than expected. A naive implementation can either lose..." />
+
+      <!-- Schema.org markup for Google+ -->
+      <meta itemprop="name" content="Transactional Outbox: What is it and why you need it?">
+      <meta itemprop="description" content="Receiving a request, saving it into a database, and finally publishing a message
+can be trickier than expected. A naive implementation can either lose...">
+      <meta itemprop="image" content="http://morningcoffee.io/images/2021-07-02-what-is-a-transaction-outbox-and-why-you-need-it?.png">
+
+      <!-- Twitter Card data -->
+      <meta name="twitter:card" content="summary_large_image">
+      <meta name="twitter:site" content="@igor_sarcevic">
+      <meta name="twitter:title" content="Transactional Outbox: What is it and why you need it?">
+      <meta name="twitter:description" content="Receiving a request, saving it into a database, and finally publishing a message
+can be trickier than expected. A naive implementation can either lose...">
+      <meta name="twitter:creator" content="@igor_sarcevic">
+      <!-- Twitter summary card with large image must be at least 280x150px -->
+      <meta name="twitter:image:src" content="http://morningcoffee.io/images/2021-07-02-what-is-a-transaction-outbox-and-why-you-need-it?.png">
+
+      <!-- Open Graph data -->
+      <meta property="og:title" content="Transactional Outbox: What is it and why you need it?" />
+      <meta property="og:type" content="article" />
+      <meta property="og:url" content="http://" />
+      <meta property="og:image" content="http://morningcoffee.io/images/2021-07-02-what-is-a-transaction-outbox-and-why-you-need-it?.png" />
+      <meta property="og:description" content="Receiving a request, saving it into a database, and finally publishing a message
+can be trickier than expected. A naive implementation can either lose..." />
+      <meta property="article:published_time" content="2021-07-02 00:00:00 UTC" />
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Raleway:900&display=swap" rel="stylesheet">
+    <link href="/stylesheets/style.css" rel="stylesheet" />
+  </head>
+  <body>
+
+    <div id="main" role="main">
+      <nav class="navigation" style="padding: 10px;">
+  <div style="display: flex;justify-items: space-between;justify-content: space-between;">
+    <a style="font-size: 20px" href="/" style="color: crimson;">Home</a>
+    <a style="font-size: 20px" href="/about-me.html" style="color: crimson;">About</a>
+  </div>
+</nav>
+
+
+        <article class="article">
+    <div class="header">
+      <h1>Transactional Outbox: What is it and why you need it?</h1>
+
+      <div class="subtitle">
+        Published on <time>July  2, 2021</time>
+      </div>
+    </div>
+
+    <p>Receiving a request, saving it into a database, and finally publishing a message
+can be trickier than expected. A naive implementation can either lose messages
+or, even worse, post incorrect messages.</p>
+
+<p>Let&rsquo;s look at an example. A user registration service allows users to sign up.
+The backend of this system saves this request to a database and publishes a
+&ldquo;user-signed-up&rdquo; message on RabbitMQ. Based on this message, the User Greeter
+service sends a welcome message to the user, while the Analytics service records
+new signup and updates the business dashboards.</p>
+
+<p><img src="/images/transactional-outbox/architecture-example.png" alt="Transactional Outbox: Architecture Example" /></p>
+
+<p>We will focus on the <strong>User Registration Service</strong> and try out several ways to
+implement the registration action.</p>
+
+<p><strong>Implementation 1: Publishing after the user insert transaction finishes</strong></p>
+
+<p>Our first attempt to implement the register action will be to open a
+transaction, save the user, close the transaction, and finally publish the
+message to RabbitMQ.</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="k">def</span> <span class="nf">register_user</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span>
+  <span class="no">DB</span><span class="p">.</span><span class="nf">transaction</span> <span class="k">do</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="ss">name: </span><span class="nb">name</span><span class="p">)</span>
+    <span class="n">user</span><span class="p">.</span><span class="nf">save!</span>
+  <span class="k">end</span>
+
+  <span class="no">RabbitMQ</span><span class="p">.</span><span class="nf">publish</span><span class="p">(</span><span class="s2">"user-signed-up"</span><span class="p">,</span> <span class="n">user</span><span class="o">.</span><span class="no">ID</span><span class="p">)</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Let&rsquo;s examine what can go wrong with this implementation. We need to answer
+three questions:</p>
+
+<ul>
+<li>What happens if RabbitMQ is temporarily unavailable?</li>
+<li>What happens if writing to RabbitMQ fails?</li>
+<li>What happens if the service is restarted right after the transaction finishes
+but right before the RabbitMQ message is published?</li>
+</ul>
+
+<p>The answer to all three questions is: The user will be saved to the database,
+but the message will not be published to the queue. The user will not get a
+welcome message via email. Unacceptable!</p>
+
+<p><strong>Implementation 2: Publishing before the user insert transaction finishes</strong></p>
+
+<p>Publishing after a closed transaction leaves us in trouble. What if we try the
+opposite and publish the message right before we close the transaction?</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="k">def</span> <span class="nf">register_user</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span>
+  <span class="no">DB</span><span class="p">.</span><span class="nf">transaction</span> <span class="k">do</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="ss">name: </span><span class="nb">name</span><span class="p">)</span>
+    <span class="n">user</span><span class="p">.</span><span class="nf">save!</span>
+
+    <span class="no">RabbitMQ</span><span class="p">.</span><span class="nf">publish</span><span class="p">(</span><span class="s2">"user-signed-up"</span><span class="p">,</span> <span class="n">user</span><span class="o">.</span><span class="no">ID</span><span class="p">,</span> <span class="n">user</span><span class="o">.</span><span class="no">Email</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Let&rsquo;s examine this approach as well. It seems that this one is also problematic.</p>
+
+<p>If the transaction fails or rollbacks (for example, due to a uniqueness
+constraint) we will publish a message to RabbitMQ that is not correct.</p>
+
+<p>The user was <strong>not created</strong>, yet we still sent a &ldquo;user-signed-up&rdquo; message to
+upstream services. Our service is lying. Unacceptable!</p>
+
+<p><hr style="width: 50%; margin-top: 3em; border-color: gray;"></p>
+
+<p><strong>Problem Statement</strong>: If we publish in the transaction, we can publish a fake
+message. If we publish after the transaction, we are risking that we will never
+publish the message. How to guarantee message dispatching?</p>
+
+<h2>The transactional outbox pattern</h2>
+
+<p>Using a transactional outbox is one way to solve this problem.</p>
+
+<p>We will introduce a supplementary database table, called outbox, that will store
+outgoing messages from our service. A publisher service will then read from this
+table and publish messages to the queue.</p>
+
+<p><img src="/images/transactional-outbox/outbox.png" alt="Transactional Outbox" /></p>
+
+<p>In code, the registration controller would do the following:</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="k">def</span> <span class="nf">register_user</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span>
+  <span class="no">DB</span><span class="p">.</span><span class="nf">transaction</span> <span class="k">do</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="ss">name: </span><span class="nb">name</span><span class="p">)</span>
+    <span class="n">user</span><span class="p">.</span><span class="nf">save!</span>
+
+    <span class="n">outbox</span> <span class="o">=</span> <span class="no">Outbox</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span>
+      <span class="s2">"message"</span><span class="p">:</span> <span class="n">json</span><span class="p">({</span><span class="ss">user_id: </span><span class="n">user</span><span class="o">.</span><span class="no">ID</span><span class="p">}),</span>
+      <span class="s2">"exchange"</span><span class="p">:</span> <span class="s2">"users"</span><span class="p">,</span>
+      <span class="s2">"routing-key"</span><span class="p">:</span> <span class="s2">"user-signed-up"</span><span class="p">)</span>
+
+    <span class="n">outbox</span><span class="p">.</span><span class="nf">save!</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>In the meantime, a Publisher service polls the outbox table and publishes the
+messages to RabbitMQ.</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="k">module</span> <span class="nn">Publisher</span>
+  <span class="k">def</span> <span class="nf">start</span>
+    <span class="kp">loop</span> <span class="k">do</span>
+      <span class="n">poll_and_publish</span><span class="p">()</span>
+      <span class="nb">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">.</span><span class="nf">second</span><span class="p">)</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">poll_and_publish</span>
+    <span class="n">transaction</span> <span class="k">do</span>
+      <span class="c1"># SELECT * FROM outbox FOR UPDATE SKIP LOCKED LIMIT 10</span>
+      <span class="n">messages</span> <span class="o">=</span> <span class="no">Outbox</span><span class="p">.</span><span class="nf">lock</span><span class="p">(</span><span class="s2">"FOR UPDATE SKIP LOCKED"</span><span class="p">).</span><span class="nf">limit</span><span class="p">(</span><span class="mi">10</span><span class="p">).</span><span class="nf">load</span><span class="p">()</span>
+
+      <span class="n">messages</span><span class="p">.</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">msg</span><span class="o">|</span>
+        <span class="no">RabbitMQ</span><span class="p">.</span><span class="nf">publish</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+        <span class="no">Outbox</span><span class="p">.</span><span class="nf">delete</span><span class="p">(</span><span class="n">msg</span><span class="p">.</span><span class="nf">id</span><span class="p">)</span>
+      <span class="k">end</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<h2>Problems resolved by a transactional outbox?</h2>
+
+<p>We had two problems in our original implementations:</p>
+
+<p>The first attempted implementation tried to publish to the queue after a
+finished database transaction. This opened up the possibility of not publishing
+anything even if the user was persisted in the database.</p>
+
+<p>We resolved this problem by moving the message creation inside of the
+transaction. This ensured that if a user was created, the message was persisted
+as well.</p>
+
+<p>The second attempted implementation tried to publish inside of the transaction.
+Still, because we were trying to write to a different system, we published fake
+messages in case the user creation transaction rolled back. When I say fake
+message, I mean that the queue would contain a &ldquo;user-signed-up&rdquo; message, but
+the user would not be saved to the database.</p>
+
+<p>We resolved this problem by writing both the user and the message into the
+database, which allowed us to have a clean rollback if the user creation failed.</p>
+
+<h2>Problems not resolved by the transactional outbox?</h2>
+
+<p>The transactional outbox has an <strong>at-least-once</strong> message publishing guarantee,
+which means that the system guarantees that the message will be published to the
+queue at least once if a user is created. However, it can happen that this
+message is published multiple times to the queue.</p>
+
+<p>How this happens?</p>
+
+<p>Let&rsquo;s take a look at the Publisher&rsquo;s implementation and find a spot where our
+implementation produces multiple messages:</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="n">transaction</span> <span class="k">do</span>
+  <span class="c1"># SELECT * FROM outbox FOR UPDATE SKIP LOCKED LIMIT 10</span>
+  <span class="n">messages</span> <span class="o">=</span> <span class="no">Outbox</span><span class="p">.</span><span class="nf">lock</span><span class="p">(</span><span class="s2">"FOR UPDATE SKIP LOCKED"</span><span class="p">).</span><span class="nf">limit</span><span class="p">(</span><span class="mi">10</span><span class="p">).</span><span class="nf">load</span><span class="p">()</span>
+
+  <span class="n">messages</span><span class="p">.</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">msg</span><span class="o">|</span>
+    <span class="no">RabbitMQ</span><span class="p">.</span><span class="nf">publish</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+    <span class="c1"># &lt;--- HERE</span>
+    <span class="c1">#      Our service can crash at this moment, for example. The message</span>
+    <span class="c1">#      gets published but the Outbox message is not cleared up. On</span>
+    <span class="c1">#      restart it will re-attempt the message publishing.</span>
+
+    <span class="no">Outbox</span><span class="p">.</span><span class="nf">delete</span><span class="p">(</span><span class="n">msg</span><span class="p">.</span><span class="nf">id</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>I&rsquo;ll illustrate a possible timeline of events that causes multiple publishing in
+the following example:</p>
+<div class="highlight"><pre class="highlight plaintext"><code>event 01: messages = "select * from outbox"
+event 02: =&gt; messages are now [{msg1, msg2}]
+
+event 03: RabbitMQ.publish(msg1)
+event 04: # message persisted to rabbitmq
+event 05: *** CRASH: Out of memory ***
+
+event 05: Publisher service is restarted.
+event 06: messages = "select * from outbox"
+event 07: =&gt; messages are now [{msg1, msg2}]
+
+event 08: RabbitMQ.publish(msg1)              &lt;--- publishing the second time
+event 09: # message persisted to rabbitmq
+event 10: Outbox.delete(msg1)
+
+...
+</code></pre></div>
+<h2>How can clients protect themselves from repeated messages?</h2>
+
+<p>Repeated messages can be a real headache. The User Greeter service from our
+original example will send out to emails. Yikes!</p>
+
+<p>One way to resolve this problem is to make the message receiving endpoint
+<strong>idempotent</strong>. This means if the server receives two messages in, for example
+<code>({user_id: 1}, {user_id: 32}, {user_id: 1})</code>, it will disregard the second
+occurrence of the <code>user_id: 1</code> message.</p>
+
+<p><img src="/images/transactional-outbox/idempotent-client.png" alt="Transactional Outbox: Idempotent Client" /></p>
+
+<p>In this case, you will notice that the receiving service needs a way to store
+the message that it receives.</p>
+
+<p>Let&rsquo;s look at the implementation:</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="no">RabbitMQ</span><span class="p">.</span><span class="nf">subscribe</span><span class="p">(</span><span class="s2">"user-signed-up"</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">message</span><span class="o">|</span>
+  <span class="n">email</span> <span class="o">=</span> <span class="no">Email</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="ss">user_id: </span><span class="n">message</span><span class="p">.</span><span class="nf">user_id</span><span class="p">,</span> <span class="ss">content: </span><span class="n">compose</span><span class="p">(</span><span class="n">user_id</span><span class="p">))</span>
+  <span class="n">result</span> <span class="o">=</span> <span class="n">email</span><span class="p">.</span><span class="nf">save!</span>
+
+  <span class="k">case</span> <span class="n">result</span>
+    <span class="k">when</span> <span class="ss">:ok</span>
+      <span class="no">RabbitMQ</span><span class="p">.</span><span class="nf">ack!</span>
+
+    <span class="k">when</span> <span class="ss">:user_id_already_exists</span>
+      <span class="no">RabbitMQ</span><span class="p">.</span><span class="nf">ack!</span> <span class="c1"># idempotent, message was already processed</span>
+
+    <span class="k">else</span>
+      <span class="c1"># something unknown happened, we don't know what</span>
+      <span class="c1"># let's put back the message to the queue</span>
+      <span class="no">RabbitMQ</span><span class="p">.</span><span class="nf">nack!</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p><hr style="width: 50%; margin-top: 3em; border-color: gray;"></p>
+
+<p>Distributed, multi-database systems are complicated. While working on Semaphore,
+I&rsquo;ve encountered this and many other tricky problems. If we were lucky, we
+caught them in during PR reviews, but I also remember several unlucky examples
+where these bugs caused more severe problems.</p>
+
+<p>Problems in distributed systems show up many months or even years after you
+introduced them. Usually, this happens when the system hits a critical number of
+requests. This feedback loop is slow; we must educate ourselves in advance.</p>
+
+<p>Here are some great resources for further reading:</p>
+
+<ul>
+<li><a href="https://dzone.com/articles/implementing-the-outbox-pattern">Implementing the Outbox Pattern</a></li>
+<li><a href="https://microservices.io/patterns/data/transactional-outbox.html">Transactional Outbox by Chris Richardson</a></li>
+<li><a href="https://www.amazon.com/gp/product/1617294543">Book: Microservice Patterns</a></li>
+</ul>
+
+
+
+  </article>
+
+
+      <div class="footer">
+  <div class="content">
+    <p>
+      <strong>❈</strong><br>
+      <br>
+
+      Follow me on <a href="https://twitter.com/igor_sarcevic">Twitter</a> and <a href="https://rs.linkedin.com/in/igorsarcevic">LinkedIn</a>.<br>
+      Copyright ©2014-2023 Igor Šarčević. All rights reserved.</br>
+      <br>
+      Enjoy the rest of your day!
+    </p>
+  </div>
+<div>
+
+    </div>
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+           })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-57223799-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+
+    <script>
+      /**
+      * Function that tracks a click on an outbound link in Analytics.
+      * This function takes a valid URL string as an argument, and uses that URL string
+      * as the event label. Setting the transport method to 'beacon' lets the hit be sent
+      * using 'navigator.sendBeacon' in browser that support it.
+      */
+      var trackOutboundLink = function(url) {
+        ga('send', 'event', 'outbound', 'click', url, {
+          'transport': 'beacon',
+          'hitCallback': function(){document.location = url;}
+        });
+      }
+    </script>
+
+  </body>
+</html>

@@ -1,0 +1,191 @@
+<!doctype html>
+<html itemscope itemtype="http://schema.org/Article">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
+    <link rel="alternate" type="application/atom+xml" title="Morning Coffee" href="/feed.xml" />
+
+    <link rel="shortcut icon" href="favicon.svg">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+      <title>Running scripts on remote machines &mdash; by Igor Šarčević</title>
+
+    <!-- Place this data between the <head> tags of your website -->
+      <meta name="description" content="Several days ago a colleague and I wanted to check whether our caching system
+contains all the files that we expect it to contain. We started by writing a
+bash command that would list and compare the available files. It had
+the following structure:
+
+" />
+
+      <!-- Schema.org markup for Google+ -->
+      <meta itemprop="name" content="Running scripts on remote machines">
+      <meta itemprop="description" content="Several days ago a colleague and I wanted to check whether our caching system
+contains all the files that we expect it to contain. We started by writing a
+bash command that would list and compare the available files. It had
+the following structure:
+
+">
+      <meta itemprop="image" content="http://morningcoffee.io/images/running.png">
+
+      <!-- Twitter Card data -->
+      <meta name="twitter:card" content="summary_large_image">
+      <meta name="twitter:site" content="@igor_sarcevic">
+      <meta name="twitter:title" content="Running scripts on remote machines">
+      <meta name="twitter:description" content="Several days ago a colleague and I wanted to check whether our caching system
+contains all the files that we expect it to contain. We started by writing a
+bash command that would list and compare the available files. It had
+the following structure:
+
+">
+      <meta name="twitter:creator" content="@igor_sarcevic">
+      <!-- Twitter summary card with large image must be at least 280x150px -->
+      <meta name="twitter:image:src" content="http://morningcoffee.io/images/running.png">
+
+      <!-- Open Graph data -->
+      <meta property="og:title" content="Running scripts on remote machines" />
+      <meta property="og:type" content="article" />
+      <meta property="og:url" content="http://" />
+      <meta property="og:image" content="http://morningcoffee.io/images/running.png" />
+      <meta property="og:description" content="Several days ago a colleague and I wanted to check whether our caching system
+contains all the files that we expect it to contain. We started by writing a
+bash command that would list and compare the available files. It had
+the following structure:
+
+" />
+      <meta property="article:published_time" content="2015-05-30 00:00:00 UTC" />
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Raleway:900&display=swap" rel="stylesheet">
+    <link href="/stylesheets/style.css" rel="stylesheet" />
+  </head>
+  <body>
+
+    <div id="main" role="main">
+      <nav class="navigation" style="padding: 10px;">
+  <div style="display: flex;justify-items: space-between;justify-content: space-between;">
+    <a style="font-size: 20px" href="/" style="color: crimson;">Home</a>
+    <a style="font-size: 20px" href="/about-me.html" style="color: crimson;">About</a>
+  </div>
+</nav>
+
+
+        <article class="article">
+    <div class="header">
+      <h1>Running scripts on remote machines</h1>
+
+      <div class="subtitle">
+        Published on <time>May 30, 2015</time>
+      </div>
+    </div>
+
+    <p>Several days ago a colleague and I wanted to check whether our caching system
+contains all the files that we expect it to contain. We started by writing a
+bash command that would list and compare the available files. It had
+the following structure:</p>
+
+<p></p>
+<div class="highlight"><pre class="highlight shell"><code><span class="nb">cd </span>somewhere <span class="o">&amp;&amp;</span> untar archive <span class="o">&amp;&amp;</span> diff &lt;<span class="o">(</span><span class="nb">ls</span> <span class="nt">-lah</span> directory<span class="o">)</span> &lt;<span class="o">(</span><span class="nb">ls</span> <span class="nt">-lah</span> other_directory<span class="o">)</span>
+</code></pre></div>
+<p>We run the above command through an ssh connection from our local machine.
+In other words we did something along these lines:</p>
+<div class="highlight"><pre class="highlight shell"><code>ssh cacher@cache-server <span class="s2">"cd somewhere &amp;&amp; untar archive &amp;&amp; diff &lt;(ls -lah directory) &lt;(ls -lah other_directory)"</span>
+</code></pre></div>
+<p>As you can see the above command is pretty long even in this form. But it wasn&rsquo;t
+sufficient. We added a couple of <code>sed</code>, <code>grep</code>, <code>awk</code>, <code>tail</code>, <code>while</code> commands just to make
+the output more human friendly. The result was a 4 lines long beast command that we
+tried to keep in a one long readline session. Imagine something like this:</p>
+<div class="highlight"><pre class="highlight shell"><code>ssh cacher@cache-server <span class="s2">"cd somewhere &amp;&amp; untar archive &amp;&amp; ls directory | while read directory; do &amp;&amp; diff echo </span><span class="nv">$directory</span><span class="s2">; &lt;(ls -lah directory | grep "</span><span class="k">*</span>.<span class="k">*</span><span class="se">\1</span><span class="s2">" | sed "</span>s/<span class="se">\.</span>spec//g<span class="s2">" | tail) &lt;(ls -lah other_directory | grep "</span><span class="k">*</span>.<span class="k">*</span><span class="se">\1</span><span class="s2">" | sed "</span>s/<span class="se">\.</span>spec//g<span class="s2">" | tail) &amp;&amp; echo "</span>No errors<span class="s2">" || echo "</span>Error!!!<span class="s2">"; done"</span>
+</code></pre></div>
+<p>To make the command even more horrible, we run it on several remote machines with a nifty
+<code>for</code> loop:</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="k">for </span>server <span class="k">in</span> <span class="s2">"</span><span class="k">${</span><span class="nv">servers</span><span class="p">[@]</span><span class="k">}</span><span class="s2">"</span><span class="p">;</span> <span class="o">{</span> ssh cacher@<span class="nv">$server</span> <span class="s2">"cd somewhere &amp;&amp; untar archive &amp;&amp; ls directory | while read directory; do &amp;&amp; diff echo </span><span class="nv">$directory</span><span class="s2">; &lt;(ls -lah directory | grep "</span><span class="k">*</span>.<span class="k">*</span><span class="se">\1</span><span class="s2">" | sed "</span>s/<span class="se">\.</span>spec//g<span class="s2">" | tail) &lt;(ls -lah other_directory | grep "</span><span class="k">*</span>.<span class="k">*</span><span class="se">\1</span><span class="s2">" | sed "</span>s/<span class="se">\.</span>spec//g<span class="s2">" | tail) &amp;&amp; echo "</span>No errors<span class="s2">" || echo "</span>Error!!!<span class="s2">"; done"</span> <span class="o">}</span>
+</code></pre></div>
+<p>Hunting down syntax errors was tedious, every time moving around with the left
+and right arrow&hellip; It was the time to put the command into a shell script!</p>
+
+<h2>The script</h2>
+
+<p>When you put the above command in a shell script, it becomes nice and tidy:</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="nb">cd </span>somewhere
+untar archive
+
+<span class="nb">ls </span>directory | <span class="k">while </span><span class="nb">read </span>directory<span class="p">;</span> <span class="k">do
+  </span><span class="nb">echo</span> <span class="nv">$directory</span><span class="p">;</span>
+
+  <span class="nv">original_list</span><span class="o">=</span><span class="k">$(</span><span class="nb">ls</span> <span class="nt">-lah</span> <span class="nv">$directory</span> | <span class="nb">grep</span> <span class="s2">"*.*</span><span class="se">\1</span><span class="s2">"</span> | sed <span class="s2">"s/</span><span class="se">\.</span><span class="s2">spec//g"</span> | tail<span class="k">)</span>
+
+  <span class="nv">new_list</span><span class="o">=</span><span class="k">$(</span><span class="nb">ls</span> <span class="nt">-lah</span> other_directory | <span class="nb">grep</span> <span class="s2">"*.*</span><span class="se">\1</span><span class="s2">"</span> | sed <span class="s2">"s/</span><span class="se">\.</span><span class="s2">spec//g"</span> | tail<span class="k">)</span>
+
+  <span class="k">if </span>diff &lt;<span class="o">(</span><span class="nb">echo </span>original_list<span class="o">)</span> &lt;<span class="o">(</span><span class="nb">echo </span>new_list<span class="o">)</span><span class="p">;</span> <span class="k">then
+    </span><span class="nb">echo</span> <span class="s2">"No errors"</span>
+  <span class="k">else
+    </span><span class="nb">echo</span> <span class="s2">"Error!!!"</span><span class="p">;</span>
+  <span class="k">fi
+done</span>
+</code></pre></div>
+<p>But, how can we run the script on a remote machine?</p>
+
+<p>The srtaight forward solution is to <code>scp</code> it to the remote machine and then execute
+the script with an <code>ssh</code> commmand:</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="k">for </span>server <span class="k">in</span> <span class="s2">"</span><span class="k">${</span><span class="nv">servers</span><span class="p">[@]</span><span class="k">}</span><span class="s2">"</span><span class="p">;</span> <span class="o">{</span> scp script.sh <span class="nv">$server</span>:/tmp/script.sh <span class="o">&amp;&amp;</span> ssh cacher@<span class="nv">$server</span> <span class="s2">"bash /tmp/script.sh &amp;&amp; rm /tmp/script.sh"</span><span class="o">}</span>
+</code></pre></div>
+<p>But, this still looks horible&hellip; Let&rsquo;s look at an alternative&hellip;</p>
+
+<p>Turns out you can push a file into the ssh command and ssh will redirect it to a
+remote command:</p>
+<div class="highlight"><pre class="highlight shell"><code>ssh cacher@cache-server <span class="s2">"bash -s"</span> &lt; script.sh
+</code></pre></div>
+<p>With this we remove the need for a temp file, and the above command becomes:</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="k">for </span>s <span class="k">in</span> <span class="s2">"</span><span class="k">${</span><span class="nv">servers</span><span class="p">[@]</span><span class="k">}</span><span class="s2">"</span><span class="p">;</span> <span class="o">{</span> ssh cacher@<span class="nv">$s</span> <span class="s2">"bash -s"</span> &lt; script.sh <span class="o">}</span>
+</code></pre></div>
+<p>This form looks acceptable.</p>
+
+
+
+  </article>
+
+
+      <div class="footer">
+  <div class="content">
+    <p>
+      <strong>❈</strong><br>
+      <br>
+
+      Follow me on <a href="https://twitter.com/igor_sarcevic">Twitter</a> and <a href="https://rs.linkedin.com/in/igorsarcevic">LinkedIn</a>.<br>
+      Copyright ©2014-2023 Igor Šarčević. All rights reserved.</br>
+      <br>
+      Enjoy the rest of your day!
+    </p>
+  </div>
+<div>
+
+    </div>
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+           })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-57223799-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+
+    <script>
+      /**
+      * Function that tracks a click on an outbound link in Analytics.
+      * This function takes a valid URL string as an argument, and uses that URL string
+      * as the event label. Setting the transport method to 'beacon' lets the hit be sent
+      * using 'navigator.sendBeacon' in browser that support it.
+      */
+      var trackOutboundLink = function(url) {
+        ga('send', 'event', 'outbound', 'click', url, {
+          'transport': 'beacon',
+          'hitCallback': function(){document.location = url;}
+        });
+      }
+    </script>
+
+  </body>
+</html>

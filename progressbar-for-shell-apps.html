@@ -1,0 +1,165 @@
+<!doctype html>
+<html itemscope itemtype="http://schema.org/Article">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
+    <link rel="alternate" type="application/atom+xml" title="Morning Coffee" href="/feed.xml" />
+
+    <link rel="shortcut icon" href="favicon.svg">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+      <title>Progress bar for shell apps &mdash; by Igor Šarčević</title>
+
+    <!-- Place this data between the <head> tags of your website -->
+      <meta name="description" content="Downloading a file, backing up your database, or installing a package for your system are all instances of long lived processes that we encounter daily. When such a process takes a long time to finish, it is always nice to give some kind of visual cue to the user.
+
+" />
+
+      <!-- Schema.org markup for Google+ -->
+      <meta itemprop="name" content="Progress bar for shell apps">
+      <meta itemprop="description" content="Downloading a file, backing up your database, or installing a package for your system are all instances of long lived processes that we encounter daily. When such a process takes a long time to finish, it is always nice to give some kind of visual cue to the user.
+
+">
+      <meta itemprop="image" content="http://morningcoffee.io/images/lol.png">
+
+      <!-- Twitter Card data -->
+      <meta name="twitter:card" content="summary_large_image">
+      <meta name="twitter:site" content="@igor_sarcevic">
+      <meta name="twitter:title" content="Progress bar for shell apps">
+      <meta name="twitter:description" content="Downloading a file, backing up your database, or installing a package for your system are all instances of long lived processes that we encounter daily. When such a process takes a long time to finish, it is always nice to give some kind of visual cue to the user.
+
+">
+      <meta name="twitter:creator" content="@igor_sarcevic">
+      <!-- Twitter summary card with large image must be at least 280x150px -->
+      <meta name="twitter:image:src" content="http://morningcoffee.io/images/lol.png">
+
+      <!-- Open Graph data -->
+      <meta property="og:title" content="Progress bar for shell apps" />
+      <meta property="og:type" content="article" />
+      <meta property="og:url" content="http://" />
+      <meta property="og:image" content="http://morningcoffee.io/images/lol.png" />
+      <meta property="og:description" content="Downloading a file, backing up your database, or installing a package for your system are all instances of long lived processes that we encounter daily. When such a process takes a long time to finish, it is always nice to give some kind of visual cue to the user.
+
+" />
+      <meta property="article:published_time" content="2014-10-15 00:00:00 UTC" />
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Raleway:900&display=swap" rel="stylesheet">
+    <link href="/stylesheets/style.css" rel="stylesheet" />
+  </head>
+  <body>
+
+    <div id="main" role="main">
+      <nav class="navigation" style="padding: 10px;">
+  <div style="display: flex;justify-items: space-between;justify-content: space-between;">
+    <a style="font-size: 20px" href="/" style="color: crimson;">Home</a>
+    <a style="font-size: 20px" href="/about-me.html" style="color: crimson;">About</a>
+  </div>
+</nav>
+
+
+        <article class="article">
+    <div class="header">
+      <h1>Progress bar for shell apps</h1>
+
+      <div class="subtitle">
+        Published on <time>October 15, 2014</time>
+      </div>
+    </div>
+
+    <p>Downloading a file, backing up your database, or installing a package for your system are all instances of long lived processes that we encounter daily. When such a process takes a long time to finish, it is always nice to give some kind of visual cue to the user.</p>
+
+<p></p>
+
+<p>A nice and space efficient way to achieve the previous is to use a progress bar or a display counter. This tutorial aims to help you create such an output for a console application.</p>
+
+<p>The hardest part in creating such an output is to figure out how to clear the current line in the output and replace it with another. Well, there is a clever trick involved. Instead of using an <code>\n</code> at the end of the string that is printed to <code>stdout</code>, you can use the <code>\r</code> escape value. These two are familiar values but the first jumps to the start of the line and moves one line down, while the second only moves to the beginning of the line and thus rewrites that line when a new output arrives.</p>
+
+<p>Here is a nice little script that will display a progress bar &ndash; written in the ruby programming language, but easily translatable to any other.</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="k">def</span> <span class="nf">print_progress_bar</span><span class="p">(</span><span class="n">finished_percent</span><span class="p">)</span>
+  <span class="n">finished</span> <span class="o">=</span> <span class="s2">"#"</span> <span class="o">*</span> <span class="n">finished_percent</span>
+  <span class="n">empty</span>    <span class="o">=</span> <span class="s2">"-"</span> <span class="o">*</span> <span class="p">(</span><span class="mi">100</span> <span class="o">-</span> <span class="n">finished_percent</span><span class="p">)</span>
+
+  <span class="nb">print</span> <span class="s2">"</span><span class="se">\r</span><span class="s2">[ </span><span class="si">#{</span><span class="n">finished</span><span class="si">}#{</span><span class="n">empty</span><span class="si">}</span><span class="s2"> ] </span><span class="si">#{</span><span class="n">finished_percent</span><span class="si">}</span><span class="s2">% "</span>
+<span class="k">end</span>
+
+<span class="p">(</span><span class="mi">0</span><span class="o">..</span><span class="mi">100</span><span class="p">).</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">count</span><span class="o">|</span>
+  <span class="n">print_progress_bar</span><span class="p">(</span><span class="n">count</span><span class="p">)</span>
+  <span class="nb">sleep</span> <span class="mi">1</span>
+<span class="k">end</span>
+</code></pre></div>
+<h2>Full line progress bars</h2>
+
+<p>The above code snippet works great, <strong>if</strong> your terminal is wider than ±100 columns. Otherwise it just breaks up your lines and looks ugly. On the other hand if your terminal is much wider than 110 columns the output
+is again strange because it leaves much of the space unfilled.</p>
+
+<p><img src="https://d23f6h5jpj26xu.cloudfront.net/2juf16zexpkqng_small.png" alt="Full line progress bar" /></p>
+
+<p>Here is a solution. If we execute the <code>tput cols</code> command it will return us the width of the terminal window in column numbers and we can use it to cleverly calculate the length of our progress bar. The improved &mdash; <code>tputs</code> using &mdash; code snippet follows</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="k">def</span> <span class="nf">print_progress_bar</span><span class="p">(</span><span class="n">finished_percent</span><span class="p">)</span>
+  <span class="n">fixed_space</span> <span class="o">=</span> <span class="mi">9</span> <span class="c1"># for braces and number</span>
+
+  <span class="n">width</span> <span class="o">=</span> <span class="sb">`tput cols`</span><span class="p">.</span><span class="nf">to_f</span> <span class="o">-</span> <span class="n">fixed_space</span>
+
+  <span class="n">finished_count</span> <span class="o">=</span> <span class="p">((</span><span class="n">finished_percent</span><span class="o">*</span><span class="n">width</span><span class="p">)</span><span class="o">/</span><span class="mi">100</span><span class="p">).</span><span class="nf">ceil</span>
+  <span class="n">empty_count</span>    <span class="o">=</span> <span class="n">width</span> <span class="o">-</span> <span class="n">finished_count</span>
+
+  <span class="n">finished</span> <span class="o">=</span> <span class="s2">"#"</span> <span class="o">*</span> <span class="n">finished_count</span>
+  <span class="n">empty</span>    <span class="o">=</span> <span class="s2">"-"</span> <span class="o">*</span> <span class="n">empty_count</span>
+
+  <span class="nb">print</span> <span class="s2">"</span><span class="se">\r</span><span class="s2">[ </span><span class="si">#{</span><span class="n">finished</span><span class="si">}#{</span><span class="n">empty</span><span class="si">}</span><span class="s2"> ] </span><span class="si">#{</span><span class="n">finished_percent</span><span class="si">}</span><span class="s2">% "</span>
+<span class="k">end</span>
+
+<span class="p">(</span><span class="mi">0</span><span class="o">..</span><span class="mi">100</span><span class="p">).</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">count</span><span class="o">|</span>
+  <span class="n">print_progress_bar</span><span class="p">(</span><span class="n">count</span><span class="p">)</span>
+  <span class="nb">sleep</span> <span class="mi">1</span>
+<span class="k">end</span>
+</code></pre></div>
+
+
+  </article>
+
+
+      <div class="footer">
+  <div class="content">
+    <p>
+      <strong>❈</strong><br>
+      <br>
+
+      Follow me on <a href="https://twitter.com/igor_sarcevic">Twitter</a> and <a href="https://rs.linkedin.com/in/igorsarcevic">LinkedIn</a>.<br>
+      Copyright ©2014-2023 Igor Šarčević. All rights reserved.</br>
+      <br>
+      Enjoy the rest of your day!
+    </p>
+  </div>
+<div>
+
+    </div>
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+           })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-57223799-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+
+    <script>
+      /**
+      * Function that tracks a click on an outbound link in Analytics.
+      * This function takes a valid URL string as an argument, and uses that URL string
+      * as the event label. Setting the transport method to 'beacon' lets the hit be sent
+      * using 'navigator.sendBeacon' in browser that support it.
+      */
+      var trackOutboundLink = function(url) {
+        ga('send', 'event', 'outbound', 'click', url, {
+          'transport': 'beacon',
+          'hitCallback': function(){document.location = url;}
+        });
+      }
+    </script>
+
+  </body>
+</html>

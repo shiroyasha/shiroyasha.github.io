@@ -1,0 +1,197 @@
+<!doctype html>
+<html itemscope itemtype="http://schema.org/Article">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
+    <link rel="alternate" type="application/atom+xml" title="Morning Coffee" href="/feed.xml" />
+
+    <link rel="shortcut icon" href="favicon.svg">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+      <title>Alias methods in CoffeeScript &mdash; by Igor Šarčević</title>
+
+    <!-- Place this data between the <head> tags of your website -->
+      <meta name="description" content="In programming we like to reuse stuff. Data, variables, classes and even whole systems. We have a rule of thumb to only write code if it can not be found somewhere else. But sometimes the same thing can have a different meaning in a different context. So in order to reuse code but have a meaningful name in various contexts, we use aliases.
+
+" />
+
+      <!-- Schema.org markup for Google+ -->
+      <meta itemprop="name" content="Alias methods in CoffeeScript">
+      <meta itemprop="description" content="In programming we like to reuse stuff. Data, variables, classes and even whole systems. We have a rule of thumb to only write code if it can not be found somewhere else. But sometimes the same thing can have a different meaning in a different context. So in order to reuse code but have a meaningful name in various contexts, we use aliases.
+
+">
+      <meta itemprop="image" content="http://morningcoffee.io/images/alias-methods-coffeescript.png">
+
+      <!-- Twitter Card data -->
+      <meta name="twitter:card" content="summary_large_image">
+      <meta name="twitter:site" content="@igor_sarcevic">
+      <meta name="twitter:title" content="Alias methods in CoffeeScript">
+      <meta name="twitter:description" content="In programming we like to reuse stuff. Data, variables, classes and even whole systems. We have a rule of thumb to only write code if it can not be found somewhere else. But sometimes the same thing can have a different meaning in a different context. So in order to reuse code but have a meaningful name in various contexts, we use aliases.
+
+">
+      <meta name="twitter:creator" content="@igor_sarcevic">
+      <!-- Twitter summary card with large image must be at least 280x150px -->
+      <meta name="twitter:image:src" content="http://morningcoffee.io/images/alias-methods-coffeescript.png">
+
+      <!-- Open Graph data -->
+      <meta property="og:title" content="Alias methods in CoffeeScript" />
+      <meta property="og:type" content="article" />
+      <meta property="og:url" content="http://" />
+      <meta property="og:image" content="http://morningcoffee.io/images/alias-methods-coffeescript.png" />
+      <meta property="og:description" content="In programming we like to reuse stuff. Data, variables, classes and even whole systems. We have a rule of thumb to only write code if it can not be found somewhere else. But sometimes the same thing can have a different meaning in a different context. So in order to reuse code but have a meaningful name in various contexts, we use aliases.
+
+" />
+      <meta property="article:published_time" content="2014-10-10 00:00:00 UTC" />
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Raleway:900&display=swap" rel="stylesheet">
+    <link href="/stylesheets/style.css" rel="stylesheet" />
+  </head>
+  <body>
+
+    <div id="main" role="main">
+      <nav class="navigation" style="padding: 10px;">
+  <div style="display: flex;justify-items: space-between;justify-content: space-between;">
+    <a style="font-size: 20px" href="/" style="color: crimson;">Home</a>
+    <a style="font-size: 20px" href="/about-me.html" style="color: crimson;">About</a>
+  </div>
+</nav>
+
+
+        <article class="article">
+    <div class="header">
+      <h1>Alias methods in CoffeeScript</h1>
+
+      <div class="subtitle">
+        Published on <time>October 10, 2014</time>
+      </div>
+    </div>
+
+    <p>In programming we like to reuse stuff. Data, variables, classes and even whole systems. We have a rule of thumb to only write code if it can not be found somewhere else. But sometimes the same thing can have a different meaning in a different context. So in order to reuse code but have a meaningful name in various contexts, we use aliases.</p>
+
+<p></p>
+
+<p>In CoffeeScript we don&rsquo;t have an explicit alias method like in Ruby or Bash Script, but we have something better &mdash; <strong>functions as data</strong>.</p>
+
+<p>Let&rsquo;s start with the basics. To create an alias for a function we can just assign one value to the other</p>
+<div class="highlight"><pre class="highlight coffeescript"><code><span class="nx">subtract</span> <span class="o">=</span> <span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nx">a</span> <span class="o">-</span> <span class="nx">b</span>
+
+<span class="nx">minus</span> <span class="o">=</span> <span class="nx">subtract</span>
+
+<span class="nx">subtract</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>    <span class="c1"># =&gt; 4</span>
+<span class="nx">minus</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>       <span class="c1"># =&gt; 4</span>
+</code></pre></div>
+<p>If we have a method in a class, unfortunately we can&rsquo;t just assign one value to the another because we would lose the context of the <code>this</code> value. Luckily, CoffeeScript has a nice little operator &mdash; <code>@::</code> &mdash; that can assign one method to another name.</p>
+<div class="highlight"><pre class="highlight coffeescript"><code><span class="k">class</span> <span class="nx">Stack</span>
+
+  <span class="na">constructor</span><span class="o">:</span> <span class="p">()</span> <span class="o">-&gt;</span>
+    <span class="vi">@</span><span class="na">_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+  <span class="na">push</span><span class="o">:</span> <span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="o">-&gt;</span>
+    <span class="vi">@</span><span class="na">_list</span><span class="p">.</span><span class="na">push</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span>
+
+  <span class="na">append</span><span class="o">:</span> <span class="err">@</span><span class="o">::</span><span class="nx">push</span>
+  <span class="na">add</span>   <span class="o">:</span> <span class="err">@</span><span class="o">::</span><span class="nx">push</span>
+
+
+<span class="nx">s</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Stack</span><span class="p">()</span>
+
+<span class="nx">s</span><span class="p">.</span><span class="na">push</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="nx">s</span><span class="p">.</span><span class="na">append</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="nx">s</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="nx">s</span><span class="p">.</span><span class="na">_list</span>  <span class="c1"># =&gt; [5, 10, 3]</span>
+</code></pre></div>
+<h2>Parameterized aliases</h2>
+
+<p>Sometimes a simple alias is not enough. The new name represents a subset of a more general function that takes more arguments than the new one we want to create. In a pure object oriented paradigm this is usually known as a factory.</p>
+
+<p>Come back! Factory aren&rsquo;t so scary in CoffeeScript as they are in for example Java. All we have to do is to redefine our original method to Carry style. Here is a nice example for logging data</p>
+<div class="highlight"><pre class="highlight coffeescript"><code><span class="nx">show</span> <span class="o">=</span> <span class="p">(</span><span class="nx">logType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="nx">message</span><span class="p">)</span> <span class="o">-&gt;</span>
+  <span class="nx">console</span><span class="p">.</span><span class="na">log</span><span class="p">(</span><span class="s">"</span><span class="si">#{</span><span class="nx">logType</span><span class="si">}</span><span class="s">: </span><span class="si">#{</span><span class="nx">message</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+
+<span class="nx">info</span>    <span class="o">=</span> <span class="nx">show</span><span class="p">(</span><span class="s">"INFO"</span><span class="p">)</span>
+<span class="nx">error</span>   <span class="o">=</span> <span class="nx">show</span><span class="p">(</span><span class="s">"ERROR"</span><span class="p">)</span>
+<span class="nx">warning</span> <span class="o">=</span> <span class="nx">show</span><span class="p">(</span><span class="s">"WARN"</span><span class="p">)</span>
+
+<span class="nx">info</span><span class="p">(</span><span class="s">"a simple test"</span><span class="p">)</span>    <span class="c1"># =&gt; "INFO: a simple test"</span>
+<span class="nx">error</span><span class="p">(</span><span class="s">"a simple test"</span><span class="p">)</span>   <span class="c1"># =&gt; "ERROR: a simple test"</span>
+<span class="nx">warning</span><span class="p">(</span><span class="s">"a simple test"</span><span class="p">)</span> <span class="c1"># =&gt; "WARN: a simple test"</span>
+</code></pre></div>
+<p>Notice how I have defined the <code>show</code> function. It is a function that returns another function. Weird&hellip; but powerful and elegant.</p>
+
+<p>To achieve the same in a class, we can do something very similar. Here is an example class that uses parameterized aliases to send out ajax requests.</p>
+<div class="highlight"><pre class="highlight coffeescript"><code><span class="k">class</span> <span class="nx">HTTP</span>
+
+  <span class="nx">_request</span> <span class="o">=</span> <span class="p">(</span><span class="nx">method</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="nx">data</span> <span class="o">=</span> <span class="p">{},</span> <span class="nx">callback</span> <span class="o">=</span> <span class="nx">nil</span><span class="p">)</span> <span class="o">-&gt;</span>
+    <span class="nx">$</span><span class="p">.</span><span class="na">ajax</span><span class="p">({</span>
+      <span class="na">method</span><span class="o">:</span> <span class="nx">method</span>
+      <span class="na">url</span><span class="o">:</span> <span class="vi">@</span><span class="na">url</span>
+      <span class="na">data</span><span class="o">:</span> <span class="nx">data</span>
+    <span class="p">}).</span><span class="na">done</span><span class="p">(</span><span class="nx">callback</span><span class="p">)</span>
+
+  <span class="na">constructor</span><span class="o">:</span> <span class="p">(</span><span class="vi">@</span><span class="na">url</span><span class="p">)</span> <span class="o">-&gt;</span>
+
+  <span class="na">get</span><span class="o">:</span>    <span class="nx">_request</span> <span class="s">"get"</span>
+  <span class="na">put</span><span class="o">:</span>    <span class="nx">_request</span> <span class="s">"put"</span>
+  <span class="na">post</span><span class="o">:</span>   <span class="nx">_request</span> <span class="s">"post"</span>
+  <span class="na">delete</span><span class="o">:</span> <span class="nx">_request</span> <span class="s">"delete"</span>
+
+<span class="nx">api</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">HTTP</span><span class="p">(</span><span class="s">"/v1/testApi"</span><span class="p">)</span>
+
+<span class="nx">api</span><span class="p">.</span><span class="na">post</span> <span class="p">{</span> <span class="na">hello</span><span class="o">:</span> <span class="s">"world"</span> <span class="p">},</span> <span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="o">-&gt;</span>
+  <span class="nx">console</span><span class="p">.</span><span class="na">log</span> <span class="nx">response</span>
+
+<span class="nx">api</span><span class="p">.</span><span class="na">get</span> <span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="o">-&gt;</span>
+  <span class="nx">console</span><span class="p">.</span><span class="na">log</span> <span class="nx">response</span>
+</code></pre></div>
+<p>That&rsquo;s it. Happy hacking!</p>
+
+
+
+  </article>
+
+
+      <div class="footer">
+  <div class="content">
+    <p>
+      <strong>❈</strong><br>
+      <br>
+
+      Follow me on <a href="https://twitter.com/igor_sarcevic">Twitter</a> and <a href="https://rs.linkedin.com/in/igorsarcevic">LinkedIn</a>.<br>
+      Copyright ©2014-2023 Igor Šarčević. All rights reserved.</br>
+      <br>
+      Enjoy the rest of your day!
+    </p>
+  </div>
+<div>
+
+    </div>
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+           })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-57223799-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+
+    <script>
+      /**
+      * Function that tracks a click on an outbound link in Analytics.
+      * This function takes a valid URL string as an argument, and uses that URL string
+      * as the event label. Setting the transport method to 'beacon' lets the hit be sent
+      * using 'navigator.sendBeacon' in browser that support it.
+      */
+      var trackOutboundLink = function(url) {
+        ga('send', 'event', 'outbound', 'click', url, {
+          'transport': 'beacon',
+          'hitCallback': function(){document.location = url;}
+        });
+      }
+    </script>
+
+  </body>
+</html>

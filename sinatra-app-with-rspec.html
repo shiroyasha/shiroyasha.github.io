@@ -1,0 +1,306 @@
+<!doctype html>
+<html itemscope itemtype="http://schema.org/Article">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
+    <link rel="alternate" type="application/atom+xml" title="Morning Coffee" href="/feed.xml" />
+
+    <link rel="shortcut icon" href="favicon.svg">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+      <title>Sinatra applications with RSpec &mdash; by Igor Šarčević</title>
+
+    <!-- Place this data between the <head> tags of your website -->
+      <meta name="description" content="There are times when the only thing I want to create is a simple API. In the Ruby ecosystem the standard for creating something simple is Sinatra. But, there are a lot of things you miss in Sinatra that you have predefined in Rails. Sinatra let’s you define and include only the things you actually need. Maybe this is a good thing, maybe it is not.
+
+" />
+
+      <!-- Schema.org markup for Google+ -->
+      <meta itemprop="name" content="Sinatra applications with RSpec">
+      <meta itemprop="description" content="There are times when the only thing I want to create is a simple API. In the Ruby ecosystem the standard for creating something simple is Sinatra. But, there are a lot of things you miss in Sinatra that you have predefined in Rails. Sinatra let’s you define and include only the things you actually need. Maybe this is a good thing, maybe it is not.
+
+">
+      <meta itemprop="image" content="http://morningcoffee.io/images/sinatra-app-with-rspec.png">
+
+      <!-- Twitter Card data -->
+      <meta name="twitter:card" content="summary_large_image">
+      <meta name="twitter:site" content="@igor_sarcevic">
+      <meta name="twitter:title" content="Sinatra applications with RSpec">
+      <meta name="twitter:description" content="There are times when the only thing I want to create is a simple API. In the Ruby ecosystem the standard for creating something simple is Sinatra. But, there are a lot of things you miss in Sinatra that you have predefined in Rails. Sinatra let’s you define and include only the things you actually need. Maybe this is a good thing, maybe it is not.
+
+">
+      <meta name="twitter:creator" content="@igor_sarcevic">
+      <!-- Twitter summary card with large image must be at least 280x150px -->
+      <meta name="twitter:image:src" content="http://morningcoffee.io/images/sinatra-app-with-rspec.png">
+
+      <!-- Open Graph data -->
+      <meta property="og:title" content="Sinatra applications with RSpec" />
+      <meta property="og:type" content="article" />
+      <meta property="og:url" content="http://" />
+      <meta property="og:image" content="http://morningcoffee.io/images/sinatra-app-with-rspec.png" />
+      <meta property="og:description" content="There are times when the only thing I want to create is a simple API. In the Ruby ecosystem the standard for creating something simple is Sinatra. But, there are a lot of things you miss in Sinatra that you have predefined in Rails. Sinatra let’s you define and include only the things you actually need. Maybe this is a good thing, maybe it is not.
+
+" />
+      <meta property="article:published_time" content="2014-10-19 00:00:00 UTC" />
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Raleway:900&display=swap" rel="stylesheet">
+    <link href="/stylesheets/style.css" rel="stylesheet" />
+  </head>
+  <body>
+
+    <div id="main" role="main">
+      <nav class="navigation" style="padding: 10px;">
+  <div style="display: flex;justify-items: space-between;justify-content: space-between;">
+    <a style="font-size: 20px" href="/" style="color: crimson;">Home</a>
+    <a style="font-size: 20px" href="/about-me.html" style="color: crimson;">About</a>
+  </div>
+</nav>
+
+
+        <article class="article">
+    <div class="header">
+      <h1>Sinatra applications with RSpec</h1>
+
+      <div class="subtitle">
+        Published on <time>October 19, 2014</time>
+      </div>
+    </div>
+
+    <p>There are times when the only thing I want to create is a simple API. In the Ruby ecosystem the standard for creating something simple is Sinatra. But, there are a lot of things you miss in Sinatra that you have predefined in Rails. Sinatra let&rsquo;s you define and include only the things you actually need. Maybe this is a good thing, maybe it is not.</p>
+
+<p></p>
+
+<p>However, the things you need for a complete Sinatra application are sometimes hard to include. This tutorial aims to help you in that process, by showing you how to create a simple Sinatra web application that uses RSpec for testing.</p>
+
+<p>We will create a simple Todo application with only two actions. One for listing all the existing Todos and another one for adding a new one. It will use Sinatra for creating the API, RSpec for testing, and it will also include Active Support for adding a couple of nice functionality to the Ruby language.</p>
+
+<h2>Bootstrap</h2>
+
+<p>So let&rsquo;s begin! The first thing is to create a <strong>Gemfile</strong> and list all the dependencies. From the above description of the project we can simply deduct all the things that are necessary.</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="n">source</span> <span class="s2">"https://rubygems.org"</span>
+
+<span class="n">gem</span> <span class="s2">"rack"</span>
+<span class="n">gem</span> <span class="s2">"sinatra"</span>
+<span class="n">gem</span> <span class="s2">"activesupport"</span>
+
+<span class="n">group</span> <span class="ss">:test</span> <span class="k">do</span>
+  <span class="n">gem</span> <span class="s2">"rspec"</span>
+  <span class="n">gem</span> <span class="s2">"rack-test"</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>We can install the dependencies with <code>bundle install</code>. I like to put my dependencies in the <code>vendor/bundle</code> directory. With that the command becomes the following</p>
+<div class="highlight"><pre class="highlight shell"><code>bundle install <span class="nt">--path</span> vendor/bundle
+</code></pre></div>
+<p>Then we can initialize RSpec in for project. The following command should create an <code>.rspec</code> and a <code>spec/spec_helper.rb</code> file.</p>
+<div class="highlight"><pre class="highlight shell"><code>bundle <span class="nb">exec </span>rspec <span class="nt">--init</span>
+</code></pre></div>
+<p>As an old Rails habit, I like to have two folders in my project.
+- <code>app</code> for containing all the application specific files.
+- <code>config</code> for the project&rsquo;s configuration</p>
+
+<p>Let&rsquo;s create them:</p>
+<div class="highlight"><pre class="highlight plaintext"><code>mkdir app
+mkdir config
+</code></pre></div>
+<h2>Configuration</h2>
+
+<p>In this example project I will have only one configuration file called <code>config/environment.rb</code>. This file will be responsible for booting up the application and loading all the gems from Bundler. Also it will load and set up active support for this project.</p>
+
+<p>Instead of using a database, this simple API will use only a global variable named <code>$db</code>. This is for the sake of simplicity and should be replaced with a real database.</p>
+
+<p>With the above description we can implement that file like this</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="nb">require</span> <span class="s2">"rubygems"</span>
+<span class="nb">require</span> <span class="s2">"bundler"</span>
+
+<span class="no">Bundler</span><span class="p">.</span><span class="nf">require</span><span class="p">(</span><span class="ss">:default</span><span class="p">)</span>                   <span class="c1"># load all the default gems</span>
+<span class="no">Bundler</span><span class="p">.</span><span class="nf">require</span><span class="p">(</span><span class="no">Sinatra</span><span class="o">::</span><span class="no">Base</span><span class="p">.</span><span class="nf">environment</span><span class="p">)</span>  <span class="c1"># load all the environment specific gems</span>
+
+<span class="nb">require</span> <span class="s2">"active_support/deprecation"</span>
+<span class="nb">require</span> <span class="s2">"active_support/all"</span>
+
+<span class="vg">$db</span> <span class="o">=</span> <span class="p">[]</span>                                    <span class="c1"># a fake database</span>
+</code></pre></div>
+<p>Now we should make the spec_helper load this file before the tests are run. To do that we need to prepend that file with a require statement.</p>
+
+<p>While we are here it would also be a good idea to set the environment to test when running RSpec, include some rake test helpers, and clear the fake database before each test.</p>
+
+<p>Your <code>spec/spec_helper.rb</code> file should look similar to this.</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="no">ENV</span><span class="p">[</span><span class="s1">'RACK_ENV'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'test'</span>
+
+<span class="nb">require</span> <span class="s2">"./config/environment"</span>
+
+<span class="no">RSpec</span><span class="p">.</span><span class="nf">configure</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+  <span class="n">config</span><span class="p">.</span><span class="nf">include</span> <span class="no">Rack</span><span class="o">::</span><span class="no">Test</span><span class="o">::</span><span class="no">Methods</span>
+
+  <span class="n">config</span><span class="p">.</span><span class="nf">before</span><span class="p">(</span><span class="ss">:each</span><span class="p">)</span> <span class="k">do</span>
+    <span class="vg">$db</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">end</span>
+
+  <span class="n">config</span><span class="p">.</span><span class="nf">expect_with</span> <span class="ss">:rspec</span> <span class="k">do</span> <span class="o">|</span><span class="n">expectations</span><span class="o">|</span>
+    <span class="n">expectations</span><span class="p">.</span><span class="nf">include_chain_clauses_in_custom_matcher_descriptions</span> <span class="o">=</span> <span class="kp">true</span>
+  <span class="k">end</span>
+
+  <span class="n">config</span><span class="p">.</span><span class="nf">mock_with</span> <span class="ss">:rspec</span> <span class="k">do</span> <span class="o">|</span><span class="n">mocks</span><span class="o">|</span>
+    <span class="n">mocks</span><span class="p">.</span><span class="nf">verify_partial_doubles</span> <span class="o">=</span> <span class="kp">true</span>
+  <span class="k">end</span>
+
+  <span class="n">config</span><span class="p">.</span><span class="nf">filter_run</span> <span class="ss">:focus</span>
+  <span class="n">config</span><span class="p">.</span><span class="nf">run_all_when_everything_filtered</span> <span class="o">=</span> <span class="kp">true</span>
+
+  <span class="n">config</span><span class="p">.</span><span class="nf">disable_monkey_patching!</span>
+
+  <span class="n">config</span><span class="p">.</span><span class="nf">warnings</span> <span class="o">=</span> <span class="kp">true</span>
+
+  <span class="k">if</span> <span class="n">config</span><span class="p">.</span><span class="nf">files_to_run</span><span class="p">.</span><span class="nf">one?</span>
+    <span class="n">config</span><span class="p">.</span><span class="nf">default_formatter</span> <span class="o">=</span> <span class="s1">'doc'</span>
+  <span class="k">end</span>
+
+  <span class="n">config</span><span class="p">.</span><span class="nf">profile_examples</span> <span class="o">=</span> <span class="mi">10</span>
+
+  <span class="n">config</span><span class="p">.</span><span class="nf">order</span> <span class="o">=</span> <span class="ss">:random</span>
+
+  <span class="no">Kernel</span><span class="p">.</span><span class="nf">srand</span> <span class="n">config</span><span class="p">.</span><span class="nf">seed</span>
+<span class="k">end</span>
+</code></pre></div>
+<h2>The API</h2>
+
+<p>As a good TDD abiding citizen we should write some test for our Todo application before actually implementing the code.</p>
+
+<p>Create an <code>app/todo_api.rb</code> and <code>spec/app/todo_api_spec.rb</code> file</p>
+<div class="highlight"><pre class="highlight shell"><code>touch app/todo_api.rb
+touch spec/app/todo_api_spec.rb
+</code></pre></div>
+<p>and describe the application in your test file</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="nb">require</span> <span class="s2">"spec_helper"</span>
+
+<span class="no">RSpec</span><span class="p">.</span><span class="nf">describe</span> <span class="no">TodoApi</span> <span class="k">do</span>
+  <span class="k">def</span> <span class="nf">app</span>
+    <span class="no">TodoApi</span> <span class="c1"># this defines the active application for this test</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>and then a matching class in the app file</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="k">class</span> <span class="nc">TodoApi</span> <span class="o">&lt;</span> <span class="no">Sinatra</span><span class="o">::</span><span class="no">Base</span>
+
+<span class="k">end</span>
+</code></pre></div>
+<p>Then we should create a get action for listing all the todos in the system. Such a get request should return nothing if the database is empty and a list of todos if the contains several todos</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="n">describe</span> <span class="s2">"GET todos"</span> <span class="k">do</span>
+  <span class="n">context</span> <span class="s2">"no todos"</span> <span class="k">do</span>
+    <span class="n">it</span> <span class="s2">"returns no todo"</span> <span class="k">do</span>
+      <span class="n">get</span> <span class="s2">"/"</span>
+
+      <span class="n">expect</span><span class="p">(</span><span class="n">last_response</span><span class="p">.</span><span class="nf">body</span><span class="p">).</span><span class="nf">to</span> <span class="n">eq</span><span class="p">(</span><span class="s2">""</span><span class="p">)</span>
+      <span class="n">expect</span><span class="p">(</span><span class="n">last_response</span><span class="p">.</span><span class="nf">status</span><span class="p">).</span><span class="nf">to</span> <span class="n">eq</span> <span class="mi">200</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="n">context</span> <span class="s2">"several todos"</span> <span class="k">do</span>
+    <span class="n">before</span> <span class="k">do</span>
+      <span class="vi">@todos</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"hello"</span><span class="p">,</span> <span class="s2">"world"</span><span class="p">,</span> <span class="s2">"!"</span><span class="p">]</span>
+      <span class="vg">$db</span> <span class="o">=</span> <span class="vi">@todos</span>
+    <span class="k">end</span>
+
+    <span class="n">it</span> <span class="s2">"returns all the todos"</span> <span class="k">do</span>
+      <span class="n">get</span> <span class="s2">"/"</span>
+
+      <span class="n">expect</span><span class="p">(</span><span class="n">last_response</span><span class="p">.</span><span class="nf">body</span><span class="p">).</span><span class="nf">to</span> <span class="n">eq</span> <span class="vi">@todos</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+      <span class="n">expect</span><span class="p">(</span><span class="n">last_response</span><span class="p">.</span><span class="nf">status</span><span class="p">).</span><span class="nf">to</span> <span class="n">eq</span> <span class="mi">200</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>A matching implementation would be</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="n">get</span> <span class="s2">"/"</span> <span class="k">do</span>
+  <span class="vg">$db</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Creating a new todo is also simple. The todo message should be passed as an argument to the POST action.</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="n">describe</span> <span class="s2">"POST todo"</span> <span class="k">do</span>
+  <span class="n">it</span> <span class="s2">"returns status 200"</span> <span class="k">do</span>
+    <span class="n">post</span> <span class="s2">"/"</span><span class="p">,</span> <span class="ss">:todo</span> <span class="o">=&gt;</span> <span class="s2">"hello rspec"</span>
+
+    <span class="n">expect</span><span class="p">(</span><span class="n">last_response</span><span class="p">.</span><span class="nf">status</span><span class="p">).</span><span class="nf">to</span> <span class="n">eq</span> <span class="mi">200</span>
+  <span class="k">end</span>
+
+  <span class="n">context</span> <span class="s2">"todo param missing"</span> <span class="k">do</span>
+    <span class="n">it</span> <span class="s2">"returns status 400"</span> <span class="k">do</span>
+      <span class="n">post</span> <span class="s2">"/"</span>
+
+      <span class="n">expect</span><span class="p">(</span><span class="n">last_response</span><span class="p">.</span><span class="nf">status</span><span class="p">).</span><span class="nf">to</span> <span class="n">eq</span> <span class="mi">400</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>It&rsquo;s implementation</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="n">post</span> <span class="s2">"/"</span> <span class="k">do</span>
+  <span class="k">return</span> <span class="mi">400</span> <span class="k">unless</span> <span class="n">params</span><span class="p">[</span><span class="s2">"todo"</span><span class="p">].</span><span class="nf">present?</span>
+
+  <span class="vg">$db</span> <span class="o">&lt;&lt;</span> <span class="n">params</span><span class="p">[</span><span class="s2">"todo"</span><span class="p">]</span>
+  <span class="mi">200</span>
+<span class="k">end</span>
+</code></pre></div>
+<h2>Making rack happy and running the App</h2>
+
+<p>In order to run your application with the <code>rackup</code> command
+we should create an <code>config.ru</code> file with the following content</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="nb">require</span> <span class="s2">"./config/environment"</span>
+
+<span class="n">run</span> <span class="no">Rack</span><span class="o">::</span><span class="no">URLMap</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s2">"/"</span> <span class="o">=&gt;</span> <span class="no">TodoApi</span><span class="p">)</span>
+</code></pre></div>
+<p>and run our application with</p>
+<div class="highlight"><pre class="highlight plaintext"><code>bundle exec rackup config.ru
+</code></pre></div>
+<p>Hooray! Our simple API is finished.</p>
+
+<p>Read the full source code <a href="https://github.com/shiroyasha/sinatra_rspec">in this GitHub repository</a>.</p>
+
+
+
+  </article>
+
+
+      <div class="footer">
+  <div class="content">
+    <p>
+      <strong>❈</strong><br>
+      <br>
+
+      Follow me on <a href="https://twitter.com/igor_sarcevic">Twitter</a> and <a href="https://rs.linkedin.com/in/igorsarcevic">LinkedIn</a>.<br>
+      Copyright ©2014-2023 Igor Šarčević. All rights reserved.</br>
+      <br>
+      Enjoy the rest of your day!
+    </p>
+  </div>
+<div>
+
+    </div>
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+           })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-57223799-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+
+    <script>
+      /**
+      * Function that tracks a click on an outbound link in Analytics.
+      * This function takes a valid URL string as an argument, and uses that URL string
+      * as the event label. Setting the transport method to 'beacon' lets the hit be sent
+      * using 'navigator.sendBeacon' in browser that support it.
+      */
+      var trackOutboundLink = function(url) {
+        ga('send', 'event', 'outbound', 'click', url, {
+          'transport': 'beacon',
+          'hitCallback': function(){document.location = url;}
+        });
+      }
+    </script>
+
+  </body>
+</html>

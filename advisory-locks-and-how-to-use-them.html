@@ -1,0 +1,325 @@
+<!doctype html>
+<html itemscope itemtype="http://schema.org/Article">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
+    <link rel="alternate" type="application/atom+xml" title="Morning Coffee" href="/feed.xml" />
+
+    <link rel="shortcut icon" href="favicon.svg">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+      <title>Advisory Locks and How to Use Them &mdash; by Igor Šarčević</title>
+
+    <!-- Place this data between the <head> tags of your website -->
+      <meta name="description" content="PostgreSQL provides the means for creating locks with application defined
+meaning. These locks are called Advisory Locks and are an ideal candidate for
+concurrency control where the standard MVCC (multiversion concurrency control)
+doesn’t fit the bill. Advisory Locks can be the perfect tool in your arsenal
+when you need to control access to a shared resource in a distributed system.
+
+" />
+
+      <!-- Schema.org markup for Google+ -->
+      <meta itemprop="name" content="Advisory Locks and How to Use Them">
+      <meta itemprop="description" content="PostgreSQL provides the means for creating locks with application defined
+meaning. These locks are called Advisory Locks and are an ideal candidate for
+concurrency control where the standard MVCC (multiversion concurrency control)
+doesn’t fit the bill. Advisory Locks can be the perfect tool in your arsenal
+when you need to control access to a shared resource in a distributed system.
+
+">
+      <meta itemprop="image" content="http://morningcoffee.io/images/advisory-locks-and-how-to-use-them.jpg">
+
+      <!-- Twitter Card data -->
+      <meta name="twitter:card" content="summary_large_image">
+      <meta name="twitter:site" content="@igor_sarcevic">
+      <meta name="twitter:title" content="Advisory Locks and How to Use Them">
+      <meta name="twitter:description" content="PostgreSQL provides the means for creating locks with application defined
+meaning. These locks are called Advisory Locks and are an ideal candidate for
+concurrency control where the standard MVCC (multiversion concurrency control)
+doesn’t fit the bill. Advisory Locks can be the perfect tool in your arsenal
+when you need to control access to a shared resource in a distributed system.
+
+">
+      <meta name="twitter:creator" content="@igor_sarcevic">
+      <!-- Twitter summary card with large image must be at least 280x150px -->
+      <meta name="twitter:image:src" content="http://morningcoffee.io/images/advisory-locks-and-how-to-use-them.jpg">
+
+      <!-- Open Graph data -->
+      <meta property="og:title" content="Advisory Locks and How to Use Them" />
+      <meta property="og:type" content="article" />
+      <meta property="og:url" content="http://" />
+      <meta property="og:image" content="http://morningcoffee.io/images/advisory-locks-and-how-to-use-them.jpg" />
+      <meta property="og:description" content="PostgreSQL provides the means for creating locks with application defined
+meaning. These locks are called Advisory Locks and are an ideal candidate for
+concurrency control where the standard MVCC (multiversion concurrency control)
+doesn’t fit the bill. Advisory Locks can be the perfect tool in your arsenal
+when you need to control access to a shared resource in a distributed system.
+
+" />
+      <meta property="article:published_time" content="2017-11-16 00:00:00 UTC" />
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Raleway:900&display=swap" rel="stylesheet">
+    <link href="/stylesheets/style.css" rel="stylesheet" />
+  </head>
+  <body>
+
+    <div id="main" role="main">
+      <nav class="navigation" style="padding: 10px;">
+  <div style="display: flex;justify-items: space-between;justify-content: space-between;">
+    <a style="font-size: 20px" href="/" style="color: crimson;">Home</a>
+    <a style="font-size: 20px" href="/about-me.html" style="color: crimson;">About</a>
+  </div>
+</nav>
+
+
+        <article class="article">
+    <div class="header">
+      <h1>Advisory Locks and How to Use Them</h1>
+
+      <div class="subtitle">
+        Published on <time>November 16, 2017</time>
+      </div>
+    </div>
+
+    <p>PostgreSQL provides the means for creating locks with application defined
+meaning. These locks are called <em>Advisory Locks</em> and are an ideal candidate for
+concurrency control where the standard MVCC (multiversion concurrency control)
+doesn&rsquo;t fit the bill. Advisory Locks can be the perfect tool in your arsenal
+when you need to control access to a shared resource in a distributed system.</p>
+
+<p></p>
+
+<p><img src="/images/advisory-locks-and-how-to-use-them.jpg" alt="Enjoying advisory locking" /></p>
+
+<p>Let&rsquo;s explore advisory locks, their use case, and how to use them from your
+applications.</p>
+
+<h2>Observing the Behaviour of Advisory Locks</h2>
+
+<p>I&rsquo;m a strong believer in learning by doing, instead of only knowing the theory.
+With that thought in mind, let&rsquo;s create a sandbox database for learning advisory
+locks.</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="nv">$ </span>createdb advisory-locks-db
+</code></pre></div>
+<p>Connect to the database:</p>
+<div class="highlight"><pre class="highlight plaintext"><code>$ psql -d advisory-locks-db
+</code></pre></div>
+<p>Now, when we have a test database, and an open connection to it, we are ready to
+create our first advisory lock.</p>
+<div class="highlight"><pre class="highlight sql"><code><span class="k">SELECT</span> <span class="n">pg_try_advisory_lock</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+</code></pre></div>
+<p>In the above session, we have created an advisory lock for the number <code>10</code>. To
+acquire an advisory lock, you can pass any 64bit number to the function. This
+is the essence of advisory locking. You are basically locking up a number in
+the database, and your application needs to provide a meaning to that number.
+Alternatively, instead of passing one 64bit to the function, you can pass two
+32bit numbers to the function.</p>
+
+<p>Like all locks in PostgreSQL, a complete list of advisory locks currently held
+by any session can be found in the pg_locks system view.</p>
+
+<p>Let&rsquo;s create two advisory locks, and observe their presence in the pg_locks
+system view:</p>
+<div class="highlight"><pre class="highlight sql"><code><span class="k">SELECT</span> <span class="n">pg_try_advisory_lock</span><span class="p">(</span><span class="mi">23</span><span class="p">);</span>
+<span class="k">SELECT</span> <span class="n">pg_try_advisory_lock</span><span class="p">(</span><span class="mi">112</span><span class="p">,</span> <span class="mi">345</span><span class="p">);</span>
+
+<span class="k">SELECT</span> <span class="k">mode</span><span class="p">,</span> <span class="n">classid</span><span class="p">,</span> <span class="n">objid</span> <span class="k">FROM</span> <span class="n">pg_locks</span> <span class="k">WHERE</span> <span class="n">locktype</span> <span class="o">=</span> <span class="s1">'advisory'</span><span class="p">;</span>
+
+     <span class="k">mode</span>      <span class="o">|</span> <span class="n">classid</span> <span class="o">|</span> <span class="n">objid</span>
+<span class="c1">---------------+---------+-------</span>
+ <span class="n">ExclusiveLock</span> <span class="o">|</span>     <span class="mi">112</span> <span class="o">|</span>   <span class="mi">345</span>
+ <span class="n">ExclusiveLock</span> <span class="o">|</span>       <span class="mi">0</span> <span class="o">|</span>    <span class="mi">23</span>
+<span class="p">(</span><span class="mi">2</span> <span class="k">rows</span><span class="p">)</span>
+</code></pre></div>
+<p>Finally, let&rsquo;s release the acquired locks:</p>
+<div class="highlight"><pre class="highlight sql"><code><span class="k">SELECT</span> <span class="n">pg_advisory_unlock</span><span class="p">(</span><span class="mi">23</span><span class="p">);</span>
+<span class="k">SELECT</span> <span class="n">pg_advisory_unlock</span><span class="p">(</span><span class="mi">112</span><span class="p">,</span> <span class="mi">345</span><span class="p">);</span>
+
+<span class="k">SELECT</span> <span class="k">mode</span><span class="p">,</span> <span class="n">classid</span><span class="p">,</span> <span class="n">objid</span> <span class="k">FROM</span> <span class="n">pg_locks</span> <span class="k">WHERE</span> <span class="n">locktype</span> <span class="o">=</span> <span class="s1">'advisory'</span><span class="p">;</span>
+
+ <span class="k">mode</span> <span class="o">|</span> <span class="n">classid</span> <span class="o">|</span> <span class="n">objid</span>
+<span class="c1">------+---------+-------</span>
+<span class="p">(</span><span class="mi">0</span> <span class="k">rows</span><span class="p">)</span>
+</code></pre></div>
+<p>Calling <code>SELECT pg_advisory_unlock_all()</code> will unlock all advisory locks
+currently held by your session.</p>
+
+<h2>Session and Transaction locks</h2>
+
+<p>There are two ways to acquire advisory locks in PostgreSQL, at session level or
+at transaction level. Session level locks are held until the session ends or
+until the lock is released manually. Transaction semantics are not honored for
+session locks. A lock acquired in a transaction will hold even if the
+transaction rollbacks. Transaction level advisory locks act like regular locks
+and honor transaction semantics. A transactional advisory lock acquired in a
+transaction will be released when the transaction ends.</p>
+
+<p>In the previous section, we have acquired session level locks. To acquire a
+transaction level advisory lock, an alternative transaction specific function
+needs to be invoked.</p>
+<div class="highlight"><pre class="highlight sql"><code><span class="k">begin</span><span class="p">;</span>
+
+<span class="c1">-- session level advisory lock</span>
+<span class="k">SELECT</span> <span class="n">pg_try_advisory_lock</span><span class="p">(</span><span class="mi">23</span><span class="p">);</span>
+
+<span class="c1">-- transaction level advisory lock</span>
+<span class="k">SELECT</span> <span class="n">pg_try_advisory_xact_lock</span><span class="p">(</span><span class="mi">17</span><span class="p">);</span>
+
+<span class="k">SELECT</span> <span class="k">mode</span><span class="p">,</span> <span class="n">classid</span><span class="p">,</span> <span class="n">objid</span> <span class="k">FROM</span> <span class="n">pg_locks</span> <span class="k">WHERE</span> <span class="n">locktype</span> <span class="o">=</span> <span class="s1">'advisory'</span><span class="p">;</span>
+
+     <span class="k">mode</span>      <span class="o">|</span> <span class="n">classid</span> <span class="o">|</span> <span class="n">objid</span>
+<span class="c1">---------------+---------+-------</span>
+ <span class="n">ExclusiveLock</span> <span class="o">|</span>       <span class="mi">0</span> <span class="o">|</span>    <span class="mi">17</span>
+ <span class="n">ExclusiveLock</span> <span class="o">|</span>       <span class="mi">0</span> <span class="o">|</span>    <span class="mi">23</span>
+<span class="p">(</span><span class="mi">2</span> <span class="k">rows</span><span class="p">)</span>
+
+<span class="k">end</span><span class="p">;</span>
+
+<span class="c1">-- after the transaction ends, only session level locks are held</span>
+
+<span class="k">SELECT</span> <span class="k">mode</span><span class="p">,</span> <span class="n">classid</span><span class="p">,</span> <span class="n">objid</span> <span class="k">FROM</span> <span class="n">pg_locks</span> <span class="k">WHERE</span> <span class="n">locktype</span> <span class="o">=</span> <span class="s1">'advisory'</span><span class="p">;</span>
+
+     <span class="k">mode</span>      <span class="o">|</span> <span class="n">classid</span> <span class="o">|</span> <span class="n">objid</span>
+<span class="c1">---------------+---------+-------</span>
+ <span class="n">ExclusiveLock</span> <span class="o">|</span>       <span class="mi">0</span> <span class="o">|</span>    <span class="mi">23</span>
+<span class="p">(</span><span class="mi">1</span> <span class="k">row</span><span class="p">)</span>
+</code></pre></div>
+<p>Both session and transaction level advisory locks can be acquired multiple times
+by the owning process. Multiple lock requests stack, so that if the same resource
+is locked three times it must then be unlocked three times to be released for
+other sessions&rsquo; use.</p>
+
+<h2>Blocking and non-Blocking Acquiring Functions</h2>
+
+<p>There are two ways to acquire an advisory lock. With a blocking function that will
+block and wait until the lock is available, or with a non-blocking function that will
+return a boolean value signifying if the lock was acquired or not. In the previous
+sections we have used the non-blocking versions of the function.</p>
+<div class="highlight"><pre class="highlight sql"><code><span class="c1">-- non blocking version, returns true of false</span>
+<span class="k">SELECT</span> <span class="n">pg_try_advisory_lock</span><span class="p">(</span><span class="mi">123</span><span class="p">);</span>
+
+<span class="c1">-- blocking version, wait for the lock to be available</span>
+<span class="k">SELECT</span> <span class="n">pg_advisory_lock</span><span class="p">(</span><span class="mi">123</span><span class="p">);</span>
+</code></pre></div>
+<h2>Use Case for Advisory Locks in a System</h2>
+
+<p>Advisory locks are suitable for implementing various application-level
+concurrency control mechanisms. For instance, advisory locks can be usable
+for the following scenarios:</p>
+
+<ul>
+<li><p>we need to coordinate access to some shared resource or a 3rd party services
+and we need to guarantee that only one node can access it at a time</p></li>
+<li><p>we want to calculate and send a report to some of our users, but we must
+guarantee that background workers don&rsquo;t start the calculation concurrently</p></li>
+<li><p>a multi-node task scheduler can use advisory locks to coordinate task
+distribution to workers</p></li>
+</ul>
+
+<p>The benefit of using advisory locks for background processing for a given user
+is that the tables are never actually locked for writing, so the main application
+that executes the regular CRUD operations on the record can behave normally
+and users will never notice anything is happening in the background.</p>
+
+<p>As an example of using advisory locks, we will create a background looper task
+in Ruby that processes our user&rsquo;s files on stored on S3.</p>
+
+<p>First, let&rsquo;s define a Ruby module responsible for creating locks.</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="k">module</span> <span class="nn">LockManager</span>
+  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">with_lock</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
+    <span class="n">lock</span> <span class="o">=</span> <span class="n">conn</span><span class="p">.</span><span class="nf">select_value</span><span class="p">(</span><span class="s2">"select pg_try_advisory_lock(</span><span class="si">#{</span><span class="n">number</span><span class="si">}</span><span class="s2">);"</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="k">unless</span> <span class="n">lock</span> <span class="o">==</span> <span class="s1">'t'</span>
+
+    <span class="k">begin</span>
+      <span class="k">yield</span>
+    <span class="k">ensure</span>
+      <span class="n">conn</span><span class="p">.</span><span class="nf">execute</span> <span class="s2">"select pg_advisory_unlock(</span><span class="si">#{</span><span class="n">number</span><span class="si">}</span><span class="s2">);"</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">conn</span>
+    <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span><span class="p">.</span><span class="nf">connection</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>When we have a lock manager, we can implement a safe, concurrent friendly,
+background processor.</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="kp">loop</span> <span class="k">do</span>
+  <span class="n">users</span> <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">with_unprocessed_files</span><span class="p">.</span><span class="nf">limit</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+
+  <span class="n">users</span><span class="p">.</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">user</span><span class="o">|</span>
+    <span class="no">LockManager</span><span class="p">.</span><span class="nf">with_lock</span><span class="p">(</span><span class="n">user</span><span class="p">.</span><span class="nf">id</span><span class="p">)</span> <span class="k">do</span>
+      <span class="n">content</span> <span class="o">=</span> <span class="n">fetch_file_from_s3</span><span class="p">(</span><span class="n">user</span><span class="p">.</span><span class="nf">file</span><span class="p">)</span>
+
+      <span class="n">processed</span> <span class="o">=</span> <span class="n">process</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+
+      <span class="n">upload_file_to_s3</span><span class="p">(</span><span class="n">user</span><span class="p">.</span><span class="nf">file</span><span class="p">,</span> <span class="n">processed</span><span class="p">)</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="nb">sleep</span> <span class="mi">1</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Finally, we can safely start several file processors on several nodes to do
+our bidding.</p>
+
+<p>An advisory note for the end. The above example is good entry point for constructing
+such a system, but it is not bulletproof. For production use case, several other
+concerns need to be addressed like connectivity issues to the database, handling
+process and node crashes, resource starvation, and of course a good set of
+metrics.</p>
+
+<p><em>Did you like this article? Or, do you maybe have a helpful hint to share? Please
+leave it in the comment section bellow.</em></p>
+
+
+
+  </article>
+
+
+      <div class="footer">
+  <div class="content">
+    <p>
+      <strong>❈</strong><br>
+      <br>
+
+      Follow me on <a href="https://twitter.com/igor_sarcevic">Twitter</a> and <a href="https://rs.linkedin.com/in/igorsarcevic">LinkedIn</a>.<br>
+      Copyright ©2014-2023 Igor Šarčević. All rights reserved.</br>
+      <br>
+      Enjoy the rest of your day!
+    </p>
+  </div>
+<div>
+
+    </div>
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+           })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-57223799-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+
+    <script>
+      /**
+      * Function that tracks a click on an outbound link in Analytics.
+      * This function takes a valid URL string as an argument, and uses that URL string
+      * as the event label. Setting the transport method to 'beacon' lets the hit be sent
+      * using 'navigator.sendBeacon' in browser that support it.
+      */
+      var trackOutboundLink = function(url) {
+        ga('send', 'event', 'outbound', 'click', url, {
+          'transport': 'beacon',
+          'hitCallback': function(){document.location = url;}
+        });
+      }
+    </script>
+
+  </body>
+</html>

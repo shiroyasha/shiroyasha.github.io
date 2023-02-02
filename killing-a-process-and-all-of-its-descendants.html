@@ -1,0 +1,294 @@
+<!doctype html>
+<html itemscope itemtype="http://schema.org/Article">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
+    <link rel="alternate" type="application/atom+xml" title="Morning Coffee" href="/feed.xml" />
+
+    <link rel="shortcut icon" href="favicon.svg">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+      <title>Killing a process and all of its descendants &mdash; by Igor Šarčević</title>
+
+    <!-- Place this data between the <head> tags of your website -->
+      <meta name="description" content="Killing processes in a Unix-like system can be trickier than expected. Last
+week I was debugging an odd issue related to job stopping on Semaphore.
+More specifically, an issue related to the killing of a running process in a
+job. " />
+
+      <!-- Schema.org markup for Google+ -->
+      <meta itemprop="name" content="Killing a process and all of its descendants">
+      <meta itemprop="description" content="Killing processes in a Unix-like system can be trickier than expected. Last
+week I was debugging an odd issue related to job stopping on Semaphore.
+More specifically, an issue related to the killing of a running process in a
+job. ">
+      <meta itemprop="image" content="http://morningcoffee.io/images/2019-08-02-killing-a-process-and-all-of-its-descendants.png">
+
+      <!-- Twitter Card data -->
+      <meta name="twitter:card" content="summary_large_image">
+      <meta name="twitter:site" content="@igor_sarcevic">
+      <meta name="twitter:title" content="Killing a process and all of its descendants">
+      <meta name="twitter:description" content="Killing processes in a Unix-like system can be trickier than expected. Last
+week I was debugging an odd issue related to job stopping on Semaphore.
+More specifically, an issue related to the killing of a running process in a
+job. ">
+      <meta name="twitter:creator" content="@igor_sarcevic">
+      <!-- Twitter summary card with large image must be at least 280x150px -->
+      <meta name="twitter:image:src" content="http://morningcoffee.io/images/2019-08-02-killing-a-process-and-all-of-its-descendants.png">
+
+      <!-- Open Graph data -->
+      <meta property="og:title" content="Killing a process and all of its descendants" />
+      <meta property="og:type" content="article" />
+      <meta property="og:url" content="http://" />
+      <meta property="og:image" content="http://morningcoffee.io/images/2019-08-02-killing-a-process-and-all-of-its-descendants.png" />
+      <meta property="og:description" content="Killing processes in a Unix-like system can be trickier than expected. Last
+week I was debugging an odd issue related to job stopping on Semaphore.
+More specifically, an issue related to the killing of a running process in a
+job. " />
+      <meta property="article:published_time" content="2019-08-02 00:00:00 UTC" />
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Raleway:900&display=swap" rel="stylesheet">
+    <link href="/stylesheets/style.css" rel="stylesheet" />
+  </head>
+  <body>
+
+    <div id="main" role="main">
+      <nav class="navigation" style="padding: 10px;">
+  <div style="display: flex;justify-items: space-between;justify-content: space-between;">
+    <a style="font-size: 20px" href="/" style="color: crimson;">Home</a>
+    <a style="font-size: 20px" href="/about-me.html" style="color: crimson;">About</a>
+  </div>
+</nav>
+
+
+        <article class="article">
+    <div class="header">
+      <h1>Killing a process and all of its descendants</h1>
+
+      <div class="subtitle">
+        Published on <time>August  2, 2019</time>
+      </div>
+    </div>
+
+    <p>Killing processes in a Unix-like system can be trickier than expected. Last
+week I was debugging an odd issue related to job stopping on Semaphore.
+More specifically, an issue related to the killing of a running process in a
+job. </p>
+
+<p>Here are the highlights of what I learned:</p>
+
+<ul>
+<li>Unix-like operating systems have sophisticated process relationships.</li>
+<li>Sending signals to all processes in a session is not trivial with syscalls.</li>
+<li>Processes started with exec inherit their parent signal configuration.</li>
+<li>There are many challenges with handling orphaned process groups.</li>
+</ul>
+
+<p>There are multiple types of relationships between processes. Parent-child,
+process groups, sessions, and session leaders. However, the details are not
+uniform across operating systems like Linux and macOS. POSIX compliant
+operating systems support sending signals to process groups with a negative
+PID number.</p>
+
+<h2>Killing a parent doesn&rsquo;t kill the child processes</h2>
+
+<p>Every process has a parent. We can observe this with <code>pstree</code> or the <code>ps</code> utility.</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="c"># start two dummy processes</span>
+<span class="nv">$ </span>sleep 100 &amp;
+<span class="nv">$ </span>sleep 101 &amp;
+
+<span class="nv">$ </span>pstree <span class="nt">-p</span>
+init<span class="o">(</span>1<span class="o">)</span>-+
+        |-bash<span class="o">(</span>29051<span class="o">)</span>-+-pstree<span class="o">(</span>29251<span class="o">)</span>
+                      |-sleep<span class="o">(</span>28919<span class="o">)</span>
+                      <span class="sb">`</span><span class="nt">-sleep</span><span class="o">(</span>28964<span class="o">)</span>
+
+<span class="nv">$ </span>ps j <span class="nt">-A</span>
+ PPID   PID  PGID   SID TTY      TPGID STAT   UID   TIME COMMAND
+    0     1     1     1 ?           <span class="nt">-1</span> Ss       0   0:03 /sbin/init
+29051  1470  1470 29051 pts/2     2386 SN    1000   0:00 sleep 100
+29051  1538  1538 29051 pts/2     2386 SN    1000   0:00 sleep 101
+29051  2386  2386 29051 pts/2     2386 R+    1000   0:00 ps j <span class="nt">-A</span>
+    1 29051 29051 29051 pts/2     2386 Ss    1000   0:00 <span class="nt">-bash</span>
+</code></pre></div>
+<p>The <code>ps</code> command displays the PID (id of the process), and the PPID (parent ID
+of the process).</p>
+
+<p>I held a very incorrect assumption about this relationship. I thought that if I
+kill the parent of a process, it kills the children of that process too.
+However, this is incorrect. Instead, child processes become orphaned, and the
+init process re-parents them.</p>
+
+<p>Let&rsquo;s see the re-parenting in action by killing the bash process — the current
+parent of the sleep commands — and observe the changes.</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="nv">$ </span><span class="nb">kill </span>29051 <span class="c"># killing the bash process</span>
+
+<span class="nv">$ </span>pstree <span class="nt">-A</span>
+init<span class="o">(</span>1<span class="o">)</span>-+
+        |-sleep<span class="o">(</span>28919<span class="o">)</span>
+        <span class="sb">`</span><span class="nt">-sleep</span><span class="o">(</span>28965<span class="o">)</span>
+</code></pre></div>
+<p>The re-parenting behavior was odd to me. For example, when I SSH into a server,
+start a process, and exit, the started process is killed. I wrongly assumed this
+is the default behavior on Linux. It turns that killing of processes when I
+leave an SSH session is related to process groups, session leaders, and
+controlling terminals.</p>
+
+<h2>What are process groups and session leaders?</h2>
+
+<p>Let&rsquo;s observe the output of <code>ps j</code> from the previous example again.</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="nv">$ </span>ps j <span class="nt">-A</span>
+ PPID   PID  PGID   SID TTY      TPGID STAT   UID   TIME COMMAND
+    0     1     1     1 ?           <span class="nt">-1</span> Ss       0   0:03 /sbin/init
+29051  1470  1470 29051 pts/2     2386 SN    1000   0:00 sleep 100
+29051  1538  1538 29051 pts/2     2386 SN    1000   0:00 sleep 101
+29051  2386  2386 29051 pts/2     2386 R+    1000   0:00 ps j <span class="nt">-A</span>
+    1 29051 29051 29051 pts/2     2386 Ss    1000   0:00 <span class="nt">-bash</span>
+</code></pre></div>
+<p>Apart from the parent-child relationship expressed by PPID and PID, we have two
+other relationships:</p>
+
+<ul>
+<li>Process groups represented by PGID</li>
+<li>Sessions represented by SID</li>
+</ul>
+
+<p>Process groups are observable in shells that support job control, like <code>bash</code>
+and <code>zsh</code>, that are creating a process group for every pipeline of commands. A
+process group is a collection of one or more processes (usually associated with
+the same job) that can receive signals from the same terminal. Each process
+group has a unique process group ID.</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="c"># start a process group that consists of tail and grep</span>
+<span class="nv">$ </span>tail <span class="nt">-f</span> /var/log/syslog | <span class="nb">grep</span> <span class="s2">"CRON"</span> &amp;
+
+<span class="nv">$ </span>ps j
+ PPID   PID  PGID   SID TTY      TPGID STAT   UID   TIME COMMAND
+29051 19701 19701 29051 pts/2    19784 SN    1000   0:00 tail <span class="nt">-f</span> /var/log/syslog
+29051 19702 19701 29051 pts/2    19784 SN    1000   0:00 <span class="nb">grep </span>CRON
+29051 19784 19784 29051 pts/2    19784 R+    1000   0:00 ps j
+29050 29051 29051 29051 pts/2    19784 Ss    1000   0:00 <span class="nt">-bash</span>
+</code></pre></div>
+<p>Notice that the PGID of <code>tail</code> and <code>grep</code> is the same in the previous snippet.</p>
+
+<p>A session is a collection of process groups, usually associated with one
+controlling terminals and a session leader process. If a session has a
+controlling terminal, it has a single foreground process group, and all other
+process groups in the session are background process groups.</p>
+
+<p><img src="/images/killing-a-process-and-all-of-its-descendants/sessions.png" alt="sessions" /></p>
+
+<p>Not all bash processes are sessions, but when you SSH into a remote server, you
+usually get a session. When bash runs as a session leader, it propagates the
+SIGHUP signal to its children. SIGHUP propagation to children was the core
+reason for my long-held belief that children are dying along with the parents.</p>
+
+<h2>Sessions are not consistent across Unix implementations</h2>
+
+<p>In the previous examples, you can notice the occurrence of SID, the session ID
+of the process. It is the ID shared by all processes in a session.</p>
+
+<p>However, you need to keep in mind that this is not true across all Unix
+implementations. The Single UNIX Specification talks only about a &ldquo;session
+leader&rdquo;; there is no &ldquo;session ID&rdquo; similar to a process ID or a process group ID.
+A session leader is a single process that has a unique process ID, so we could
+talk about a session ID that is the process ID of the session leader.</p>
+
+<p>System V Release 4 introduced Session IDs.</p>
+
+<p>In practice, this means that you get session ID in the <code>ps</code> output on Linux, but
+on BSD and its variants like MacOS, the session ID isn&rsquo;t present or always zero.</p>
+
+<h2>Killing all processes in a process group or session</h2>
+
+<p>We can use that PGID to send a signal to the whole group with the kill utility:</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="nv">$ </span><span class="nb">kill</span> <span class="nt">-SIGTERM</span> <span class="nt">--</span> <span class="nt">-19701</span>
+</code></pre></div>
+<p>We used a negative number <code>-19701</code> to send a signal to the group. If kill
+receives a positive number, it kills the process with that ID. If we pass a
+negative number, it kills the process group with that PGID.</p>
+
+<p>The negative number comes from the system call definition directly.</p>
+
+<p>Killing all processes in a session is quite different. As explained in the
+previous section, some systems don&rsquo;t have a notion of a session ID. Even the
+ones that have session IDs, like Linux, don&rsquo;t have a system call to kill all
+processes in a session. You need to walk the <code>/proc</code> tree, collect the SIDs, and
+terminate the processes.</p>
+
+<p>Pgrep implements the algorithm for walking, collecting, and process killing by
+session ID.  Use the following snipped:</p>
+<div class="highlight"><pre class="highlight shell"><code>pkill <span class="nt">-s</span> &lt;SID&gt;
+</code></pre></div>
+<p>Nohup propagation to process descendants</p>
+
+<p>Ignored signals, like the ones ignored with <code>nohup</code>, are propagated to all
+descendants of a process. This propagation was the final bottleneck in my bug
+hunting exercise last week.</p>
+
+<p>In my program — an agent for running bash commands — I verified that I have an
+established a bash session that has a controlling terminal. It is the session
+leader of the processes started in that bash session. My process tree looks like
+this:</p>
+<div class="highlight"><pre class="highlight shell"><code>agent -+
+       +- bash <span class="o">(</span>session leader<span class="o">)</span> -+
+                                 | - process1
+                                 | - process2
+</code></pre></div>
+<p>I assumed that when I kill the bash session with SIGHUP, it kills the children
+as well. Integration tests on the agent also verified this.</p>
+
+<p>However, what I missed was that the agent is started with <code>nohup</code>. When you
+start a subprocess with <code>exec</code>, like we start the bash process in the agent, it
+inherits the signals states from its parents.</p>
+
+<p>This last one took me by surprise.</p>
+
+
+
+  </article>
+
+
+      <div class="footer">
+  <div class="content">
+    <p>
+      <strong>❈</strong><br>
+      <br>
+
+      Follow me on <a href="https://twitter.com/igor_sarcevic">Twitter</a> and <a href="https://rs.linkedin.com/in/igorsarcevic">LinkedIn</a>.<br>
+      Copyright ©2014-2023 Igor Šarčević. All rights reserved.</br>
+      <br>
+      Enjoy the rest of your day!
+    </p>
+  </div>
+<div>
+
+    </div>
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+           })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-57223799-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+
+    <script>
+      /**
+      * Function that tracks a click on an outbound link in Analytics.
+      * This function takes a valid URL string as an argument, and uses that URL string
+      * as the event label. Setting the transport method to 'beacon' lets the hit be sent
+      * using 'navigator.sendBeacon' in browser that support it.
+      */
+      var trackOutboundLink = function(url) {
+        ga('send', 'event', 'outbound', 'click', url, {
+          'transport': 'beacon',
+          'hitCallback': function(){document.location = url;}
+        });
+      }
+    </script>
+
+  </body>
+</html>

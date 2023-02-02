@@ -1,0 +1,253 @@
+<!doctype html>
+<html itemscope itemtype="http://schema.org/Article">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
+    <link rel="alternate" type="application/atom+xml" title="Morning Coffee" href="/feed.xml" />
+
+    <link rel="shortcut icon" href="favicon.svg">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+      <title>Database Tests with Rails &mdash; by Igor Šarčević</title>
+
+    <!-- Place this data between the <head> tags of your website -->
+      <meta name="description" content="We, software developers, like to call ourselves computer scientist,
+software engineers or data scientists. Hah, what a load of bulls*it!
+
+" />
+
+      <!-- Schema.org markup for Google+ -->
+      <meta itemprop="name" content="Database Tests with Rails">
+      <meta itemprop="description" content="We, software developers, like to call ourselves computer scientist,
+software engineers or data scientists. Hah, what a load of bulls*it!
+
+">
+      <meta itemprop="image" content="http://morningcoffee.io/images/database.png">
+
+      <!-- Twitter Card data -->
+      <meta name="twitter:card" content="summary_large_image">
+      <meta name="twitter:site" content="@igor_sarcevic">
+      <meta name="twitter:title" content="Database Tests with Rails">
+      <meta name="twitter:description" content="We, software developers, like to call ourselves computer scientist,
+software engineers or data scientists. Hah, what a load of bulls*it!
+
+">
+      <meta name="twitter:creator" content="@igor_sarcevic">
+      <!-- Twitter summary card with large image must be at least 280x150px -->
+      <meta name="twitter:image:src" content="http://morningcoffee.io/images/database.png">
+
+      <!-- Open Graph data -->
+      <meta property="og:title" content="Database Tests with Rails" />
+      <meta property="og:type" content="article" />
+      <meta property="og:url" content="http://" />
+      <meta property="og:image" content="http://morningcoffee.io/images/database.png" />
+      <meta property="og:description" content="We, software developers, like to call ourselves computer scientist,
+software engineers or data scientists. Hah, what a load of bulls*it!
+
+" />
+      <meta property="article:published_time" content="2015-03-11 00:00:00 UTC" />
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Raleway:900&display=swap" rel="stylesheet">
+    <link href="/stylesheets/style.css" rel="stylesheet" />
+  </head>
+  <body>
+
+    <div id="main" role="main">
+      <nav class="navigation" style="padding: 10px;">
+  <div style="display: flex;justify-items: space-between;justify-content: space-between;">
+    <a style="font-size: 20px" href="/" style="color: crimson;">Home</a>
+    <a style="font-size: 20px" href="/about-me.html" style="color: crimson;">About</a>
+  </div>
+</nav>
+
+
+        <article class="article">
+    <div class="header">
+      <h1>Database Tests with Rails</h1>
+
+      <div class="subtitle">
+        Published on <time>March 11, 2015</time>
+      </div>
+    </div>
+
+    <p>We, software developers, like to call ourselves computer scientist,
+software engineers or data scientists. Hah, what a load of bulls*it!</p>
+
+<p></p>
+
+<p>To do real science, we would need to be able to measure, reproduce and
+prove our code and methodologies. But I will leave this discussion for
+an another day&hellip;</p>
+
+<p>The reason why I started like this is because I often find
+myself guessing and hoping for the best instead of doing the hard work,
+and actually trying to measure and test my ideas.</p>
+
+<p>One particular area, where I often fail to live up to a good scientific
+practice, is estimating the duration of database actions. But no more!
+In this article I will explain how I test some of my guesses by
+creating short lived Rails projects with some sample databases.</p>
+
+<h2>Creating Test Projects</h2>
+
+<p>I start each test session by creating a test project with Rails,
+usually with a preset database:</p>
+<div class="highlight"><pre class="highlight shell"><code>rails new db-test-1 <span class="nt">--database</span><span class="o">=</span>postgresql
+</code></pre></div>
+<p>Then I follow up with creating an appropriate model that fits my
+testing needs. For example a Movies table:</p>
+<div class="highlight"><pre class="highlight shell"><code>rails generate model movies title:string genre:string description:text
+rake db:migrate
+</code></pre></div>
+<p>The finishing step is of course to create some data in the database.
+I like to make a big number of entries because that way the errors
+in my logic are easily exposed. For example a million entries are
+a good test candidate. We can make them in the Rails console.</p>
+
+<p>But because this action usually takes more than a couple of minutes,
+I like to turn of the Rails logger with the following command before
+I create the entries to prevent unnecessary overhead:</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span><span class="p">.</span><span class="nf">logger</span><span class="p">.</span><span class="nf">level</span> <span class="o">=</span> <span class="mi">1</span>
+</code></pre></div>
+<p>To return the origin logger state I will execute the following:</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span><span class="p">.</span><span class="nf">logger</span><span class="p">.</span><span class="nf">level</span> <span class="o">=</span> <span class="mi">0</span>
+</code></pre></div>
+<p>For the above <code>movies</code> table I would write something like this:</p>
+<div class="highlight"><pre class="highlight shell"><code>genres <span class="o">=</span> <span class="o">[</span><span class="s2">"action"</span>, <span class="s2">"commedy"</span>, <span class="s2">"thriller"</span><span class="o">]</span>
+
+1000000.times <span class="k">do</span> |index|
+  Movies.create :title <span class="o">=&gt;</span> <span class="s2">"movie-#{index}"</span>,
+                :genre <span class="o">=&gt;</span> genres.sample,
+                :description <span class="o">=&gt;</span> <span class="s2">"#{SecureRandom.uuid * 100}"</span>
+
+  <span class="c"># progress indicator</span>
+  puts<span class="o">(</span>index<span class="o">)</span> <span class="k">if </span>index % 1000 <span class="o">==</span> 0
+end
+</code></pre></div>
+<p>This is of course pretty basic if you have used Rails for more
+than a week or two, but it is a necessary boilerplate. Let&rsquo;s
+start with the measurement.</p>
+
+<h2>Adding New Columns</h2>
+
+<p>For example we can create some migrations that add a new column to
+the <code>movies</code> table.</p>
+<div class="highlight"><pre class="highlight shell"><code>rails generate migration AddDirectorToMovies
+</code></pre></div><div class="highlight"><pre class="highlight ruby"><code><span class="k">def</span> <span class="nf">change</span>
+  <span class="n">add_column</span> <span class="ss">:movies</span><span class="p">,</span> <span class="ss">:director</span><span class="p">,</span> <span class="ss">:string</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>On my computer this takes less than a second to finish.</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="nv">$ </span>rake db:migrate
+
+<span class="nt">--</span> add_column<span class="o">(</span>:movies, :director, :string<span class="o">)</span>
+   -&gt; 0.0315s
+</code></pre></div>
+<p>However if I add a default value on the director column:</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="k">def</span> <span class="nf">change</span>
+  <span class="n">add_column</span> <span class="ss">:movies</span><span class="p">,</span> <span class="ss">:director</span><span class="p">,</span> <span class="ss">:default</span> <span class="o">=&gt;</span> <span class="s2">"Nobody"</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Than it takes significantly longer:</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="nv">$ </span>rake db:migrate
+
+<span class="nt">--</span> add_column<span class="o">(</span>:movies, :director, :string, <span class="o">{</span>:default<span class="o">=&gt;</span><span class="s2">"Nobody"</span><span class="o">})</span>
+   -&gt; 24.7215s
+</code></pre></div>
+<p>This was of course expected, but if you would ask me before
+this test, I would guess that the time difference is not this
+big. Measurements ftw!</p>
+
+<h2>Adding Database Indexes</h2>
+
+<p>Adding indexes to the database can often speed up your queries.
+But will it always speed them up? Let&rsquo;s find out with a simple
+example.</p>
+
+<p>For example let&rsquo;s try to speed up the following query:</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="o">&gt;</span> Movie.where<span class="o">(</span>:genre <span class="o">=&gt;</span> <span class="s2">"action"</span><span class="o">)</span>.count
+<span class="o">(</span>157.8ms<span class="o">)</span>  SELECT COUNT<span class="o">(</span><span class="k">*</span><span class="o">)</span> FROM <span class="s2">"movies"</span>  WHERE <span class="s2">"movies"</span>.<span class="s2">"genre"</span> <span class="o">=</span> <span class="s1">'action'</span>
+<span class="o">=&gt;</span> 332953
+</code></pre></div>
+<p>It isn&rsquo;t too slow, but if we execute several of these counts in
+one HTTP request, it can add up quickly.</p>
+
+<p>Let&rsquo;s add an index to it:</p>
+<div class="highlight"><pre class="highlight shell"><code>rails generate migration AddIndexToMoviesGenre
+</code></pre></div><div class="highlight"><pre class="highlight ruby"><code><span class="k">def</span> <span class="nf">change</span>
+  <span class="n">add_index</span> <span class="ss">:movies</span><span class="p">,</span> <span class="ss">:genre</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Execute it with the following:</p>
+<div class="highlight"><pre class="highlight plaintext"><code>$ rake db:migrate
+== 20150311212758 AddIndexToMoviesGenre: migrating
+-- add_index(:movies, :genre)
+   -&gt; 31.1195s
+== 20150311212758 AddIndexToMoviesGenre: migrated (31.1196s)
+</code></pre></div>
+<p>Whooa! I did not expect more than a couple of seconds for this
+task. But let&rsquo;s continue. Will it speed up the query?</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="o">&gt;</span> Movie.where<span class="o">(</span>:genre <span class="o">=&gt;</span> <span class="s2">"action"</span><span class="o">)</span>.count
+<span class="o">(</span>161.4ms<span class="o">)</span>  SELECT COUNT<span class="o">(</span><span class="k">*</span><span class="o">)</span> FROM <span class="s2">"movies"</span>  WHERE <span class="s2">"movies"</span>.<span class="s2">"genre"</span> <span class="o">=</span> <span class="s1">'action'</span>
+<span class="o">=&gt;</span> 332953
+</code></pre></div>
+<p>Bummer, it did not help at all! As I later checked, it is pretty
+much useless to add indexes to column that have a small range of
+values. That is of course exactly the case with the genre column.</p>
+
+<h2>Final words</h2>
+
+<p>The above tests are probably a little childish, but some of the
+things actually surprised me. I hope you liked this article.</p>
+
+<p>Happy hacking!</p>
+
+
+
+  </article>
+
+
+      <div class="footer">
+  <div class="content">
+    <p>
+      <strong>❈</strong><br>
+      <br>
+
+      Follow me on <a href="https://twitter.com/igor_sarcevic">Twitter</a> and <a href="https://rs.linkedin.com/in/igorsarcevic">LinkedIn</a>.<br>
+      Copyright ©2014-2023 Igor Šarčević. All rights reserved.</br>
+      <br>
+      Enjoy the rest of your day!
+    </p>
+  </div>
+<div>
+
+    </div>
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+           })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-57223799-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+
+    <script>
+      /**
+      * Function that tracks a click on an outbound link in Analytics.
+      * This function takes a valid URL string as an argument, and uses that URL string
+      * as the event label. Setting the transport method to 'beacon' lets the hit be sent
+      * using 'navigator.sendBeacon' in browser that support it.
+      */
+      var trackOutboundLink = function(url) {
+        ga('send', 'event', 'outbound', 'click', url, {
+          'transport': 'beacon',
+          'hitCallback': function(){document.location = url;}
+        });
+      }
+    </script>
+
+  </body>
+</html>

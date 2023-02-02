@@ -1,0 +1,258 @@
+<!doctype html>
+<html itemscope itemtype="http://schema.org/Article">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
+    <link rel="alternate" type="application/atom+xml" title="Morning Coffee" href="/feed.xml" />
+
+    <link rel="shortcut icon" href="favicon.svg">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+      <title>Measuring the strength of a WiFi connection &mdash; by Igor Šarčević</title>
+
+    <!-- Place this data between the <head> tags of your website -->
+      <meta name="description" content="Recently I switched my ISP provider and with the change I’ve got
+a new WiFi router. The download speed is incredible, 10x the compared
+to my previous subscription, but the stability got worse.
+
+" />
+
+      <!-- Schema.org markup for Google+ -->
+      <meta itemprop="name" content="Measuring the strength of a WiFi connection">
+      <meta itemprop="description" content="Recently I switched my ISP provider and with the change I’ve got
+a new WiFi router. The download speed is incredible, 10x the compared
+to my previous subscription, but the stability got worse.
+
+">
+      <meta itemprop="image" content="http://morningcoffee.io/images/2018-09-04-measuring-the-strength-of-a-wifi-connection.png">
+
+      <!-- Twitter Card data -->
+      <meta name="twitter:card" content="summary_large_image">
+      <meta name="twitter:site" content="@igor_sarcevic">
+      <meta name="twitter:title" content="Measuring the strength of a WiFi connection">
+      <meta name="twitter:description" content="Recently I switched my ISP provider and with the change I’ve got
+a new WiFi router. The download speed is incredible, 10x the compared
+to my previous subscription, but the stability got worse.
+
+">
+      <meta name="twitter:creator" content="@igor_sarcevic">
+      <!-- Twitter summary card with large image must be at least 280x150px -->
+      <meta name="twitter:image:src" content="http://morningcoffee.io/images/2018-09-04-measuring-the-strength-of-a-wifi-connection.png">
+
+      <!-- Open Graph data -->
+      <meta property="og:title" content="Measuring the strength of a WiFi connection" />
+      <meta property="og:type" content="article" />
+      <meta property="og:url" content="http://" />
+      <meta property="og:image" content="http://morningcoffee.io/images/2018-09-04-measuring-the-strength-of-a-wifi-connection.png" />
+      <meta property="og:description" content="Recently I switched my ISP provider and with the change I’ve got
+a new WiFi router. The download speed is incredible, 10x the compared
+to my previous subscription, but the stability got worse.
+
+" />
+      <meta property="article:published_time" content="2018-09-04 00:00:00 UTC" />
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Raleway:900&display=swap" rel="stylesheet">
+    <link href="/stylesheets/style.css" rel="stylesheet" />
+  </head>
+  <body>
+
+    <div id="main" role="main">
+      <nav class="navigation" style="padding: 10px;">
+  <div style="display: flex;justify-items: space-between;justify-content: space-between;">
+    <a style="font-size: 20px" href="/" style="color: crimson;">Home</a>
+    <a style="font-size: 20px" href="/about-me.html" style="color: crimson;">About</a>
+  </div>
+</nav>
+
+
+        <article class="article">
+    <div class="header">
+      <h1>Measuring the strength of a WiFi connection</h1>
+
+      <div class="subtitle">
+        Published on <time>September  4, 2018</time>
+      </div>
+    </div>
+
+    <p>Recently I switched my ISP provider and with the change I&rsquo;ve got
+a new WiFi router. The download speed is incredible, 10x the compared
+to my previous subscription, but the stability got worse.</p>
+
+<p></p>
+
+<p>As a software engineer, I know my way around computers, but when it
+comes to network equipment I&rsquo;m on the same level as the avarage Joe.
+This issue with an unstable WiFi connection was bugging me too much.
+I&rsquo;ve tried moving my notebook around the appartment and I&rsquo;ve noticed
+some difference, but it was mostly random.</p>
+
+<p>I realize that it is time to purchase a stronger WiFi router.
+However, before I do that, I wanted to find out exactly where is the
+source of the issue.</p>
+
+<h2>Measuring Signal Strength</h2>
+
+<p>I learned that on OS X there is a utility command that I can invoke to
+print the information about the current wireless connection:</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="nv">$ </span>/System/Library/PrivateFrameworks/Apple<span class="k">*</span>.framework/Versions/Current/Resources/airport <span class="nt">-I</span>
+
+     agrCtlRSSI: <span class="nt">-52</span>
+     agrExtRSSI: 0
+    agrCtlNoise: <span class="nt">-98</span>
+    agrExtNoise: 0
+          state: running
+        op mode: station
+     lastTxRate: 117
+        maxRate: 289
+lastAssocStatus: 0
+    802.11 auth: open
+      link auth: wpa2-psk
+          BSSID: <span class="nb">fc</span>:1:7c:50:33:56
+           SSID: A
+            MCS: 6
+        channel: 36
+</code></pre></div>
+<p>We will look into two of the above numbers, the RSSI and Noise.</p>
+
+<p>The first value RSSI (Received Signal Strenght Indicator) is mesauring the
+power of the received signal in the wireless network. It uses a logarithmic
+scale expressed in decibels (db) and typically ranges from 0 to -100. For a
+good quality signal, we want the number to be closer to zero.</p>
+
+<p>The second value Noise, measures the impact of unwanted interfering signal
+sources, such as distortion and radio frequency interference. This value is
+also measured in decibels (db) from 0 to -120. We want this value to be as
+close to the -120 as possible as this indicates little to no noise in the
+wireless network.</p>
+
+<p>With the RSSI and Noise, we can calculate Signal-to-Noise margin, a
+commonly used value to measure the power of the signal. It is calculated
+with the following formula:</p>
+<div class="highlight"><pre class="highlight plaintext"><code>SNR_Margin = RSSI - Noise
+</code></pre></div>
+<p>Higher values represent better WiFi signals.</p>
+
+<p>With the above formula, I&rsquo;ve constructed a bash script for monitoring the
+strenght of my WiFi signal.</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="c">#!/usr/bin/env bash</span>
+<span class="c"># file: w.sh</span>
+
+<span class="k">while </span><span class="nb">true</span><span class="p">;</span> <span class="k">do
+  </span><span class="nv">out</span><span class="o">=</span><span class="s2">"</span><span class="k">$(</span>/System/Library/PrivateFrameworks/Apple<span class="k">*</span>.framework/Versions/Current/Resources/airport <span class="nt">-I</span><span class="k">)</span><span class="s2">"</span>
+
+  <span class="nv">rssi</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"</span><span class="nv">$out</span><span class="s2">"</span> | <span class="nb">grep</span> <span class="s2">"CtlRSSI"</span> | awk <span class="nt">-F</span> <span class="s1">':'</span> <span class="s1">'{ print $2 }'</span><span class="k">)</span>
+  <span class="nv">noise</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"</span><span class="nv">$out</span><span class="s2">"</span> | <span class="nb">grep</span> <span class="s2">"CtlNoise"</span> | awk <span class="nt">-F</span> <span class="s1">':'</span> <span class="s1">'{ print $2 }'</span><span class="k">)</span>
+
+  <span class="nb">echo</span> <span class="s2">"RSSI: </span><span class="nv">$rssi</span><span class="s2">, Noise: </span><span class="nv">$noise</span><span class="s2">, Quality: </span><span class="k">$((</span>rssi <span class="o">-</span> noise<span class="k">))</span><span class="s2">"</span>
+
+  sleep 1
+<span class="k">done</span>
+</code></pre></div>
+<p>Example of monitoring and walking around the appartment:</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="nv">$ </span>bash w.sh
+
+RSSI:  <span class="nt">-59</span>, Noise:  <span class="nt">-90</span>, Quality: 31
+RSSI:  <span class="nt">-59</span>, Noise:  <span class="nt">-92</span>, Quality: 33
+RSSI:  <span class="nt">-58</span>, Noise:  <span class="nt">-86</span>, Quality: 28
+RSSI:  <span class="nt">-57</span>, Noise:  <span class="nt">-86</span>, Quality: 29
+RSSI:  <span class="nt">-57</span>, Noise:  <span class="nt">-86</span>, Quality: 29
+RSSI:  <span class="nt">-57</span>, Noise:  <span class="nt">-88</span>, Quality: 31
+RSSI:  <span class="nt">-57</span>, Noise:  <span class="nt">-89</span>, Quality: 32
+RSSI:  <span class="nt">-57</span>, Noise:  <span class="nt">-89</span>, Quality: 32
+RSSI:  <span class="nt">-57</span>, Noise:  <span class="nt">-89</span>, Quality: 32
+RSSI:  <span class="nt">-57</span>, Noise:  <span class="nt">-89</span>, Quality: 32
+RSSI:  <span class="nt">-56</span>, Noise:  <span class="nt">-89</span>, Quality: 33
+RSSI:  <span class="nt">-55</span>, Noise:  <span class="nt">-95</span>, Quality: 40
+RSSI:  <span class="nt">-55</span>, Noise:  <span class="nt">-100</span>, Quality: 45
+RSSI:  <span class="nt">-54</span>, Noise:  <span class="nt">-101</span>, Quality: 47
+RSSI:  <span class="nt">-53</span>, Noise:  <span class="nt">-101</span>, Quality: 48
+RSSI:  <span class="nt">-53</span>, Noise:  <span class="nt">-101</span>, Quality: 48
+RSSI:  <span class="nt">-52</span>, Noise:  <span class="nt">-101</span>, Quality: 49
+RSSI:  <span class="nt">-52</span>, Noise:  <span class="nt">-100</span>, Quality: 48
+RSSI:  <span class="nt">-52</span>, Noise:  <span class="nt">-98</span>, Quality: 46
+RSSI:  <span class="nt">-51</span>, Noise:  <span class="nt">-96</span>, Quality: 45
+RSSI:  <span class="nt">-51</span>, Noise:  <span class="nt">-92</span>, Quality: 41
+RSSI:  <span class="nt">-50</span>, Noise:  <span class="nt">-92</span>, Quality: 42
+RSSI:  <span class="nt">-50</span>, Noise:  <span class="nt">-92</span>, Quality: 42
+RSSI:  <span class="nt">-50</span>, Noise:  <span class="nt">-90</span>, Quality: 40
+RSSI:  <span class="nt">-50</span>, Noise:  <span class="nt">-90</span>, Quality: 40
+RSSI:  <span class="nt">-50</span>, Noise:  <span class="nt">-89</span>, Quality: 39
+RSSI:  <span class="nt">-51</span>, Noise:  <span class="nt">-89</span>, Quality: 38
+RSSI:  <span class="nt">-52</span>, Noise:  <span class="nt">-89</span>, Quality: 37
+RSSI:  <span class="nt">-53</span>, Noise:  <span class="nt">-89</span>, Quality: 36
+RSSI:  <span class="nt">-54</span>, Noise:  <span class="nt">-89</span>, Quality: 35
+RSSI:  <span class="nt">-59</span>, Noise:  <span class="nt">-92</span>, Quality: 33
+RSSI:  <span class="nt">-60</span>, Noise:  <span class="nt">-92</span>, Quality: 32
+RSSI:  <span class="nt">-62</span>, Noise:  <span class="nt">-92</span>, Quality: 30
+RSSI:  <span class="nt">-62</span>, Noise:  <span class="nt">-91</span>, Quality: 29
+RSSI:  <span class="nt">-63</span>, Noise:  <span class="nt">-89</span>, Quality: 26
+RSSI:  <span class="nt">-63</span>, Noise:  <span class="nt">-87</span>, Quality: 24
+RSSI:  <span class="nt">-64</span>, Noise:  <span class="nt">-86</span>, Quality: 22
+RSSI:  <span class="nt">-65</span>, Noise:  <span class="nt">-86</span>, Quality: 21
+RSSI:  <span class="nt">-65</span>, Noise:  <span class="nt">-86</span>, Quality: 21
+RSSI:  <span class="nt">-65</span>, Noise:  <span class="nt">-88</span>, Quality: 23
+RSSI:  <span class="nt">-65</span>, Noise:  <span class="nt">-89</span>, Quality: 24
+RSSI:  <span class="nt">-66</span>, Noise:  <span class="nt">-89</span>, Quality: 23
+RSSI:  <span class="nt">-66</span>, Noise:  <span class="nt">-89</span>, Quality: 23
+RSSI:  <span class="nt">-65</span>, Noise:  <span class="nt">-96</span>, Quality: 31
+</code></pre></div>
+<p>I use the following rules of thumb for my WiFi connection:</p>
+
+<ul>
+<li>RSSI =&gt; -90dB: Unusable connection.</li>
+<li>RSSI (-90dB..-80db): Connection is bad, but I can maybe open my email.</li>
+<li>RSSI (-80dB..-70db): Usable. Major disruptions while browsing the web.</li>
+<li>RSSI (-70dB..-65dB): Usable for email, browsing.</li>
+<li>RSSI (-65dB..-55dB): Usable for Skype/Zoom calls, Gaming, streaming.</li>
+<li>RSSI &lt;= -55dB: Stable connection with no distractions.</li>
+</ul>
+
+
+
+  </article>
+
+
+      <div class="footer">
+  <div class="content">
+    <p>
+      <strong>❈</strong><br>
+      <br>
+
+      Follow me on <a href="https://twitter.com/igor_sarcevic">Twitter</a> and <a href="https://rs.linkedin.com/in/igorsarcevic">LinkedIn</a>.<br>
+      Copyright ©2014-2023 Igor Šarčević. All rights reserved.</br>
+      <br>
+      Enjoy the rest of your day!
+    </p>
+  </div>
+<div>
+
+    </div>
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+           })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-57223799-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+
+    <script>
+      /**
+      * Function that tracks a click on an outbound link in Analytics.
+      * This function takes a valid URL string as an argument, and uses that URL string
+      * as the event label. Setting the transport method to 'beacon' lets the hit be sent
+      * using 'navigator.sendBeacon' in browser that support it.
+      */
+      var trackOutboundLink = function(url) {
+        ga('send', 'event', 'outbound', 'click', url, {
+          'transport': 'beacon',
+          'hitCallback': function(){document.location = url;}
+        });
+      }
+    </script>
+
+  </body>
+</html>

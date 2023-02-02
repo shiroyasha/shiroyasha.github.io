@@ -1,0 +1,203 @@
+<!doctype html>
+<html itemscope itemtype="http://schema.org/Article">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
+    <link rel="alternate" type="application/atom+xml" title="Morning Coffee" href="/feed.xml" />
+
+    <link rel="shortcut icon" href="favicon.svg">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+      <title>Strive for Software Autonomy, not just Process Automation &mdash; by Igor Šarčević</title>
+
+    <!-- Place this data between the <head> tags of your website -->
+      <meta name="description" content="We made some major steps in software automation, more specifically release
+automation. We coined the word DevOps and invented a culture that unites..." />
+
+      <!-- Schema.org markup for Google+ -->
+      <meta itemprop="name" content="Strive for Software Autonomy, not just Process Automation">
+      <meta itemprop="description" content="We made some major steps in software automation, more specifically release
+automation. We coined the word DevOps and invented a culture that unites...">
+      <meta itemprop="image" content="http://morningcoffee.io/images/2019-03-30-strive-for-software-autonomy-not-just-process-automation.png">
+
+      <!-- Twitter Card data -->
+      <meta name="twitter:card" content="summary_large_image">
+      <meta name="twitter:site" content="@igor_sarcevic">
+      <meta name="twitter:title" content="Strive for Software Autonomy, not just Process Automation">
+      <meta name="twitter:description" content="We made some major steps in software automation, more specifically release
+automation. We coined the word DevOps and invented a culture that unites...">
+      <meta name="twitter:creator" content="@igor_sarcevic">
+      <!-- Twitter summary card with large image must be at least 280x150px -->
+      <meta name="twitter:image:src" content="http://morningcoffee.io/images/2019-03-30-strive-for-software-autonomy-not-just-process-automation.png">
+
+      <!-- Open Graph data -->
+      <meta property="og:title" content="Strive for Software Autonomy, not just Process Automation" />
+      <meta property="og:type" content="article" />
+      <meta property="og:url" content="http://" />
+      <meta property="og:image" content="http://morningcoffee.io/images/2019-03-30-strive-for-software-autonomy-not-just-process-automation.png" />
+      <meta property="og:description" content="We made some major steps in software automation, more specifically release
+automation. We coined the word DevOps and invented a culture that unites..." />
+      <meta property="article:published_time" content="2019-03-30 00:00:00 UTC" />
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Raleway:900&display=swap" rel="stylesheet">
+    <link href="/stylesheets/style.css" rel="stylesheet" />
+  </head>
+  <body>
+
+    <div id="main" role="main">
+      <nav class="navigation" style="padding: 10px;">
+  <div style="display: flex;justify-items: space-between;justify-content: space-between;">
+    <a style="font-size: 20px" href="/" style="color: crimson;">Home</a>
+    <a style="font-size: 20px" href="/about-me.html" style="color: crimson;">About</a>
+  </div>
+</nav>
+
+
+        <article class="article">
+    <div class="header">
+      <h1>Strive for Software Autonomy, not just Process Automation</h1>
+
+      <div class="subtitle">
+        Published on <time>March 30, 2019</time>
+      </div>
+    </div>
+
+    <p>We made some major steps in software automation, more specifically release
+automation. We coined the word DevOps and invented a culture that unites
+developers and operations. We invented the term infrastructure as code that
+represents our ability to store the state of our systems in textual documents, 
+and on-demand reproduce that state. Our systems become immutable, revertable,
+observable.</p>
+
+<p>The common factor shared in all the previous advancements is the reduction of
+operators necessary to complete a task. With greater automation, operations that
+once demanded a week of well-coordinated effort team effort can now be completed
+in a matter of minutes by a single person. This gave us a free room to invent
+and to solve real issues, and not be bogged down by meaningless toil.</p>
+
+<p>The next step in this evolution is to completely remove the necessity for
+unnecessary toil. The next step is to strive for software that can live on its
+own. Software that can be autonomous.</p>
+
+<p>There&rsquo;s a subtle yet very important difference between the semantic meaning of
+the words automatic and autonomous. The first one, automatic, is what our
+collective vocabulary is focused on right now. We recognize the steps we need to
+take manually, codify them, and in this process make them automatic. The process
+itself hasn&rsquo;t changed. It still has the same perspective, it is only faster, and
+more reliable. The second word, autonomous, implies that our software can make
+decisions on its own. Software that can react and adjust to a desirable state.
+This activity still requires automation in its core, but the focus has shifted.
+The question is no longer how I can make this process faster, or more reliable,
+the new question is how I can make this software independent.</p>
+
+<p>Like any other cultural shift in our industry, to reach the state of software
+autonomy, we first need to adjust our vocabulary.</p>
+
+<h2>Codify Goals instead of Tasks</h2>
+
+<p>A good example of aiming for software autonomy is how you approach routine
+maintenance tasks in your system. You can either codify and automate the steps
+you usually take to process a maintenance task, or you can codify the goals you
+want to achieve when the task is finished.</p>
+
+<p>A concrete example would be installing a new node in your infrastructure.</p>
+
+<p>Your end goal can be to set up a Chef/Puppet/Ansible cookbook that codifies the
+steps necessary to spin up this machine. This would satisfy the automation part.</p>
+
+<p>Or you can aim higher and ask a fundamental question. Why do I want to have new
+nodes in my system? Do I want to make sure that I have enough servers to handle
+the incoming request load? I should, in that case, codify this goal instead.
+Keep in mind that this is not just an incremental upgrade compared to the
+Chef/Puppet/Ansible approach. This new system needs to monitor and react to some
+meaningful numbers in the system and take a series of steps to satisfy that
+goal. For this task, our classical automation tools might just not cut it. </p>
+
+<h2>Don&rsquo;t just observe the system, let the system react to problems</h2>
+
+<p>Any good production ready system should come with a set of metrics that
+communicates its health to the operators. Prometheus, InfluxDB, Grafana, StatsD,
+and Fluentd have made some major advances. These systems, however great, are
+still not the ultimate end. They assume that there is an operator that keeps an
+eye on the system, makes judgment calls, and reacts to issues. In this system,
+an operator is part of the system. A human operator that wants to sleep during
+the night.</p>
+
+<p>Is your software a toddler that needs 24h human monitoring? Can it stand up when
+it falls down? Can it self-correct when it makes a mistake? Be courageous enough
+to let it act on its own. Let it try to fall, and stand up. Let your system
+evolve to live on its own, instead of hanging on to your hands.</p>
+
+<p>A concrete example of this is releasing new versions of your software. You can
+focus on automating deployment, automating rollbacks, and patiently observing
+the metrics of the new release. Or you can set up a system where you offer a new
+version, and the system decides if it wants to keep running it. Automated
+Blue/Green deployment is a good step in this direction. A new blue version is
+offered up. The system monitors itself for a given amount of time. If everything
+is right the system evolves to a new green state. There is no human that needs
+to trigger a rollback if something goes wrong.</p>
+
+<h2>Talk about your system as a part of your team</h2>
+
+<p>Your system should not be something that you maintain. Your system should evolve
+and start making decisions on its own. This should be reflected in your everyday
+vocabulary as well.</p>
+
+<p>For example, instead of saying we will add a new node, we should aim for we will
+tell the system to improve its response rate.</p>
+
+<p>If you change your vocabulary and start talking about your system as a part of
+your team, you will make sure that everyone in your team understands that your
+system should be an autonomous entity. This will shift your collective
+perspective from automating tasks, to teaching your software to do those tasks
+instead of you.</p>
+
+
+
+  </article>
+
+
+      <div class="footer">
+  <div class="content">
+    <p>
+      <strong>❈</strong><br>
+      <br>
+
+      Follow me on <a href="https://twitter.com/igor_sarcevic">Twitter</a> and <a href="https://rs.linkedin.com/in/igorsarcevic">LinkedIn</a>.<br>
+      Copyright ©2014-2023 Igor Šarčević. All rights reserved.</br>
+      <br>
+      Enjoy the rest of your day!
+    </p>
+  </div>
+<div>
+
+    </div>
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+           })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-57223799-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+
+    <script>
+      /**
+      * Function that tracks a click on an outbound link in Analytics.
+      * This function takes a valid URL string as an argument, and uses that URL string
+      * as the event label. Setting the transport method to 'beacon' lets the hit be sent
+      * using 'navigator.sendBeacon' in browser that support it.
+      */
+      var trackOutboundLink = function(url) {
+        ga('send', 'event', 'outbound', 'click', url, {
+          'transport': 'beacon',
+          'hitCallback': function(){document.location = url;}
+        });
+      }
+    </script>
+
+  </body>
+</html>

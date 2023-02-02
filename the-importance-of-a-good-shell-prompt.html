@@ -1,0 +1,284 @@
+<!doctype html>
+<html itemscope itemtype="http://schema.org/Article">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
+    <link rel="alternate" type="application/atom+xml" title="Morning Coffee" href="/feed.xml" />
+
+    <link rel="shortcut icon" href="favicon.svg">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+      <title>The importance of a good command line prompt &mdash; by Igor Šarčević</title>
+
+    <!-- Place this data between the <head> tags of your website -->
+      <meta name="description" content="A lot of developers choose to avoid the often big, clumsy and complicated
+IDEs in favor of the Linux command line. At first sight the command line
+is inferior to the experience you get from a full blown IDE. However, the
+beauty of the command line is just that. It is fast, simple, and by default
+it comes with very small set of pre-installed features.
+
+" />
+
+      <!-- Schema.org markup for Google+ -->
+      <meta itemprop="name" content="The importance of a good command line prompt">
+      <meta itemprop="description" content="A lot of developers choose to avoid the often big, clumsy and complicated
+IDEs in favor of the Linux command line. At first sight the command line
+is inferior to the experience you get from a full blown IDE. However, the
+beauty of the command line is just that. It is fast, simple, and by default
+it comes with very small set of pre-installed features.
+
+">
+      <meta itemprop="image" content="http://morningcoffee.io/images/running-shell-commands-from-ruby.png">
+
+      <!-- Twitter Card data -->
+      <meta name="twitter:card" content="summary_large_image">
+      <meta name="twitter:site" content="@igor_sarcevic">
+      <meta name="twitter:title" content="The importance of a good command line prompt">
+      <meta name="twitter:description" content="A lot of developers choose to avoid the often big, clumsy and complicated
+IDEs in favor of the Linux command line. At first sight the command line
+is inferior to the experience you get from a full blown IDE. However, the
+beauty of the command line is just that. It is fast, simple, and by default
+it comes with very small set of pre-installed features.
+
+">
+      <meta name="twitter:creator" content="@igor_sarcevic">
+      <!-- Twitter summary card with large image must be at least 280x150px -->
+      <meta name="twitter:image:src" content="http://morningcoffee.io/images/running-shell-commands-from-ruby.png">
+
+      <!-- Open Graph data -->
+      <meta property="og:title" content="The importance of a good command line prompt" />
+      <meta property="og:type" content="article" />
+      <meta property="og:url" content="http://" />
+      <meta property="og:image" content="http://morningcoffee.io/images/running-shell-commands-from-ruby.png" />
+      <meta property="og:description" content="A lot of developers choose to avoid the often big, clumsy and complicated
+IDEs in favor of the Linux command line. At first sight the command line
+is inferior to the experience you get from a full blown IDE. However, the
+beauty of the command line is just that. It is fast, simple, and by default
+it comes with very small set of pre-installed features.
+
+" />
+      <meta property="article:published_time" content="2016-06-12 00:00:00 UTC" />
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Raleway:900&display=swap" rel="stylesheet">
+    <link href="/stylesheets/style.css" rel="stylesheet" />
+  </head>
+  <body>
+
+    <div id="main" role="main">
+      <nav class="navigation" style="padding: 10px;">
+  <div style="display: flex;justify-items: space-between;justify-content: space-between;">
+    <a style="font-size: 20px" href="/" style="color: crimson;">Home</a>
+    <a style="font-size: 20px" href="/about-me.html" style="color: crimson;">About</a>
+  </div>
+</nav>
+
+
+        <article class="article">
+    <div class="header">
+      <h1>The importance of a good command line prompt</h1>
+
+      <div class="subtitle">
+        Published on <time>June 12, 2016</time>
+      </div>
+    </div>
+
+    <p>A lot of developers choose to avoid the often big, clumsy and complicated
+IDEs in favor of the Linux command line. At first sight the command line
+is inferior to the experience you get from a full blown IDE. However, the
+beauty of the command line is just that. It is fast, simple, and by default
+it comes with very small set of pre-installed features.</p>
+
+<p></p>
+
+<p>To make the best use of the command line, you will have to invest your time to
+learn and configure the various parts of the system. At first, this time
+investment will slow you down, but with time, your investment will reward you
+development workflow exponentially.</p>
+
+<p>One of the first things you want to modify in your shell is the command line prompt.</p>
+
+<h2>The prompt</h2>
+
+<p>In case you are unfamiliar with the term <em>prompt</em>, it is the text that appears
+every time you want to enter a new command in your shell.</p>
+
+<p><img src="/images/prompt/default-prompt.png" alt="Default Linux prompt" /></p>
+
+<p>In the above image we consider <code>vagrant@local:/tmp$</code> to be our prompt. On Ubuntu
+it displays several nifty information useful for our everyday tasks. For
+example, in the above image you can immediately recognize the following:</p>
+
+<ul>
+<li>current Linux user (in this case <em>vagrant</em>)</li>
+<li>the hostname of the machine (in this case <em>local</em>)</li>
+<li>the current directory (in this case <em>tmp</em>)</li>
+<li>the authority level (<code>$</code> for normal users, <code>#</code> for admins)</li>
+</ul>
+
+<p>These are valuable information when you enter the system for the first
+time, or when you SSH into an unfamiliar remote server. However, for a local
+development environment, it contains too much information that we don&rsquo;t really
+care about (hostname and username for example).</p>
+
+<p>This is where the power of the shell comes handy. If we don&rsquo;t like something,
+there is usually a really simple, <em>scriptable</em>, way to change it. In the case of
+the prompt, we want to modify the <code>PS1</code> environment variable. For exercise sake,
+we will remove the username and the hostname from our <code>PS1</code> variable.</p>
+
+<p>But first, let&rsquo;s peek at the current value:</p>
+<div class="highlight"><pre class="highlight shell"><code>vagrant@local:/tmp<span class="nv">$ </span><span class="nb">echo</span> <span class="nv">$PS1</span>
+<span class="k">${</span><span class="nv">debian_chroot</span>:+<span class="p">(</span><span class="nv">$debian_chroot</span><span class="p">)</span><span class="k">}</span><span class="se">\u</span>@<span class="se">\h</span>:<span class="se">\w\$</span>
+</code></pre></div>
+<p>The <code>\u</code> represents the current user, and <code>\h</code> the current hostname. Let&rsquo;s
+remove everything except the <code>\w</code> that represents the current directory.</p>
+<div class="highlight"><pre class="highlight shell"><code>vagrant@local:/tmp<span class="nv">$ </span><span class="nb">export </span><span class="nv">PS1</span><span class="o">=</span><span class="s1">'\w\$'</span>
+</code></pre></div>
+<p>Your shell should have changed immediately. If you have done everything right,
+you should see the following:</p>
+<div class="highlight"><pre class="highlight shell"><code>/tmp<span class="err">$</span>
+</code></pre></div>
+<p>However, this change will not last long. More specifically, it will stay
+unchanged until the next time you log into your system. To make this change
+permanent, we should execute it every time when you log into your system.</p>
+
+<p>On Linux, or more specifically bash, if you want to execute something every time
+you log into the system, you should put it inside the <code>~/.bashrc</code> file.</p>
+
+<p>Let&rsquo;s do that. Open the file, and add <code>export PS1=&#39;\w\$&#39;</code> at the end of the
+file. Now, your change in the prompt will remain permanent.</p>
+
+<h2>Ideas for an awesome command line prompt</h2>
+
+<p>The above was just a quick introduction. You can, and if care about yourself
+then you must, change and tweak your prompt even further. Here are some ideas I
+use to boost my shell productivity.</p>
+
+<h3>Exit status indicators</h3>
+
+<p>It has been a long time since we moved from monochromatic displays to the ones
+that support colors. We should definitely make use of this fact. However,
+instead of making our prompt just colorful, we can use the colors to attach
+meaning to some events and make an awesome indicator in our prompt.</p>
+
+<p>The green and red colors are a very good indicators for representing the success
+of the previous command. If the previous command returned an exit status <code>0</code> we
+can color our prompt indicator green, and red otherwise.</p>
+
+<p><img src="/images/prompt/exit_status.png" alt="Exit status prompt indicator" /></p>
+
+<h3>Current directory display</h3>
+
+<p>I am not a big fan of long command line prompts. A good way to save some place
+on your command prompt is to display only the name of the current directory
+instead of the full path.</p>
+
+<p>For example, instead of the following:</p>
+<div class="highlight"><pre class="highlight shell"><code>code/blog/source/images/prompt <span class="err">$</span>
+</code></pre></div>
+<p>I am perfectly fine with displaying only:</p>
+<div class="highlight"><pre class="highlight shell"><code>prompt <span class="err">$</span>
+</code></pre></div>
+<p>At first, you may find the lack of the full path confusing, but with time you
+get used to it and you rarely need to lookup the full path.</p>
+
+<h3>Git branch</h3>
+
+<p>As a developer, you probably spend most of your time in git repositories. A
+valuable information on your prompt can be the name of the current branch. This
+comes even more handy when you have dozens of repositories on your machine.</p>
+
+<p>For example, I store all of my repositories in the <code>~/code</code> directory. When I
+enter a directory, I want to have a way to immediately recognize the state where
+I left off work yesterday.</p>
+
+<p><img src="/images/prompt/git-branch.png" alt="Git branch in the prompt" /></p>
+
+<h3>Git status indicators</h3>
+
+<p>Another useful information in the prompt can be the state of your git
+repository. Instead of writing <code>git status</code> every time you want to check if you
+have some uncommitted changes, you can use the combination of the green/red
+color to get this information effortlessly.</p>
+
+<p>In my prompt, if the name of the branch is green, that means that I don&rsquo;t have
+any uncommitted changes. It is red otherwise.</p>
+
+<p><img src="/images/prompt/git-status.png" alt="Git status in the prompt" /></p>
+
+<h3>Minimized jobs</h3>
+
+<p>If you are anything like me, you probably open a lot of files with Vim, edit
+them, minimize them with <code>Ctrl+z</code>, commit the changes, and then continue to edit
+the file by doing <code>fg</code>.</p>
+
+<p>Unfortunately, I used to forget that I have minimized some of the Vim windows,
+and I ended up with several open files, that sometimes conflicted with each
+other.</p>
+
+<p>To avoid this pain, I decided to display this information on my prompt. I use
+the following logic: If I have zero minimized jobs, the prompt displays nothing.
+If I have one or more jobs, the prompt displays the count of the jobs.</p>
+
+<p><img src="/images/prompt/job-count.png" alt="Job count on the prompt" /></p>
+
+<h2>Final words</h2>
+
+<p>If you like the above changes, you can take a peek at my <a href="https://github.com/shiroyasha/dotfiles/blob/master/files/prompt">current zsh
+prompt</a>.</p>
+
+<p>Also, a good source of inspiration can be the awesome <a href="https://github.com/robbyrussell/oh-my-zsh">oh-my-zsh
+project</a> or the <a href="https://github.com/Bash-it/bash-it">bash-it
+project</a> if you prefer Bash as your shell.</p>
+
+<p>Hope you enjoyed the article.<br>
+Stay awesome!</p>
+
+
+
+  </article>
+
+
+      <div class="footer">
+  <div class="content">
+    <p>
+      <strong>❈</strong><br>
+      <br>
+
+      Follow me on <a href="https://twitter.com/igor_sarcevic">Twitter</a> and <a href="https://rs.linkedin.com/in/igorsarcevic">LinkedIn</a>.<br>
+      Copyright ©2014-2023 Igor Šarčević. All rights reserved.</br>
+      <br>
+      Enjoy the rest of your day!
+    </p>
+  </div>
+<div>
+
+    </div>
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+           })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-57223799-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+
+    <script>
+      /**
+      * Function that tracks a click on an outbound link in Analytics.
+      * This function takes a valid URL string as an argument, and uses that URL string
+      * as the event label. Setting the transport method to 'beacon' lets the hit be sent
+      * using 'navigator.sendBeacon' in browser that support it.
+      */
+      var trackOutboundLink = function(url) {
+        ga('send', 'event', 'outbound', 'click', url, {
+          'transport': 'beacon',
+          'hitCallback': function(){document.location = url;}
+        });
+      }
+    </script>
+
+  </body>
+</html>

@@ -1,0 +1,222 @@
+<!doctype html>
+<html itemscope itemtype="http://schema.org/Article">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
+    <link rel="alternate" type="application/atom+xml" title="Morning Coffee" href="/feed.xml" />
+
+    <link rel="shortcut icon" href="favicon.svg">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+      <title>Deadlocks in PostgreSQL &mdash; by Igor Šarčević</title>
+
+    <!-- Place this data between the <head> tags of your website -->
+      <meta name="description" content="In concurrent systems where resources are locked, two or more processes can end
+up in a state in which each process is waiting for the other one. This state is
+called a deadlock. Deadlocks are an important issues that can happen in any
+database and can be scary when you encounter them for the first time.
+
+" />
+
+      <!-- Schema.org markup for Google+ -->
+      <meta itemprop="name" content="Deadlocks in PostgreSQL">
+      <meta itemprop="description" content="In concurrent systems where resources are locked, two or more processes can end
+up in a state in which each process is waiting for the other one. This state is
+called a deadlock. Deadlocks are an important issues that can happen in any
+database and can be scary when you encounter them for the first time.
+
+">
+      <meta itemprop="image" content="http://morningcoffee.io/images/2017-11-30-deadlocks-in-postgresql.png">
+
+      <!-- Twitter Card data -->
+      <meta name="twitter:card" content="summary_large_image">
+      <meta name="twitter:site" content="@igor_sarcevic">
+      <meta name="twitter:title" content="Deadlocks in PostgreSQL">
+      <meta name="twitter:description" content="In concurrent systems where resources are locked, two or more processes can end
+up in a state in which each process is waiting for the other one. This state is
+called a deadlock. Deadlocks are an important issues that can happen in any
+database and can be scary when you encounter them for the first time.
+
+">
+      <meta name="twitter:creator" content="@igor_sarcevic">
+      <!-- Twitter summary card with large image must be at least 280x150px -->
+      <meta name="twitter:image:src" content="http://morningcoffee.io/images/2017-11-30-deadlocks-in-postgresql.png">
+
+      <!-- Open Graph data -->
+      <meta property="og:title" content="Deadlocks in PostgreSQL" />
+      <meta property="og:type" content="article" />
+      <meta property="og:url" content="http://" />
+      <meta property="og:image" content="http://morningcoffee.io/images/2017-11-30-deadlocks-in-postgresql.png" />
+      <meta property="og:description" content="In concurrent systems where resources are locked, two or more processes can end
+up in a state in which each process is waiting for the other one. This state is
+called a deadlock. Deadlocks are an important issues that can happen in any
+database and can be scary when you encounter them for the first time.
+
+" />
+      <meta property="article:published_time" content="2017-11-30 00:00:00 UTC" />
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Raleway:900&display=swap" rel="stylesheet">
+    <link href="/stylesheets/style.css" rel="stylesheet" />
+  </head>
+  <body>
+
+    <div id="main" role="main">
+      <nav class="navigation" style="padding: 10px;">
+  <div style="display: flex;justify-items: space-between;justify-content: space-between;">
+    <a style="font-size: 20px" href="/" style="color: crimson;">Home</a>
+    <a style="font-size: 20px" href="/about-me.html" style="color: crimson;">About</a>
+  </div>
+</nav>
+
+
+        <article class="article">
+    <div class="header">
+      <h1>Deadlocks in PostgreSQL</h1>
+
+      <div class="subtitle">
+        Published on <time>November 30, 2017</time>
+      </div>
+    </div>
+
+    <p>In concurrent systems where resources are locked, two or more processes can end
+up in a state in which each process is waiting for the other one. This state is
+called a deadlock. Deadlocks are an important issues that can happen in any
+database and can be scary when you encounter them for the first time.</p>
+
+<p></p>
+
+<p><img src="/images/2017-11-30-deadlocks-in-postgresql.png" alt="Deadlocks in PostgreSQL" /></p>
+
+<p>In this article we will explore how deadlocks occur in PostgreSQL, what is the
+deadlock timeout, and how to interpret the error raised by PostgreSQL in case of
+a deadlock timeout.</p>
+
+<h2>Understanding How Deadlocks Occur in your Database</h2>
+
+<p>Before we dig into the details about deadlocks in PostgreSQL, it is important to
+understand how they occur. Let&rsquo;s observe the following example where two
+concurrent processes end up in a deadlock.</p>
+<div class="highlight"><pre class="highlight sql"><code><span class="n">process</span> <span class="n">A</span><span class="p">:</span> <span class="k">BEGIN</span><span class="p">;</span>
+<span class="n">process</span> <span class="n">B</span><span class="p">:</span> <span class="k">BEGIN</span><span class="p">;</span>
+
+<span class="n">process</span> <span class="n">A</span><span class="p">:</span> <span class="k">UPDATE</span> <span class="n">users</span> <span class="k">SET</span> <span class="n">name</span> <span class="o">=</span> <span class="nv">"Peter"</span> <span class="k">WHERE</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="n">process</span> <span class="n">B</span><span class="p">:</span> <span class="k">UPDATE</span> <span class="n">users</span> <span class="k">SET</span> <span class="n">name</span> <span class="o">=</span> <span class="nv">"Marko"</span> <span class="k">WHERE</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+
+<span class="c1">-- Both process A and B acquired an exclusive lock in</span>
+<span class="c1">-- their transactions. The lock will be released when</span>
+<span class="c1">-- the transactions finishes.</span>
+
+<span class="n">process</span> <span class="n">A</span><span class="p">:</span> <span class="k">UPDATE</span> <span class="n">users</span> <span class="k">SET</span> <span class="n">name</span> <span class="o">=</span> <span class="nv">"John"</span> <span class="k">WHERE</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="c1">-- process A tries to acquire an exclusive lock, but process B</span>
+<span class="c1">-- already holds the lock for the record with id = 2</span>
+<span class="c1">-- process A needs to wait till process B's transaction ends</span>
+
+<span class="n">process</span> <span class="n">B</span><span class="p">:</span> <span class="k">UPDATE</span> <span class="n">users</span> <span class="k">SET</span> <span class="n">name</span> <span class="o">=</span> <span class="nv">"John"</span> <span class="k">WHERE</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="c1">-- process B tries to acquire an exclusive lock, but process A</span>
+<span class="c1">-- already holds the lock for the record with id = 1</span>
+<span class="c1">-- process B needs to wait till process A's transaction ends</span>
+</code></pre></div>
+<p>At this point process A is waiting for process B, and process B is waiting for
+process A. In other words, a deadlock has occurred. Neither of the two processes
+can continue, and they will wait for each other indefinitely.</p>
+
+<h2>The Deadlock Timeout</h2>
+
+<p>To resolve the situation from the previous example, PostgreSQL raises a deadlock
+error if it detects that two processes are waiting for each other. PostgreSQL
+will wait for a given interval before it raises the error. This interval is
+defined with <code>deadlock_timeout</code> configuration value.</p>
+
+<p>Here is output one of the process would see after the deadlock timeout passes:</p>
+<div class="highlight"><pre class="highlight sql"><code><span class="c1">-- After a second, the deadlock timeout kicks in and raises an error</span>
+
+<span class="n">ERROR</span><span class="p">:</span>  <span class="n">deadlock</span> <span class="n">detected</span>
+<span class="n">DETAIL</span><span class="p">:</span>  <span class="n">Process</span> <span class="mi">12664</span> <span class="n">waits</span> <span class="k">for</span> <span class="n">ShareLock</span> <span class="k">on</span> <span class="n">transaction</span> <span class="mi">1330</span><span class="p">;</span>
+         <span class="n">blocked</span> <span class="k">by</span> <span class="n">process</span> <span class="mi">12588</span><span class="p">.</span>
+         <span class="n">Process</span> <span class="mi">12588</span> <span class="n">waits</span> <span class="k">for</span> <span class="n">ShareLock</span> <span class="k">on</span> <span class="n">transaction</span> <span class="mi">1331</span><span class="p">;</span>
+         <span class="n">blocked</span> <span class="k">by</span> <span class="n">process</span> <span class="mi">12664</span><span class="p">.</span>
+
+<span class="n">HINT</span><span class="p">:</span>  <span class="n">See</span> <span class="n">server</span> <span class="n">log</span> <span class="k">for</span> <span class="n">query</span> <span class="n">details</span><span class="p">.</span>
+<span class="n">CONTEXT</span><span class="p">:</span>  <span class="n">while</span> <span class="n">updating</span> <span class="n">tuple</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">31</span><span class="p">)</span> <span class="k">in</span> <span class="n">relation</span> <span class="nv">"users"</span>
+</code></pre></div>
+<p>Rollbacks are of course not ideal, but they are a better solution than waiting
+forever. If possible you should strive to design your application in a way that
+prevents deadlocks in the first place. For example, if you are locking tables in
+your application, you want to make sure that you always invoke the locking in
+the same order.</p>
+
+<p>In general, applications must be ready to handle deadlocks issue and retry the
+transaction in case of a failure.</p>
+
+<p>The best defense against deadlocks is generally to avoid them by being certain
+that all applications using a database acquire locks on multiple objects in a
+consistent order.</p>
+
+<h2>Adjusting the Deadlock Timeout</h2>
+
+<p>The deadlock timeout is the amount of time that PostgreSQL waits on a lock
+before it checks for a deadlock. The deadlock check is an expensive operation so
+it is not run every time a lock needs to wait. Deadlocks should not be common in
+production environments and PostgreSQL will wait for a while before running the
+expensive deadlock check.</p>
+
+<p>The default timeout value in PostgreSQL is 1 second, and this is probably the
+smallest time interval you would want to set in practice. If your database is
+heavily loaded, you might want to raise this value to reduce the overhead on
+your database servers.</p>
+
+<p>Ideally, the deadlock_timeout should be a bit longer than your typical
+transaction duration.</p>
+
+<p><em>Did you like this article? Or, do you maybe have a helpful hint to share? Please
+leave it in the comment section bellow.</em></p>
+
+
+
+  </article>
+
+
+      <div class="footer">
+  <div class="content">
+    <p>
+      <strong>❈</strong><br>
+      <br>
+
+      Follow me on <a href="https://twitter.com/igor_sarcevic">Twitter</a> and <a href="https://rs.linkedin.com/in/igorsarcevic">LinkedIn</a>.<br>
+      Copyright ©2014-2023 Igor Šarčević. All rights reserved.</br>
+      <br>
+      Enjoy the rest of your day!
+    </p>
+  </div>
+<div>
+
+    </div>
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+           })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-57223799-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+
+    <script>
+      /**
+      * Function that tracks a click on an outbound link in Analytics.
+      * This function takes a valid URL string as an argument, and uses that URL string
+      * as the event label. Setting the transport method to 'beacon' lets the hit be sent
+      * using 'navigator.sendBeacon' in browser that support it.
+      */
+      var trackOutboundLink = function(url) {
+        ga('send', 'event', 'outbound', 'click', url, {
+          'transport': 'beacon',
+          'hitCallback': function(){document.location = url;}
+        });
+      }
+    </script>
+
+  </body>
+</html>

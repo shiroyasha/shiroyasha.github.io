@@ -1,0 +1,268 @@
+<!doctype html>
+<html itemscope itemtype="http://schema.org/Article">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
+    <link rel="alternate" type="application/atom+xml" title="Morning Coffee" href="/feed.xml" />
+
+    <link rel="shortcut icon" href="favicon.svg">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+      <title>Stable Pagination &mdash; by Igor Šarčević</title>
+
+    <!-- Place this data between the <head> tags of your website -->
+      <meta name="description" content="Last week we’ve investigated a way to achieve stable pagination
+for our new API. I’ve learned some new techniques for handling
+pagination, and dig deep into the downsides of standard —
+offset based — pagination.
+
+" />
+
+      <!-- Schema.org markup for Google+ -->
+      <meta itemprop="name" content="Stable Pagination">
+      <meta itemprop="description" content="Last week we’ve investigated a way to achieve stable pagination
+for our new API. I’ve learned some new techniques for handling
+pagination, and dig deep into the downsides of standard —
+offset based — pagination.
+
+">
+      <meta itemprop="image" content="http://morningcoffee.io/images/2018-09-13-stable-pagination.png">
+
+      <!-- Twitter Card data -->
+      <meta name="twitter:card" content="summary_large_image">
+      <meta name="twitter:site" content="@igor_sarcevic">
+      <meta name="twitter:title" content="Stable Pagination">
+      <meta name="twitter:description" content="Last week we’ve investigated a way to achieve stable pagination
+for our new API. I’ve learned some new techniques for handling
+pagination, and dig deep into the downsides of standard —
+offset based — pagination.
+
+">
+      <meta name="twitter:creator" content="@igor_sarcevic">
+      <!-- Twitter summary card with large image must be at least 280x150px -->
+      <meta name="twitter:image:src" content="http://morningcoffee.io/images/2018-09-13-stable-pagination.png">
+
+      <!-- Open Graph data -->
+      <meta property="og:title" content="Stable Pagination" />
+      <meta property="og:type" content="article" />
+      <meta property="og:url" content="http://" />
+      <meta property="og:image" content="http://morningcoffee.io/images/2018-09-13-stable-pagination.png" />
+      <meta property="og:description" content="Last week we’ve investigated a way to achieve stable pagination
+for our new API. I’ve learned some new techniques for handling
+pagination, and dig deep into the downsides of standard —
+offset based — pagination.
+
+" />
+      <meta property="article:published_time" content="2018-09-13 00:00:00 UTC" />
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Raleway:900&display=swap" rel="stylesheet">
+    <link href="/stylesheets/style.css" rel="stylesheet" />
+  </head>
+  <body>
+
+    <div id="main" role="main">
+      <nav class="navigation" style="padding: 10px;">
+  <div style="display: flex;justify-items: space-between;justify-content: space-between;">
+    <a style="font-size: 20px" href="/" style="color: crimson;">Home</a>
+    <a style="font-size: 20px" href="/about-me.html" style="color: crimson;">About</a>
+  </div>
+</nav>
+
+
+        <article class="article">
+    <div class="header">
+      <h1>Stable Pagination</h1>
+
+      <div class="subtitle">
+        Published on <time>September 13, 2018</time>
+      </div>
+    </div>
+
+    <p>Last week we&rsquo;ve investigated a way to achieve stable pagination
+for our new API. I&rsquo;ve learned some new techniques for handling
+pagination, and dig deep into the downsides of standard &mdash;
+offset based &mdash; pagination.</p>
+
+<p></p>
+
+<h2>Offset Based Pagination</h2>
+
+<p>Before I share our new approach, let&rsquo;s start with the exploring
+the issues we wanted to solve. The most common pagination method
+that APIs expose is the one that is based on offsets. The client
+passes two information to the server: the desired page size, and
+the page number. This is very convenient if your application is
+backed by an SQL database, where you can almost directly inject
+the passed arguments:</p>
+<div class="highlight"><pre class="highlight sql"><code><span class="n">page_size</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">page_number</span> <span class="o">=</span> <span class="mi">2</span>
+
+<span class="k">offset</span> <span class="o">=</span> <span class="n">page_size</span> <span class="o">*</span> <span class="n">page_number</span>
+
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">posts</span>
+<span class="k">OFFSET</span> <span class="err">$</span><span class="k">offset</span>
+<span class="k">LIMIT</span> <span class="err">$</span><span class="n">page_size</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">created_at</span> <span class="k">DESC</span>
+</code></pre></div>
+<p>The issue arises when you want to visit the next page in the above example,
+but someone inserted new records into the database in the
+meantime. Then you can get some of the same results from the previous
+example. Let&rsquo;s go through an example to demonstrate the issue:</p>
+<div class="highlight"><pre class="highlight sql"><code><span class="c1">-- A client requests the first page</span>
+
+<span class="k">SELECT</span> <span class="n">name</span> <span class="k">FROM</span> <span class="n">posts</span> <span class="k">LIMIT</span> <span class="mi">3</span> <span class="k">OFFSET</span> <span class="mi">0</span> <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">created_at</span> <span class="k">DESC</span><span class="p">;</span>
+
+<span class="c1">-- post101</span>
+<span class="c1">-- post100</span>
+<span class="c1">-- post99</span>
+
+<span class="c1">-- Insertion of new records</span>
+
+<span class="k">INSERT</span> <span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="k">INTO</span> <span class="n">posts</span> <span class="k">VALUES</span> <span class="p">(</span><span class="n">post102</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="k">INTO</span> <span class="n">posts</span> <span class="k">VALUES</span> <span class="p">(</span><span class="n">post103</span><span class="p">);</span>
+
+<span class="c1">-- The client requests the second page</span>
+
+<span class="k">SELECT</span> <span class="n">name</span> <span class="k">FROM</span> <span class="n">posts</span> <span class="k">LIMIT</span> <span class="mi">3</span> <span class="k">OFFSET</span> <span class="mi">3</span> <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">created_at</span> <span class="k">DESC</span><span class="p">;</span>
+
+<span class="c1">-- post100 - I've seen this already!</span>
+<span class="c1">-- post99  - I've seen this already!</span>
+<span class="c1">-- post98  - This is new</span>
+</code></pre></div>
+<p>Another issue is that <code>LIMIT &lt;a&gt; OFFSET &lt;b&gt;</code> doesn&rsquo;t scale for large
+datasets. For large <code>OFFSET</code> values, the database still has to read all
+the values from the disk and discard them until the goal is reached.
+Implementing this kind of pagination for resources that have
+high insertion frequency could cause you unwanted issues down the line.</p>
+
+<p>To mitigate some of the previous issues we decided to use cursor based
+pagination in our new API.</p>
+
+<h2>Cursor Based Pagination</h2>
+
+<p>Cursor based pagination works by returning a pointer to specific record
+in the database which will be used for subsequent requests. Let&rsquo;s see an
+example to grasp the idea:</p>
+<div class="highlight"><pre class="highlight sql"><code><span class="c1">-- First request from the client (page size=3)</span>
+
+<span class="k">SELECT</span> <span class="n">id</span><span class="p">,</span> <span class="n">name</span> <span class="k">FROM</span> <span class="n">posts</span> <span class="k">LIMIT</span> <span class="mi">4</span> <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">created_at</span> <span class="k">DESC</span><span class="p">;</span>
+
+                                 <span class="o">^</span> <span class="c1">----- notice that we</span>
+                                         <span class="k">are</span> <span class="n">requesting</span> <span class="n">one</span> <span class="k">more</span>
+                                         <span class="k">than</span> <span class="n">requested</span>
+
+<span class="o">#</span> <span class="p">[</span><span class="mi">101</span><span class="p">,</span> <span class="n">post101</span><span class="p">]</span> <span class="o">-</span> <span class="n">we</span> <span class="k">return</span> <span class="n">this</span> <span class="k">to</span> <span class="n">the</span> <span class="n">client</span>
+<span class="o">#</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="n">post100</span><span class="p">]</span> <span class="o">-</span> <span class="n">we</span> <span class="k">return</span> <span class="n">this</span> <span class="k">to</span> <span class="n">the</span> <span class="n">client</span>
+<span class="o">#</span> <span class="p">[</span> <span class="mi">99</span><span class="p">,</span> <span class="n">post99</span> <span class="p">]</span> <span class="o">-</span> <span class="n">we</span> <span class="k">return</span> <span class="n">this</span> <span class="k">to</span> <span class="n">the</span> <span class="n">client</span>
+<span class="o">#</span> <span class="p">[</span> <span class="mi">98</span><span class="p">,</span> <span class="n">post98</span> <span class="p">]</span> <span class="o">-</span> <span class="o">&lt;</span><span class="c1">-- we use this to construct the next_page_token</span>
+
+<span class="c1">-- =&gt; response [post101, post100, post99], next_page_token=98</span>
+
+<span class="c1">-- Second request from the client (page_size=3, next_page_token=98)</span>
+
+<span class="k">SELECT</span> <span class="n">id</span><span class="p">,</span> <span class="n">name</span> <span class="k">FROM</span> <span class="n">posts</span>
+<span class="k">WHERE</span> <span class="n">id</span> <span class="o">=&lt;</span> <span class="n">next_page_token</span>
+<span class="k">LIMIT</span> <span class="mi">4</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">created_at</span> <span class="k">DESC</span><span class="p">;</span>
+
+<span class="c1">-- [ 98, post98 ] - we return this to the client</span>
+<span class="c1">-- [ 97, post97 ] - we return this to the client</span>
+<span class="c1">-- [ 96, post96 ] - we return this to the client</span>
+<span class="c1">-- [ 95, post95 ] - &lt;-- we use this to construct the next_page_token</span>
+</code></pre></div>
+<p>Notice that with cursors we don&rsquo;t need to worry about insertions in
+between the two requests. The pagination window is stable and we have
+a precise pointer from which we will continue our pagination.</p>
+
+<p>This approach will also scale much better for large datasets as the
+database can utilize the index in the <code>WHERE id &lt; next_page_token</code>.</p>
+
+<p>The big trade-off that we had to accept is that our API can no longer
+support jumps to a specific page, it needs to traverse there. For
+our use case this is acceptable.</p>
+
+<p>Another trade-off is that if you want to have stable pagination windows
+you need to order your records by strictly increasing/decreasing value.</p>
+
+<h2>Cursor based pagination with UUIDs for primary keys</h2>
+
+<p>The previous examples are simple, but they rely on the fact that ids
+are incremental numbers. This wasn&rsquo;t the case for our use case as we
+use UUIDs for primary keys almost exclusively in our tables.</p>
+
+<p>The solution for this issues is to use the combination of two values
+for constructing the next<em>page</em>token. The UUID that guarantees
+uniqueness and created_at (for example) to guarantee increasing values.
+Let&rsquo;s see an example:</p>
+<div class="highlight"><pre class="highlight sql"><code><span class="c1">-- First request from the client (page size=3)</span>
+
+<span class="k">SELECT</span> <span class="n">id</span><span class="p">,</span> <span class="n">created_at</span><span class="p">,</span> <span class="n">name</span> <span class="k">FROM</span> <span class="n">posts</span> <span class="k">LIMIT</span> <span class="mi">4</span> <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">created_at</span> <span class="k">DESC</span><span class="p">;</span>
+
+<span class="c1">-- [ace9a01b-bcaa-471c-89a5-92da19b94f0c, 1536872459, post101]</span>
+<span class="c1">-- [a84331fb-1d32-4fd9-9d9b-2420db87404d, 1536872448, post100]</span>
+<span class="c1">-- [af98348d-34a4-4d1c-b026-21ef8edc7e2e, 1536872448, post99 ]</span>
+<span class="c1">-- [aff9e8dc-b9bb-4c91-8ad8-e9055ffb7891, 1536872448, post98 ]</span>
+
+<span class="n">page_token</span> <span class="o">=</span> <span class="n">Base64</span><span class="p">(</span><span class="nv">"aff9e8dc-b9bb-4c91-8ad8-e9055ffb7891, 1536872448"</span><span class="p">)</span>
+
+<span class="c1">-- Second request from the client (page_size=3)</span>
+
+<span class="k">SELECT</span> <span class="n">id</span><span class="p">,</span> <span class="n">name</span> <span class="k">FROM</span> <span class="n">posts</span>
+<span class="k">WHERE</span> <span class="p">(</span><span class="n">uuid</span><span class="p">,</span> <span class="n">created_at</span><span class="p">)</span> <span class="o">=&lt;</span> <span class="p">(</span><span class="n">page_token</span><span class="p">.</span><span class="n">id</span><span class="p">,</span> <span class="n">page_token</span><span class="p">.</span><span class="n">created_at</span><span class="p">)</span>
+<span class="k">LIMIT</span> <span class="mi">4</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">created_at</span> <span class="k">DESC</span><span class="p">;</span>
+
+<span class="c1">-- [bce9a01b-bcaa-471c-89a5-92da19b94f0c, 1536872458, post98]</span>
+<span class="c1">-- [b84331fb-1d32-4fd9-9d9b-2420db87404d, 1536872448, post97]</span>
+<span class="c1">-- [bf98348d-34a4-4d1c-b026-21ef8edc7e2e, 1536872448, post96]</span>
+<span class="c1">-- [bff9e8dc-b9bb-4c91-8ad8-e9055ffb7891, 1536872441, post95]</span>
+</code></pre></div>
+
+
+  </article>
+
+
+      <div class="footer">
+  <div class="content">
+    <p>
+      <strong>❈</strong><br>
+      <br>
+
+      Follow me on <a href="https://twitter.com/igor_sarcevic">Twitter</a> and <a href="https://rs.linkedin.com/in/igorsarcevic">LinkedIn</a>.<br>
+      Copyright ©2014-2023 Igor Šarčević. All rights reserved.</br>
+      <br>
+      Enjoy the rest of your day!
+    </p>
+  </div>
+<div>
+
+    </div>
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+           })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-57223799-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+
+    <script>
+      /**
+      * Function that tracks a click on an outbound link in Analytics.
+      * This function takes a valid URL string as an argument, and uses that URL string
+      * as the event label. Setting the transport method to 'beacon' lets the hit be sent
+      * using 'navigator.sendBeacon' in browser that support it.
+      */
+      var trackOutboundLink = function(url) {
+        ga('send', 'event', 'outbound', 'click', url, {
+          'transport': 'beacon',
+          'hitCallback': function(){document.location = url;}
+        });
+      }
+    </script>
+
+  </body>
+</html>

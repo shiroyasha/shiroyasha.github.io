@@ -1,0 +1,945 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>The path of coding enlightment</title>
+  <id>http://shiroyasha.io/</id>
+  <link href="http://shiroyasha.io/"/>
+  <link href="http://shiroyasha.io/feed.xml" rel="self"/>
+  <updated>2023-01-29T00:00:00+00:00</updated>
+  <author>
+    <name>Igor Šarčević</name>
+  </author>
+  <entry>
+    <title>Adulting Harder</title>
+    <link rel="alternate" href="http://shiroyasha.io/adulting-harder.html"/>
+    <id>http://shiroyasha.io/adulting-harder.html</id>
+    <published>2023-01-29T00:00:00+00:00</published>
+    <updated>2023-02-02T18:41:10+00:00</updated>
+    <author>
+      <name>Igor Šarčević</name>
+    </author>
+    <summary type="html">&lt;p&gt;One of my grandad’s best friends, Kovács János, was a talented chess player.
+They used to play chess together every week. János consistently beat my grandpa,
+but winning was not the focus of their play. It was a dedicated time to talk about
+life, women...&lt;/p&gt;</summary>
+    <content type="html">&lt;p&gt;One of my grandad&amp;rsquo;s best friends, Kovács János, was a talented chess player.
+They used to play chess together every week. János consistently beat my grandpa,
+but winning was not the focus of their play. It was a dedicated time to talk about
+life, women, and their shared admiration for Ferenc Puskás, a famous
+Hungarian football player.&lt;/p&gt;
+
+&lt;p&gt;Despite his high intellect, János was struggling to put his life together.
+He would often drink to excess and lose vast amounts of money to gambling.
+He struggled to hold down a job and had a hard time being accountable
+for his actions.&lt;/p&gt;
+
+&lt;p&gt;It all changed when his wife left him, taking away his two children.
+While he was always very persistent about how much he loved his wife,
+his actions told a different story. Frequently drunk, losing money,
+and flirting around with other married women in the town, he lost
+any remaining love his wife had for him. János hit rock bottom.
+He lost his wife, children, and most of his friends.&lt;/p&gt;
+
+&lt;p&gt;Despite his struggles, my grandad never gave up on János. He knew that
+there was a capable person beneath all of the gambling and
+irresponsibility. My grandpa gave János a stern but loving speech at one
+of their weekly chess sessions. &amp;ldquo;Look, János, I like you as a friend
+and respect you as a chess player, but you need to learn to be an adult.
+You need to be able to take responsibility.&amp;rdquo; His intellect was undeniable,
+but his habits were more akin to a teenager than a grown, responsible man.&lt;/p&gt;
+
+&lt;p&gt;My grandpa repeated the same message to János for years, but he was
+ready to change this time. He changed his life around almost overnight.
+He stopped drinking and gambling and separated himself from a group of
+friends who only supported him while living a reckless, irresponsible life.&lt;/p&gt;
+
+&lt;p&gt;My grandpa found a mechanical support position for him at the local
+military unit, where he slowly learned how to act and behave like a
+grownup. Several years later, János opened up a side business in his
+backyard where he was working as a car mechanic.&lt;/p&gt;
+
+&lt;p&gt;In his retirement, János was my chess teacher for a brief period,
+sharing stories about my late grandad and the lessons they learned
+during their life. János&amp;rsquo;s story is a reminder that no matter how
+hard life gets, it&amp;rsquo;s never too late to turn things around. With the
+right mindset, determination, and support, anyone can overcome their
+struggles and build a better life for themselves, their family,
+and their friends.&lt;/p&gt;
+
+&lt;p&gt;János, despite being an adult, was still a teenager in his late thirties.
+The lesson I learned from János was that real success requires us to adult
+harder. Take challenges head-on, build a system of accountability,
+forge strong friendships, and strongly believe in people and yourself
+despite any mistake in the past.&lt;/p&gt;
+
+&lt;h2&gt;What can we learn from János about adulting harder?&lt;/h2&gt;
+
+&lt;p&gt;Despite literally being the definition of adulthood, adulthood
+doesn&amp;rsquo;t start by turning 18 or 21. It begins by taking responsibility.
+Responsibility to hold down a stable job, provide for your family, and
+become a positive force for your community.&lt;/p&gt;
+
+&lt;p&gt;Adulting harder goes beyond just paying bills. It&amp;rsquo;s also about
+taking on challenges and making the most of the opportunities
+that come your way.&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Pull Requests are a reflection of your engineering culture</title>
+    <link rel="alternate" href="http://shiroyasha.io/pull-requests-are-a-reflection-of-your-engineering-culture.html"/>
+    <id>http://shiroyasha.io/pull-requests-are-a-reflection-of-your-engineering-culture.html</id>
+    <published>2022-07-17T00:00:00+00:00</published>
+    <updated>2023-02-02T18:41:07+00:00</updated>
+    <author>
+      <name>Igor Šarčević</name>
+    </author>
+    <summary type="html">&lt;p&gt;When engineers want to introduce a change to the system, they use pull requests
+to package the change and present it to the rest of the team. A pull request
+usually contains a title, a description, and a list of commits that aim to
+change the system...&lt;/p&gt;</summary>
+    <content type="html">&lt;p&gt;When engineers want to introduce a change to the system, they use pull requests
+to package the change and present it to the rest of the team. A pull request
+usually contains a title, a description, and a list of commits that aim to
+change the system.&lt;/p&gt;
+
+&lt;p&gt;They are the core communication mechanism in your team. More precise than Jira
+tickets, more pragmatic than any meeting, and more direct than any design
+document. Take a random pull request from your team, and it will tell me more
+about your engineering culture than any other metric.&lt;/p&gt;
+
+&lt;h2&gt;Comparing Good and Bad pull requests&lt;/h2&gt;
+
+&lt;p&gt;A pull request should be easy to understand. It should be reasonably short. It
+should be backed by clear, objective quality signals like green CI build and
+code quality metrics.&lt;/p&gt;
+
+&lt;p&gt;Bad pull requests are unclear. They don&amp;rsquo;t have clear answers to &amp;ldquo;why are we
+doing this?&amp;rdquo; and &amp;ldquo;why are we doing it like this?&amp;rdquo;. They are usually unreasonable
+in size and include multiple changes to multiple subsystems. The reader is
+typically unsure if the pull request is mergeable, nor does he have any metric
+to help answer this question.&lt;/p&gt;
+
+&lt;h2&gt;Write clear titles&lt;/h2&gt;
+
+&lt;p&gt;Clear titles that signal what this pull request is about to
+introduce. Typically, this is a combination of business needs and concrete
+implementation approaches.&lt;/p&gt;
+
+&lt;p&gt;As with other forms of writing, there is no precise formula for titles. It is
+one of those things that you recognize when you see it.&lt;/p&gt;
+
+&lt;p&gt;Let&amp;rsquo;s look at some examples:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&amp;ldquo;Change src/scheduler.go&amp;rdquo; - A good indication of poor communication patterns in
+the team. Usually, these are individual contributors who rarely work in a
+structured group.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&amp;ldquo;Update the for loop in the scheduler implementation by counting in reverse and
+visiting memory objects in a FIFO order&amp;rdquo; - Technically precise, but low
+information about the reason for this change. Usually, an indication of poor
+communication in the team and can be a signal of superhero culture.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&amp;ldquo;Optimization of the scheduling strategy&amp;rdquo; - Good high-level technical overview,
+but still low information about the reason for this change. Typically, it arises
+in teams disconnected from the company&amp;rsquo;s business decisions.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&amp;ldquo;Optimization of the scheduling strategy to reduce server hosting costs -
+Excellent! Good technical description and direct reason for this change. &lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;Focus on the reason for change in the description&lt;/h2&gt;
+
+&lt;p&gt;Every change to the system has two parts: the &lt;em&gt;why?&lt;/em&gt; and the &lt;em&gt;how?&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;The &lt;em&gt;how?&lt;/em&gt; should be clear from the code. Either write clean and understandable
+code or supplement the code with documentation that describes the implementation
+details.&lt;/p&gt;
+
+&lt;p&gt;As the code focuses on the &lt;em&gt;how?&lt;/em&gt;, there is little reason to supplement this
+same information in the pull request description. The description should
+describe the details of why we are introducing this change.&lt;/p&gt;
+
+&lt;p&gt;For example, here is how a good PR description should look like. &lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;We have noticed increased server hosting costs in the previous
+quarter that were not matched directly by increased demand on the system. We
+have noticed that the scheduling system is introducing delays by not efficiently
+visiting the objects. This PR addresses this concern and aims to reduce the
+server hosting costs by up to 5%.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Notice that it focuses on the reason and not the implementation.&lt;/p&gt;
+
+&lt;h2&gt;Supplement PRs with results and visual proof&lt;/h2&gt;
+
+&lt;p&gt;Pull Request reviewers will typically question your approach to solving the 
+problem or might be unsure of the results.&lt;/p&gt;
+
+&lt;p&gt;Provide results or visual proof when submitting pull requests. In our previous
+scheduling example, provide metric data that supports your argument. In visually
+centered systems, like updates in the UI, provide screenshots or videos of the
+new design. &lt;/p&gt;
+
+&lt;h2&gt;Keep the Pull Requests short and to the point&lt;/h2&gt;
+
+&lt;p&gt;I have a rule of thumb in my team. Pull requests should be short in length 
+(typically around ~300loc), short in age (0-3 days to write), and focused on one change.&lt;/p&gt;
+
+&lt;p&gt;Typically, a pull request starts by updating tests, followed by several commits
+that attempt to implement the new system specification.&lt;/p&gt;
+
+&lt;p&gt;Long pull requests are typically a signal of either young engineers who are
+still learning the value of short and safe iterative changes or overly eager
+changes to the system that is impossible to review and approve.&lt;/p&gt;
+
+&lt;p&gt;The actual number of line changes depends on multiple factors. The previously
+mentioned ~300loc fits my team and our design. Some languages are less
+expressive, and some changes require more work and cannot be broken down. &lt;/p&gt;
+
+&lt;p&gt;Breaking these guidelines once in a while is not a problem. The problem arises
+when suboptimal patterns take over and degrade your engineering culture.&lt;/p&gt;
+
+&lt;h2&gt;Keep the coding style uniform and objective&lt;/h2&gt;
+
+&lt;p&gt;Young engineering teams tend to put a lot of emphasis on how the code looks and 
+how it is formatted. Older teams usually have a shared understanding of what 
+good code looks like and spend less time discussing it.&lt;/p&gt;
+
+&lt;p&gt;Keeping the code clean has clear benefits. But discussing this in every pull
+request degrades the quality of discussion and exhausts the energy that remains
+for vital topics.&lt;/p&gt;
+
+&lt;p&gt;Use a linter, codify your rules, and make it part of the CI process. There
+should be no reason to check the code style in every pull request manually.&lt;/p&gt;
+
+&lt;h2&gt;Don&amp;rsquo;t review pull requests before CI&lt;/h2&gt;
+
+&lt;p&gt;The CI should be your first reviewer. There is no reason to involve other humans
+before you get a green build from your CI system.&lt;/p&gt;
+
+&lt;p&gt;Teams that lack fast CI, or even worse, lack CI entirely, tend to lose a lot of
+time repeating and manually validating the same problem areas over and over.&lt;/p&gt;
+
+&lt;p&gt;An engineering culture that lacks automated Pull Request reviews is an insane
+amount of energy and money on entirely automatable problems.&lt;/p&gt;
+
+&lt;h2&gt;Tips for engineering leadership&lt;/h2&gt;
+
+&lt;p&gt;It is understandably hard to step out from thinking about long-term strategy and 
+zoom in on a single pull request. However, by missing to do this occasionally 
+(once a quartal, for example), you are missing out on valuable insights about
+your engineering culture that are hard to reproduce in any other way.&lt;/p&gt;
+
+&lt;p&gt;After all, it has been repeatably shown that your organization&amp;rsquo;s operational
+performance directly impacts its overall performance.&lt;/p&gt;
+
+&lt;p&gt;My advice is to go to your main project, take a random pull request, and get a
+direct first-hand experience of the bottlenecks your team is dealing with.&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Proactive cache warming in a microservice-based architecture</title>
+    <link rel="alternate" href="http://shiroyasha.io/proactive-cache-warming-in-a-microservice-based-architecture.html"/>
+    <id>http://shiroyasha.io/proactive-cache-warming-in-a-microservice-based-architecture.html</id>
+    <published>2021-07-17T00:00:00+00:00</published>
+    <updated>2023-02-02T18:41:07+00:00</updated>
+    <author>
+      <name>Igor Šarčević</name>
+    </author>
+    <summary type="html">&lt;p&gt;With the microservice architecture style, services and their data are contained
+within a single bounded context. This architectural decision helps us to develop
+and deploy changes in one business unit fast and independent of other services
+in our system...&lt;/p&gt;</summary>
+    <content type="html">&lt;p&gt;With the microservice architecture style, services and their data are contained
+within a single bounded context. This architectural decision helps us to develop
+and deploy changes in one business unit fast and independent of other services
+in our system.&lt;/p&gt;
+
+&lt;p&gt;However, collecting and analyzing data from multiple services can be slow and
+much more complex than in a typical monolithic service where the caller has
+access to data from a single big database system.&lt;/p&gt;
+
+&lt;p&gt;Let&amp;rsquo;s look at an example: A web application for ordering items with a page that
+displays information about the most recent orders in a company.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="/images/proactive-caching/architecture-example.png" alt="Proactive Cache Warming: Architecture Example" /&gt;&lt;/p&gt;
+
+&lt;p&gt;We will focus on the front service from the above architecture. More
+specifically, on its recent orders controller action.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre class="highlight ruby"&gt;&lt;code&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;recent_orders&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;company_id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="n"&gt;orders&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;OrdersService&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;get_recent_orders&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;company_id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+  &lt;span class="n"&gt;customer_ids&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;orders&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;map&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="ss"&gt;:customer_ids&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="n"&gt;customers&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;CustomerService&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;get_customer_details&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;customer_ids&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+  &lt;span class="n"&gt;render_page&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;orders&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;customers&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Our next challenge is how to make this page fast.&lt;/p&gt;
+
+&lt;p&gt;Let&amp;rsquo;s assume for the sake of the argument that both the Orders Service and the
+Customer Services take around 200ms to respond and that we don&amp;rsquo;t have any viable
+way of making these response times faster.&lt;/p&gt;
+
+&lt;p&gt;To render the page, we need to wait 200ms for the Orders Service, then 200ms for
+the Customers Service, and finally, we need some time to generate the HTML page,
+100ms. The minimum time to render the page is 500ms, which is relatively slow.&lt;/p&gt;
+
+&lt;p&gt;Caching is a standard tool that we use to make slow things faster. Key/Value
+memory stores like Redis can easily support 1ms response times if we figure out
+how to use it effectively.&lt;/p&gt;
+
+&lt;p&gt;Let&amp;rsquo;s explore some caching strategies.&lt;/p&gt;
+
+&lt;h2&gt;Time-to-live based caching&lt;/h2&gt;
+
+&lt;p&gt;A simple-to-implement caching strategy is a time-based one. This strategy
+renders the page and keeps it in the cache for a given amount of time.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre class="highlight ruby"&gt;&lt;code&gt;&lt;span class="no"&gt;CACHE_EXPIRES_IN&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;hour&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;recent_orders&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;company_id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="n"&gt;key&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;cache_key&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;company_id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="n"&gt;cached_page&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;Cache&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;find&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+  &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;cached_page&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;present?&lt;/span&gt;
+    &lt;span class="n"&gt;cached_page&lt;/span&gt;
+  &lt;span class="k"&gt;else&lt;/span&gt;
+    &lt;span class="n"&gt;content&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;full_render&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;company_id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="no"&gt;Cache&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;store&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;content&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;ttl: &lt;/span&gt;&lt;span class="no"&gt;CACHE_EXPIRES_IN&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="n"&gt;content&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;cache_key&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;company_id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="s2"&gt;"recent_orders_page_&lt;/span&gt;&lt;span class="si"&gt;#{&lt;/span&gt;&lt;span class="n"&gt;company_id&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;"&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;full_render&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;company_id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="n"&gt;orders&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;OrdersService&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;get_recent_orders&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;company_id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+  &lt;span class="n"&gt;customer_ids&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;orders&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;map&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="ss"&gt;:customer_ids&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="n"&gt;customers&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;CustomerService&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;get_customer_details&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;customer_ids&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+  &lt;span class="n"&gt;render_page&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;orders&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;customers&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This strategy can be the ideal one when the domain of the problem is time-bound.
+For example, if the page would display orders processed for the previous day
+instead of listing all the most recent ones.&lt;/p&gt;
+
+&lt;p&gt;The most significant downside is that the page will not refresh its content even
+if the system receives new orders. The page will be fast but stale.&lt;/p&gt;
+
+&lt;h2&gt;Signature-based caching&lt;/h2&gt;
+
+&lt;p&gt;We can use this information to optimize our rendering function.  Another way to
+improve the speed of our page is to fetch some minimal amount of data that can
+signal to our system if our cached value is stale or usable.&lt;/p&gt;
+
+&lt;p&gt;Let&amp;rsquo;s assume that in the above example, the order processing system has an
+additional endpoint that can tell us the timestamp of the last processed order
+by a given company in 100ms.&lt;/p&gt;
+
+&lt;p&gt;We can use this information to optimize our rendering function.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre class="highlight ruby"&gt;&lt;code&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;recent_orders&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;company_id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="n"&gt;last_order_at&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;OrdersService&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;get_last_order_timestamp&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;company_id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="n"&gt;key&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;cache_key&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;company_id&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;last_order_at&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+  &lt;span class="n"&gt;cached_page&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;Cache&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;find&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+  &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;cached_page&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;present?&lt;/span&gt;
+    &lt;span class="n"&gt;cached_page&lt;/span&gt;
+  &lt;span class="k"&gt;else&lt;/span&gt;
+    &lt;span class="n"&gt;content&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;full_render&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;company_id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="no"&gt;Cache&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;store&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;content&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;ttl: &lt;/span&gt;&lt;span class="no"&gt;CACHE_EXPIRES_IN&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="n"&gt;content&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;cache_key&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;company_id&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;last_order_at&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="s2"&gt;"recent_orders_page_&lt;/span&gt;&lt;span class="si"&gt;#{&lt;/span&gt;&lt;span class="n"&gt;company_id&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;_&lt;/span&gt;&lt;span class="si"&gt;#{&lt;/span&gt;&lt;span class="n"&gt;md5&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;last_order_at&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;"&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;full_render&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;company_id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="n"&gt;orders&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;OrdersService&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;get_recent_orders&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;company_id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+  &lt;span class="n"&gt;customer_ids&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;orders&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;map&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="ss"&gt;:customer_ids&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="n"&gt;customers&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;CustomerService&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;get_customer_details&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;customer_ids&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+  &lt;span class="n"&gt;render_page&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;orders&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;customers&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The above implementation makes sure that we never have a stale state on the
+page. However, the performance gains are not so good as in our previous
+iteration.&lt;/p&gt;
+
+&lt;p&gt;If we have a cache hit, the performance will be 100ms as it takes this long to
+fetch the timestamp of the last order.&lt;/p&gt;
+
+&lt;p&gt;If we have a cache miss, the performance will be worse than it would be without
+caching. We will need 100ms to find the timestamp of the last order, plus the
+500ms duration for the full page render.&lt;/p&gt;
+
+&lt;h2&gt;Event-based caching&lt;/h2&gt;
+
+&lt;p&gt;In both of the previous implementations, the core problem was how and when to
+clear the cached values. It turns out it is pretty hard to deduce this on the
+client-side.&lt;/p&gt;
+
+&lt;p&gt;One strategy common in distributed systems is to use events to propagate
+information about state changes. We can use this architecture to have a clear
+signal of when to clear our cache.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="/images/proactive-caching/invalidation.png" alt="Proactive Cache Warming: Event Based Cache Invalidation" /&gt;&lt;/p&gt;
+
+&lt;p&gt;In this architecture, both the order processing service and the customer service
+are publishing events when their datasets change. The cache invalidator then
+listens to those events and clears the data from the UI layer&amp;rsquo;s cache.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre class="highlight ruby"&gt;&lt;code&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;recent_orders&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;company_id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="n"&gt;key&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;cache_key&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;company_id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="n"&gt;cached_page&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;Cache&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;find&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+  &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;cached_page&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;present?&lt;/span&gt;
+    &lt;span class="n"&gt;cached_page&lt;/span&gt;
+  &lt;span class="k"&gt;else&lt;/span&gt;
+    &lt;span class="n"&gt;content&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;full_render&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;company_id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="no"&gt;Cache&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;store&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;content&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="n"&gt;content&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+
+&lt;span class="n"&gt;subscribe&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"orders_service"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"order-created"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;
+  &lt;span class="n"&gt;key&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;cache_key&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;company_id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+  &lt;span class="no"&gt;Cache&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;clear&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+
+&lt;span class="n"&gt;subscribe&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"customers_service"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"customer-updated"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;
+  &lt;span class="n"&gt;key&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;cache_key&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;company_id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+  &lt;span class="no"&gt;Cache&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;clear&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;We get pretty fast response times and up-to-date content in the cache. Neat!&lt;/p&gt;
+
+&lt;p&gt;If we have a cache hit, we can respond under 1ms, the amount of time it takes to
+fetch the data from the cache.&lt;/p&gt;
+
+&lt;p&gt;If we have a cache miss, we can respond in 500ms, the amount of data it takes to
+have a full page render.&lt;/p&gt;
+
+&lt;p&gt;The event-based cache invalidation is better in both cases from the
+signature-based caching solution we explored in the previous section.&lt;/p&gt;
+
+&lt;h2&gt;Event-based proactive caching&lt;/h2&gt;
+
+&lt;p&gt;We had a 1ms response for cached pages in that last section and 500ms for when
+the page wasn&amp;rsquo;t cached. Can we do better?&lt;/p&gt;
+
+&lt;p&gt;One approach that can guarantee a fast (1ms) response is to utilize proactive
+caching, meaning to prepare the page cache before the customers load it for the
+first time.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="/images/proactive-caching/reactor.png" alt="Proactive Cache Warming: Event Based Cache Updater" /&gt;&lt;/p&gt;
+
+&lt;p&gt;In this architecture, the UI layer always reads responses from the cache,
+meaning that it can guarantee a fast response time for both first visits and
+repeated visits to the page.&lt;/p&gt;
+
+&lt;p&gt;The reactor maintains the cache&amp;rsquo;s content, a subsystem in the UI layer that
+reacts to various events in the system and recalculates the cached content.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre class="highlight ruby"&gt;&lt;code&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;recent_orders&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;company_id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="n"&gt;key&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;cache_key&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;company_id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="n"&gt;cached_page&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;Cache&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;find&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+  &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;cached_page&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+
+&lt;span class="n"&gt;subscribe&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"orders_service"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"order-created"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;
+  &lt;span class="n"&gt;key&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;cache_key&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;company_id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="n"&gt;new_content&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;full_render&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;company_id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+  &lt;span class="no"&gt;Cache&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;store&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;new_content&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+
+&lt;span class="n"&gt;subscribe&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"customers_service"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"customer-updated"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;
+  &lt;span class="n"&gt;key&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;cache_key&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;company_id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="n"&gt;new_content&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;full_render&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;company_id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+  &lt;span class="no"&gt;Cache&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;store&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;new_content&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Let&amp;rsquo;s analyze this pattern. What are the shortcomings of this caching approach?&lt;/p&gt;
+
+&lt;p&gt;On the pros side, this caching approach can guarantee us fast response times for
+every page visit.&lt;/p&gt;
+
+&lt;p&gt;On the cons side, the reactor might be caching pages that our customers rarely
+visit, which leads to lots of busywork in our system. We might prepare and
+crunch an enormous amount of unused data.&lt;/p&gt;
+
+&lt;p&gt;The storage size can also drastically increase when we start using this approach
+as we are no longer storing only visited pages but all the pages in the cache.&lt;/p&gt;
+
+&lt;p&gt;If your number one priority is speed, the added storage and architectural
+complexity could be acceptable; otherwise, you might be crunching data
+needlessly. Choose carefully.&lt;/p&gt;
+
+&lt;p&gt;&lt;hr style="width: 50%; margin-top: 3em; border-color: gray;"&gt;&lt;/p&gt;
+
+&lt;p&gt;Caching is complicated, even more so in distributed systems.&lt;/p&gt;
+
+&lt;p&gt;At &lt;a href="https://semaphoreci.com"&gt;SemaphoreCI&lt;/a&gt;, we use event-based proactive caching
+to make our UI layer fast.  Over the years, we faced many challenges while using
+this system, including race conditions and high queue processing latency.
+However, while these problems were challenging, we are still happy with this
+architectural choice even after several years in production.&lt;/p&gt;
+
+&lt;p&gt;Here are some great resources for further reading:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://martinfowler.com/bliki/ReportingDatabase.html"&gt;Reporting Database&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.oreilly.com/library/view/microservices-antipatterns-and/9781492042716/"&gt;Microservices: AntiPatterns and Pitfalls&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://martinfowler.com/articles/201701-event-driven.html"&gt;What do you mean by “Event-Driven”?&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Transactional Outbox: What is it and why you need it?</title>
+    <link rel="alternate" href="http://shiroyasha.io/what-is-a-transaction-outbox-and-why-you-need-it.html"/>
+    <id>http://shiroyasha.io/what-is-a-transaction-outbox-and-why-you-need-it.html</id>
+    <published>2021-07-02T00:00:00+00:00</published>
+    <updated>2023-02-02T18:41:07+00:00</updated>
+    <author>
+      <name>Igor Šarčević</name>
+    </author>
+    <summary type="html">&lt;p&gt;Receiving a request, saving it into a database, and finally publishing a message
+can be trickier than expected. A naive implementation can either lose messages
+or, even worse, post incorrect messages.&lt;/p&gt;
+
+&lt;p&gt;Let’s look at an example. A user registration...&lt;/p&gt;</summary>
+    <content type="html">&lt;p&gt;Receiving a request, saving it into a database, and finally publishing a message
+can be trickier than expected. A naive implementation can either lose messages
+or, even worse, post incorrect messages.&lt;/p&gt;
+
+&lt;p&gt;Let&amp;rsquo;s look at an example. A user registration service allows users to sign up.
+The backend of this system saves this request to a database and publishes a
+&amp;ldquo;user-signed-up&amp;rdquo; message on RabbitMQ. Based on this message, the User Greeter
+service sends a welcome message to the user, while the Analytics service records
+new signup and updates the business dashboards.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="/images/transactional-outbox/architecture-example.png" alt="Transactional Outbox: Architecture Example" /&gt;&lt;/p&gt;
+
+&lt;p&gt;We will focus on the &lt;strong&gt;User Registration Service&lt;/strong&gt; and try out several ways to
+implement the registration action.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Implementation 1: Publishing after the user insert transaction finishes&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Our first attempt to implement the register action will be to open a
+transaction, save the user, close the transaction, and finally publish the
+message to RabbitMQ.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre class="highlight ruby"&gt;&lt;code&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;register_user&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;name&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="no"&gt;DB&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;transaction&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
+    &lt;span class="n"&gt;user&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;User&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;new&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;name: &lt;/span&gt;&lt;span class="nb"&gt;name&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;user&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;save!&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+
+  &lt;span class="no"&gt;RabbitMQ&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;publish&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"user-signed-up"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;user&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="no"&gt;ID&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Let&amp;rsquo;s examine what can go wrong with this implementation. We need to answer
+three questions:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;What happens if RabbitMQ is temporarily unavailable?&lt;/li&gt;
+&lt;li&gt;What happens if writing to RabbitMQ fails?&lt;/li&gt;
+&lt;li&gt;What happens if the service is restarted right after the transaction finishes
+but right before the RabbitMQ message is published?&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The answer to all three questions is: The user will be saved to the database,
+but the message will not be published to the queue. The user will not get a
+welcome message via email. Unacceptable!&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Implementation 2: Publishing before the user insert transaction finishes&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Publishing after a closed transaction leaves us in trouble. What if we try the
+opposite and publish the message right before we close the transaction?&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre class="highlight ruby"&gt;&lt;code&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;register_user&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;name&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="no"&gt;DB&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;transaction&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
+    &lt;span class="n"&gt;user&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;User&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;new&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;name: &lt;/span&gt;&lt;span class="nb"&gt;name&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;user&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;save!&lt;/span&gt;
+
+    &lt;span class="no"&gt;RabbitMQ&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;publish&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"user-signed-up"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;user&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="no"&gt;ID&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;user&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="no"&gt;Email&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Let&amp;rsquo;s examine this approach as well. It seems that this one is also problematic.&lt;/p&gt;
+
+&lt;p&gt;If the transaction fails or rollbacks (for example, due to a uniqueness
+constraint) we will publish a message to RabbitMQ that is not correct.&lt;/p&gt;
+
+&lt;p&gt;The user was &lt;strong&gt;not created&lt;/strong&gt;, yet we still sent a &amp;ldquo;user-signed-up&amp;rdquo; message to
+upstream services. Our service is lying. Unacceptable!&lt;/p&gt;
+
+&lt;p&gt;&lt;hr style="width: 50%; margin-top: 3em; border-color: gray;"&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Problem Statement&lt;/strong&gt;: If we publish in the transaction, we can publish a fake
+message. If we publish after the transaction, we are risking that we will never
+publish the message. How to guarantee message dispatching?&lt;/p&gt;
+
+&lt;h2&gt;The transactional outbox pattern&lt;/h2&gt;
+
+&lt;p&gt;Using a transactional outbox is one way to solve this problem.&lt;/p&gt;
+
+&lt;p&gt;We will introduce a supplementary database table, called outbox, that will store
+outgoing messages from our service. A publisher service will then read from this
+table and publish messages to the queue.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="/images/transactional-outbox/outbox.png" alt="Transactional Outbox" /&gt;&lt;/p&gt;
+
+&lt;p&gt;In code, the registration controller would do the following:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre class="highlight ruby"&gt;&lt;code&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;register_user&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;name&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="no"&gt;DB&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;transaction&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
+    &lt;span class="n"&gt;user&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;User&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;new&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;name: &lt;/span&gt;&lt;span class="nb"&gt;name&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;user&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;save!&lt;/span&gt;
+
+    &lt;span class="n"&gt;outbox&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;Outbox&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;new&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+      &lt;span class="s2"&gt;"message"&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;json&lt;/span&gt;&lt;span class="p"&gt;({&lt;/span&gt;&lt;span class="ss"&gt;user_id: &lt;/span&gt;&lt;span class="n"&gt;user&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="no"&gt;ID&lt;/span&gt;&lt;span class="p"&gt;}),&lt;/span&gt;
+      &lt;span class="s2"&gt;"exchange"&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;"users"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+      &lt;span class="s2"&gt;"routing-key"&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;"user-signed-up"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="n"&gt;outbox&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;save!&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;In the meantime, a Publisher service polls the outbox table and publishes the
+messages to RabbitMQ.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre class="highlight ruby"&gt;&lt;code&gt;&lt;span class="k"&gt;module&lt;/span&gt; &lt;span class="nn"&gt;Publisher&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;start&lt;/span&gt;
+    &lt;span class="kp"&gt;loop&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
+      &lt;span class="n"&gt;poll_and_publish&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+      &lt;span class="nb"&gt;sleep&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;second&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;end&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;poll_and_publish&lt;/span&gt;
+    &lt;span class="n"&gt;transaction&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
+      &lt;span class="c1"&gt;# SELECT * FROM outbox FOR UPDATE SKIP LOCKED LIMIT 10&lt;/span&gt;
+      &lt;span class="n"&gt;messages&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;Outbox&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;lock&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"FOR UPDATE SKIP LOCKED"&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nf"&gt;limit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nf"&gt;load&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+      &lt;span class="n"&gt;messages&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;each&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;msg&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;
+        &lt;span class="no"&gt;RabbitMQ&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;publish&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;msg&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+        &lt;span class="no"&gt;Outbox&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;delete&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;msg&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+      &lt;span class="k"&gt;end&lt;/span&gt;
+    &lt;span class="k"&gt;end&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;Problems resolved by a transactional outbox?&lt;/h2&gt;
+
+&lt;p&gt;We had two problems in our original implementations:&lt;/p&gt;
+
+&lt;p&gt;The first attempted implementation tried to publish to the queue after a
+finished database transaction. This opened up the possibility of not publishing
+anything even if the user was persisted in the database.&lt;/p&gt;
+
+&lt;p&gt;We resolved this problem by moving the message creation inside of the
+transaction. This ensured that if a user was created, the message was persisted
+as well.&lt;/p&gt;
+
+&lt;p&gt;The second attempted implementation tried to publish inside of the transaction.
+Still, because we were trying to write to a different system, we published fake
+messages in case the user creation transaction rolled back. When I say fake
+message, I mean that the queue would contain a &amp;ldquo;user-signed-up&amp;rdquo; message, but
+the user would not be saved to the database.&lt;/p&gt;
+
+&lt;p&gt;We resolved this problem by writing both the user and the message into the
+database, which allowed us to have a clean rollback if the user creation failed.&lt;/p&gt;
+
+&lt;h2&gt;Problems not resolved by the transactional outbox?&lt;/h2&gt;
+
+&lt;p&gt;The transactional outbox has an &lt;strong&gt;at-least-once&lt;/strong&gt; message publishing guarantee,
+which means that the system guarantees that the message will be published to the
+queue at least once if a user is created. However, it can happen that this
+message is published multiple times to the queue.&lt;/p&gt;
+
+&lt;p&gt;How this happens?&lt;/p&gt;
+
+&lt;p&gt;Let&amp;rsquo;s take a look at the Publisher&amp;rsquo;s implementation and find a spot where our
+implementation produces multiple messages:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre class="highlight ruby"&gt;&lt;code&gt;&lt;span class="n"&gt;transaction&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
+  &lt;span class="c1"&gt;# SELECT * FROM outbox FOR UPDATE SKIP LOCKED LIMIT 10&lt;/span&gt;
+  &lt;span class="n"&gt;messages&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;Outbox&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;lock&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"FOR UPDATE SKIP LOCKED"&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nf"&gt;limit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nf"&gt;load&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+  &lt;span class="n"&gt;messages&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;each&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;msg&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;
+    &lt;span class="no"&gt;RabbitMQ&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;publish&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;msg&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="c1"&gt;# &amp;lt;--- HERE&lt;/span&gt;
+    &lt;span class="c1"&gt;#      Our service can crash at this moment, for example. The message&lt;/span&gt;
+    &lt;span class="c1"&gt;#      gets published but the Outbox message is not cleared up. On&lt;/span&gt;
+    &lt;span class="c1"&gt;#      restart it will re-attempt the message publishing.&lt;/span&gt;
+
+    &lt;span class="no"&gt;Outbox&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;delete&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;msg&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;I&amp;rsquo;ll illustrate a possible timeline of events that causes multiple publishing in
+the following example:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre class="highlight plaintext"&gt;&lt;code&gt;event 01: messages = "select * from outbox"
+event 02: =&amp;gt; messages are now [{msg1, msg2}]
+
+event 03: RabbitMQ.publish(msg1)
+event 04: # message persisted to rabbitmq
+event 05: *** CRASH: Out of memory ***
+
+event 05: Publisher service is restarted.
+event 06: messages = "select * from outbox"
+event 07: =&amp;gt; messages are now [{msg1, msg2}]
+
+event 08: RabbitMQ.publish(msg1)              &amp;lt;--- publishing the second time
+event 09: # message persisted to rabbitmq
+event 10: Outbox.delete(msg1)
+
+...
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;How can clients protect themselves from repeated messages?&lt;/h2&gt;
+
+&lt;p&gt;Repeated messages can be a real headache. The User Greeter service from our
+original example will send out to emails. Yikes!&lt;/p&gt;
+
+&lt;p&gt;One way to resolve this problem is to make the message receiving endpoint
+&lt;strong&gt;idempotent&lt;/strong&gt;. This means if the server receives two messages in, for example
+&lt;code&gt;({user_id: 1}, {user_id: 32}, {user_id: 1})&lt;/code&gt;, it will disregard the second
+occurrence of the &lt;code&gt;user_id: 1&lt;/code&gt; message.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="/images/transactional-outbox/idempotent-client.png" alt="Transactional Outbox: Idempotent Client" /&gt;&lt;/p&gt;
+
+&lt;p&gt;In this case, you will notice that the receiving service needs a way to store
+the message that it receives.&lt;/p&gt;
+
+&lt;p&gt;Let&amp;rsquo;s look at the implementation:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre class="highlight ruby"&gt;&lt;code&gt;&lt;span class="no"&gt;RabbitMQ&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;subscribe&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"user-signed-up"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;message&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;
+  &lt;span class="n"&gt;email&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;Email&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;new&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;user_id: &lt;/span&gt;&lt;span class="n"&gt;message&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;user_id&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;content: &lt;/span&gt;&lt;span class="n"&gt;compose&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;user_id&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+  &lt;span class="n"&gt;result&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;email&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;save!&lt;/span&gt;
+
+  &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="n"&gt;result&lt;/span&gt;
+    &lt;span class="k"&gt;when&lt;/span&gt; &lt;span class="ss"&gt;:ok&lt;/span&gt;
+      &lt;span class="no"&gt;RabbitMQ&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;ack!&lt;/span&gt;
+
+    &lt;span class="k"&gt;when&lt;/span&gt; &lt;span class="ss"&gt;:user_id_already_exists&lt;/span&gt;
+      &lt;span class="no"&gt;RabbitMQ&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;ack!&lt;/span&gt; &lt;span class="c1"&gt;# idempotent, message was already processed&lt;/span&gt;
+
+    &lt;span class="k"&gt;else&lt;/span&gt;
+      &lt;span class="c1"&gt;# something unknown happened, we don't know what&lt;/span&gt;
+      &lt;span class="c1"&gt;# let's put back the message to the queue&lt;/span&gt;
+      &lt;span class="no"&gt;RabbitMQ&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;nack!&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;hr style="width: 50%; margin-top: 3em; border-color: gray;"&gt;&lt;/p&gt;
+
+&lt;p&gt;Distributed, multi-database systems are complicated. While working on Semaphore,
+I&amp;rsquo;ve encountered this and many other tricky problems. If we were lucky, we
+caught them in during PR reviews, but I also remember several unlucky examples
+where these bugs caused more severe problems.&lt;/p&gt;
+
+&lt;p&gt;Problems in distributed systems show up many months or even years after you
+introduced them. Usually, this happens when the system hits a critical number of
+requests. This feedback loop is slow; we must educate ourselves in advance.&lt;/p&gt;
+
+&lt;p&gt;Here are some great resources for further reading:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://dzone.com/articles/implementing-the-outbox-pattern"&gt;Implementing the Outbox Pattern&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://microservices.io/patterns/data/transactional-outbox.html"&gt;Transactional Outbox by Chris Richardson&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.amazon.com/gp/product/1617294543"&gt;Book: Microservice Patterns&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+  </entry>
+  <entry>
+    <title>What I learned from completing my first half-marathon</title>
+    <link rel="alternate" href="http://shiroyasha.io/running-my-first-half-marathon.html"/>
+    <id>http://shiroyasha.io/running-my-first-half-marathon.html</id>
+    <published>2021-06-29T00:00:00+00:00</published>
+    <updated>2023-02-02T18:41:07+00:00</updated>
+    <author>
+      <name>Igor Šarčević</name>
+    </author>
+    <summary type="html">&lt;p&gt;Three days have passed since I completed my first half-marathon here in Novi
+Sad. My legs are still sore, I still have several calluses on my feet, and my
+butt muscles are still screaming when I stand up. It’s the perfect time to
+reflect and learn...&lt;/p&gt;</summary>
+    <content type="html">&lt;p&gt;Three days have passed since I completed my first half-marathon here in Novi
+Sad. My legs are still sore, I still have several calluses on my feet, and my
+butt muscles are still screaming when I stand up. It&amp;rsquo;s the perfect time to
+reflect and learn from this experience.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="/images/2021-06-29-running-my-first-half-marathon.png" alt="Running my first half-marathon" /&gt;&lt;/p&gt;
+
+&lt;p&gt;I started jogging regularly &lt;a href="/running.html"&gt;back in 2017&lt;/a&gt;. It is my way of
+zoning out, breathing deeply, and disconnecting from the day-to-day stress of
+the modern workplace. In a word, meditating. But then corona hit us last year
+and halted everything. No more running, no more healthy eating, no more friends,
+only anxiety and soft panic attacks when someone gets closer than 6 feet to you.&lt;/p&gt;
+
+&lt;p&gt;After around two years of no actual physical activity, I got pulled into running
+a half marathon by a friend. I started from zero three weeks ago, and when I say
+zero, I mean that I was barely able to complete 5 kilometers on the first try.
+It was a bit better on the second try, but still, it was almost impossible for
+me to cross the 10k mark. The marathon day was getting closer, and I still
+struggled with the basics.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="/images/2021-06-29-running-my-first-half-marathon-pace.png" alt="Running pace on first half marathon" /&gt;&lt;/p&gt;
+
+&lt;p&gt;As you might expect, the marathon experience was brutal. I started strong. 6km
+in my breath become erratic. On the 10km mark, I developed a callus on my right
+foot. At 16km, I was running on sheer willpower, counting down every 100m till
+the end. Finally, around 2hour 55min, I reached the finish line. My feet were on
+fire.&lt;/p&gt;
+
+&lt;p&gt;But I finished it. I fucking did it!  What did I learn from this?&lt;/p&gt;
+
+&lt;h2&gt;I (you) can do much more than I (you) think&lt;/h2&gt;
+
+&lt;p&gt;There are always reasons why I feel unprepared to take on a challenge.  For
+example, &amp;ldquo;I never wrote a test. TDD is impossible.&amp;rdquo;, or &amp;ldquo;This API can&amp;rsquo;t be
+faster. It is impossible.&amp;rdquo;, or in my latest case, &amp;ldquo;I&amp;rsquo;m too fat to run a
+marathon.&amp;rdquo;.&lt;/p&gt;
+
+&lt;p&gt;I (you) are mostly much more capable than you give yourself credit. The right
+approach is to Just Do It ™. I guarantee that you will be at least 40% more
+capable than you think.&lt;/p&gt;
+
+&lt;h2&gt;Environment ≥ Willpower&lt;/h2&gt;
+
+&lt;p&gt;An important observation to make here is that I was able to complete the
+marathon. I simply didn&amp;rsquo;t do it. So what was the difference this time? First, a
+friend nudged me into it. The second is that the marathon was an organized event
+with a well-defined deadline. Third, my life partner supported me in every way.&lt;/p&gt;
+
+&lt;p&gt;Individual willpower, or discipline, fades quickly. However, with the right
+people and the right environment, everything feels natural and straightforward.
+They are there to kick you in the ass when you feel stuck, and they are there to
+heal and support you when you get burned.&lt;/p&gt;
+
+&lt;p&gt;For example, take the example of a 10x engineer. An engineer from a different
+company can feel 10x compared to you. But I can bet that he is not 10x compared
+to his peers, not even close. It is the culture that makes her 10x. Culture
+always predates individuals.&lt;/p&gt;
+
+&lt;h2&gt;Will I do it again?&lt;/h2&gt;
+
+&lt;p&gt;You bet I will. I&amp;rsquo;m already looking forward to the next one in September.&lt;/p&gt;
+
+&lt;p&gt;107km here I come! 👟&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>How to get things done?</title>
+    <link rel="alternate" href="http://shiroyasha.io/how-to-get-things-done.html"/>
+    <id>http://shiroyasha.io/how-to-get-things-done.html</id>
+    <published>2021-02-04T00:00:00+00:00</published>
+    <updated>2023-02-02T18:41:07+00:00</updated>
+    <author>
+      <name>Igor Šarčević</name>
+    </author>
+    <summary type="html">&lt;p&gt;I was talking with a friend a while back. He’s a tech lead at
+a local company. We were discussing our ongoing projects and
+what is stopping us from completing them. He made an excellent observation:&lt;/p&gt;
+
+&lt;p&gt;“Skill alone is not the biggest predictor if a project...&lt;/p&gt;</summary>
+    <content type="html">&lt;p&gt;I was talking with a friend a while back. He&amp;rsquo;s a tech lead at
+a local company. We were discussing our ongoing projects and
+what is stopping us from completing them. He made an excellent observation:&lt;/p&gt;
+
+&lt;p&gt;&amp;ldquo;Skill alone is not the biggest predictor if a project will
+get completed. There are observable patterns between people that get things
+done and people who get stuck. It&amp;rsquo;s hard to pinpoint the actual
+reason, but it is easy to recognize when you see it.&amp;rdquo;&lt;/p&gt;
+
+&lt;p&gt;In the following days, I was meditating on this topic. What are the
+these that help us to finish our projects? I observed the following patterns
+that were a good predictor:&lt;/p&gt;
+
+&lt;h3&gt;Solving things one-by-one&lt;/h3&gt;
+
+&lt;p&gt;People who solve problems one-by-one have a good track record of finishing
+projects. Projects are always full of unknowns, and almost impossible to solve
+problems.
+Taking in all of the issues at once can be parallelizing. I&amp;rsquo;ve noticed that
+people who are good at finishing projects are good at picking a problem
+out of the bunch of hard problems and solving them without worrying what
+comes next.&lt;/p&gt;
+
+&lt;h3&gt;A work environment where you don&amp;rsquo;t need permissions&lt;/h3&gt;
+
+&lt;p&gt;The work environment is as important as your individual qualities. If you need
+to get permission for every little decision, a person&amp;rsquo;s motivation plummets.
+Good environments allow you to do anything and will stop you when things start
+to look bad. Bad environments will prevent you from doing any work before you
+are absolutely sure that it will be a success.&lt;/p&gt;
+
+&lt;h3&gt;Doing things you don&amp;rsquo;t know how to do&lt;/h3&gt;
+
+&lt;p&gt;&amp;ldquo;I&amp;rsquo;m not a CSS expert, but I can fix this one border-width&amp;rdquo; is the right
+mindset. When we are not comfortable doing things outside of our primary
+domain, the set of problems we can solve soon becomes very limited.&lt;/p&gt;
+
+&lt;p&gt;People who are good at finishing projects are fearless. &amp;ldquo;I need to write a sales
+pitch? Sure, I can try it.&amp;rdquo;, &amp;ldquo;The metrics servers is broken? I can take a peek.&amp;rdquo;.
+More often than not, problems are not so scary as they seem.&lt;/p&gt;
+
+&lt;h3&gt;Avoiding perfectionism&lt;/h3&gt;
+
+&lt;p&gt;Perfectionism (and generalization) is the prime killer of projects. Exciting
+problems usually don&amp;rsquo;t have a clear, &amp;ldquo;mathematically complete&amp;rdquo;
+solution. I&amp;rsquo;ve noticed that people who embrace the fuzziness and try to
+implement the sub-perfect solution are usually the only ones who figure out
+the perfect solution in the long run, while the perfectionist crowd is still
+discussing what can go wrong.&lt;/p&gt;
+
+&lt;h3&gt;Investing in the meta-problems&lt;/h3&gt;
+
+&lt;p&gt;More often than not, the problem that is too hard to solve is only so hard
+because you don&amp;rsquo;t have the right tools and the environment. People who zoom-out
+and solve the meta-problems are the ones that are good at finishing projects.&lt;/p&gt;
+
+&lt;p&gt;For example, reducing the number of defects in your system can feel impossible.
+As soon as you fix one, another one pops up. But the deeper meta-problem is that
+you are not writing tests. You must solve the meta-problem before you tackle
+the real one.&lt;/p&gt;
+
+&lt;h3&gt;Asking for help&lt;/h3&gt;
+
+&lt;p&gt;Getting stuck is OK and natural. Getting stuck and not asking for any help is
+foolish. There are so many places where you can find help these days. You can
+ask other people in your team, you can ask online, you can ask a friend.&lt;/p&gt;
+
+&lt;p&gt;We sometimes limit ourselves and stay stuck in the problem. The productive ones
+are asking for help in multiple places.&lt;/p&gt;
+
+&lt;h3&gt;Asking for help and listening to answers&lt;/h3&gt;
+
+&lt;p&gt;Asking for help is the first step, but listening to the answers is the crucial
+part. We sometimes get so stuck in the problem that we refuse to
+listen to answers.&lt;/p&gt;
+
+&lt;p&gt;When you mentor others, you learn an important lesson: You can only teach a
+person who is ready to learn. Try to be a person that is always ready to learn.&lt;/p&gt;
+
+&lt;p&gt;People who are good at finishing projects are good at listening to answers.&lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;Thought I&amp;rsquo;d share this in case anyone else finds it useful.&lt;/p&gt;
+
+&lt;p&gt;Have a great day!&lt;/p&gt;
+</content>
+  </entry>
+</feed>

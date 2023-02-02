@@ -1,0 +1,146 @@
+<!doctype html>
+<html itemscope itemtype="http://schema.org/Article">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
+    <link rel="alternate" type="application/atom+xml" title="Morning Coffee" href="/feed.xml" />
+
+    <link rel="shortcut icon" href="favicon.svg">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+      <title>Moving files with curly braces &mdash; by Igor Šarčević</title>
+
+    <!-- Place this data between the <head> tags of your website -->
+      <meta name="description" content="Did you ever had to rename a part of a relly long filename?
+
+" />
+
+      <!-- Schema.org markup for Google+ -->
+      <meta itemprop="name" content="Moving files with curly braces">
+      <meta itemprop="description" content="Did you ever had to rename a part of a relly long filename?
+
+">
+      <meta itemprop="image" content="http://morningcoffee.io/images/moving_files.png">
+
+      <!-- Twitter Card data -->
+      <meta name="twitter:card" content="summary_large_image">
+      <meta name="twitter:site" content="@igor_sarcevic">
+      <meta name="twitter:title" content="Moving files with curly braces">
+      <meta name="twitter:description" content="Did you ever had to rename a part of a relly long filename?
+
+">
+      <meta name="twitter:creator" content="@igor_sarcevic">
+      <!-- Twitter summary card with large image must be at least 280x150px -->
+      <meta name="twitter:image:src" content="http://morningcoffee.io/images/moving_files.png">
+
+      <!-- Open Graph data -->
+      <meta property="og:title" content="Moving files with curly braces" />
+      <meta property="og:type" content="article" />
+      <meta property="og:url" content="http://" />
+      <meta property="og:image" content="http://morningcoffee.io/images/moving_files.png" />
+      <meta property="og:description" content="Did you ever had to rename a part of a relly long filename?
+
+" />
+      <meta property="article:published_time" content="2015-05-25 00:00:00 UTC" />
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Raleway:900&display=swap" rel="stylesheet">
+    <link href="/stylesheets/style.css" rel="stylesheet" />
+  </head>
+  <body>
+
+    <div id="main" role="main">
+      <nav class="navigation" style="padding: 10px;">
+  <div style="display: flex;justify-items: space-between;justify-content: space-between;">
+    <a style="font-size: 20px" href="/" style="color: crimson;">Home</a>
+    <a style="font-size: 20px" href="/about-me.html" style="color: crimson;">About</a>
+  </div>
+</nav>
+
+
+        <article class="article">
+    <div class="header">
+      <h1>Moving files with curly braces</h1>
+
+      <div class="subtitle">
+        Published on <time>May 25, 2015</time>
+      </div>
+    </div>
+
+    <p>Did you ever had to rename a part of a relly long filename?</p>
+
+<p></p>
+<div class="highlight"><pre class="highlight shell"><code>mv really-fake-and-really-long-file-name.html not-fake-and-really-long-file-name.html
+</code></pre></div>
+<p>Or rename files several directories bellow your path?</p>
+<div class="highlight"><pre class="highlight shell"><code>mv tips/source/posts/latest/images/dog.html tips/source/posts/latest/images/cat.html
+</code></pre></div>
+<p>Using some curly braces can help to ease up the pain:</p>
+<div class="highlight"><pre class="highlight shell"><code>mv <span class="o">{</span>really,not<span class="o">}</span><span class="nt">-fake-and-really-long-file-name</span>.html
+</code></pre></div><div class="highlight"><pre class="highlight shell"><code>mv tips/source/posts/latest/images/<span class="o">{</span>dog,cat<span class="o">}</span>.html
+</code></pre></div>
+<p>It can even help you to add a suffix to your commands, and instead of
+creating backups with:</p>
+<div class="highlight"><pre class="highlight shell"><code>mv .vimrc .vimrc.backup
+</code></pre></div>
+<p>You can simply write:</p>
+<div class="highlight"><pre class="highlight shell"><code>mv .vimrc<span class="o">{</span>,.backup<span class="o">}</span>
+</code></pre></div>
+<p>and the following to reuse the backup:</p>
+<div class="highlight"><pre class="highlight shell"><code>mv .vimrc<span class="o">{</span>.backup,<span class="o">}</span>
+</code></pre></div>
+<p>It seems like a trivial thing, but if you spend as much time in the terminal
+as I do, you will start to value these simple tips and tricks that can make
+you job at least a little bit faster.</p>
+
+<p>To learn more about this tehnique called Brace Expansion visit the
+<a href="http://www.gnu.org/software/bash/manual/html_node/Brace-Expansion.html">bash docs</a>.</p>
+
+
+
+  </article>
+
+
+      <div class="footer">
+  <div class="content">
+    <p>
+      <strong>❈</strong><br>
+      <br>
+
+      Follow me on <a href="https://twitter.com/igor_sarcevic">Twitter</a> and <a href="https://rs.linkedin.com/in/igorsarcevic">LinkedIn</a>.<br>
+      Copyright ©2014-2023 Igor Šarčević. All rights reserved.</br>
+      <br>
+      Enjoy the rest of your day!
+    </p>
+  </div>
+<div>
+
+    </div>
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+           })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-57223799-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+
+    <script>
+      /**
+      * Function that tracks a click on an outbound link in Analytics.
+      * This function takes a valid URL string as an argument, and uses that URL string
+      * as the event label. Setting the transport method to 'beacon' lets the hit be sent
+      * using 'navigator.sendBeacon' in browser that support it.
+      */
+      var trackOutboundLink = function(url) {
+        ga('send', 'event', 'outbound', 'click', url, {
+          'transport': 'beacon',
+          'hitCallback': function(){document.location = url;}
+        });
+      }
+    </script>
+
+  </body>
+</html>

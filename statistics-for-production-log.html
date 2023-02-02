@@ -1,0 +1,237 @@
+<!doctype html>
+<html itemscope itemtype="http://schema.org/Article">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
+    <link rel="alternate" type="application/atom+xml" title="Morning Coffee" href="/feed.xml" />
+
+    <link rel="shortcut icon" href="favicon.svg">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+      <title>Sorting your production.log &mdash; by Igor Šarčević</title>
+
+    <!-- Place this data between the <head> tags of your website -->
+      <meta name="description" content="Many developers fail to realize that by using the basic Unix tools, you can find
+on any server, you can find and collect valuable data from your logs. Often the
+data you need can be found without using any external services, including but
+not limited to service measurements.
+
+" />
+
+      <!-- Schema.org markup for Google+ -->
+      <meta itemprop="name" content="Sorting your production.log">
+      <meta itemprop="description" content="Many developers fail to realize that by using the basic Unix tools, you can find
+on any server, you can find and collect valuable data from your logs. Often the
+data you need can be found without using any external services, including but
+not limited to service measurements.
+
+">
+      <meta itemprop="image" content="http://morningcoffee.io/images/sorting-your-production-log.png">
+
+      <!-- Twitter Card data -->
+      <meta name="twitter:card" content="summary_large_image">
+      <meta name="twitter:site" content="@igor_sarcevic">
+      <meta name="twitter:title" content="Sorting your production.log">
+      <meta name="twitter:description" content="Many developers fail to realize that by using the basic Unix tools, you can find
+on any server, you can find and collect valuable data from your logs. Often the
+data you need can be found without using any external services, including but
+not limited to service measurements.
+
+">
+      <meta name="twitter:creator" content="@igor_sarcevic">
+      <!-- Twitter summary card with large image must be at least 280x150px -->
+      <meta name="twitter:image:src" content="http://morningcoffee.io/images/sorting-your-production-log.png">
+
+      <!-- Open Graph data -->
+      <meta property="og:title" content="Sorting your production.log" />
+      <meta property="og:type" content="article" />
+      <meta property="og:url" content="http://" />
+      <meta property="og:image" content="http://morningcoffee.io/images/sorting-your-production-log.png" />
+      <meta property="og:description" content="Many developers fail to realize that by using the basic Unix tools, you can find
+on any server, you can find and collect valuable data from your logs. Often the
+data you need can be found without using any external services, including but
+not limited to service measurements.
+
+" />
+      <meta property="article:published_time" content="2015-03-01 00:00:00 UTC" />
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Raleway:900&display=swap" rel="stylesheet">
+    <link href="/stylesheets/style.css" rel="stylesheet" />
+  </head>
+  <body>
+
+    <div id="main" role="main">
+      <nav class="navigation" style="padding: 10px;">
+  <div style="display: flex;justify-items: space-between;justify-content: space-between;">
+    <a style="font-size: 20px" href="/" style="color: crimson;">Home</a>
+    <a style="font-size: 20px" href="/about-me.html" style="color: crimson;">About</a>
+  </div>
+</nav>
+
+
+        <article class="article">
+    <div class="header">
+      <h1>Sorting your production.log</h1>
+
+      <div class="subtitle">
+        Published on <time>March  1, 2015</time>
+      </div>
+    </div>
+
+    <p>Many developers fail to realize that by using the basic Unix tools, you can find
+on any server, you can find and collect valuable data from your logs. Often the
+data you need can be found without using any external services, including but
+not limited to service measurements.</p>
+
+<p></p>
+
+<p><em>This is the continuation of the series where I show how to collect
+valuable data from your production.log. Please read the
+<a href="/select-and-count-your-production-log.html">previous posts</a>
+if you haven&rsquo;t already</em></p>
+
+<h2>Basic Unix sorting</h2>
+
+<p>In this article I want to show you how to sort your data using
+the <code>sort</code> Unix command. With that you can order the routes by
+response time, or to count them and show a list of most frequently
+visited. But first let&rsquo;s see how the <code>sort</code> command works.</p>
+
+<p>Let&rsquo;s start with a file <code>animals.txt</code> that has the following content:</p>
+<div class="highlight"><pre class="highlight plaintext"><code>dog
+cat
+fish
+</code></pre></div>
+<p>If you call <code>sort</code> on this file the output will be the following:</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="nv">$ </span>sort animals.txt
+<span class="nb">cat
+</span>dog
+fish
+</code></pre></div>
+<p>As you can see in the above output, the <code>sort</code> command orders the
+lines alphabetically. To show the reverse order:</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="nv">$ </span>sort <span class="nt">-r</span> animals.txt
+fish
+dog
+<span class="nb">cat</span>
+</code></pre></div>
+<p>You can also sort numerically. For example if you have a file called
+<code>numbered-animals.txt</code> with the following content:</p>
+<div class="highlight"><pre class="highlight plaintext"><code>117 cat
+1 fish
+10 dog
+</code></pre></div>
+<p>You can sort it with the following command:</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="nv">$ </span>sort <span class="nt">-n</span> numbered-animals.txt
+1 fish
+10 dog
+117 <span class="nb">cat</span>
+</code></pre></div>
+<p>Please note that if you leave out <code>-n</code> your output will be the same
+in some cases, but not always. For example:</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="nv">$ </span>sort <span class="nt">-n</span> numbered-animals.txt
+10 dog
+117 <span class="nb">cat
+</span>1 fish
+</code></pre></div>
+<p>We can of course order by other words other than the first one in the
+line. Using the <code>-k</code> option we can tell <code>sort</code> which field it to use.
+Let&rsquo;s look at the following <code>example.txt</code> file:</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="nv">a</span><span class="o">=</span>abc <span class="nv">b</span><span class="o">=</span>999
+<span class="nv">a</span><span class="o">=</span>abd <span class="nv">b</span><span class="o">=</span>462
+<span class="nv">a</span><span class="o">=</span>abf <span class="nv">b</span><span class="o">=</span>517
+</code></pre></div>
+<p>To sort using the <code>b=</code> part we can invoke <code>sort</code> with the <code>-k 2</code> option
+to select the second word in the lines:</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="nv">$ </span>sort <span class="nt">-k</span> 2 example.txt
+<span class="nv">a</span><span class="o">=</span>abd <span class="nv">b</span><span class="o">=</span>462
+<span class="nv">a</span><span class="o">=</span>abf <span class="nv">b</span><span class="o">=</span>517
+<span class="nv">a</span><span class="o">=</span>abc <span class="nv">b</span><span class="o">=</span>999
+</code></pre></div>
+<p>But, the <code>-k</code> option doesn&rsquo;t stop there. We can also select the
+character from which we want to start sorting. For example to cut
+of the first <code>3</code> characters in the <code>b=462</code> and get <code>62</code> we would
+write <code>-k 2.4</code> option, and thus sort only using the last two digits:</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="nv">$ </span>sort <span class="nt">-k</span> 2.4 example.txt
+<span class="nv">a</span><span class="o">=</span>abf <span class="nv">b</span><span class="o">=</span>517
+<span class="nv">a</span><span class="o">=</span>abd <span class="nv">b</span><span class="o">=</span>462
+<span class="nv">a</span><span class="o">=</span>abc <span class="nv">b</span><span class="o">=</span>999
+</code></pre></div>
+<h2>Sorting logs by response time</h2>
+
+<p>Now let&rsquo;s use the above knowledge to sort the routes from fastest to
+slowest. Let&rsquo;s use the following example:</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="nv">method</span><span class="o">=</span>GET <span class="nv">path</span><span class="o">=</span>/user <span class="nv">format</span><span class="o">=</span><span class="k">*</span>/<span class="k">*</span> <span class="nv">controller</span><span class="o">=</span>users <span class="nv">action</span><span class="o">=</span>create <span class="nv">status</span><span class="o">=</span>200 <span class="nv">duration</span><span class="o">=</span>4.2 <span class="nv">view</span><span class="o">=</span>0.00 <span class="nv">db</span><span class="o">=</span>3.91 <span class="nb">time</span><span class="o">=</span>2016-02-16 16:50:37 +0000
+<span class="nv">method</span><span class="o">=</span>POST <span class="nv">path</span><span class="o">=</span>/user <span class="nv">format</span><span class="o">=</span><span class="k">*</span>/<span class="k">*</span> <span class="nv">controller</span><span class="o">=</span>users <span class="nv">action</span><span class="o">=</span>create <span class="nv">status</span><span class="o">=</span>200 <span class="nv">duration</span><span class="o">=</span>2.4 <span class="nv">view</span><span class="o">=</span>0.00 <span class="nv">db</span><span class="o">=</span>3.91 <span class="nb">time</span><span class="o">=</span>2016-02-16 16:48:37 +0000
+<span class="nv">method</span><span class="o">=</span>POST <span class="nv">path</span><span class="o">=</span>/user <span class="nv">format</span><span class="o">=</span><span class="k">*</span>/<span class="k">*</span> <span class="nv">controller</span><span class="o">=</span>users <span class="nv">action</span><span class="o">=</span>create <span class="nv">status</span><span class="o">=</span>200 <span class="nv">duration</span><span class="o">=</span>56.4 <span class="nv">view</span><span class="o">=</span>0.00 <span class="nv">db</span><span class="o">=</span>3.91 <span class="nb">time</span><span class="o">=</span>2016-02-16 16:52:12 +0000
+</code></pre></div>
+<p>The only thing now we have to do is to count the location of
+the things we want to sort. In this example we are interested
+in the <code>duration=&lt;number&gt;</code> part of the lines. The <code>duration</code> is
+the 7th word on the line and the numbers start at the 10th place
+in the word. Now it is easy to conclude that we need the <code>-k 7.10</code>
+option in our sort command.</p>
+
+<p>The other option we want to use is the <code>-n</code> option to sort the lines
+numerically.</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="nv">$ </span><span class="nb">cat </span>production.log | sort <span class="nt">-n</span> <span class="nt">-k</span> 7.10
+<span class="nv">method</span><span class="o">=</span>POST <span class="nv">path</span><span class="o">=</span>/user <span class="nv">format</span><span class="o">=</span><span class="k">*</span>/<span class="k">*</span> <span class="nv">controller</span><span class="o">=</span>users <span class="nv">action</span><span class="o">=</span>create <span class="nv">status</span><span class="o">=</span>200 <span class="nv">duration</span><span class="o">=</span>2.4 <span class="nv">view</span><span class="o">=</span>0.00 <span class="nv">db</span><span class="o">=</span>3.91 <span class="nb">time</span><span class="o">=</span>2016-02-16 16:48:37 +0000
+<span class="nv">method</span><span class="o">=</span>GET <span class="nv">path</span><span class="o">=</span>/user <span class="nv">format</span><span class="o">=</span><span class="k">*</span>/<span class="k">*</span> <span class="nv">controller</span><span class="o">=</span>users <span class="nv">action</span><span class="o">=</span>create <span class="nv">status</span><span class="o">=</span>200 <span class="nv">duration</span><span class="o">=</span>4.2 <span class="nv">view</span><span class="o">=</span>0.00 <span class="nv">db</span><span class="o">=</span>3.91 <span class="nb">time</span><span class="o">=</span>2016-02-16 16:50:37 +0000
+<span class="nv">method</span><span class="o">=</span>POST <span class="nv">path</span><span class="o">=</span>/user <span class="nv">format</span><span class="o">=</span><span class="k">*</span>/<span class="k">*</span> <span class="nv">controller</span><span class="o">=</span>users <span class="nv">action</span><span class="o">=</span>create <span class="nv">status</span><span class="o">=</span>200 <span class="nv">duration</span><span class="o">=</span>56.4 <span class="nv">view</span><span class="o">=</span>0.00 <span class="nv">db</span><span class="o">=</span>3.91 <span class="nb">time</span><span class="o">=</span>2016-02-16 16:52:12 +0000
+</code></pre></div>
+<h2>Final words</h2>
+
+<p>I hope you enjoyed this tutorial, I will give my best to finish the next
+one soon, where I will be writing about unique lines.</p>
+
+<p>Happy hacking!</p>
+
+
+
+  </article>
+
+
+      <div class="footer">
+  <div class="content">
+    <p>
+      <strong>❈</strong><br>
+      <br>
+
+      Follow me on <a href="https://twitter.com/igor_sarcevic">Twitter</a> and <a href="https://rs.linkedin.com/in/igorsarcevic">LinkedIn</a>.<br>
+      Copyright ©2014-2023 Igor Šarčević. All rights reserved.</br>
+      <br>
+      Enjoy the rest of your day!
+    </p>
+  </div>
+<div>
+
+    </div>
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+           })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-57223799-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+
+    <script>
+      /**
+      * Function that tracks a click on an outbound link in Analytics.
+      * This function takes a valid URL string as an argument, and uses that URL string
+      * as the event label. Setting the transport method to 'beacon' lets the hit be sent
+      * using 'navigator.sendBeacon' in browser that support it.
+      */
+      var trackOutboundLink = function(url) {
+        ga('send', 'event', 'outbound', 'click', url, {
+          'transport': 'beacon',
+          'hitCallback': function(){document.location = url;}
+        });
+      }
+    </script>
+
+  </body>
+</html>

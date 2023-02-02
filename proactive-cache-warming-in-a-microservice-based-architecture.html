@@ -1,0 +1,372 @@
+<!doctype html>
+<html itemscope itemtype="http://schema.org/Article">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
+    <link rel="alternate" type="application/atom+xml" title="Morning Coffee" href="/feed.xml" />
+
+    <link rel="shortcut icon" href="favicon.svg">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+      <title>Proactive cache warming in a microservice-based architecture &mdash; by Igor Šarčević</title>
+
+    <!-- Place this data between the <head> tags of your website -->
+      <meta name="description" content="With the microservice architecture style, services and their data are contained
+within a single bounded context. This architectural decision helps us..." />
+
+      <!-- Schema.org markup for Google+ -->
+      <meta itemprop="name" content="Proactive cache warming in a microservice-based architecture">
+      <meta itemprop="description" content="With the microservice architecture style, services and their data are contained
+within a single bounded context. This architectural decision helps us...">
+      <meta itemprop="image" content="http://morningcoffee.io/images/2021-07-17-proactive-cache-warming-in-a-microservice-based-architecture.png">
+
+      <!-- Twitter Card data -->
+      <meta name="twitter:card" content="summary_large_image">
+      <meta name="twitter:site" content="@igor_sarcevic">
+      <meta name="twitter:title" content="Proactive cache warming in a microservice-based architecture">
+      <meta name="twitter:description" content="With the microservice architecture style, services and their data are contained
+within a single bounded context. This architectural decision helps us...">
+      <meta name="twitter:creator" content="@igor_sarcevic">
+      <!-- Twitter summary card with large image must be at least 280x150px -->
+      <meta name="twitter:image:src" content="http://morningcoffee.io/images/2021-07-17-proactive-cache-warming-in-a-microservice-based-architecture.png">
+
+      <!-- Open Graph data -->
+      <meta property="og:title" content="Proactive cache warming in a microservice-based architecture" />
+      <meta property="og:type" content="article" />
+      <meta property="og:url" content="http://" />
+      <meta property="og:image" content="http://morningcoffee.io/images/2021-07-17-proactive-cache-warming-in-a-microservice-based-architecture.png" />
+      <meta property="og:description" content="With the microservice architecture style, services and their data are contained
+within a single bounded context. This architectural decision helps us..." />
+      <meta property="article:published_time" content="2021-07-17 00:00:00 UTC" />
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Raleway:900&display=swap" rel="stylesheet">
+    <link href="/stylesheets/style.css" rel="stylesheet" />
+  </head>
+  <body>
+
+    <div id="main" role="main">
+      <nav class="navigation" style="padding: 10px;">
+  <div style="display: flex;justify-items: space-between;justify-content: space-between;">
+    <a style="font-size: 20px" href="/" style="color: crimson;">Home</a>
+    <a style="font-size: 20px" href="/about-me.html" style="color: crimson;">About</a>
+  </div>
+</nav>
+
+
+        <article class="article">
+    <div class="header">
+      <h1>Proactive cache warming in a microservice-based architecture</h1>
+
+      <div class="subtitle">
+        Published on <time>July 17, 2021</time>
+      </div>
+    </div>
+
+    <p>With the microservice architecture style, services and their data are contained
+within a single bounded context. This architectural decision helps us to develop
+and deploy changes in one business unit fast and independent of other services
+in our system.</p>
+
+<p>However, collecting and analyzing data from multiple services can be slow and
+much more complex than in a typical monolithic service where the caller has
+access to data from a single big database system.</p>
+
+<p>Let&rsquo;s look at an example: A web application for ordering items with a page that
+displays information about the most recent orders in a company.</p>
+
+<p><img src="/images/proactive-caching/architecture-example.png" alt="Proactive Cache Warming: Architecture Example" /></p>
+
+<p>We will focus on the front service from the above architecture. More
+specifically, on its recent orders controller action.</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="k">def</span> <span class="nf">recent_orders</span><span class="p">(</span><span class="n">company_id</span><span class="p">)</span>
+  <span class="n">orders</span> <span class="o">=</span> <span class="no">OrdersService</span><span class="p">.</span><span class="nf">get_recent_orders</span><span class="p">(</span><span class="n">company_id</span><span class="p">)</span>
+
+  <span class="n">customer_ids</span> <span class="o">=</span> <span class="n">orders</span><span class="p">.</span><span class="nf">map</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:customer_ids</span><span class="p">)</span>
+  <span class="n">customers</span> <span class="o">=</span> <span class="no">CustomerService</span><span class="p">.</span><span class="nf">get_customer_details</span><span class="p">(</span><span class="n">customer_ids</span><span class="p">)</span>
+
+  <span class="n">render_page</span><span class="p">(</span><span class="n">orders</span><span class="p">,</span> <span class="n">customers</span><span class="p">)</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Our next challenge is how to make this page fast.</p>
+
+<p>Let&rsquo;s assume for the sake of the argument that both the Orders Service and the
+Customer Services take around 200ms to respond and that we don&rsquo;t have any viable
+way of making these response times faster.</p>
+
+<p>To render the page, we need to wait 200ms for the Orders Service, then 200ms for
+the Customers Service, and finally, we need some time to generate the HTML page,
+100ms. The minimum time to render the page is 500ms, which is relatively slow.</p>
+
+<p>Caching is a standard tool that we use to make slow things faster. Key/Value
+memory stores like Redis can easily support 1ms response times if we figure out
+how to use it effectively.</p>
+
+<p>Let&rsquo;s explore some caching strategies.</p>
+
+<h2>Time-to-live based caching</h2>
+
+<p>A simple-to-implement caching strategy is a time-based one. This strategy
+renders the page and keeps it in the cache for a given amount of time.</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="no">CACHE_EXPIRES_IN</span> <span class="o">=</span> <span class="mi">1</span><span class="p">.</span><span class="nf">hour</span>
+
+<span class="k">def</span> <span class="nf">recent_orders</span><span class="p">(</span><span class="n">company_id</span><span class="p">)</span>
+  <span class="n">key</span> <span class="o">=</span> <span class="n">cache_key</span><span class="p">(</span><span class="n">company_id</span><span class="p">)</span>
+  <span class="n">cached_page</span> <span class="o">=</span> <span class="no">Cache</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+
+  <span class="k">if</span> <span class="n">cached_page</span><span class="p">.</span><span class="nf">present?</span>
+    <span class="n">cached_page</span>
+  <span class="k">else</span>
+    <span class="n">content</span> <span class="o">=</span> <span class="n">full_render</span><span class="p">(</span><span class="n">company_id</span><span class="p">)</span>
+
+    <span class="no">Cache</span><span class="p">.</span><span class="nf">store</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">content</span><span class="p">,</span> <span class="ss">ttl: </span><span class="no">CACHE_EXPIRES_IN</span><span class="p">)</span>
+
+    <span class="n">content</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="k">def</span> <span class="nf">cache_key</span><span class="p">(</span><span class="n">company_id</span><span class="p">)</span>
+  <span class="s2">"recent_orders_page_</span><span class="si">#{</span><span class="n">company_id</span><span class="si">}</span><span class="s2">"</span>
+<span class="k">end</span>
+
+<span class="k">def</span> <span class="nf">full_render</span><span class="p">(</span><span class="n">company_id</span><span class="p">)</span>
+  <span class="n">orders</span> <span class="o">=</span> <span class="no">OrdersService</span><span class="p">.</span><span class="nf">get_recent_orders</span><span class="p">(</span><span class="n">company_id</span><span class="p">)</span>
+
+  <span class="n">customer_ids</span> <span class="o">=</span> <span class="n">orders</span><span class="p">.</span><span class="nf">map</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:customer_ids</span><span class="p">)</span>
+  <span class="n">customers</span> <span class="o">=</span> <span class="no">CustomerService</span><span class="p">.</span><span class="nf">get_customer_details</span><span class="p">(</span><span class="n">customer_ids</span><span class="p">)</span>
+
+  <span class="n">render_page</span><span class="p">(</span><span class="n">orders</span><span class="p">,</span> <span class="n">customers</span><span class="p">)</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>This strategy can be the ideal one when the domain of the problem is time-bound.
+For example, if the page would display orders processed for the previous day
+instead of listing all the most recent ones.</p>
+
+<p>The most significant downside is that the page will not refresh its content even
+if the system receives new orders. The page will be fast but stale.</p>
+
+<h2>Signature-based caching</h2>
+
+<p>We can use this information to optimize our rendering function.  Another way to
+improve the speed of our page is to fetch some minimal amount of data that can
+signal to our system if our cached value is stale or usable.</p>
+
+<p>Let&rsquo;s assume that in the above example, the order processing system has an
+additional endpoint that can tell us the timestamp of the last processed order
+by a given company in 100ms.</p>
+
+<p>We can use this information to optimize our rendering function.</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="k">def</span> <span class="nf">recent_orders</span><span class="p">(</span><span class="n">company_id</span><span class="p">)</span>
+  <span class="n">last_order_at</span> <span class="o">=</span> <span class="no">OrdersService</span><span class="p">.</span><span class="nf">get_last_order_timestamp</span><span class="p">(</span><span class="n">company_id</span><span class="p">)</span>
+  <span class="n">key</span> <span class="o">=</span> <span class="n">cache_key</span><span class="p">(</span><span class="n">company_id</span><span class="p">,</span> <span class="n">last_order_at</span><span class="p">)</span>
+
+  <span class="n">cached_page</span> <span class="o">=</span> <span class="no">Cache</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+
+  <span class="k">if</span> <span class="n">cached_page</span><span class="p">.</span><span class="nf">present?</span>
+    <span class="n">cached_page</span>
+  <span class="k">else</span>
+    <span class="n">content</span> <span class="o">=</span> <span class="n">full_render</span><span class="p">(</span><span class="n">company_id</span><span class="p">)</span>
+
+    <span class="no">Cache</span><span class="p">.</span><span class="nf">store</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">content</span><span class="p">,</span> <span class="ss">ttl: </span><span class="no">CACHE_EXPIRES_IN</span><span class="p">)</span>
+
+    <span class="n">content</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="k">def</span> <span class="nf">cache_key</span><span class="p">(</span><span class="n">company_id</span><span class="p">,</span> <span class="n">last_order_at</span><span class="p">)</span>
+  <span class="s2">"recent_orders_page_</span><span class="si">#{</span><span class="n">company_id</span><span class="si">}</span><span class="s2">_</span><span class="si">#{</span><span class="n">md5</span><span class="p">(</span><span class="n">last_order_at</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span>
+<span class="k">end</span>
+
+<span class="k">def</span> <span class="nf">full_render</span><span class="p">(</span><span class="n">company_id</span><span class="p">)</span>
+  <span class="n">orders</span> <span class="o">=</span> <span class="no">OrdersService</span><span class="p">.</span><span class="nf">get_recent_orders</span><span class="p">(</span><span class="n">company_id</span><span class="p">)</span>
+
+  <span class="n">customer_ids</span> <span class="o">=</span> <span class="n">orders</span><span class="p">.</span><span class="nf">map</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:customer_ids</span><span class="p">)</span>
+  <span class="n">customers</span> <span class="o">=</span> <span class="no">CustomerService</span><span class="p">.</span><span class="nf">get_customer_details</span><span class="p">(</span><span class="n">customer_ids</span><span class="p">)</span>
+
+  <span class="n">render_page</span><span class="p">(</span><span class="n">orders</span><span class="p">,</span> <span class="n">customers</span><span class="p">)</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>The above implementation makes sure that we never have a stale state on the
+page. However, the performance gains are not so good as in our previous
+iteration.</p>
+
+<p>If we have a cache hit, the performance will be 100ms as it takes this long to
+fetch the timestamp of the last order.</p>
+
+<p>If we have a cache miss, the performance will be worse than it would be without
+caching. We will need 100ms to find the timestamp of the last order, plus the
+500ms duration for the full page render.</p>
+
+<h2>Event-based caching</h2>
+
+<p>In both of the previous implementations, the core problem was how and when to
+clear the cached values. It turns out it is pretty hard to deduce this on the
+client-side.</p>
+
+<p>One strategy common in distributed systems is to use events to propagate
+information about state changes. We can use this architecture to have a clear
+signal of when to clear our cache.</p>
+
+<p><img src="/images/proactive-caching/invalidation.png" alt="Proactive Cache Warming: Event Based Cache Invalidation" /></p>
+
+<p>In this architecture, both the order processing service and the customer service
+are publishing events when their datasets change. The cache invalidator then
+listens to those events and clears the data from the UI layer&rsquo;s cache.</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="k">def</span> <span class="nf">recent_orders</span><span class="p">(</span><span class="n">company_id</span><span class="p">)</span>
+  <span class="n">key</span> <span class="o">=</span> <span class="n">cache_key</span><span class="p">(</span><span class="n">company_id</span><span class="p">)</span>
+  <span class="n">cached_page</span> <span class="o">=</span> <span class="no">Cache</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+
+  <span class="k">if</span> <span class="n">cached_page</span><span class="p">.</span><span class="nf">present?</span>
+    <span class="n">cached_page</span>
+  <span class="k">else</span>
+    <span class="n">content</span> <span class="o">=</span> <span class="n">full_render</span><span class="p">(</span><span class="n">company_id</span><span class="p">)</span>
+
+    <span class="no">Cache</span><span class="p">.</span><span class="nf">store</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
+
+    <span class="n">content</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="n">subscribe</span><span class="p">(</span><span class="s2">"orders_service"</span><span class="p">,</span> <span class="s2">"order-created"</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">event</span><span class="o">|</span>
+  <span class="n">key</span> <span class="o">=</span> <span class="n">cache_key</span><span class="p">(</span><span class="n">event</span><span class="p">.</span><span class="nf">company_id</span><span class="p">)</span>
+
+  <span class="no">Cache</span><span class="p">.</span><span class="nf">clear</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+<span class="k">end</span>
+
+<span class="n">subscribe</span><span class="p">(</span><span class="s2">"customers_service"</span><span class="p">,</span> <span class="s2">"customer-updated"</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">event</span><span class="o">|</span>
+  <span class="n">key</span> <span class="o">=</span> <span class="n">cache_key</span><span class="p">(</span><span class="n">event</span><span class="p">.</span><span class="nf">company_id</span><span class="p">)</span>
+
+  <span class="no">Cache</span><span class="p">.</span><span class="nf">clear</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>We get pretty fast response times and up-to-date content in the cache. Neat!</p>
+
+<p>If we have a cache hit, we can respond under 1ms, the amount of time it takes to
+fetch the data from the cache.</p>
+
+<p>If we have a cache miss, we can respond in 500ms, the amount of data it takes to
+have a full page render.</p>
+
+<p>The event-based cache invalidation is better in both cases from the
+signature-based caching solution we explored in the previous section.</p>
+
+<h2>Event-based proactive caching</h2>
+
+<p>We had a 1ms response for cached pages in that last section and 500ms for when
+the page wasn&rsquo;t cached. Can we do better?</p>
+
+<p>One approach that can guarantee a fast (1ms) response is to utilize proactive
+caching, meaning to prepare the page cache before the customers load it for the
+first time.</p>
+
+<p><img src="/images/proactive-caching/reactor.png" alt="Proactive Cache Warming: Event Based Cache Updater" /></p>
+
+<p>In this architecture, the UI layer always reads responses from the cache,
+meaning that it can guarantee a fast response time for both first visits and
+repeated visits to the page.</p>
+
+<p>The reactor maintains the cache&rsquo;s content, a subsystem in the UI layer that
+reacts to various events in the system and recalculates the cached content.</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="k">def</span> <span class="nf">recent_orders</span><span class="p">(</span><span class="n">company_id</span><span class="p">)</span>
+  <span class="n">key</span> <span class="o">=</span> <span class="n">cache_key</span><span class="p">(</span><span class="n">company_id</span><span class="p">)</span>
+  <span class="n">cached_page</span> <span class="o">=</span> <span class="no">Cache</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">cached_page</span>
+<span class="k">end</span>
+
+<span class="n">subscribe</span><span class="p">(</span><span class="s2">"orders_service"</span><span class="p">,</span> <span class="s2">"order-created"</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">event</span><span class="o">|</span>
+  <span class="n">key</span> <span class="o">=</span> <span class="n">cache_key</span><span class="p">(</span><span class="n">event</span><span class="p">.</span><span class="nf">company_id</span><span class="p">)</span>
+  <span class="n">new_content</span> <span class="o">=</span> <span class="n">full_render</span><span class="p">(</span><span class="n">company_id</span><span class="p">)</span>
+
+  <span class="no">Cache</span><span class="p">.</span><span class="nf">store</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">new_content</span><span class="p">)</span>
+<span class="k">end</span>
+
+<span class="n">subscribe</span><span class="p">(</span><span class="s2">"customers_service"</span><span class="p">,</span> <span class="s2">"customer-updated"</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">event</span><span class="o">|</span>
+  <span class="n">key</span> <span class="o">=</span> <span class="n">cache_key</span><span class="p">(</span><span class="n">event</span><span class="p">.</span><span class="nf">company_id</span><span class="p">)</span>
+  <span class="n">new_content</span> <span class="o">=</span> <span class="n">full_render</span><span class="p">(</span><span class="n">company_id</span><span class="p">)</span>
+
+  <span class="no">Cache</span><span class="p">.</span><span class="nf">store</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">new_content</span><span class="p">)</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Let&rsquo;s analyze this pattern. What are the shortcomings of this caching approach?</p>
+
+<p>On the pros side, this caching approach can guarantee us fast response times for
+every page visit.</p>
+
+<p>On the cons side, the reactor might be caching pages that our customers rarely
+visit, which leads to lots of busywork in our system. We might prepare and
+crunch an enormous amount of unused data.</p>
+
+<p>The storage size can also drastically increase when we start using this approach
+as we are no longer storing only visited pages but all the pages in the cache.</p>
+
+<p>If your number one priority is speed, the added storage and architectural
+complexity could be acceptable; otherwise, you might be crunching data
+needlessly. Choose carefully.</p>
+
+<p><hr style="width: 50%; margin-top: 3em; border-color: gray;"></p>
+
+<p>Caching is complicated, even more so in distributed systems.</p>
+
+<p>At <a href="https://semaphoreci.com">SemaphoreCI</a>, we use event-based proactive caching
+to make our UI layer fast.  Over the years, we faced many challenges while using
+this system, including race conditions and high queue processing latency.
+However, while these problems were challenging, we are still happy with this
+architectural choice even after several years in production.</p>
+
+<p>Here are some great resources for further reading:</p>
+
+<ul>
+<li><a href="https://martinfowler.com/bliki/ReportingDatabase.html">Reporting Database</a></li>
+<li><a href="https://www.oreilly.com/library/view/microservices-antipatterns-and/9781492042716/">Microservices: AntiPatterns and Pitfalls</a></li>
+<li><a href="https://martinfowler.com/articles/201701-event-driven.html">What do you mean by “Event-Driven”?</a></li>
+</ul>
+
+
+
+  </article>
+
+
+      <div class="footer">
+  <div class="content">
+    <p>
+      <strong>❈</strong><br>
+      <br>
+
+      Follow me on <a href="https://twitter.com/igor_sarcevic">Twitter</a> and <a href="https://rs.linkedin.com/in/igorsarcevic">LinkedIn</a>.<br>
+      Copyright ©2014-2023 Igor Šarčević. All rights reserved.</br>
+      <br>
+      Enjoy the rest of your day!
+    </p>
+  </div>
+<div>
+
+    </div>
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+           })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-57223799-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+
+    <script>
+      /**
+      * Function that tracks a click on an outbound link in Analytics.
+      * This function takes a valid URL string as an argument, and uses that URL string
+      * as the event label. Setting the transport method to 'beacon' lets the hit be sent
+      * using 'navigator.sendBeacon' in browser that support it.
+      */
+      var trackOutboundLink = function(url) {
+        ga('send', 'event', 'outbound', 'click', url, {
+          'transport': 'beacon',
+          'hitCallback': function(){document.location = url;}
+        });
+      }
+    </script>
+
+  </body>
+</html>

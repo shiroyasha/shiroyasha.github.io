@@ -1,0 +1,328 @@
+<!doctype html>
+<html itemscope itemtype="http://schema.org/Article">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
+    <link rel="alternate" type="application/atom+xml" title="Morning Coffee" href="/feed.xml" />
+
+    <link rel="shortcut icon" href="favicon.svg">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+      <title>OOP in the age of ES6 &mdash; by Igor Šarčević</title>
+
+    <!-- Place this data between the <head> tags of your website -->
+      <meta name="description" content="Recently, I have become more of a “Ruby/Bash/Haskell” guy, but
+JavaScript will always remain one of my favorite languages, and I
+couldn’t be happier when I saw the new new upcoming ES6 standard.
+
+" />
+
+      <!-- Schema.org markup for Google+ -->
+      <meta itemprop="name" content="OOP in the age of ES6">
+      <meta itemprop="description" content="Recently, I have become more of a “Ruby/Bash/Haskell” guy, but
+JavaScript will always remain one of my favorite languages, and I
+couldn’t be happier when I saw the new new upcoming ES6 standard.
+
+">
+      <meta itemprop="image" content="http://morningcoffee.io/images/es6-ninja.png">
+
+      <!-- Twitter Card data -->
+      <meta name="twitter:card" content="summary_large_image">
+      <meta name="twitter:site" content="@igor_sarcevic">
+      <meta name="twitter:title" content="OOP in the age of ES6">
+      <meta name="twitter:description" content="Recently, I have become more of a “Ruby/Bash/Haskell” guy, but
+JavaScript will always remain one of my favorite languages, and I
+couldn’t be happier when I saw the new new upcoming ES6 standard.
+
+">
+      <meta name="twitter:creator" content="@igor_sarcevic">
+      <!-- Twitter summary card with large image must be at least 280x150px -->
+      <meta name="twitter:image:src" content="http://morningcoffee.io/images/es6-ninja.png">
+
+      <!-- Open Graph data -->
+      <meta property="og:title" content="OOP in the age of ES6" />
+      <meta property="og:type" content="article" />
+      <meta property="og:url" content="http://" />
+      <meta property="og:image" content="http://morningcoffee.io/images/es6-ninja.png" />
+      <meta property="og:description" content="Recently, I have become more of a “Ruby/Bash/Haskell” guy, but
+JavaScript will always remain one of my favorite languages, and I
+couldn’t be happier when I saw the new new upcoming ES6 standard.
+
+" />
+      <meta property="article:published_time" content="2015-04-15 00:00:00 UTC" />
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Raleway:900&display=swap" rel="stylesheet">
+    <link href="/stylesheets/style.css" rel="stylesheet" />
+  </head>
+  <body>
+
+    <div id="main" role="main">
+      <nav class="navigation" style="padding: 10px;">
+  <div style="display: flex;justify-items: space-between;justify-content: space-between;">
+    <a style="font-size: 20px" href="/" style="color: crimson;">Home</a>
+    <a style="font-size: 20px" href="/about-me.html" style="color: crimson;">About</a>
+  </div>
+</nav>
+
+
+        <article class="article">
+    <div class="header">
+      <h1>OOP in the age of ES6</h1>
+
+      <div class="subtitle">
+        Published on <time>April 15, 2015</time>
+      </div>
+    </div>
+
+    <p>Recently, I have become more of a &ldquo;Ruby/Bash/Haskell&rdquo; guy, but
+JavaScript will always remain one of my favorite languages, and I
+couldn&rsquo;t be happier when I saw the new new upcoming ES6 standard.</p>
+
+<p></p>
+
+<p>ES6 is the new sexy ECMAScript standard that brings a lot of goodies
+to the JavaScript world. One of the new features I am really looking
+forward to is the new classical OOP system.</p>
+
+<p>If you are familiar with JavaScript, you probably know that that it
+uses an alternative version of Object Orientation that relies on
+object prototypes. While in theory the prototypical nature of JavaScript
+is superior to the classical version, in the sense that it can simulate
+the later, in practice it is often confusing and a common source of bugs.</p>
+
+<p>The new OOP system on the other hand is intuitive and comparable to
+the system implemented in Ruby, Python or Scala. This article will
+demonstrate some of the awesome things that you can soon use in your
+daily JavaScript development.</p>
+
+<h2>Constructing classes</h2>
+
+<p>Finally the useless reserved word <code>class</code> can shine. The
+new OOP system uses it to define new classes. Here is an example:</p>
+<div class="highlight"><pre class="highlight javascript"><code><span class="kd">class</span> <span class="nx">Dog</span> <span class="p">{</span>
+  <span class="kd">constructor</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="nx">bark</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"wuf! wuf!"</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">leo</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Dog</span><span class="p">(</span><span class="s2">"Leo"</span><span class="p">);</span>
+<span class="nx">leo</span><span class="p">.</span><span class="nx">bark</span><span class="p">();</span>
+</code></pre></div>
+<p>At the first glance, we can instantly recognize the intuitiveness of
+the above construct. It defines a <code>Dog</code> class with a <em>constructor</em>
+that takes it name, and an instance method that let&rsquo;s our dogs to bark.</p>
+
+<p>Notice also that the methods don&rsquo;t have a <code>function</code> keyword and that
+there is no <code>prototype</code> word anywhere in the source file. Just as a
+reminder of the old days, I will rewrite the above class to the current
+ES5 format:</p>
+<div class="highlight"><pre class="highlight javascript"><code><span class="kd">function</span> <span class="nx">Dog</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">Dog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">bark</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"wuf! wuf!"</span><span class="p">);</span>
+<span class="p">};</span>
+
+<span class="kd">var</span> <span class="nx">leo</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Dog</span><span class="p">(</span><span class="s2">"Leo"</span><span class="p">);</span>
+<span class="nx">leo</span><span class="p">.</span><span class="nx">bark</span><span class="p">();</span>
+</code></pre></div>
+<p>You can argue that this version is shorter, but it is definitely
+weirder no matter how you look at it.</p>
+
+<h2>Inheritance</h2>
+
+<p>If you were amazed with the new system, prepare yourself for even
+more. Inheritance was always one of the most confusing parts of
+prototypical OOP.</p>
+
+<ul>
+<li>How do I define my parent class?</li>
+<li>How do I redefine methods in the inherited class?</li>
+<li>How to pass arguments to the parent&rsquo;s constructor?</li>
+</ul>
+
+<p>The above questions always boggled my mind. I learned them when I
+needed them, but after a week or two I completely forgot them.
+Luckily for me, the new system uses <code>extends</code> and <code>super</code>.</p>
+
+<p>Let&rsquo;s extend the above <code>Dog</code> class to a subtype of dogs, for example
+Labradors:</p>
+<div class="highlight"><pre class="highlight javascript"><code><span class="kd">class</span> <span class="nx">Labrador</span> <span class="kd">extends</span> <span class="nx">Dog</span> <span class="p">{</span>
+  <span class="kd">constructor</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">super</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="nx">playWithKids</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"playing with kids! wuf! wuf!"</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">leo</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Labrador</span><span class="p">(</span><span class="s2">"Leo"</span><span class="p">);</span>
+<span class="nx">leo</span><span class="p">.</span><span class="nx">playWithKids</span><span class="p">();</span>
+</code></pre></div>
+<p>But how do you redefine a method? Let&rsquo;s say for the sake of the
+following example that Labradors have a different kind of bark
+that instead of <code>wuf! wuf!</code> says <code>wuf! wuf! woof!</code>. Here is how
+we can do it:</p>
+<div class="highlight"><pre class="highlight javascript"><code><span class="kd">class</span> <span class="nx">Labrador</span> <span class="kd">extends</span> <span class="nx">Dog</span> <span class="p">{</span>
+  <span class="kd">constructor</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">super</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="nx">bark</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"wuf! wuf!"</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"woof!"</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="nx">playWithKids</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"playing with kids! wuf! wuf!"</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">leo</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Labrador</span><span class="p">(</span><span class="s2">"Leo"</span><span class="p">);</span>
+<span class="nx">leo</span><span class="p">.</span><span class="nx">bark</span><span class="p">();</span>
+</code></pre></div>
+<p>Pretty simple. We can even use the definition from the parent class
+by doing the following:</p>
+<div class="highlight"><pre class="highlight javascript"><code><span class="kd">class</span> <span class="nx">Labrador</span> <span class="kd">extends</span> <span class="nx">Dog</span> <span class="p">{</span>
+  <span class="kd">constructor</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">super</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="nx">bark</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">super</span><span class="p">.</span><span class="nx">bark</span><span class="p">();</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"woof!"</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="nx">playWithKids</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"playing with kids! wuf! wuf!"</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">leo</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Labrador</span><span class="p">(</span><span class="s2">"Leo"</span><span class="p">);</span>
+<span class="nx">leo</span><span class="p">.</span><span class="nx">bark</span><span class="p">();</span>
+</code></pre></div>
+<p>That was again, blazingly simple. I don&rsquo;t even know how to do that
+in plain old JavaScript.</p>
+
+<h2>Getters</h2>
+
+<p>There is one more feature that I want to write about, the new getter syntax.
+Let&rsquo;s start with an example <code>User</code> class:</p>
+<div class="highlight"><pre class="highlight javascript"><code><span class="kd">class</span> <span class="nx">User</span> <span class="p">{</span>
+
+  <span class="kd">constructor</span><span class="p">(</span><span class="nx">firstName</span><span class="p">,</span> <span class="nx">lastName</span><span class="p">,</span> <span class="nx">age</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">firstName</span> <span class="o">=</span> <span class="nx">firstName</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">lastName</span>  <span class="o">=</span> <span class="nx">lastName</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">age</span>       <span class="o">=</span> <span class="nx">age</span><span class="p">;</span>
+  <span class="p">}</span>
+
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">user</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">User</span><span class="p">(</span><span class="s2">"Igor"</span><span class="p">,</span> <span class="s2">"Sarcevic"</span><span class="p">,</span> <span class="mi">24</span><span class="p">);</span>
+</code></pre></div>
+<p>Now, let&rsquo;s say there is a need to get the full name of the user. We can define
+a method called <code>fullName</code> like this:</p>
+<div class="highlight"><pre class="highlight javascript"><code><span class="kd">class</span> <span class="nx">User</span> <span class="p">{</span>
+
+  <span class="kd">constructor</span><span class="p">(</span><span class="nx">firstName</span><span class="p">,</span> <span class="nx">lastName</span><span class="p">,</span> <span class="nx">age</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">firstName</span> <span class="o">=</span> <span class="nx">firstName</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">lastName</span>  <span class="o">=</span> <span class="nx">lastName</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">age</span>       <span class="o">=</span> <span class="nx">age</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="nx">fullName</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="s2">`</span><span class="p">${</span><span class="k">this</span><span class="p">.</span><span class="nx">firstName</span><span class="p">}</span><span class="s2"> </span><span class="p">${</span><span class="k">this</span><span class="p">.</span><span class="nx">lastName</span><span class="p">}</span><span class="s2">`</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">user</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">User</span><span class="p">(</span><span class="s2">"Igor"</span><span class="p">,</span> <span class="s2">"Sarcevic"</span><span class="p">,</span> <span class="mi">24</span><span class="p">);</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">user</span><span class="p">.</span><span class="nx">fullName</span><span class="p">());</span>
+</code></pre></div>
+<p>Note: I used the sexy new string template syntax, go look it up, you won&rsquo;t regret it. :D</p>
+
+<p>The <code>fullName</code> method is simple but it can bother you that you must
+append the function invoking brackets <code>user.fullName()</code> every time you need to know
+the full name of the user. Luckily, we can use getters:</p>
+<div class="highlight"><pre class="highlight javascript"><code><span class="kd">class</span> <span class="nx">User</span> <span class="p">{</span>
+
+  <span class="kd">constructor</span><span class="p">(</span><span class="nx">firstName</span><span class="p">,</span> <span class="nx">lastName</span><span class="p">,</span> <span class="nx">age</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">firstName</span> <span class="o">=</span> <span class="nx">firstName</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">lastName</span>  <span class="o">=</span> <span class="nx">lastName</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">age</span>       <span class="o">=</span> <span class="nx">age</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="kd">get</span> <span class="nx">fullName</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="s2">`</span><span class="p">${</span><span class="k">this</span><span class="p">.</span><span class="nx">firstName</span><span class="p">}</span><span class="s2"> </span><span class="p">${</span><span class="k">this</span><span class="p">.</span><span class="nx">lastName</span><span class="p">}</span><span class="s2">`</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">user</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">User</span><span class="p">(</span><span class="s2">"Igor"</span><span class="p">,</span> <span class="s2">"Sarcevic"</span><span class="p">,</span> <span class="mi">24</span><span class="p">);</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">user</span><span class="p">.</span><span class="nx">fullName</span><span class="p">);</span>
+</code></pre></div>
+<p>In the above example pay attention to the addition of the <code>get</code> keyword
+and the removal of the brackets when the getter was invoked <code>user.fullName</code>.</p>
+
+<h2>Final words</h2>
+
+<p>I can only say that I fell in love with the new OOP style. Finally, JavaScript
+can be as expressive as the other languages in its category.</p>
+
+<p>But it makes me wonder what is the future of CoffeeScript?</p>
+
+
+
+  </article>
+
+
+      <div class="footer">
+  <div class="content">
+    <p>
+      <strong>❈</strong><br>
+      <br>
+
+      Follow me on <a href="https://twitter.com/igor_sarcevic">Twitter</a> and <a href="https://rs.linkedin.com/in/igorsarcevic">LinkedIn</a>.<br>
+      Copyright ©2014-2023 Igor Šarčević. All rights reserved.</br>
+      <br>
+      Enjoy the rest of your day!
+    </p>
+  </div>
+<div>
+
+    </div>
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+           })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-57223799-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+
+    <script>
+      /**
+      * Function that tracks a click on an outbound link in Analytics.
+      * This function takes a valid URL string as an argument, and uses that URL string
+      * as the event label. Setting the transport method to 'beacon' lets the hit be sent
+      * using 'navigator.sendBeacon' in browser that support it.
+      */
+      var trackOutboundLink = function(url) {
+        ga('send', 'event', 'outbound', 'click', url, {
+          'transport': 'beacon',
+          'hitCallback': function(){document.location = url;}
+        });
+      }
+    </script>
+
+  </body>
+</html>

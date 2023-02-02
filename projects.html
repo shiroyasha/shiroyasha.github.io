@@ -1,0 +1,133 @@
+<!doctype html>
+<html itemscope itemtype="http://schema.org/Article">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
+    <link rel="alternate" type="application/atom+xml" title="Morning Coffee" href="/feed.xml" />
+
+    <link rel="shortcut icon" href="favicon.svg">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+      <title>Morning Coffee &mdash; by Igor Šarčević</title>
+
+    <!-- Place this data between the <head> tags of your website -->
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Raleway:900&display=swap" rel="stylesheet">
+    <link href="/stylesheets/style.css" rel="stylesheet" />
+  </head>
+  <body>
+
+    <div id="main" role="main">
+      <nav class="navigation" style="padding: 10px;">
+  <div style="display: flex;justify-items: space-between;justify-content: space-between;">
+    <a style="font-size: 20px" href="/" style="color: crimson;">Home</a>
+    <a style="font-size: 20px" href="/about-me.html" style="color: crimson;">About</a>
+  </div>
+</nav>
+
+
+      <nav class="navigation" style="padding: 10px;">
+  <div style="display: flex;justify-items: space-between;justify-content: space-between;">
+    <a style="font-size: 20px" href="/" style="color: crimson;">Home</a>
+    <a style="font-size: 20px" href="/about-me.html" style="color: crimson;">About</a>
+  </div>
+</nav>
+
+
+<ul class="project-showcase cf">
+  <li>
+    <div class="project-screenshot">
+      <img src="/images/projects/goku.png">
+    </div>
+
+    <a href="http://github.com/shiroyasha/goku">Goku</a>
+  </li>
+
+  <li>
+    <div class="project-screenshot">
+      <img src="/images/projects/elm-2048.png">
+    </div>
+
+    <a href="http://shiroyasha.io/elm-2048">Elm 2048</a>
+  </li>
+
+  <li>
+    <div class="project-screenshot">
+      <img src="/images/projects/tetris.png">
+    </div>
+
+    <a href="http://shiroyasha.io/tetris">ES6 Tetris</a>
+  </li>
+
+  <li>
+    <div class="project-screenshot">
+      <img src="/images/projects/hrc.png">
+    </div>
+
+    <a href="http://hrc.herokuapp.com">HRC</a>
+  </li>
+
+  <li>
+    <div class="project-screenshot">
+      <img src="/images/projects/xogame.png">
+    </div>
+
+    <a href="http://xogame.herokuapp.com">Tic-Tac-Toe</a>
+  </li>
+
+  <li>
+    <div class="project-screenshot">
+      <img src="/images/projects/game-of-life.png">
+    </div>
+
+    <a href="http://shiroyasha.io/randomGameOfLife/">Game Of Life</a>
+  </li>
+</ul>
+
+<hr>
+
+
+      <div class="footer">
+  <div class="content">
+    <p>
+      <strong>❈</strong><br>
+      <br>
+
+      Follow me on <a href="https://twitter.com/igor_sarcevic">Twitter</a> and <a href="https://rs.linkedin.com/in/igorsarcevic">LinkedIn</a>.<br>
+      Copyright ©2014-2023 Igor Šarčević. All rights reserved.</br>
+      <br>
+      Enjoy the rest of your day!
+    </p>
+  </div>
+<div>
+
+    </div>
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+           })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-57223799-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+
+    <script>
+      /**
+      * Function that tracks a click on an outbound link in Analytics.
+      * This function takes a valid URL string as an argument, and uses that URL string
+      * as the event label. Setting the transport method to 'beacon' lets the hit be sent
+      * using 'navigator.sendBeacon' in browser that support it.
+      */
+      var trackOutboundLink = function(url) {
+        ga('send', 'event', 'outbound', 'click', url, {
+          'transport': 'beacon',
+          'hitCallback': function(){document.location = url;}
+        });
+      }
+    </script>
+
+  </body>
+</html>

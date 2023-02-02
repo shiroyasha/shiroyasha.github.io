@@ -1,0 +1,225 @@
+<!doctype html>
+<html itemscope itemtype="http://schema.org/Article">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
+    <link rel="alternate" type="application/atom+xml" title="Morning Coffee" href="/feed.xml" />
+
+    <link rel="shortcut icon" href="favicon.svg">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+      <title>Intimate connections: Sharing a database &mdash; by Igor Šarčević</title>
+
+    <!-- Place this data between the <head> tags of your website -->
+      <meta name="description" content="Your monolith was slowing you down, and you have decided that it is time to
+invest in a multiple service based approach. There were lot of new things to
+learn, but finally, you are free to experiment with new technologies. Your
+services can be developed & deployed independently. Life is good.
+
+" />
+
+      <!-- Schema.org markup for Google+ -->
+      <meta itemprop="name" content="Intimate connections: Sharing a database">
+      <meta itemprop="description" content="Your monolith was slowing you down, and you have decided that it is time to
+invest in a multiple service based approach. There were lot of new things to
+learn, but finally, you are free to experiment with new technologies. Your
+services can be developed & deployed independently. Life is good.
+
+">
+      <meta itemprop="image" content="http://morningcoffee.io/images/shared-databases.png">
+
+      <!-- Twitter Card data -->
+      <meta name="twitter:card" content="summary_large_image">
+      <meta name="twitter:site" content="@igor_sarcevic">
+      <meta name="twitter:title" content="Intimate connections: Sharing a database">
+      <meta name="twitter:description" content="Your monolith was slowing you down, and you have decided that it is time to
+invest in a multiple service based approach. There were lot of new things to
+learn, but finally, you are free to experiment with new technologies. Your
+services can be developed & deployed independently. Life is good.
+
+">
+      <meta name="twitter:creator" content="@igor_sarcevic">
+      <!-- Twitter summary card with large image must be at least 280x150px -->
+      <meta name="twitter:image:src" content="http://morningcoffee.io/images/shared-databases.png">
+
+      <!-- Open Graph data -->
+      <meta property="og:title" content="Intimate connections: Sharing a database" />
+      <meta property="og:type" content="article" />
+      <meta property="og:url" content="http://" />
+      <meta property="og:image" content="http://morningcoffee.io/images/shared-databases.png" />
+      <meta property="og:description" content="Your monolith was slowing you down, and you have decided that it is time to
+invest in a multiple service based approach. There were lot of new things to
+learn, but finally, you are free to experiment with new technologies. Your
+services can be developed & deployed independently. Life is good.
+
+" />
+      <meta property="article:published_time" content="2017-07-19 00:00:00 UTC" />
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Raleway:900&display=swap" rel="stylesheet">
+    <link href="/stylesheets/style.css" rel="stylesheet" />
+  </head>
+  <body>
+
+    <div id="main" role="main">
+      <nav class="navigation" style="padding: 10px;">
+  <div style="display: flex;justify-items: space-between;justify-content: space-between;">
+    <a style="font-size: 20px" href="/" style="color: crimson;">Home</a>
+    <a style="font-size: 20px" href="/about-me.html" style="color: crimson;">About</a>
+  </div>
+</nav>
+
+
+        <article class="article">
+    <div class="header">
+      <h1>Intimate connections: Sharing a database</h1>
+
+      <div class="subtitle">
+        Published on <time>July 19, 2017</time>
+      </div>
+    </div>
+
+    <p>Your monolith was slowing you down, and you have decided that it is time to
+invest in a multiple service based approach. There were lot of new things to
+learn, but finally, you are free to experiment with new technologies. Your
+services can be developed &amp; deployed independently. Life is good.</p>
+
+<p></p>
+
+<p>However, your monolith is still here. It still manages the majority of your
+data. You quickly notice that it is hard to extend your system without gaining
+access to your main database. Without solving this issue, you can&rsquo;t develop any
+meaningful new service in your system.</p>
+
+<p>There is a quick &amp; dirty solution. You can share your database with your
+microservices. Why not push it even farther, all of our services can share a
+database. What can go wrong?</p>
+
+<p><img src="/images/shared-databases.png" alt="Sharing a database between multiple services" /></p>
+
+<h3>Too much intimacy?</h3>
+
+<p>Loosely coupled components that communicate only through a public API have many
+benefits. Most importantly, they allow you to change the internals of one
+component without affecting the rest of the system.</p>
+
+<p>If you are not making changes in the public interface, you are free to build,
+improve, and deploy your service independently from the rest of the system. This
+alone is a huge benefit, as it reduces the pressure on your developers to
+constantly keep in mind all the intricate ways in which two components can be
+connected.</p>
+
+<p>For this reason, public interfaces should be as small as possible. If you are
+exposing every little implementation detail, every other service can rightfully
+use it and depend on it.</p>
+
+<p>Now consider two services that share a database. I would argue that the
+database schema is one huge public interfaces between the services. Now, if you
+want to change anything in your database, you need to double check with any
+other service that might be using a database column that you are about to remove.</p>
+
+<p>Repeat after me: Public interfaces should be as small as possible.</p>
+
+<h3>Can I deploy my service?</h3>
+
+<p>When multiple services share a single database, the question &ldquo;Is it safe to
+deploy this new code?&rdquo; must be answered by multiple teams.</p>
+
+<p>There are several scenario:</p>
+
+<ul>
+<li><p><strong>My new code won&rsquo;t change anything in the database:</strong> It is safe to deploy.</p></li>
+<li><p><strong>My new code has changed the DB schema:</strong> You must make changes in all services,
+and deploy them at once.</p></li>
+<li><p><strong>My new code is deleting old records from the database:</strong> We need to ask
+maintainers of all the services that share the DB. It is <em>maybe</em> safe to deploy
+your service.</p></li>
+</ul>
+
+<p>Why would you do this to yourself? It is already hard enough to keep the public
+API stable, why would you make deployment of new code even harder?</p>
+
+<h3>End-to-end tests will save me!</h3>
+
+<p>No, they won&rsquo;t.</p>
+
+<p>End-to-end tests of multiple services will answer the question
+&ldquo;Did you break something?&rdquo;, but they won&rsquo;t save you from the logistical
+nightmare when you do indeed need to change and break something. There is no
+other way, you need to rewrite code in multiple services.</p>
+
+<h3>Better alternatives from sharing a database</h3>
+
+<p>The first best step is to precisely define what is the data that you want to
+share between any two services. If you find that any two services need to share
+almost all the data between them, then I would argue that you should merge those
+two services into one.</p>
+
+<p>When you finish the first step, you will have a good overview of your system and
+the data that flows between them. Now, it is time to codify that information, and
+provide a minimal set of well defined interfaces for your services. Two things
+are important here. To precisely define the format of the messages, and to
+provide the actions that your services are offering.</p>
+
+<p>Separate the actions that can be executed asynchronously, and actions that
+require immediate results. If possible, always prefer async actions, as they
+will make your system more fault-tolerant.</p>
+
+<p>Finally, you need to choose your preferred communication channels. For async
+communication, message brokers like RabbitMQ are an excellent choice. For
+in-sync communication REST/gRPC/Thrift are good candidates, choose your poison.</p>
+
+<p>At first, this might seem like an impossibly huge task. However, good design
+practices are always worth the investment. Good APIs are and always were the
+backbones of every successful software endeavor.</p>
+
+<p>Move slowly and understand what you are doing.</p>
+
+
+
+  </article>
+
+
+      <div class="footer">
+  <div class="content">
+    <p>
+      <strong>❈</strong><br>
+      <br>
+
+      Follow me on <a href="https://twitter.com/igor_sarcevic">Twitter</a> and <a href="https://rs.linkedin.com/in/igorsarcevic">LinkedIn</a>.<br>
+      Copyright ©2014-2023 Igor Šarčević. All rights reserved.</br>
+      <br>
+      Enjoy the rest of your day!
+    </p>
+  </div>
+<div>
+
+    </div>
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+           })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-57223799-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+
+    <script>
+      /**
+      * Function that tracks a click on an outbound link in Analytics.
+      * This function takes a valid URL string as an argument, and uses that URL string
+      * as the event label. Setting the transport method to 'beacon' lets the hit be sent
+      * using 'navigator.sendBeacon' in browser that support it.
+      */
+      var trackOutboundLink = function(url) {
+        ga('send', 'event', 'outbound', 'click', url, {
+          'transport': 'beacon',
+          'hitCallback': function(){document.location = url;}
+        });
+      }
+    </script>
+
+  </body>
+</html>
