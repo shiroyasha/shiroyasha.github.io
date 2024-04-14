@@ -109,33 +109,33 @@ precisely about that &mdash; calculations in the shell.</p>
 in Unix, several ways to do it. The oldest method is to use
 <code>expr</code> to evaluate expressions. For example to add 2 and 4
 we can write the following:</p>
-<div class="highlight"><pre class="highlight shell"><code><span class="nv">$ </span>expr 2 + 4
+<div class="highlight"><pre class="highlight shell"><code><span class="nv">$ </span><span class="nb">expr </span>2 + 4
 6
 </code></pre></div>
 <p>This seems really easy, but there is a catch. If you try to
 multiply numbers using <code>*</code> Bash will throw you back an error:</p>
-<div class="highlight"><pre class="highlight shell"><code><span class="nv">$ </span>expr 2 <span class="k">*</span> 4
-expr: syntax error
+<div class="highlight"><pre class="highlight shell"><code><span class="nv">$ </span><span class="nb">expr </span>2 <span class="k">*</span> 4
+<span class="nb">expr</span>: syntax error
 </code></pre></div>
 <p>In this case Bash sees <code>*</code> as wildcard operator so you must
 use a backslash before the asterisk sign:</p>
-<div class="highlight"><pre class="highlight shell"><code><span class="nv">$ </span>expr 2 <span class="se">\*</span> 4
+<div class="highlight"><pre class="highlight shell"><code><span class="nv">$ </span><span class="nb">expr </span>2 <span class="se">\*</span> 4
 8
 </code></pre></div>
 <p>At this point you will probably try to surround the expression
 with quotes, but that will also fail:</p>
-<div class="highlight"><pre class="highlight shell"><code><span class="nv">$ </span>expr <span class="s2">"2 * 4"</span>
+<div class="highlight"><pre class="highlight shell"><code><span class="nv">$ </span><span class="nb">expr</span> <span class="s2">"2 * 4"</span>
 2 <span class="k">*</span> 4
 
-<span class="nv">$ </span>expr <span class="s1">'2 * 4'</span>
+<span class="nv">$ </span><span class="nb">expr</span> <span class="s1">'2 * 4'</span>
 2 <span class="k">*</span> 4
 </code></pre></div>
 <p>Apart from this little annoyance, <code>expr</code> is quite powerful. It can
 even do boolean arithmetic:</p>
-<div class="highlight"><pre class="highlight shell"><code><span class="nv">$ </span>expr 2 <span class="se">\&lt;</span> 4
+<div class="highlight"><pre class="highlight shell"><code><span class="nv">$ </span><span class="nb">expr </span>2 <span class="se">\&lt;</span> 4
 1
 
-<span class="nv">$ </span>expr 4 <span class="se">\&lt;</span> 2
+<span class="nv">$ </span><span class="nb">expr </span>4 <span class="se">\&lt;</span> 2
 0
 </code></pre></div>
 <h2>Arithmetic expansion</h2>
@@ -171,8 +171,8 @@ be familiar with other common things in Bash like loops and variables.</p>
 
 <p>Let&rsquo;s start by creating a shell script and giving it executable
 permissions:</p>
-<div class="highlight"><pre class="highlight shell"><code><span class="nv">$ </span>touch gcd.sh
-<span class="nv">$ </span>chmod +x gcd.sh
+<div class="highlight"><pre class="highlight shell"><code><span class="nv">$ </span><span class="nb">touch </span>gcd.sh
+<span class="nv">$ </span><span class="nb">chmod</span> +x gcd.sh
 </code></pre></div>
 <p>My goal is to invoke my script with two command line arguments and
 expect it to print out the greatest common divisor like this:</p>

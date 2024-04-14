@@ -111,18 +111,18 @@ rules in this context.</p>
 
 <p>We encoded this information in the following SQL tables:</p>
 <div class="highlight"><pre class="highlight sql"><code><span class="k">table</span> <span class="n">repository</span> <span class="p">(</span>
-  <span class="n">id</span>   <span class="n">integer</span>
+  <span class="n">id</span>   <span class="nb">integer</span>
   <span class="n">name</span> <span class="n">string</span>
 <span class="p">)</span>
 
 <span class="k">table</span> <span class="n">rules</span> <span class="p">(</span>
-  <span class="n">id</span>      <span class="n">integer</span>
-  <span class="n">repo_id</span> <span class="n">integer</span>
+  <span class="n">id</span>      <span class="nb">integer</span>
+  <span class="n">repo_id</span> <span class="nb">integer</span>
   <span class="n">name</span>    <span class="n">string</span>
 <span class="p">)</span>
 
 <span class="k">table</span> <span class="n">patterns</span> <span class="p">(</span>
-  <span class="n">rule_id</span> <span class="n">integer</span>
+  <span class="n">rule_id</span> <span class="nb">integer</span>
   <span class="n">term</span>    <span class="n">string</span>
 <span class="p">)</span>
 </code></pre></div>
@@ -182,7 +182,7 @@ SQL <code>explain</code> and <code>explain analyse</code> helped us to prove our
         <span class="k">Index</span> <span class="n">Cond</span><span class="p">:</span> <span class="p">(</span><span class="n">repo_id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
   <span class="o">-&gt;</span>  <span class="n">Materialize</span>  <span class="p">(</span><span class="n">cost</span><span class="o">=</span><span class="mi">0</span><span class="p">.</span><span class="mi">00</span><span class="p">..</span><span class="mi">10</span><span class="p">.</span><span class="mi">88</span> <span class="k">rows</span><span class="o">=</span><span class="mi">1</span> <span class="n">width</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
         <span class="o">-&gt;</span>  <span class="n">Seq</span> <span class="n">Scan</span> <span class="k">on</span> <span class="n">patterns</span>  <span class="p">(</span><span class="n">cost</span><span class="o">=</span><span class="mi">0</span><span class="p">.</span><span class="mi">00</span><span class="p">..</span><span class="mi">10</span><span class="p">.</span><span class="mi">88</span> <span class="k">rows</span><span class="o">=</span><span class="mi">1</span> <span class="n">width</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
-              <span class="n">Filter</span><span class="p">:</span> <span class="p">(</span><span class="s1">'master'</span><span class="p">::</span><span class="n">text</span> <span class="o">~</span> <span class="p">(</span><span class="n">term</span><span class="p">)::</span><span class="n">text</span><span class="p">)</span>
+              <span class="n">Filter</span><span class="p">:</span> <span class="p">(</span><span class="s1">'master'</span><span class="p">::</span><span class="nb">text</span> <span class="o">~</span> <span class="p">(</span><span class="n">term</span><span class="p">)::</span><span class="nb">text</span><span class="p">)</span>
 </code></pre></div>
 <p>Turns out the actual order of operations is:</p>
 

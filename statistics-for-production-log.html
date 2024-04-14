@@ -104,14 +104,14 @@ cat
 fish
 </code></pre></div>
 <p>If you call <code>sort</code> on this file the output will be the following:</p>
-<div class="highlight"><pre class="highlight shell"><code><span class="nv">$ </span>sort animals.txt
+<div class="highlight"><pre class="highlight shell"><code><span class="nv">$ </span><span class="nb">sort </span>animals.txt
 <span class="nb">cat
 </span>dog
 fish
 </code></pre></div>
 <p>As you can see in the above output, the <code>sort</code> command orders the
 lines alphabetically. To show the reverse order:</p>
-<div class="highlight"><pre class="highlight shell"><code><span class="nv">$ </span>sort <span class="nt">-r</span> animals.txt
+<div class="highlight"><pre class="highlight shell"><code><span class="nv">$ </span><span class="nb">sort</span> <span class="nt">-r</span> animals.txt
 fish
 dog
 <span class="nb">cat</span>
@@ -123,14 +123,14 @@ dog
 10 dog
 </code></pre></div>
 <p>You can sort it with the following command:</p>
-<div class="highlight"><pre class="highlight shell"><code><span class="nv">$ </span>sort <span class="nt">-n</span> numbered-animals.txt
+<div class="highlight"><pre class="highlight shell"><code><span class="nv">$ </span><span class="nb">sort</span> <span class="nt">-n</span> numbered-animals.txt
 1 fish
 10 dog
 117 <span class="nb">cat</span>
 </code></pre></div>
 <p>Please note that if you leave out <code>-n</code> your output will be the same
 in some cases, but not always. For example:</p>
-<div class="highlight"><pre class="highlight shell"><code><span class="nv">$ </span>sort <span class="nt">-n</span> numbered-animals.txt
+<div class="highlight"><pre class="highlight shell"><code><span class="nv">$ </span><span class="nb">sort</span> <span class="nt">-n</span> numbered-animals.txt
 10 dog
 117 <span class="nb">cat
 </span>1 fish
@@ -144,7 +144,7 @@ Let&rsquo;s look at the following <code>example.txt</code> file:</p>
 </code></pre></div>
 <p>To sort using the <code>b=</code> part we can invoke <code>sort</code> with the <code>-k 2</code> option
 to select the second word in the lines:</p>
-<div class="highlight"><pre class="highlight shell"><code><span class="nv">$ </span>sort <span class="nt">-k</span> 2 example.txt
+<div class="highlight"><pre class="highlight shell"><code><span class="nv">$ </span><span class="nb">sort</span> <span class="nt">-k</span> 2 example.txt
 <span class="nv">a</span><span class="o">=</span>abd <span class="nv">b</span><span class="o">=</span>462
 <span class="nv">a</span><span class="o">=</span>abf <span class="nv">b</span><span class="o">=</span>517
 <span class="nv">a</span><span class="o">=</span>abc <span class="nv">b</span><span class="o">=</span>999
@@ -153,7 +153,7 @@ to select the second word in the lines:</p>
 character from which we want to start sorting. For example to cut
 of the first <code>3</code> characters in the <code>b=462</code> and get <code>62</code> we would
 write <code>-k 2.4</code> option, and thus sort only using the last two digits:</p>
-<div class="highlight"><pre class="highlight shell"><code><span class="nv">$ </span>sort <span class="nt">-k</span> 2.4 example.txt
+<div class="highlight"><pre class="highlight shell"><code><span class="nv">$ </span><span class="nb">sort</span> <span class="nt">-k</span> 2.4 example.txt
 <span class="nv">a</span><span class="o">=</span>abf <span class="nv">b</span><span class="o">=</span>517
 <span class="nv">a</span><span class="o">=</span>abd <span class="nv">b</span><span class="o">=</span>462
 <span class="nv">a</span><span class="o">=</span>abc <span class="nv">b</span><span class="o">=</span>999
@@ -162,9 +162,9 @@ write <code>-k 2.4</code> option, and thus sort only using the last two digits:<
 
 <p>Now let&rsquo;s use the above knowledge to sort the routes from fastest to
 slowest. Let&rsquo;s use the following example:</p>
-<div class="highlight"><pre class="highlight shell"><code><span class="nv">method</span><span class="o">=</span>GET <span class="nv">path</span><span class="o">=</span>/user <span class="nv">format</span><span class="o">=</span><span class="k">*</span>/<span class="k">*</span> <span class="nv">controller</span><span class="o">=</span>users <span class="nv">action</span><span class="o">=</span>create <span class="nv">status</span><span class="o">=</span>200 <span class="nv">duration</span><span class="o">=</span>4.2 <span class="nv">view</span><span class="o">=</span>0.00 <span class="nv">db</span><span class="o">=</span>3.91 <span class="nb">time</span><span class="o">=</span>2016-02-16 16:50:37 +0000
-<span class="nv">method</span><span class="o">=</span>POST <span class="nv">path</span><span class="o">=</span>/user <span class="nv">format</span><span class="o">=</span><span class="k">*</span>/<span class="k">*</span> <span class="nv">controller</span><span class="o">=</span>users <span class="nv">action</span><span class="o">=</span>create <span class="nv">status</span><span class="o">=</span>200 <span class="nv">duration</span><span class="o">=</span>2.4 <span class="nv">view</span><span class="o">=</span>0.00 <span class="nv">db</span><span class="o">=</span>3.91 <span class="nb">time</span><span class="o">=</span>2016-02-16 16:48:37 +0000
-<span class="nv">method</span><span class="o">=</span>POST <span class="nv">path</span><span class="o">=</span>/user <span class="nv">format</span><span class="o">=</span><span class="k">*</span>/<span class="k">*</span> <span class="nv">controller</span><span class="o">=</span>users <span class="nv">action</span><span class="o">=</span>create <span class="nv">status</span><span class="o">=</span>200 <span class="nv">duration</span><span class="o">=</span>56.4 <span class="nv">view</span><span class="o">=</span>0.00 <span class="nv">db</span><span class="o">=</span>3.91 <span class="nb">time</span><span class="o">=</span>2016-02-16 16:52:12 +0000
+<div class="highlight"><pre class="highlight shell"><code><span class="nv">method</span><span class="o">=</span>GET <span class="nv">path</span><span class="o">=</span>/user <span class="nv">format</span><span class="o">=</span><span class="k">*</span>/<span class="k">*</span> <span class="nv">controller</span><span class="o">=</span><span class="nb">users </span><span class="nv">action</span><span class="o">=</span>create <span class="nv">status</span><span class="o">=</span>200 <span class="nv">duration</span><span class="o">=</span>4.2 <span class="nv">view</span><span class="o">=</span>0.00 <span class="nv">db</span><span class="o">=</span>3.91 <span class="nb">time</span><span class="o">=</span>2016-02-16 16:50:37 +0000
+<span class="nv">method</span><span class="o">=</span>POST <span class="nv">path</span><span class="o">=</span>/user <span class="nv">format</span><span class="o">=</span><span class="k">*</span>/<span class="k">*</span> <span class="nv">controller</span><span class="o">=</span><span class="nb">users </span><span class="nv">action</span><span class="o">=</span>create <span class="nv">status</span><span class="o">=</span>200 <span class="nv">duration</span><span class="o">=</span>2.4 <span class="nv">view</span><span class="o">=</span>0.00 <span class="nv">db</span><span class="o">=</span>3.91 <span class="nb">time</span><span class="o">=</span>2016-02-16 16:48:37 +0000
+<span class="nv">method</span><span class="o">=</span>POST <span class="nv">path</span><span class="o">=</span>/user <span class="nv">format</span><span class="o">=</span><span class="k">*</span>/<span class="k">*</span> <span class="nv">controller</span><span class="o">=</span><span class="nb">users </span><span class="nv">action</span><span class="o">=</span>create <span class="nv">status</span><span class="o">=</span>200 <span class="nv">duration</span><span class="o">=</span>56.4 <span class="nv">view</span><span class="o">=</span>0.00 <span class="nv">db</span><span class="o">=</span>3.91 <span class="nb">time</span><span class="o">=</span>2016-02-16 16:52:12 +0000
 </code></pre></div>
 <p>The only thing now we have to do is to count the location of
 the things we want to sort. In this example we are interested
@@ -175,10 +175,10 @@ option in our sort command.</p>
 
 <p>The other option we want to use is the <code>-n</code> option to sort the lines
 numerically.</p>
-<div class="highlight"><pre class="highlight shell"><code><span class="nv">$ </span><span class="nb">cat </span>production.log | sort <span class="nt">-n</span> <span class="nt">-k</span> 7.10
-<span class="nv">method</span><span class="o">=</span>POST <span class="nv">path</span><span class="o">=</span>/user <span class="nv">format</span><span class="o">=</span><span class="k">*</span>/<span class="k">*</span> <span class="nv">controller</span><span class="o">=</span>users <span class="nv">action</span><span class="o">=</span>create <span class="nv">status</span><span class="o">=</span>200 <span class="nv">duration</span><span class="o">=</span>2.4 <span class="nv">view</span><span class="o">=</span>0.00 <span class="nv">db</span><span class="o">=</span>3.91 <span class="nb">time</span><span class="o">=</span>2016-02-16 16:48:37 +0000
-<span class="nv">method</span><span class="o">=</span>GET <span class="nv">path</span><span class="o">=</span>/user <span class="nv">format</span><span class="o">=</span><span class="k">*</span>/<span class="k">*</span> <span class="nv">controller</span><span class="o">=</span>users <span class="nv">action</span><span class="o">=</span>create <span class="nv">status</span><span class="o">=</span>200 <span class="nv">duration</span><span class="o">=</span>4.2 <span class="nv">view</span><span class="o">=</span>0.00 <span class="nv">db</span><span class="o">=</span>3.91 <span class="nb">time</span><span class="o">=</span>2016-02-16 16:50:37 +0000
-<span class="nv">method</span><span class="o">=</span>POST <span class="nv">path</span><span class="o">=</span>/user <span class="nv">format</span><span class="o">=</span><span class="k">*</span>/<span class="k">*</span> <span class="nv">controller</span><span class="o">=</span>users <span class="nv">action</span><span class="o">=</span>create <span class="nv">status</span><span class="o">=</span>200 <span class="nv">duration</span><span class="o">=</span>56.4 <span class="nv">view</span><span class="o">=</span>0.00 <span class="nv">db</span><span class="o">=</span>3.91 <span class="nb">time</span><span class="o">=</span>2016-02-16 16:52:12 +0000
+<div class="highlight"><pre class="highlight shell"><code><span class="nv">$ </span><span class="nb">cat </span>production.log | <span class="nb">sort</span> <span class="nt">-n</span> <span class="nt">-k</span> 7.10
+<span class="nv">method</span><span class="o">=</span>POST <span class="nv">path</span><span class="o">=</span>/user <span class="nv">format</span><span class="o">=</span><span class="k">*</span>/<span class="k">*</span> <span class="nv">controller</span><span class="o">=</span><span class="nb">users </span><span class="nv">action</span><span class="o">=</span>create <span class="nv">status</span><span class="o">=</span>200 <span class="nv">duration</span><span class="o">=</span>2.4 <span class="nv">view</span><span class="o">=</span>0.00 <span class="nv">db</span><span class="o">=</span>3.91 <span class="nb">time</span><span class="o">=</span>2016-02-16 16:48:37 +0000
+<span class="nv">method</span><span class="o">=</span>GET <span class="nv">path</span><span class="o">=</span>/user <span class="nv">format</span><span class="o">=</span><span class="k">*</span>/<span class="k">*</span> <span class="nv">controller</span><span class="o">=</span><span class="nb">users </span><span class="nv">action</span><span class="o">=</span>create <span class="nv">status</span><span class="o">=</span>200 <span class="nv">duration</span><span class="o">=</span>4.2 <span class="nv">view</span><span class="o">=</span>0.00 <span class="nv">db</span><span class="o">=</span>3.91 <span class="nb">time</span><span class="o">=</span>2016-02-16 16:50:37 +0000
+<span class="nv">method</span><span class="o">=</span>POST <span class="nv">path</span><span class="o">=</span>/user <span class="nv">format</span><span class="o">=</span><span class="k">*</span>/<span class="k">*</span> <span class="nv">controller</span><span class="o">=</span><span class="nb">users </span><span class="nv">action</span><span class="o">=</span>create <span class="nv">status</span><span class="o">=</span>200 <span class="nv">duration</span><span class="o">=</span>56.4 <span class="nv">view</span><span class="o">=</span>0.00 <span class="nv">db</span><span class="o">=</span>3.91 <span class="nb">time</span><span class="o">=</span>2016-02-16 16:52:12 +0000
 </code></pre></div>
 <h2>Final words</h2>
 

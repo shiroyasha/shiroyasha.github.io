@@ -78,7 +78,7 @@
 <p>What I mean by this title, is that from the standpoint of the interpreter or a compiler a program written in a programming language is just a string. It needs to read in from a file, broken down to little pieces, and then reassembled into meaningful actions.</p>
 
 <p>Let&rsquo;s say I have a file named <code>example.br</code> that contains the following source code written in my new programming language.</p>
-<div class="highlight"><pre class="highlight plaintext"><code>(+ 1 2 (* 2 3 ))
+<div class="highlight"><pre class="highlight common_lisp"><code><span class="p">(</span><span class="nb">+</span> <span class="mi">1</span> <span class="mi">2</span> <span class="p">(</span><span class="nb">*</span> <span class="mi">2</span> <span class="mi">3</span> <span class="p">))</span>
 </code></pre></div>
 <p>Which, if you are familiar with Lisp, should evaluate to <code>9</code>. The first thing our interpreter needs to do with the above <em>string</em> is to break it into small logical elements. This process is usually called parsing which result should resemble something like the following.</p>
 <div class="highlight"><pre class="highlight ruby"><code><span class="p">[</span> <span class="s2">"("</span><span class="p">,</span> <span class="s2">"+"</span><span class="p">,</span> <span class="s2">"1"</span><span class="p">,</span>  <span class="s2">"2"</span><span class="p">,</span>  <span class="s2">"("</span><span class="p">,</span> <span class="s2">"*"</span><span class="p">,</span>  <span class="s2">"2"</span><span class="p">,</span>  <span class="s2">"3"</span><span class="p">,</span> <span class="s2">")"</span><span class="p">,</span> <span class="s2">")"</span> <span class="p">]</span>

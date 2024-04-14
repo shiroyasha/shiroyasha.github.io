@@ -90,7 +90,7 @@
 <span class="k">end</span>
 </code></pre></div>
 <p>We can install the dependencies with <code>bundle install</code>. I like to put my dependencies in the <code>vendor/bundle</code> directory. With that the command becomes the following</p>
-<div class="highlight"><pre class="highlight shell"><code>bundle install <span class="nt">--path</span> vendor/bundle
+<div class="highlight"><pre class="highlight shell"><code>bundle <span class="nb">install</span> <span class="nt">--path</span> vendor/bundle
 </code></pre></div>
 <p>Then we can initialize RSpec in for project. The following command should create an <code>.rspec</code> and a <code>spec/spec_helper.rb</code> file.</p>
 <div class="highlight"><pre class="highlight shell"><code>bundle <span class="nb">exec </span>rspec <span class="nt">--init</span>
@@ -168,8 +168,8 @@ mkdir config
 <p>As a good TDD abiding citizen we should write some test for our Todo application before actually implementing the code.</p>
 
 <p>Create an <code>app/todo_api.rb</code> and <code>spec/app/todo_api_spec.rb</code> file</p>
-<div class="highlight"><pre class="highlight shell"><code>touch app/todo_api.rb
-touch spec/app/todo_api_spec.rb
+<div class="highlight"><pre class="highlight shell"><code><span class="nb">touch </span>app/todo_api.rb
+<span class="nb">touch </span>spec/app/todo_api_spec.rb
 </code></pre></div>
 <p>and describe the application in your test file</p>
 <div class="highlight"><pre class="highlight ruby"><code><span class="nb">require</span> <span class="s2">"spec_helper"</span>

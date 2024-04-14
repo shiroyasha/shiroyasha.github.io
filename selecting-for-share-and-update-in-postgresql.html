@@ -175,7 +175,7 @@ case:</p>
 <span class="n">process</span> <span class="n">A</span><span class="p">:</span>   <span class="k">WHERE</span> <span class="n">processed</span> <span class="o">=</span> <span class="k">false</span> <span class="k">FOR</span> <span class="k">UPDATE</span> <span class="n">SKIP</span> <span class="n">LOCKED</span><span class="p">;</span>
 
 <span class="n">process</span> <span class="n">B</span><span class="p">:</span> <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">purchases</span>
-<span class="n">process</span> <span class="n">B</span><span class="p">:</span>   <span class="k">WHERE</span> <span class="n">created_at</span> <span class="o">&lt;</span> <span class="n">now</span><span class="p">()::</span><span class="n">date</span> <span class="o">-</span> <span class="n">interval</span> <span class="s1">'1w'</span><span class="p">;</span>
+<span class="n">process</span> <span class="n">B</span><span class="p">:</span>   <span class="k">WHERE</span> <span class="n">created_at</span> <span class="o">&lt;</span> <span class="n">now</span><span class="p">()::</span><span class="nb">date</span> <span class="o">-</span> <span class="n">interval</span> <span class="s1">'1w'</span><span class="p">;</span>
 <span class="n">process</span> <span class="n">B</span><span class="p">:</span>   <span class="k">FOR</span> <span class="k">UPDATE</span> <span class="n">SKIP</span> <span class="n">LOCKED</span><span class="p">;</span>
 
 <span class="c1">-- process A selects and locks all unprocess rows</span>
@@ -199,9 +199,9 @@ that users have many purchases.</p>
               <span class="k">Table</span> <span class="nv">"public.purchases"</span>
  <span class="k">Column</span>  <span class="o">|</span>  <span class="k">Type</span>   <span class="o">|</span> <span class="k">Collation</span> <span class="o">|</span> <span class="k">Nullable</span> <span class="o">|</span> <span class="k">Default</span>
 <span class="c1">---------+---------+-----------+----------+---------</span>
- <span class="n">id</span>      <span class="o">|</span> <span class="n">integer</span> <span class="o">|</span>           <span class="o">|</span>          <span class="o">|</span>
+ <span class="n">id</span>      <span class="o">|</span> <span class="nb">integer</span> <span class="o">|</span>           <span class="o">|</span>          <span class="o">|</span>
  <span class="n">payload</span> <span class="o">|</span> <span class="n">jsonb</span>   <span class="o">|</span>           <span class="o">|</span>          <span class="o">|</span>
- <span class="n">user_id</span> <span class="o">|</span> <span class="n">integer</span> <span class="o">|</span>           <span class="o">|</span>          <span class="o">|</span>
+ <span class="n">user_id</span> <span class="o">|</span> <span class="nb">integer</span> <span class="o">|</span>           <span class="o">|</span>          <span class="o">|</span>
 
 <span class="k">Foreign</span><span class="o">-</span><span class="k">key</span> <span class="k">constraints</span><span class="p">:</span>
     <span class="nv">"purchases_user_id_fkey"</span> <span class="k">FOREIGN</span> <span class="k">KEY</span> <span class="p">(</span><span class="n">user_id</span><span class="p">)</span> <span class="k">REFERENCES</span>

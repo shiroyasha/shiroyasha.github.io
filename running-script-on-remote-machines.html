@@ -113,9 +113,9 @@ untar archive
 <span class="nb">ls </span>directory | <span class="k">while </span><span class="nb">read </span>directory<span class="p">;</span> <span class="k">do
   </span><span class="nb">echo</span> <span class="nv">$directory</span><span class="p">;</span>
 
-  <span class="nv">original_list</span><span class="o">=</span><span class="k">$(</span><span class="nb">ls</span> <span class="nt">-lah</span> <span class="nv">$directory</span> | <span class="nb">grep</span> <span class="s2">"*.*</span><span class="se">\1</span><span class="s2">"</span> | sed <span class="s2">"s/</span><span class="se">\.</span><span class="s2">spec//g"</span> | tail<span class="k">)</span>
+  <span class="nv">original_list</span><span class="o">=</span><span class="si">$(</span><span class="nb">ls</span> <span class="nt">-lah</span> <span class="nv">$directory</span> | <span class="nb">grep</span> <span class="s2">"*.*</span><span class="se">\1</span><span class="s2">"</span> | <span class="nb">sed</span> <span class="s2">"s/</span><span class="se">\.</span><span class="s2">spec//g"</span> | <span class="nb">tail</span><span class="si">)</span>
 
-  <span class="nv">new_list</span><span class="o">=</span><span class="k">$(</span><span class="nb">ls</span> <span class="nt">-lah</span> other_directory | <span class="nb">grep</span> <span class="s2">"*.*</span><span class="se">\1</span><span class="s2">"</span> | sed <span class="s2">"s/</span><span class="se">\.</span><span class="s2">spec//g"</span> | tail<span class="k">)</span>
+  <span class="nv">new_list</span><span class="o">=</span><span class="si">$(</span><span class="nb">ls</span> <span class="nt">-lah</span> other_directory | <span class="nb">grep</span> <span class="s2">"*.*</span><span class="se">\1</span><span class="s2">"</span> | <span class="nb">sed</span> <span class="s2">"s/</span><span class="se">\.</span><span class="s2">spec//g"</span> | <span class="nb">tail</span><span class="si">)</span>
 
   <span class="k">if </span>diff &lt;<span class="o">(</span><span class="nb">echo </span>original_list<span class="o">)</span> &lt;<span class="o">(</span><span class="nb">echo </span>new_list<span class="o">)</span><span class="p">;</span> <span class="k">then
     </span><span class="nb">echo</span> <span class="s2">"No errors"</span>

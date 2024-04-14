@@ -102,7 +102,7 @@ easily count the number of <code>POST</code> requests my server has received for
 this day, by executing the following filter:</p>
 <div class="highlight"><pre class="highlight shell"><code><span class="nb">cat </span>log/production.log | <span class="nb">grep</span> <span class="s1">'method=POST'</span>
                        | <span class="nb">grep</span> <span class="s1">'time=2015-02-16'</span>
-                       | wc <span class="nt">-l</span>
+                       | <span class="nb">wc</span> <span class="nt">-l</span>
 </code></pre></div>
 <p>The above command should be pretty familiar by now except the last
 command in the pipe. To count lines, we can use the word count
@@ -113,7 +113,7 @@ lines.</p>
 the <code>nl</code> command:</p>
 <div class="highlight"><pre class="highlight shell"><code><span class="nb">cat </span>log/production.log | <span class="nb">grep</span> <span class="s1">'method=POST'</span>
                        | <span class="nb">grep</span> <span class="s1">'time=2015-02-16'</span>
-                       | nl
+                       | <span class="nb">nl</span>
 </code></pre></div>
 <p>This command doesn&rsquo;t look so useful as the above, but it can come handy
 for orientation when you share the output with a friend or when you
@@ -125,9 +125,9 @@ combine it with some other interesting commands.</p>
 that while we do remove the unnecessary lines, we do not remove
 the unnecessary noise from within the lines. For example let&rsquo;s say
 that a query for today&rsquo;s requests returned the following output:</p>
-<div class="highlight"><pre class="highlight shell"><code><span class="nv">method</span><span class="o">=</span>POST <span class="nv">path</span><span class="o">=</span>/user <span class="nv">format</span><span class="o">=</span><span class="k">*</span>/<span class="k">*</span> <span class="nv">controller</span><span class="o">=</span>users <span class="nv">action</span><span class="o">=</span>create <span class="nv">status</span><span class="o">=</span>200 <span class="nv">duration</span><span class="o">=</span>19.4 <span class="nv">view</span><span class="o">=</span>0.00 <span class="nv">db</span><span class="o">=</span>3.91 <span class="nb">time</span><span class="o">=</span>2016-02-16 16:48:37 +0000
-<span class="nv">method</span><span class="o">=</span>GET <span class="nv">path</span><span class="o">=</span>/user <span class="nv">format</span><span class="o">=</span><span class="k">*</span>/<span class="k">*</span> <span class="nv">controller</span><span class="o">=</span>users <span class="nv">action</span><span class="o">=</span>create <span class="nv">status</span><span class="o">=</span>200 <span class="nv">duration</span><span class="o">=</span>19.4 <span class="nv">view</span><span class="o">=</span>0.00 <span class="nv">db</span><span class="o">=</span>3.91 <span class="nb">time</span><span class="o">=</span>2016-02-16 16:50:37 +0000
-<span class="nv">method</span><span class="o">=</span>POST <span class="nv">path</span><span class="o">=</span>/user <span class="nv">format</span><span class="o">=</span><span class="k">*</span>/<span class="k">*</span> <span class="nv">controller</span><span class="o">=</span>users <span class="nv">action</span><span class="o">=</span>create <span class="nv">status</span><span class="o">=</span>200 <span class="nv">duration</span><span class="o">=</span>19.4 <span class="nv">view</span><span class="o">=</span>0.00 <span class="nv">db</span><span class="o">=</span>3.91 <span class="nb">time</span><span class="o">=</span>2016-02-16 16:52:12 +0000
+<div class="highlight"><pre class="highlight shell"><code><span class="nv">method</span><span class="o">=</span>POST <span class="nv">path</span><span class="o">=</span>/user <span class="nv">format</span><span class="o">=</span><span class="k">*</span>/<span class="k">*</span> <span class="nv">controller</span><span class="o">=</span><span class="nb">users </span><span class="nv">action</span><span class="o">=</span>create <span class="nv">status</span><span class="o">=</span>200 <span class="nv">duration</span><span class="o">=</span>19.4 <span class="nv">view</span><span class="o">=</span>0.00 <span class="nv">db</span><span class="o">=</span>3.91 <span class="nb">time</span><span class="o">=</span>2016-02-16 16:48:37 +0000
+<span class="nv">method</span><span class="o">=</span>GET <span class="nv">path</span><span class="o">=</span>/user <span class="nv">format</span><span class="o">=</span><span class="k">*</span>/<span class="k">*</span> <span class="nv">controller</span><span class="o">=</span><span class="nb">users </span><span class="nv">action</span><span class="o">=</span>create <span class="nv">status</span><span class="o">=</span>200 <span class="nv">duration</span><span class="o">=</span>19.4 <span class="nv">view</span><span class="o">=</span>0.00 <span class="nv">db</span><span class="o">=</span>3.91 <span class="nb">time</span><span class="o">=</span>2016-02-16 16:50:37 +0000
+<span class="nv">method</span><span class="o">=</span>POST <span class="nv">path</span><span class="o">=</span>/user <span class="nv">format</span><span class="o">=</span><span class="k">*</span>/<span class="k">*</span> <span class="nv">controller</span><span class="o">=</span><span class="nb">users </span><span class="nv">action</span><span class="o">=</span>create <span class="nv">status</span><span class="o">=</span>200 <span class="nv">duration</span><span class="o">=</span>19.4 <span class="nv">view</span><span class="o">=</span>0.00 <span class="nv">db</span><span class="o">=</span>3.91 <span class="nb">time</span><span class="o">=</span>2016-02-16 16:52:12 +0000
 </code></pre></div>
 <p>Ugh, that is a little overwhelming, especially if I only want to
 know the path and the method for example. Luckily, we can use
@@ -140,7 +140,7 @@ use the following line, and show only the first and the last entry.</p>
 <p>By default, <code>awk</code> separates the fields in a line on the and gives
 them back to us in the form of <code>$1</code>, <code>$2</code>, <code>$3</code>&hellip; To show only the
 first and the last entry, execute the following command:</p>
-<div class="highlight"><pre class="highlight shell"><code><span class="nb">echo</span> <span class="s2">"dog cat fish"</span> | awk <span class="s1">'{ print $1 $2 }'</span>
+<div class="highlight"><pre class="highlight shell"><code><span class="nb">echo</span> <span class="s2">"dog cat fish"</span> | <span class="nb">awk</span> <span class="s1">'{ print $1 $2 }'</span>
 </code></pre></div>
 <p>In the above example I only used <code>echo</code> as a mean to push something
 into the <code>awk</code> command, but it can work on any output. But wait!
@@ -148,13 +148,13 @@ This command has the following output, that is not what we want:</p>
 <div class="highlight"><pre class="highlight shell"><code>dogfish
 </code></pre></div>
 <p>Yes, we also have to put a separator between them:</p>
-<div class="highlight"><pre class="highlight shell"><code><span class="nb">echo</span> <span class="s2">"dog cat fish"</span> | awk <span class="s1">'{ print $1 " " $2 }'</span>
+<div class="highlight"><pre class="highlight shell"><code><span class="nb">echo</span> <span class="s2">"dog cat fish"</span> | <span class="nb">awk</span> <span class="s1">'{ print $1 " " $2 }'</span>
 </code></pre></div>
 <p>We can of course put any string between them, like an arrow:</p>
-<div class="highlight"><pre class="highlight shell"><code><span class="nb">echo</span> <span class="s2">"dog cat fish"</span> | awk <span class="s1">'{ print $1 " ---&gt; " $2 }'</span>
+<div class="highlight"><pre class="highlight shell"><code><span class="nb">echo</span> <span class="s2">"dog cat fish"</span> | <span class="nb">awk</span> <span class="s1">'{ print $1 " ---&gt; " $2 }'</span>
 </code></pre></div>
 <p>We can also reorganize the output:</p>
-<div class="highlight"><pre class="highlight shell"><code><span class="nb">echo</span> <span class="s2">"dog cat fish"</span> | awk <span class="s1">'{ print $3 " ---&gt; " $1 " ---&gt; " $2 }'</span>
+<div class="highlight"><pre class="highlight shell"><code><span class="nb">echo</span> <span class="s2">"dog cat fish"</span> | <span class="nb">awk</span> <span class="s1">'{ print $3 " ---&gt; " $1 " ---&gt; " $2 }'</span>
 </code></pre></div>
 <p>That will give us:</p>
 <div class="highlight"><pre class="highlight shell"><code>fish <span class="nt">---</span><span class="o">&gt;</span> dog <span class="nt">---</span><span class="o">&gt;</span> <span class="nb">cat</span>
@@ -163,7 +163,7 @@ This command has the following output, that is not what we want:</p>
 &mdash; showing only the method and the path of today&rsquo;s request:</p>
 <div class="highlight"><pre class="highlight shell"><code><span class="nb">cat </span>log/production.log | <span class="nb">grep</span> <span class="s1">'method=POST'</span>
                        | <span class="nb">grep</span> <span class="s1">'time=2015-02-16'</span>
-                       | awk <span class="s1">'{ print $1 " " $2 }'</span>
+                       | <span class="nb">awk</span> <span class="s1">'{ print $1 " " $2 }'</span>
 </code></pre></div>
 <p>Hooray, this just what we needed!</p>
 <div class="highlight"><pre class="highlight shell"><code><span class="nv">method</span><span class="o">=</span>POST <span class="nv">path</span><span class="o">=</span>/user

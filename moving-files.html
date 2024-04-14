@@ -70,24 +70,24 @@
     <p>Did you ever had to rename a part of a relly long filename?</p>
 
 <p></p>
-<div class="highlight"><pre class="highlight shell"><code>mv really-fake-and-really-long-file-name.html not-fake-and-really-long-file-name.html
+<div class="highlight"><pre class="highlight shell"><code><span class="nb">mv </span>really-fake-and-really-long-file-name.html not-fake-and-really-long-file-name.html
 </code></pre></div>
 <p>Or rename files several directories bellow your path?</p>
-<div class="highlight"><pre class="highlight shell"><code>mv tips/source/posts/latest/images/dog.html tips/source/posts/latest/images/cat.html
+<div class="highlight"><pre class="highlight shell"><code><span class="nb">mv </span>tips/source/posts/latest/images/dog.html tips/source/posts/latest/images/cat.html
 </code></pre></div>
 <p>Using some curly braces can help to ease up the pain:</p>
-<div class="highlight"><pre class="highlight shell"><code>mv <span class="o">{</span>really,not<span class="o">}</span><span class="nt">-fake-and-really-long-file-name</span>.html
-</code></pre></div><div class="highlight"><pre class="highlight shell"><code>mv tips/source/posts/latest/images/<span class="o">{</span>dog,cat<span class="o">}</span>.html
+<div class="highlight"><pre class="highlight shell"><code><span class="nb">mv</span> <span class="o">{</span>really,not<span class="o">}</span><span class="nt">-fake-and-really-long-file-name</span>.html
+</code></pre></div><div class="highlight"><pre class="highlight shell"><code><span class="nb">mv </span>tips/source/posts/latest/images/<span class="o">{</span>dog,cat<span class="o">}</span>.html
 </code></pre></div>
 <p>It can even help you to add a suffix to your commands, and instead of
 creating backups with:</p>
-<div class="highlight"><pre class="highlight shell"><code>mv .vimrc .vimrc.backup
+<div class="highlight"><pre class="highlight shell"><code><span class="nb">mv</span> .vimrc .vimrc.backup
 </code></pre></div>
 <p>You can simply write:</p>
-<div class="highlight"><pre class="highlight shell"><code>mv .vimrc<span class="o">{</span>,.backup<span class="o">}</span>
+<div class="highlight"><pre class="highlight shell"><code><span class="nb">mv</span> .vimrc<span class="o">{</span>,.backup<span class="o">}</span>
 </code></pre></div>
 <p>and the following to reuse the backup:</p>
-<div class="highlight"><pre class="highlight shell"><code>mv .vimrc<span class="o">{</span>.backup,<span class="o">}</span>
+<div class="highlight"><pre class="highlight shell"><code><span class="nb">mv</span> .vimrc<span class="o">{</span>.backup,<span class="o">}</span>
 </code></pre></div>
 <p>It seems like a trivial thing, but if you spend as much time in the terminal
 as I do, you will start to value these simple tips and tricks that can make

@@ -95,8 +95,8 @@ PID number.</p>
 
 <p>Every process has a parent. We can observe this with <code>pstree</code> or the <code>ps</code> utility.</p>
 <div class="highlight"><pre class="highlight shell"><code><span class="c"># start two dummy processes</span>
-<span class="nv">$ </span>sleep 100 &amp;
-<span class="nv">$ </span>sleep 101 &amp;
+<span class="nv">$ </span><span class="nb">sleep </span>100 &amp;
+<span class="nv">$ </span><span class="nb">sleep </span>101 &amp;
 
 <span class="nv">$ </span>pstree <span class="nt">-p</span>
 init<span class="o">(</span>1<span class="o">)</span>-+
@@ -107,8 +107,8 @@ init<span class="o">(</span>1<span class="o">)</span>-+
 <span class="nv">$ </span>ps j <span class="nt">-A</span>
  PPID   PID  PGID   SID TTY      TPGID STAT   UID   TIME COMMAND
     0     1     1     1 ?           <span class="nt">-1</span> Ss       0   0:03 /sbin/init
-29051  1470  1470 29051 pts/2     2386 SN    1000   0:00 sleep 100
-29051  1538  1538 29051 pts/2     2386 SN    1000   0:00 sleep 101
+29051  1470  1470 29051 pts/2     2386 SN    1000   0:00 <span class="nb">sleep </span>100
+29051  1538  1538 29051 pts/2     2386 SN    1000   0:00 <span class="nb">sleep </span>101
 29051  2386  2386 29051 pts/2     2386 R+    1000   0:00 ps j <span class="nt">-A</span>
     1 29051 29051 29051 pts/2     2386 Ss    1000   0:00 <span class="nt">-bash</span>
 </code></pre></div>
@@ -141,8 +141,8 @@ controlling terminals.</p>
 <div class="highlight"><pre class="highlight shell"><code><span class="nv">$ </span>ps j <span class="nt">-A</span>
  PPID   PID  PGID   SID TTY      TPGID STAT   UID   TIME COMMAND
     0     1     1     1 ?           <span class="nt">-1</span> Ss       0   0:03 /sbin/init
-29051  1470  1470 29051 pts/2     2386 SN    1000   0:00 sleep 100
-29051  1538  1538 29051 pts/2     2386 SN    1000   0:00 sleep 101
+29051  1470  1470 29051 pts/2     2386 SN    1000   0:00 <span class="nb">sleep </span>100
+29051  1538  1538 29051 pts/2     2386 SN    1000   0:00 <span class="nb">sleep </span>101
 29051  2386  2386 29051 pts/2     2386 R+    1000   0:00 ps j <span class="nt">-A</span>
     1 29051 29051 29051 pts/2     2386 Ss    1000   0:00 <span class="nt">-bash</span>
 </code></pre></div>
@@ -160,11 +160,11 @@ process group is a collection of one or more processes (usually associated with
 the same job) that can receive signals from the same terminal. Each process
 group has a unique process group ID.</p>
 <div class="highlight"><pre class="highlight shell"><code><span class="c"># start a process group that consists of tail and grep</span>
-<span class="nv">$ </span>tail <span class="nt">-f</span> /var/log/syslog | <span class="nb">grep</span> <span class="s2">"CRON"</span> &amp;
+<span class="nv">$ </span><span class="nb">tail</span> <span class="nt">-f</span> /var/log/syslog | <span class="nb">grep</span> <span class="s2">"CRON"</span> &amp;
 
 <span class="nv">$ </span>ps j
  PPID   PID  PGID   SID TTY      TPGID STAT   UID   TIME COMMAND
-29051 19701 19701 29051 pts/2    19784 SN    1000   0:00 tail <span class="nt">-f</span> /var/log/syslog
+29051 19701 19701 29051 pts/2    19784 SN    1000   0:00 <span class="nb">tail</span> <span class="nt">-f</span> /var/log/syslog
 29051 19702 19701 29051 pts/2    19784 SN    1000   0:00 <span class="nb">grep </span>CRON
 29051 19784 19784 29051 pts/2    19784 R+    1000   0:00 ps j
 29050 29051 29051 29051 pts/2    19784 Ss    1000   0:00 <span class="nt">-bash</span>

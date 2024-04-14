@@ -4,16 +4,131 @@
   <id>http://shiroyasha.io/</id>
   <link href="http://shiroyasha.io/"/>
   <link href="http://shiroyasha.io/feed.xml" rel="self"/>
-  <updated>2023-01-29T00:00:00+00:00</updated>
+  <updated>2024-04-14T00:00:00+00:00</updated>
   <author>
     <name>Igor Šarčević</name>
   </author>
+  <entry>
+    <title>Steps We Took to Automate License Compatibility Verification</title>
+    <link rel="alternate" href="http://shiroyasha.io/steps-we-took-to-automate-license-compatibility-verification.html"/>
+    <id>http://shiroyasha.io/steps-we-took-to-automate-license-compatibility-verification.html</id>
+    <published>2024-04-14T00:00:00+00:00</published>
+    <updated>2024-04-14T15:30:14+00:00</updated>
+    <author>
+      <name>Igor Šarčević</name>
+    </author>
+    <summary type="html">&lt;p&gt;We are actively developing Operately, an open-source software licensed under
+Apache 2.0. As such, we need to carefully consider whether our dependencies’
+licenses are compatible with ours. Starting to build features based on
+functionality from a non...&lt;/p&gt;</summary>
+    <content type="html">&lt;p&gt;We are actively developing Operately, an open-source software licensed under
+Apache 2.0. As such, we need to carefully consider whether our dependencies&amp;rsquo;
+licenses are compatible with ours. Starting to build features based on
+functionality from a non-compatible license, only to realize this too late,
+could lead to wasted time and energy in rewriting those features.&lt;/p&gt;
+
+&lt;p&gt;As we are a small team, my attention is intensely focused on building and
+refining the core features of Operately. Whenever possible, I take
+opportunities to automate tasks that can save significant time in the coming
+months. One question arises: can license compatibility checks be automated to a
+reasonable degree within a day&amp;rsquo;s work, with a return on the time invested over
+the next few months? I implemented such a system a few months ago at Operately.
+The return on investment has been decidedly positive, and on several occasions,
+it has prevented me from proceeding with features based on an incompatible AGPL
+license—a scenario that could have cost me weeks or even a full month of work
+if not caught early.&lt;/p&gt;
+
+&lt;p&gt;My requirements for a license compatibility checking system are as follows:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Integration into the CI Build &amp;amp; Test Phase&lt;/strong&gt;: The system should be
+integrated into every continuous integration (CI) run. Whenever someone
+pushes code or opens a pull request, the system must provide a clear YES/NO
+answer regarding license compatibility. I prefer this real-time check over
+asynchronous systems that only notify of issues after code submission.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Comprehensive Dependency Testing&lt;/strong&gt;: The solution must be capable of
+testing not only direct dependencies but also their nested dependencies
+recursively. It is crucial that it supports Elixir libraries and NPM packages,
+given that Operately is developed with a combination of Elixir and React. While
+Docker build compatibility would be beneficial, it is not essential.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Open-Source&lt;/strong&gt;: The solution should be open-source. We are committed to
+supporting and utilizing open-source solutions, aligning with our principles
+and contributing back to the community.&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;a href="https://github.com/pivotal/LicenseFinder"&gt;Pivotal’s License Finder&lt;/a&gt; is an 
+excellent solution that meets most of our needs. It is a Ruby-based CLI tool 
+that can be installed in our repository and integrated into our continuous 
+integration build process. It is compatible with Elixir Mix and NPM, which are
+essential for Operately, given our use of Elixir and React. Additionally, it 
+supports many other programming languages and build systems, offering flexibility
+should we decide to incorporate other technologies into Operately in the future.&lt;/p&gt;
+
+&lt;p&gt;The initial setup of the License Finder can be complex as it involves listing
+all the dependencies in your projects and requiring approval for each
+discovered license. Here’s the strategy I recommend:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Approve MIT and BSD Licenses&lt;/strong&gt;: These licenses are well-established,
+clearly written, and have judicial precedence confirming their compatibility
+with the Apache 2.0 license. Approving these is straightforward.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Assess Other Open Source Licenses&lt;/strong&gt;: Navigating other open-source licenses
+can be more challenging. &lt;a href="https://opensource.org/license"&gt;OpenSource.org&lt;/a&gt; lists 
+at least 10 pages of recognized open-source licenses. Some, like GPL3 and AGPL, 
+are not compatible with Apache 2.0 and are considered restrictive or even
+parasitic. Others, such as Unlicense or WTFPL, lack clear legal status and
+are potentially problematic. Since I&amp;rsquo;m not a lawyer, we have decided not to use
+such licenses.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Handle Unknown Licenses&lt;/strong&gt;: License Finder sometimes cannot identify a
+license for a dependency, like with TipTap used for rich text editing. In
+these cases, License Finder allows for the manual approval of packages. It
+requires you to specify your identity, the basis of your authorization, and
+the reason for approving the use of the license.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Deal with License-Less Dependencies&lt;/strong&gt;: Many public repositories on GitHub
+are intended to be open-source but lack a clear license, making their use
+legally risky. I recommend removing these dependencies or contacting the
+contributors to obtain permission to use their software.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Automate the Process&lt;/strong&gt;: Once you have approved all licenses, you can
+automate the process by running License Finder in CI. It will check all
+dependencies and provide a report on the licenses used. If a new dependency
+is added, License Finder will notify you of the new license, allowing you to
+approve or reject it.&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Once the setup and initial license triage are completed, this system requires
+almost no maintenance. It will continuously check every new dependency and every
+update to your existing dependencies in the background.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;A note of warning:&lt;/strong&gt; While this system is great at detecting most license
+incompatibilities, it is not infallible. I recommend a periodic manual reviews 
+of all your dependencies, particularly for infrastructure software that this 
+solution does not cover.&lt;/p&gt;
+
+&lt;p&gt;By investing a day in setting up the License Finder, I have saved myself weeks
+of potential rework and legal headaches. I highly recommend this system to
+anyone working on open-source projects, especially those with a small team and
+limited resources. It is a small investment that can prevent significant
+headaches down the road.&lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;Investing time and energy into automation can yield long-term benefits, but there
+is a risk of automating too much too early. For instance, for an early startup
+like Operately, it makes sense to automate processes that can provide positive
+outcomes within the upcoming quarter and can be completed in under a day.
+However, it would be unwise to spend several weeks on automation efforts that do
+not promise returns in the foreseeable future.&lt;/p&gt;
+
+&lt;p&gt;Finally, if you want to look at the specifics of how we implemented this check,
+start from here: &lt;a href="https://github.com/operately/operately/blob/main/Makefile#L216"&gt;Operately Makefile&lt;/a&gt;.&lt;/p&gt;
+</content>
+  </entry>
   <entry>
     <title>Adulting Harder</title>
     <link rel="alternate" href="http://shiroyasha.io/adulting-harder.html"/>
     <id>http://shiroyasha.io/adulting-harder.html</id>
     <published>2023-01-29T00:00:00+00:00</published>
-    <updated>2023-02-02T18:41:10+00:00</updated>
+    <updated>2024-04-14T14:30:28+00:00</updated>
     <author>
       <name>Igor Šarčević</name>
     </author>
@@ -88,7 +203,7 @@ that come your way.&lt;/p&gt;
     <link rel="alternate" href="http://shiroyasha.io/pull-requests-are-a-reflection-of-your-engineering-culture.html"/>
     <id>http://shiroyasha.io/pull-requests-are-a-reflection-of-your-engineering-culture.html</id>
     <published>2022-07-17T00:00:00+00:00</published>
-    <updated>2023-02-02T18:41:07+00:00</updated>
+    <updated>2024-04-14T14:30:28+00:00</updated>
     <author>
       <name>Igor Šarčević</name>
     </author>
@@ -240,7 +355,7 @@ direct first-hand experience of the bottlenecks your team is dealing with.&lt;/p
     <link rel="alternate" href="http://shiroyasha.io/proactive-cache-warming-in-a-microservice-based-architecture.html"/>
     <id>http://shiroyasha.io/proactive-cache-warming-in-a-microservice-based-architecture.html</id>
     <published>2021-07-17T00:00:00+00:00</published>
-    <updated>2023-02-02T18:41:07+00:00</updated>
+    <updated>2024-04-14T14:30:28+00:00</updated>
     <author>
       <name>Igor Šarčević</name>
     </author>
@@ -513,7 +628,7 @@ architectural choice even after several years in production.&lt;/p&gt;
     <link rel="alternate" href="http://shiroyasha.io/what-is-a-transaction-outbox-and-why-you-need-it.html"/>
     <id>http://shiroyasha.io/what-is-a-transaction-outbox-and-why-you-need-it.html</id>
     <published>2021-07-02T00:00:00+00:00</published>
-    <updated>2023-02-02T18:41:07+00:00</updated>
+    <updated>2024-04-14T14:30:28+00:00</updated>
     <author>
       <name>Igor Šarčević</name>
     </author>
@@ -767,7 +882,7 @@ requests. This feedback loop is slow; we must educate ourselves in advance.&lt;/
     <link rel="alternate" href="http://shiroyasha.io/running-my-first-half-marathon.html"/>
     <id>http://shiroyasha.io/running-my-first-half-marathon.html</id>
     <published>2021-06-29T00:00:00+00:00</published>
-    <updated>2023-02-02T18:41:07+00:00</updated>
+    <updated>2024-04-14T14:30:28+00:00</updated>
     <author>
       <name>Igor Šarčević</name>
     </author>
@@ -838,108 +953,6 @@ always predates individuals.&lt;/p&gt;
 &lt;p&gt;You bet I will. I&amp;rsquo;m already looking forward to the next one in September.&lt;/p&gt;
 
 &lt;p&gt;107km here I come! 👟&lt;/p&gt;
-</content>
-  </entry>
-  <entry>
-    <title>How to get things done?</title>
-    <link rel="alternate" href="http://shiroyasha.io/how-to-get-things-done.html"/>
-    <id>http://shiroyasha.io/how-to-get-things-done.html</id>
-    <published>2021-02-04T00:00:00+00:00</published>
-    <updated>2023-02-02T18:41:07+00:00</updated>
-    <author>
-      <name>Igor Šarčević</name>
-    </author>
-    <summary type="html">&lt;p&gt;I was talking with a friend a while back. He’s a tech lead at
-a local company. We were discussing our ongoing projects and
-what is stopping us from completing them. He made an excellent observation:&lt;/p&gt;
-
-&lt;p&gt;“Skill alone is not the biggest predictor if a project...&lt;/p&gt;</summary>
-    <content type="html">&lt;p&gt;I was talking with a friend a while back. He&amp;rsquo;s a tech lead at
-a local company. We were discussing our ongoing projects and
-what is stopping us from completing them. He made an excellent observation:&lt;/p&gt;
-
-&lt;p&gt;&amp;ldquo;Skill alone is not the biggest predictor if a project will
-get completed. There are observable patterns between people that get things
-done and people who get stuck. It&amp;rsquo;s hard to pinpoint the actual
-reason, but it is easy to recognize when you see it.&amp;rdquo;&lt;/p&gt;
-
-&lt;p&gt;In the following days, I was meditating on this topic. What are the
-these that help us to finish our projects? I observed the following patterns
-that were a good predictor:&lt;/p&gt;
-
-&lt;h3&gt;Solving things one-by-one&lt;/h3&gt;
-
-&lt;p&gt;People who solve problems one-by-one have a good track record of finishing
-projects. Projects are always full of unknowns, and almost impossible to solve
-problems.
-Taking in all of the issues at once can be parallelizing. I&amp;rsquo;ve noticed that
-people who are good at finishing projects are good at picking a problem
-out of the bunch of hard problems and solving them without worrying what
-comes next.&lt;/p&gt;
-
-&lt;h3&gt;A work environment where you don&amp;rsquo;t need permissions&lt;/h3&gt;
-
-&lt;p&gt;The work environment is as important as your individual qualities. If you need
-to get permission for every little decision, a person&amp;rsquo;s motivation plummets.
-Good environments allow you to do anything and will stop you when things start
-to look bad. Bad environments will prevent you from doing any work before you
-are absolutely sure that it will be a success.&lt;/p&gt;
-
-&lt;h3&gt;Doing things you don&amp;rsquo;t know how to do&lt;/h3&gt;
-
-&lt;p&gt;&amp;ldquo;I&amp;rsquo;m not a CSS expert, but I can fix this one border-width&amp;rdquo; is the right
-mindset. When we are not comfortable doing things outside of our primary
-domain, the set of problems we can solve soon becomes very limited.&lt;/p&gt;
-
-&lt;p&gt;People who are good at finishing projects are fearless. &amp;ldquo;I need to write a sales
-pitch? Sure, I can try it.&amp;rdquo;, &amp;ldquo;The metrics servers is broken? I can take a peek.&amp;rdquo;.
-More often than not, problems are not so scary as they seem.&lt;/p&gt;
-
-&lt;h3&gt;Avoiding perfectionism&lt;/h3&gt;
-
-&lt;p&gt;Perfectionism (and generalization) is the prime killer of projects. Exciting
-problems usually don&amp;rsquo;t have a clear, &amp;ldquo;mathematically complete&amp;rdquo;
-solution. I&amp;rsquo;ve noticed that people who embrace the fuzziness and try to
-implement the sub-perfect solution are usually the only ones who figure out
-the perfect solution in the long run, while the perfectionist crowd is still
-discussing what can go wrong.&lt;/p&gt;
-
-&lt;h3&gt;Investing in the meta-problems&lt;/h3&gt;
-
-&lt;p&gt;More often than not, the problem that is too hard to solve is only so hard
-because you don&amp;rsquo;t have the right tools and the environment. People who zoom-out
-and solve the meta-problems are the ones that are good at finishing projects.&lt;/p&gt;
-
-&lt;p&gt;For example, reducing the number of defects in your system can feel impossible.
-As soon as you fix one, another one pops up. But the deeper meta-problem is that
-you are not writing tests. You must solve the meta-problem before you tackle
-the real one.&lt;/p&gt;
-
-&lt;h3&gt;Asking for help&lt;/h3&gt;
-
-&lt;p&gt;Getting stuck is OK and natural. Getting stuck and not asking for any help is
-foolish. There are so many places where you can find help these days. You can
-ask other people in your team, you can ask online, you can ask a friend.&lt;/p&gt;
-
-&lt;p&gt;We sometimes limit ourselves and stay stuck in the problem. The productive ones
-are asking for help in multiple places.&lt;/p&gt;
-
-&lt;h3&gt;Asking for help and listening to answers&lt;/h3&gt;
-
-&lt;p&gt;Asking for help is the first step, but listening to the answers is the crucial
-part. We sometimes get so stuck in the problem that we refuse to
-listen to answers.&lt;/p&gt;
-
-&lt;p&gt;When you mentor others, you learn an important lesson: You can only teach a
-person who is ready to learn. Try to be a person that is always ready to learn.&lt;/p&gt;
-
-&lt;p&gt;People who are good at finishing projects are good at listening to answers.&lt;/p&gt;
-
-&lt;hr&gt;
-
-&lt;p&gt;Thought I&amp;rsquo;d share this in case anyone else finds it useful.&lt;/p&gt;
-
-&lt;p&gt;Have a great day!&lt;/p&gt;
 </content>
   </entry>
 </feed>

@@ -1,0 +1,214 @@
+<!doctype html>
+<html itemscope itemtype="http://schema.org/Article">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
+    <link rel="alternate" type="application/atom+xml" title="Morning Coffee" href="/feed.xml" />
+
+    <link rel="shortcut icon" href="favicon.svg">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+      <title>Steps We Took to Automate License Compatibility Verification &mdash; by Igor Šarčević</title>
+
+    <!-- Place this data between the <head> tags of your website -->
+      <meta name="description" content="We are actively developing Operately, an open-source software licensed under
+Apache 2.0. As such, we need to carefully consider whether our dependencies..." />
+
+      <!-- Schema.org markup for Google+ -->
+      <meta itemprop="name" content="Steps We Took to Automate License Compatibility Verification">
+      <meta itemprop="description" content="We are actively developing Operately, an open-source software licensed under
+Apache 2.0. As such, we need to carefully consider whether our dependencies...">
+      <meta itemprop="image" content="http://morningcoffee.io/images/2024-04-14-steps-we-took-to-automate-license-compatibility-verification.png">
+
+      <!-- Twitter Card data -->
+      <meta name="twitter:card" content="summary_large_image">
+      <meta name="twitter:site" content="@igor_sarcevic">
+      <meta name="twitter:title" content="Steps We Took to Automate License Compatibility Verification">
+      <meta name="twitter:description" content="We are actively developing Operately, an open-source software licensed under
+Apache 2.0. As such, we need to carefully consider whether our dependencies...">
+      <meta name="twitter:creator" content="@igor_sarcevic">
+      <!-- Twitter summary card with large image must be at least 280x150px -->
+      <meta name="twitter:image:src" content="http://morningcoffee.io/images/2024-04-14-steps-we-took-to-automate-license-compatibility-verification.png">
+
+      <!-- Open Graph data -->
+      <meta property="og:title" content="Steps We Took to Automate License Compatibility Verification" />
+      <meta property="og:type" content="article" />
+      <meta property="og:url" content="http://" />
+      <meta property="og:image" content="http://morningcoffee.io/images/2024-04-14-steps-we-took-to-automate-license-compatibility-verification.png" />
+      <meta property="og:description" content="We are actively developing Operately, an open-source software licensed under
+Apache 2.0. As such, we need to carefully consider whether our dependencies..." />
+      <meta property="article:published_time" content="2024-04-14 00:00:00 UTC" />
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Raleway:900&display=swap" rel="stylesheet">
+    <link href="/stylesheets/style.css" rel="stylesheet" />
+  </head>
+  <body>
+
+    <div id="main" role="main">
+      <nav class="navigation" style="padding: 10px;">
+  <div style="display: flex;justify-items: space-between;justify-content: space-between;">
+    <a style="font-size: 20px" href="/" style="color: crimson;">Home</a>
+    <a style="font-size: 20px" href="/about-me.html" style="color: crimson;">About</a>
+  </div>
+</nav>
+
+
+        <article class="article">
+    <div class="header">
+      <h1>Steps We Took to Automate License Compatibility Verification</h1>
+
+      <div class="subtitle">
+        Published on <time>April 14, 2024</time>
+      </div>
+    </div>
+
+    <p>We are actively developing Operately, an open-source software licensed under
+Apache 2.0. As such, we need to carefully consider whether our dependencies&rsquo;
+licenses are compatible with ours. Starting to build features based on
+functionality from a non-compatible license, only to realize this too late,
+could lead to wasted time and energy in rewriting those features.</p>
+
+<p>As we are a small team, my attention is intensely focused on building and
+refining the core features of Operately. Whenever possible, I take
+opportunities to automate tasks that can save significant time in the coming
+months. One question arises: can license compatibility checks be automated to a
+reasonable degree within a day&rsquo;s work, with a return on the time invested over
+the next few months? I implemented such a system a few months ago at Operately.
+The return on investment has been decidedly positive, and on several occasions,
+it has prevented me from proceeding with features based on an incompatible AGPL
+license—a scenario that could have cost me weeks or even a full month of work
+if not caught early.</p>
+
+<p>My requirements for a license compatibility checking system are as follows:</p>
+
+<ol>
+<li><p><strong>Integration into the CI Build &amp; Test Phase</strong>: The system should be
+integrated into every continuous integration (CI) run. Whenever someone
+pushes code or opens a pull request, the system must provide a clear YES/NO
+answer regarding license compatibility. I prefer this real-time check over
+asynchronous systems that only notify of issues after code submission.</p></li>
+<li><p><strong>Comprehensive Dependency Testing</strong>: The solution must be capable of
+testing not only direct dependencies but also their nested dependencies
+recursively. It is crucial that it supports Elixir libraries and NPM packages,
+given that Operately is developed with a combination of Elixir and React. While
+Docker build compatibility would be beneficial, it is not essential.</p></li>
+<li><p><strong>Open-Source</strong>: The solution should be open-source. We are committed to
+supporting and utilizing open-source solutions, aligning with our principles
+and contributing back to the community.</p></li>
+</ol>
+
+<p><a href="https://github.com/pivotal/LicenseFinder">Pivotal’s License Finder</a> is an 
+excellent solution that meets most of our needs. It is a Ruby-based CLI tool 
+that can be installed in our repository and integrated into our continuous 
+integration build process. It is compatible with Elixir Mix and NPM, which are
+essential for Operately, given our use of Elixir and React. Additionally, it 
+supports many other programming languages and build systems, offering flexibility
+should we decide to incorporate other technologies into Operately in the future.</p>
+
+<p>The initial setup of the License Finder can be complex as it involves listing
+all the dependencies in your projects and requiring approval for each
+discovered license. Here’s the strategy I recommend:</p>
+
+<ol>
+<li><p><strong>Approve MIT and BSD Licenses</strong>: These licenses are well-established,
+clearly written, and have judicial precedence confirming their compatibility
+with the Apache 2.0 license. Approving these is straightforward.</p></li>
+<li><p><strong>Assess Other Open Source Licenses</strong>: Navigating other open-source licenses
+can be more challenging. <a href="https://opensource.org/license">OpenSource.org</a> lists 
+at least 10 pages of recognized open-source licenses. Some, like GPL3 and AGPL, 
+are not compatible with Apache 2.0 and are considered restrictive or even
+parasitic. Others, such as Unlicense or WTFPL, lack clear legal status and
+are potentially problematic. Since I&rsquo;m not a lawyer, we have decided not to use
+such licenses.</p></li>
+<li><p><strong>Handle Unknown Licenses</strong>: License Finder sometimes cannot identify a
+license for a dependency, like with TipTap used for rich text editing. In
+these cases, License Finder allows for the manual approval of packages. It
+requires you to specify your identity, the basis of your authorization, and
+the reason for approving the use of the license.</p></li>
+<li><p><strong>Deal with License-Less Dependencies</strong>: Many public repositories on GitHub
+are intended to be open-source but lack a clear license, making their use
+legally risky. I recommend removing these dependencies or contacting the
+contributors to obtain permission to use their software.</p></li>
+<li><p><strong>Automate the Process</strong>: Once you have approved all licenses, you can
+automate the process by running License Finder in CI. It will check all
+dependencies and provide a report on the licenses used. If a new dependency
+is added, License Finder will notify you of the new license, allowing you to
+approve or reject it.</p></li>
+</ol>
+
+<p>Once the setup and initial license triage are completed, this system requires
+almost no maintenance. It will continuously check every new dependency and every
+update to your existing dependencies in the background.</p>
+
+<p><strong>A note of warning:</strong> While this system is great at detecting most license
+incompatibilities, it is not infallible. I recommend a periodic manual reviews 
+of all your dependencies, particularly for infrastructure software that this 
+solution does not cover.</p>
+
+<p>By investing a day in setting up the License Finder, I have saved myself weeks
+of potential rework and legal headaches. I highly recommend this system to
+anyone working on open-source projects, especially those with a small team and
+limited resources. It is a small investment that can prevent significant
+headaches down the road.</p>
+
+<hr>
+
+<p>Investing time and energy into automation can yield long-term benefits, but there
+is a risk of automating too much too early. For instance, for an early startup
+like Operately, it makes sense to automate processes that can provide positive
+outcomes within the upcoming quarter and can be completed in under a day.
+However, it would be unwise to spend several weeks on automation efforts that do
+not promise returns in the foreseeable future.</p>
+
+<p>Finally, if you want to look at the specifics of how we implemented this check,
+start from here: <a href="https://github.com/operately/operately/blob/main/Makefile#L216">Operately Makefile</a>.</p>
+
+
+
+  </article>
+
+
+      <div class="footer">
+  <div class="content">
+    <p>
+      <strong>❈</strong><br>
+      <br>
+
+      Follow me on <a href="https://twitter.com/igor_sarcevic">Twitter</a> and <a href="https://rs.linkedin.com/in/igorsarcevic">LinkedIn</a>.<br>
+      Copyright ©2014-2023 Igor Šarčević. All rights reserved.</br>
+      <br>
+      Enjoy the rest of your day!
+    </p>
+  </div>
+<div>
+
+    </div>
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+           })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-57223799-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+
+    <script>
+      /**
+      * Function that tracks a click on an outbound link in Analytics.
+      * This function takes a valid URL string as an argument, and uses that URL string
+      * as the event label. Setting the transport method to 'beacon' lets the hit be sent
+      * using 'navigator.sendBeacon' in browser that support it.
+      */
+      var trackOutboundLink = function(url) {
+        ga('send', 'event', 'outbound', 'click', url, {
+          'transport': 'beacon',
+          'hitCallback': function(){document.location = url;}
+        });
+      }
+    </script>
+
+  </body>
+</html>

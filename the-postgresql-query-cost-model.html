@@ -105,7 +105,7 @@ performance impact that the new query will have on your system.</p>
 
 <p>We&rsquo;ll start with an example database table to illustrate the usage of <code>explain</code>.
 This table will have a million records.</p>
-<div class="highlight"><pre class="highlight sql"><code><span class="n">db</span> <span class="o">#</span> <span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">users</span> <span class="p">(</span><span class="n">id</span> <span class="n">serial</span><span class="p">,</span> <span class="n">name</span> <span class="n">varchar</span><span class="p">);</span>
+<div class="highlight"><pre class="highlight sql"><code><span class="n">db</span> <span class="o">#</span> <span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">users</span> <span class="p">(</span><span class="n">id</span> <span class="nb">serial</span><span class="p">,</span> <span class="n">name</span> <span class="nb">varchar</span><span class="p">);</span>
 
 <span class="n">db</span> <span class="o">#</span> <span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">users</span> <span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="k">SELECT</span> <span class="s1">'John'</span>
      <span class="k">FROM</span> <span class="n">generate_series</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1000000</span><span class="p">);</span>

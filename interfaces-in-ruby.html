@@ -107,19 +107,19 @@ objects that implement them.</p>
 <p>For example, in Java, if I want to say that an object can be transformed to and
 from CSV (comma separated values) I could simply declare a CSV interface.</p>
 <div class="highlight"><pre class="highlight java"><code><span class="kd">interface</span> <span class="nc">CSV</span> <span class="o">{</span>
-  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">fromCSV</span><span class="o">(</span><span class="n">String</span> <span class="n">line</span><span class="o">);</span>
-  <span class="kd">public</span> <span class="n">String</span> <span class="nf">toCSV</span><span class="o">();</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">fromCSV</span><span class="o">(</span><span class="nc">String</span> <span class="n">line</span><span class="o">);</span>
+  <span class="kd">public</span> <span class="nc">String</span> <span class="nf">toCSV</span><span class="o">();</span>
 <span class="o">}</span>
 </code></pre></div>
 <p>Now, I can be sure that every object that implements that interface can be
 transformed to and from a CSV file. Here are two examples:</p>
-<div class="highlight"><pre class="highlight java"><code><span class="kd">class</span> <span class="nc">User</span> <span class="kd">implements</span> <span class="n">CSV</span> <span class="o">{</span>
-  <span class="kd">public</span> <span class="n">String</span> <span class="nf">toCSV</span><span class="o">()</span> <span class="o">{</span>
+<div class="highlight"><pre class="highlight java"><code><span class="kd">class</span> <span class="nc">User</span> <span class="kd">implements</span> <span class="no">CSV</span> <span class="o">{</span>
+  <span class="kd">public</span> <span class="nc">String</span> <span class="nf">toCSV</span><span class="o">()</span> <span class="o">{</span>
     <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">+</span> <span class="s">","</span> <span class="o">+</span> <span class="k">this</span><span class="o">.</span><span class="na">age</span> <span class="o">+</span> <span class="s">","</span> <span class="o">+</span> <span class="k">this</span><span class="o">.</span><span class="na">password</span><span class="o">;</span>
   <span class="o">}</span>
 
-  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">fromCSV</span><span class="o">(</span><span class="n">String</span> <span class="n">csvLine</span><span class="o">)</span> <span class="o">{</span>
-    <span class="n">String</span><span class="o">[]</span> <span class="n">parts</span> <span class="o">=</span> <span class="n">csvLine</span><span class="o">.</span><span class="na">split</span><span class="o">(</span><span class="s">","</span><span class="o">);</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">fromCSV</span><span class="o">(</span><span class="nc">String</span> <span class="n">csvLine</span><span class="o">)</span> <span class="o">{</span>
+    <span class="nc">String</span><span class="o">[]</span> <span class="n">parts</span> <span class="o">=</span> <span class="n">csvLine</span><span class="o">.</span><span class="na">split</span><span class="o">(</span><span class="s">","</span><span class="o">);</span>
 
     <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">parts</span><span class="o">[</span><span class="mi">0</span><span class="o">];</span>
     <span class="k">this</span><span class="o">.</span><span class="na">age</span> <span class="o">=</span> <span class="n">parts</span><span class="o">[</span><span class="mi">1</span><span class="o">];</span>
@@ -127,13 +127,13 @@ transformed to and from a CSV file. Here are two examples:</p>
   <span class="o">}</span>
 <span class="o">}</span>
 
-<span class="kd">class</span> <span class="nc">Book</span> <span class="kd">implements</span> <span class="n">CSV</span> <span class="o">{</span>
-  <span class="kd">public</span> <span class="n">String</span> <span class="nf">toCSV</span><span class="o">()</span> <span class="o">{</span>
+<span class="kd">class</span> <span class="nc">Book</span> <span class="kd">implements</span> <span class="no">CSV</span> <span class="o">{</span>
+  <span class="kd">public</span> <span class="nc">String</span> <span class="nf">toCSV</span><span class="o">()</span> <span class="o">{</span>
     <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">title</span> <span class="o">+</span> <span class="s">","</span> <span class="o">+</span> <span class="k">this</span><span class="o">.</span><span class="na">author</span><span class="o">;</span>
   <span class="o">}</span>
 
-  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">fromCSV</span><span class="o">(</span><span class="n">String</span> <span class="n">csvLine</span><span class="o">)</span> <span class="o">{</span>
-    <span class="n">String</span><span class="o">[]</span> <span class="n">parts</span> <span class="o">=</span> <span class="n">csvLine</span><span class="o">.</span><span class="na">split</span><span class="o">(</span><span class="s">","</span><span class="o">);</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">fromCSV</span><span class="o">(</span><span class="nc">String</span> <span class="n">csvLine</span><span class="o">)</span> <span class="o">{</span>
+    <span class="nc">String</span><span class="o">[]</span> <span class="n">parts</span> <span class="o">=</span> <span class="n">csvLine</span><span class="o">.</span><span class="na">split</span><span class="o">(</span><span class="s">","</span><span class="o">);</span>
 
     <span class="k">this</span><span class="o">.</span><span class="na">title</span> <span class="o">=</span> <span class="n">parts</span><span class="o">[</span><span class="mi">0</span><span class="o">];</span>
     <span class="k">this</span><span class="o">.</span><span class="na">author</span> <span class="o">=</span> <span class="n">parts</span><span class="o">[</span><span class="mi">1</span><span class="o">];</span>

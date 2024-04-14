@@ -93,10 +93,10 @@
 <h2>Counting files in a directory</h2>
 
 <p>The word count command <code>wc</code>  counts the number of words. If you also add the <code>wc -l</code> it will count the number of lines.</p>
-<div class="highlight"><pre class="highlight shell"><code><span class="nb">ls</span> <span class="nt">-l</span> | wc <span class="nt">-l</span>
+<div class="highlight"><pre class="highlight shell"><code><span class="nb">ls</span> <span class="nt">-l</span> | <span class="nb">wc</span> <span class="nt">-l</span>
 </code></pre></div>
 <p>Going even further, you can count the number of files that contain the <code>cat</code> string in their title. To do that we need to pipe even more commands, but it is still quiet easy</p>
-<div class="highlight"><pre class="highlight shell"><code><span class="nb">ls</span> <span class="nt">-l</span> | <span class="nb">grep</span> <span class="s2">"cat"</span> | wc <span class="nt">-l</span>
+<div class="highlight"><pre class="highlight shell"><code><span class="nb">ls</span> <span class="nt">-l</span> | <span class="nb">grep</span> <span class="s2">"cat"</span> | <span class="nb">wc</span> <span class="nt">-l</span>
 </code></pre></div>
 <h2>Finding processes by their title</h2>
 
@@ -104,7 +104,7 @@
 <div class="highlight"><pre class="highlight shell"><code>ps aux | <span class="nb">grep</span> <span class="s2">"chrome"</span>
 </code></pre></div>
 <p>To count them we can use <code>wc -l</code></p>
-<div class="highlight"><pre class="highlight shell"><code>ps aux | <span class="nb">grep</span> <span class="s2">"chrome"</span> | wc <span class="nt">-l</span>
+<div class="highlight"><pre class="highlight shell"><code>ps aux | <span class="nb">grep</span> <span class="s2">"chrome"</span> | <span class="nb">wc</span> <span class="nt">-l</span>
 </code></pre></div>
 <h2>Summary</h2>
 

@@ -107,7 +107,7 @@ print the information about the current wireless connection:</p>
         maxRate: 289
 lastAssocStatus: 0
     802.11 auth: open
-      link auth: wpa2-psk
+      <span class="nb">link </span>auth: wpa2-psk
           BSSID: <span class="nb">fc</span>:1:7c:50:33:56
            SSID: A
             MCS: 6
@@ -139,14 +139,14 @@ strenght of my WiFi signal.</p>
 <span class="c"># file: w.sh</span>
 
 <span class="k">while </span><span class="nb">true</span><span class="p">;</span> <span class="k">do
-  </span><span class="nv">out</span><span class="o">=</span><span class="s2">"</span><span class="k">$(</span>/System/Library/PrivateFrameworks/Apple<span class="k">*</span>.framework/Versions/Current/Resources/airport <span class="nt">-I</span><span class="k">)</span><span class="s2">"</span>
+  </span><span class="nv">out</span><span class="o">=</span><span class="s2">"</span><span class="si">$(</span>/System/Library/PrivateFrameworks/Apple<span class="k">*</span>.framework/Versions/Current/Resources/airport <span class="nt">-I</span><span class="si">)</span><span class="s2">"</span>
 
-  <span class="nv">rssi</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"</span><span class="nv">$out</span><span class="s2">"</span> | <span class="nb">grep</span> <span class="s2">"CtlRSSI"</span> | awk <span class="nt">-F</span> <span class="s1">':'</span> <span class="s1">'{ print $2 }'</span><span class="k">)</span>
-  <span class="nv">noise</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"</span><span class="nv">$out</span><span class="s2">"</span> | <span class="nb">grep</span> <span class="s2">"CtlNoise"</span> | awk <span class="nt">-F</span> <span class="s1">':'</span> <span class="s1">'{ print $2 }'</span><span class="k">)</span>
+  <span class="nv">rssi</span><span class="o">=</span><span class="si">$(</span><span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"</span><span class="nv">$out</span><span class="s2">"</span> | <span class="nb">grep</span> <span class="s2">"CtlRSSI"</span> | <span class="nb">awk</span> <span class="nt">-F</span> <span class="s1">':'</span> <span class="s1">'{ print $2 }'</span><span class="si">)</span>
+  <span class="nv">noise</span><span class="o">=</span><span class="si">$(</span><span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"</span><span class="nv">$out</span><span class="s2">"</span> | <span class="nb">grep</span> <span class="s2">"CtlNoise"</span> | <span class="nb">awk</span> <span class="nt">-F</span> <span class="s1">':'</span> <span class="s1">'{ print $2 }'</span><span class="si">)</span>
 
   <span class="nb">echo</span> <span class="s2">"RSSI: </span><span class="nv">$rssi</span><span class="s2">, Noise: </span><span class="nv">$noise</span><span class="s2">, Quality: </span><span class="k">$((</span>rssi <span class="o">-</span> noise<span class="k">))</span><span class="s2">"</span>
 
-  sleep 1
+  <span class="nb">sleep </span>1
 <span class="k">done</span>
 </code></pre></div>
 <p>Example of monitoring and walking around the appartment:</p>

@@ -106,11 +106,11 @@ new OOP system uses it to define new classes. Here is an example:</p>
   <span class="p">}</span>
 
   <span class="nx">bark</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"wuf! wuf!"</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">wuf! wuf!</span><span class="dl">"</span><span class="p">);</span>
   <span class="p">}</span>
 <span class="p">}</span>
 
-<span class="kd">var</span> <span class="nx">leo</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Dog</span><span class="p">(</span><span class="s2">"Leo"</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">leo</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Dog</span><span class="p">(</span><span class="dl">"</span><span class="s2">Leo</span><span class="dl">"</span><span class="p">);</span>
 <span class="nx">leo</span><span class="p">.</span><span class="nx">bark</span><span class="p">();</span>
 </code></pre></div>
 <p>At the first glance, we can instantly recognize the intuitiveness of
@@ -126,10 +126,10 @@ ES5 format:</p>
 <span class="p">}</span>
 
 <span class="nx">Dog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">bark</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"wuf! wuf!"</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">wuf! wuf!</span><span class="dl">"</span><span class="p">);</span>
 <span class="p">};</span>
 
-<span class="kd">var</span> <span class="nx">leo</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Dog</span><span class="p">(</span><span class="s2">"Leo"</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">leo</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Dog</span><span class="p">(</span><span class="dl">"</span><span class="s2">Leo</span><span class="dl">"</span><span class="p">);</span>
 <span class="nx">leo</span><span class="p">.</span><span class="nx">bark</span><span class="p">();</span>
 </code></pre></div>
 <p>You can argue that this version is shorter, but it is definitely
@@ -159,11 +159,11 @@ Labradors:</p>
   <span class="p">}</span>
 
   <span class="nx">playWithKids</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"playing with kids! wuf! wuf!"</span><span class="p">)</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">playing with kids! wuf! wuf!</span><span class="dl">"</span><span class="p">)</span>
   <span class="p">}</span>
 <span class="p">}</span>
 
-<span class="kd">var</span> <span class="nx">leo</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Labrador</span><span class="p">(</span><span class="s2">"Leo"</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">leo</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Labrador</span><span class="p">(</span><span class="dl">"</span><span class="s2">Leo</span><span class="dl">"</span><span class="p">);</span>
 <span class="nx">leo</span><span class="p">.</span><span class="nx">playWithKids</span><span class="p">();</span>
 </code></pre></div>
 <p>But how do you redefine a method? Let&rsquo;s say for the sake of the
@@ -176,16 +176,16 @@ we can do it:</p>
   <span class="p">}</span>
 
   <span class="nx">bark</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"wuf! wuf!"</span><span class="p">);</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"woof!"</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">wuf! wuf!</span><span class="dl">"</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">woof!</span><span class="dl">"</span><span class="p">);</span>
   <span class="p">}</span>
 
   <span class="nx">playWithKids</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"playing with kids! wuf! wuf!"</span><span class="p">)</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">playing with kids! wuf! wuf!</span><span class="dl">"</span><span class="p">)</span>
   <span class="p">}</span>
 <span class="p">}</span>
 
-<span class="kd">var</span> <span class="nx">leo</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Labrador</span><span class="p">(</span><span class="s2">"Leo"</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">leo</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Labrador</span><span class="p">(</span><span class="dl">"</span><span class="s2">Leo</span><span class="dl">"</span><span class="p">);</span>
 <span class="nx">leo</span><span class="p">.</span><span class="nx">bark</span><span class="p">();</span>
 </code></pre></div>
 <p>Pretty simple. We can even use the definition from the parent class
@@ -197,15 +197,15 @@ by doing the following:</p>
 
   <span class="nx">bark</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">super</span><span class="p">.</span><span class="nx">bark</span><span class="p">();</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"woof!"</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">woof!</span><span class="dl">"</span><span class="p">);</span>
   <span class="p">}</span>
 
   <span class="nx">playWithKids</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"playing with kids! wuf! wuf!"</span><span class="p">)</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">playing with kids! wuf! wuf!</span><span class="dl">"</span><span class="p">)</span>
   <span class="p">}</span>
 <span class="p">}</span>
 
-<span class="kd">var</span> <span class="nx">leo</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Labrador</span><span class="p">(</span><span class="s2">"Leo"</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">leo</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Labrador</span><span class="p">(</span><span class="dl">"</span><span class="s2">Leo</span><span class="dl">"</span><span class="p">);</span>
 <span class="nx">leo</span><span class="p">.</span><span class="nx">bark</span><span class="p">();</span>
 </code></pre></div>
 <p>That was again, blazingly simple. I don&rsquo;t even know how to do that
@@ -225,7 +225,7 @@ Let&rsquo;s start with an example <code>User</code> class:</p>
 
 <span class="p">}</span>
 
-<span class="kd">var</span> <span class="nx">user</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">User</span><span class="p">(</span><span class="s2">"Igor"</span><span class="p">,</span> <span class="s2">"Sarcevic"</span><span class="p">,</span> <span class="mi">24</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">user</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">User</span><span class="p">(</span><span class="dl">"</span><span class="s2">Igor</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Sarcevic</span><span class="dl">"</span><span class="p">,</span> <span class="mi">24</span><span class="p">);</span>
 </code></pre></div>
 <p>Now, let&rsquo;s say there is a need to get the full name of the user. We can define
 a method called <code>fullName</code> like this:</p>
@@ -242,7 +242,7 @@ a method called <code>fullName</code> like this:</p>
   <span class="p">}</span>
 <span class="p">}</span>
 
-<span class="kd">var</span> <span class="nx">user</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">User</span><span class="p">(</span><span class="s2">"Igor"</span><span class="p">,</span> <span class="s2">"Sarcevic"</span><span class="p">,</span> <span class="mi">24</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">user</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">User</span><span class="p">(</span><span class="dl">"</span><span class="s2">Igor</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Sarcevic</span><span class="dl">"</span><span class="p">,</span> <span class="mi">24</span><span class="p">);</span>
 
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">user</span><span class="p">.</span><span class="nx">fullName</span><span class="p">());</span>
 </code></pre></div>
@@ -264,7 +264,7 @@ the full name of the user. Luckily, we can use getters:</p>
   <span class="p">}</span>
 <span class="p">}</span>
 
-<span class="kd">var</span> <span class="nx">user</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">User</span><span class="p">(</span><span class="s2">"Igor"</span><span class="p">,</span> <span class="s2">"Sarcevic"</span><span class="p">,</span> <span class="mi">24</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">user</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">User</span><span class="p">(</span><span class="dl">"</span><span class="s2">Igor</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Sarcevic</span><span class="dl">"</span><span class="p">,</span> <span class="mi">24</span><span class="p">);</span>
 
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">user</span><span class="p">.</span><span class="nx">fullName</span><span class="p">);</span>
 </code></pre></div>

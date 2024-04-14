@@ -107,7 +107,7 @@ Type <span class="s2">"help"</span> <span class="k">for </span>help.
 test-db-001<span class="o">=</span><span class="c">#</span>
 </code></pre></div>
 <p>In the database, create a <code>users</code> table with several records:</p>
-<div class="highlight"><pre class="highlight sql"><code><span class="n">test</span><span class="o">-</span><span class="n">db</span><span class="o">-</span><span class="mi">001</span><span class="o">=#</span> <span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">users</span> <span class="p">(</span><span class="n">id</span> <span class="n">int</span><span class="p">,</span> <span class="n">username</span> <span class="n">text</span><span class="p">);</span>
+<div class="highlight"><pre class="highlight sql"><code><span class="n">test</span><span class="o">-</span><span class="n">db</span><span class="o">-</span><span class="mi">001</span><span class="o">=#</span> <span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">users</span> <span class="p">(</span><span class="n">id</span> <span class="nb">int</span><span class="p">,</span> <span class="n">username</span> <span class="nb">text</span><span class="p">);</span>
 <span class="k">CREATE</span> <span class="k">TABLE</span>
 
 <span class="n">test</span><span class="o">-</span><span class="n">db</span><span class="o">-</span><span class="mi">001</span><span class="o">=#</span> <span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">users</span> <span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">username</span><span class="p">)</span>
@@ -169,21 +169,21 @@ listing the available columns.</p>
                    <span class="k">View</span> <span class="nv">"pg_catalog.pg_locks"</span>
        <span class="k">Column</span>       <span class="o">|</span>   <span class="k">Type</span>   <span class="o">|</span> <span class="k">Collation</span> <span class="o">|</span> <span class="k">Nullable</span> <span class="o">|</span> <span class="k">Default</span>
 <span class="c1">--------------------+----------+-----------+----------+---------</span>
- <span class="n">locktype</span>           <span class="o">|</span> <span class="n">text</span>     <span class="o">|</span>           <span class="o">|</span>          <span class="o">|</span>
+ <span class="n">locktype</span>           <span class="o">|</span> <span class="nb">text</span>     <span class="o">|</span>           <span class="o">|</span>          <span class="o">|</span>
  <span class="k">database</span>           <span class="o">|</span> <span class="n">oid</span>      <span class="o">|</span>           <span class="o">|</span>          <span class="o">|</span>
  <span class="n">relation</span>           <span class="o">|</span> <span class="n">oid</span>      <span class="o">|</span>           <span class="o">|</span>          <span class="o">|</span>
- <span class="n">page</span>               <span class="o">|</span> <span class="n">integer</span>  <span class="o">|</span>           <span class="o">|</span>          <span class="o">|</span>
- <span class="n">tuple</span>              <span class="o">|</span> <span class="n">smallint</span> <span class="o">|</span>           <span class="o">|</span>          <span class="o">|</span>
- <span class="n">virtualxid</span>         <span class="o">|</span> <span class="n">text</span>     <span class="o">|</span>           <span class="o">|</span>          <span class="o">|</span>
+ <span class="n">page</span>               <span class="o">|</span> <span class="nb">integer</span>  <span class="o">|</span>           <span class="o">|</span>          <span class="o">|</span>
+ <span class="n">tuple</span>              <span class="o">|</span> <span class="nb">smallint</span> <span class="o">|</span>           <span class="o">|</span>          <span class="o">|</span>
+ <span class="n">virtualxid</span>         <span class="o">|</span> <span class="nb">text</span>     <span class="o">|</span>           <span class="o">|</span>          <span class="o">|</span>
  <span class="n">transactionid</span>      <span class="o">|</span> <span class="n">xid</span>      <span class="o">|</span>           <span class="o">|</span>          <span class="o">|</span>
  <span class="n">classid</span>            <span class="o">|</span> <span class="n">oid</span>      <span class="o">|</span>           <span class="o">|</span>          <span class="o">|</span>
  <span class="n">objid</span>              <span class="o">|</span> <span class="n">oid</span>      <span class="o">|</span>           <span class="o">|</span>          <span class="o">|</span>
- <span class="n">objsubid</span>           <span class="o">|</span> <span class="n">smallint</span> <span class="o">|</span>           <span class="o">|</span>          <span class="o">|</span>
- <span class="n">virtualtransaction</span> <span class="o">|</span> <span class="n">text</span>     <span class="o">|</span>           <span class="o">|</span>          <span class="o">|</span>
- <span class="n">pid</span>                <span class="o">|</span> <span class="n">integer</span>  <span class="o">|</span>           <span class="o">|</span>          <span class="o">|</span>
- <span class="k">mode</span>               <span class="o">|</span> <span class="n">text</span>     <span class="o">|</span>           <span class="o">|</span>          <span class="o">|</span>
- <span class="k">granted</span>            <span class="o">|</span> <span class="n">boolean</span>  <span class="o">|</span>           <span class="o">|</span>          <span class="o">|</span>
- <span class="n">fastpath</span>           <span class="o">|</span> <span class="n">boolean</span>  <span class="o">|</span>           <span class="o">|</span>          <span class="o">|</span>
+ <span class="n">objsubid</span>           <span class="o">|</span> <span class="nb">smallint</span> <span class="o">|</span>           <span class="o">|</span>          <span class="o">|</span>
+ <span class="n">virtualtransaction</span> <span class="o">|</span> <span class="nb">text</span>     <span class="o">|</span>           <span class="o">|</span>          <span class="o">|</span>
+ <span class="n">pid</span>                <span class="o">|</span> <span class="nb">integer</span>  <span class="o">|</span>           <span class="o">|</span>          <span class="o">|</span>
+ <span class="k">mode</span>               <span class="o">|</span> <span class="nb">text</span>     <span class="o">|</span>           <span class="o">|</span>          <span class="o">|</span>
+ <span class="k">granted</span>            <span class="o">|</span> <span class="nb">boolean</span>  <span class="o">|</span>           <span class="o">|</span>          <span class="o">|</span>
+ <span class="n">fastpath</span>           <span class="o">|</span> <span class="nb">boolean</span>  <span class="o">|</span>           <span class="o">|</span>          <span class="o">|</span>
 </code></pre></div>
 <p>Let&rsquo;s look into open locks in the database with the <code>select</code> command:</p>
 <div class="highlight"><pre class="highlight sql"><code><span class="p">(</span><span class="n">alice</span><span class="p">)</span> <span class="o">#</span> <span class="k">SELECT</span> <span class="n">locktype</span><span class="p">,</span> <span class="n">relation</span><span class="p">,</span> <span class="k">mode</span><span class="p">,</span> <span class="n">pid</span> <span class="k">FROM</span> <span class="n">pg_locks</span><span class="p">;</span>
@@ -257,7 +257,7 @@ table does just that, it locks up the table with exclusive access.</p>
 <div class="highlight"><pre class="highlight sql"><code><span class="p">(</span><span class="n">bob</span><span class="p">)</span> <span class="o">#</span> <span class="k">END</span><span class="p">;</span>
 
 <span class="p">(</span><span class="n">bob</span><span class="p">)</span> <span class="o">#</span> <span class="k">BEGIN</span><span class="p">;</span>
-<span class="p">(</span><span class="n">bob</span><span class="p">)</span> <span class="o">#</span> <span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">users</span> <span class="k">ADD</span> <span class="n">age</span> <span class="n">int</span><span class="p">;</span>
+<span class="p">(</span><span class="n">bob</span><span class="p">)</span> <span class="o">#</span> <span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">users</span> <span class="k">ADD</span> <span class="n">age</span> <span class="nb">int</span><span class="p">;</span>
 </code></pre></div><div class="highlight"><pre class="highlight sql"><code><span class="p">(</span><span class="n">alice</span><span class="p">)</span> <span class="o">#</span> <span class="k">SELECT</span> <span class="n">locktype</span><span class="p">,</span> <span class="n">relation</span><span class="p">::</span><span class="n">regclass</span><span class="p">,</span> <span class="k">mode</span><span class="p">,</span> <span class="n">pid</span>
 <span class="p">(</span><span class="n">alice</span><span class="p">)</span> <span class="o">#</span> <span class="k">FROM</span> <span class="n">pg_locks</span> <span class="k">WHERE</span> <span class="n">pid</span> <span class="o">!=</span> <span class="n">pg_backend_pid</span><span class="p">();</span>
 

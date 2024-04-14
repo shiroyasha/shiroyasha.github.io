@@ -102,7 +102,7 @@ around for a quick and easy solution, I&rsquo;ve learned that there is a tool in
 Linux environment &mdash; column &mdash; that does just that.</p>
 <div class="highlight"><pre class="highlight shell"><code><span class="nv">$ </span><span class="nb">cat </span>data.txt | column <span class="nt">-t</span> <span class="nt">-s</span> <span class="s1">','</span>
 
-id     name               count
+<span class="nb">id     </span>name               count
 31232  property-a         21
 31     window             2
 2121   update-attributes  432
@@ -136,19 +136,19 @@ Su Mo Tu We Th Fr Sa  Su Mo Tu We Th Fr Sa  Su Mo Tu We Th Fr Sa
 30
 </code></pre></div>
 <p>Or, did you know that you can factor numbers with the <code>factor</code> program?</p>
-<div class="highlight"><pre class="highlight shell"><code><span class="nv">$ </span>factor 234123421341
+<div class="highlight"><pre class="highlight shell"><code><span class="nv">$ </span><span class="nb">factor </span>234123421341
 234123421341: 3 67 1601 727541
 
-<span class="nv">$ </span>factor <span class="k">$(</span>date +%s<span class="k">)</span> <span class="c"># factor current timestamp</span>
+<span class="nv">$ </span><span class="nb">factor</span> <span class="si">$(</span><span class="nb">date</span> +%s<span class="si">)</span> <span class="c"># factor current timestamp</span>
 1495329393: 3 19 47 558167
 </code></pre></div>
 <p>Or, that you can find out how many terabytes are in <code>4123412312312</code> bytes:</p>
-<div class="highlight"><pre class="highlight shell"><code><span class="nv">$ </span>numfmt <span class="nt">--to</span><span class="o">=</span>iec 4123412312312
+<div class="highlight"><pre class="highlight shell"><code><span class="nv">$ </span><span class="nb">numfmt</span> <span class="nt">--to</span><span class="o">=</span>iec 4123412312312
 3.8T
 </code></pre></div>
 <p>Or that there is a hardcore version of <code>rm</code> that makes it much harder to
 retrieve deleted files:</p>
-<div class="highlight"><pre class="highlight shell"><code><span class="nv">$ </span>shred a.txt
+<div class="highlight"><pre class="highlight shell"><code><span class="nv">$ </span><span class="nb">shred </span>a.txt
 </code></pre></div>
 <p>So many interesting things to learn! I encourage you to read through the
 <a href="https://www.gnu.org/software/coreutils/manual/coreutils.html#toc-System-context-1">documentation</a>
