@@ -62,24 +62,23 @@ to compare them and find out what part of them is different.
   <body>
 
     <div id="main" role="main">
-      <nav class="navigation" style="padding: 10px;">
-  <div style="display: flex;justify-items: space-between;justify-content: space-between;">
-    <a style="font-size: 20px" href="/" style="color: crimson;">Home</a>
-    <a style="font-size: 20px" href="/about-me.html" style="color: crimson;">About</a>
-  </div>
-</nav>
+      <div style="font-size: 16px; color: rgba(0, 0, 0, 0.8); padding: 10px; font-weight: 400; text-align: center">
+  You are reading <a href="/">Morning Coffee</a>, a blog about software engineering written by <a href="/about-me.html">Igor Šarčević</a>. <br> Have a nice day!
+</div>
 
 
         <article class="article">
     <div class="header">
       <h1>Comparing files on different servers</h1>
 
-      <div class="subtitle">
-        Published on <time>May 27, 2015</time>
+      <div style="display: flex; items-align: center; font-size: 18px; color: #444; border-top: 1px solid #eee; border-bottom: 1px solid #eee; padding-top: 10px; padding-bottom: 10px;">
+        <img src="https://pbs.twimg.com/profile_images/1645826320729767941/xmJQNFJz_400x400.jpg" alt="Igor Sarcevic" style="height: 30px; width: 30px; border-radius: 50%; margin-right: 8px;">
+        Igor wrote this in May 2015
       </div>
     </div>
 
-    <p>Let&rsquo;s say you have two servers named <code>gandalf</code> and <code>charmander</code>, and a configuration
+    <div class="content">
+      <p>Let&rsquo;s say you have two servers named <code>gandalf</code> and <code>charmander</code>, and a configuration
 file <code>config.xml</code> that should be present on each server. Due to some human error
 the files got different and your servers started to act weird. It would be nice
 to compare them and find out what part of them is different.</p>
@@ -119,6 +118,7 @@ wastly more handy form like the following:</p>
 <p>and loop through all the servers with a nifty <code>for</code> loop:</p>
 <div class="highlight"><pre class="highlight shell"><code><span class="k">for </span>i <span class="k">in</span> <span class="o">{</span>2..100<span class="o">}</span><span class="p">;</span> <span class="o">{</span> diff /tmp/good &lt;<span class="o">(</span>ssh <span class="s2">"s</span><span class="nv">$i</span><span class="s2">"</span> <span class="s2">"cat ~/config.xml"</span><span class="o">)</span> <span class="o">}</span>
 </code></pre></div>
+    </div>
 
 
   </article>
