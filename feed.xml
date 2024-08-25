@@ -4,10 +4,66 @@
   <id>http://shiroyasha.io/</id>
   <link href="http://shiroyasha.io/"/>
   <link href="http://shiroyasha.io/feed.xml" rel="self"/>
-  <updated>2024-04-14T00:00:00+00:00</updated>
+  <updated>2024-08-25T00:00:00+00:00</updated>
   <author>
     <name>Igor Šarčević</name>
   </author>
+  <entry>
+    <title>Manage Your Time or Someone Else Will Do It for You</title>
+    <link rel="alternate" href="http://shiroyasha.io/manage-your-time-or-someone-else-will-do-it-for-you.html"/>
+    <id>http://shiroyasha.io/manage-your-time-or-someone-else-will-do-it-for-you.html</id>
+    <published>2024-08-25T00:00:00+00:00</published>
+    <updated>2024-08-25T11:29:30+00:00</updated>
+    <author>
+      <name>Igor Šarčević</name>
+    </author>
+    <summary type="html">&lt;p&gt;From the moment we’re born, our time isn’t really our own. Parents, schools,
+and later, employers all have a say in how our days unfold. As kids, we’re on
+someone else’s schedule. Education systems beat it into us, training us to
+march to the drum...&lt;/p&gt;</summary>
+    <content type="html">&lt;p&gt;From the moment we’re born, our time isn’t really our own. Parents, schools,
+and later, employers all have a say in how our days unfold. As kids, we’re on
+someone else’s schedule. Education systems beat it into us, training us to
+march to the drum of a clock that someone else controls. By the time we enter
+the workforce, we’re well-prepared to hand over the reins of our time to
+another authority.&lt;/p&gt;
+
+&lt;p&gt;Most people never break free from this pattern. They move from the structure of
+school into the rigid framework of corporate life, where time is often wasted
+on pointless tasks. Think about the endless meetings you’ve sat
+through—meetings that could have been an email, a quick chat, or even avoided
+entirely. It’s astonishing how much time we collectively waste on rituals that
+serve no real purpose.&lt;/p&gt;
+
+&lt;p&gt;The office itself is a masterclass in time-wasting. Long commutes eat away at
+your day. Two hours stuck in traffic might not seem like much, but add that up
+over a week, a month, a year. Suddenly, you’ve lost hundreds of hours that
+could have been spent on something meaningful. That’s time you could’ve used to
+learn a new skill, start a side project, or just have some damn fun. Adventures
+don’t just happen—they’re made, and you need time to make them.&lt;/p&gt;
+
+&lt;p&gt;Complete work-life separation isn’t optimal either. When you rigidly divide
+work from the rest of your life, you end up competing for time and space with
+everyone else. The classic example is the gym at 5 p.m. It’s packed, loud, and
+stressful. Go at noon, though, and it’s a different world. You have space, you
+have time, and you have freedom. Why not work when you’re most productive, and
+live when it’s most enjoyable?&lt;/p&gt;
+
+&lt;p&gt;If you measure your team’s output by the hours they spend in a chair, you’re
+doing it wrong. It’s naive and lazy management. Forcing people to be present
+for a fixed number of hours is a waste, plain and simple. It’s not about the
+time spent; it’s about what gets done. When you value chair time over actual
+work, you’re collectively making everyone’s life worse. You’re stealing time
+from them—their most valuable asset.&lt;/p&gt;
+
+&lt;p&gt;The truth is, if you don’t take control of your time, someone else will. And
+they’ll do it in a way that benefits them, not you. Don’t let that happen. Take
+the reins, cut out the waste, and reclaim your time. It’s the only way to live
+a life that’s truly yours.&lt;/p&gt;
+
+&lt;p&gt;&amp;mdash; Igor&lt;/p&gt;
+</content>
+  </entry>
   <entry>
     <title>Steps We Took to Automate License Compatibility Verification</title>
     <link rel="alternate" href="http://shiroyasha.io/steps-we-took-to-automate-license-compatibility-verification.html"/>
@@ -875,84 +931,6 @@ requests. This feedback loop is slow; we must educate ourselves in advance.&lt;/
 &lt;li&gt;&lt;a href="https://microservices.io/patterns/data/transactional-outbox.html"&gt;Transactional Outbox by Chris Richardson&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://www.amazon.com/gp/product/1617294543"&gt;Book: Microservice Patterns&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-</content>
-  </entry>
-  <entry>
-    <title>What I learned from completing my first half-marathon</title>
-    <link rel="alternate" href="http://shiroyasha.io/running-my-first-half-marathon.html"/>
-    <id>http://shiroyasha.io/running-my-first-half-marathon.html</id>
-    <published>2021-06-29T00:00:00+00:00</published>
-    <updated>2024-04-14T14:30:28+00:00</updated>
-    <author>
-      <name>Igor Šarčević</name>
-    </author>
-    <summary type="html">&lt;p&gt;Three days have passed since I completed my first half-marathon here in Novi
-Sad. My legs are still sore, I still have several calluses on my feet, and my
-butt muscles are still screaming when I stand up. It’s the perfect time to
-reflect and learn...&lt;/p&gt;</summary>
-    <content type="html">&lt;p&gt;Three days have passed since I completed my first half-marathon here in Novi
-Sad. My legs are still sore, I still have several calluses on my feet, and my
-butt muscles are still screaming when I stand up. It&amp;rsquo;s the perfect time to
-reflect and learn from this experience.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src="/images/2021-06-29-running-my-first-half-marathon.png" alt="Running my first half-marathon" /&gt;&lt;/p&gt;
-
-&lt;p&gt;I started jogging regularly &lt;a href="/running.html"&gt;back in 2017&lt;/a&gt;. It is my way of
-zoning out, breathing deeply, and disconnecting from the day-to-day stress of
-the modern workplace. In a word, meditating. But then corona hit us last year
-and halted everything. No more running, no more healthy eating, no more friends,
-only anxiety and soft panic attacks when someone gets closer than 6 feet to you.&lt;/p&gt;
-
-&lt;p&gt;After around two years of no actual physical activity, I got pulled into running
-a half marathon by a friend. I started from zero three weeks ago, and when I say
-zero, I mean that I was barely able to complete 5 kilometers on the first try.
-It was a bit better on the second try, but still, it was almost impossible for
-me to cross the 10k mark. The marathon day was getting closer, and I still
-struggled with the basics.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src="/images/2021-06-29-running-my-first-half-marathon-pace.png" alt="Running pace on first half marathon" /&gt;&lt;/p&gt;
-
-&lt;p&gt;As you might expect, the marathon experience was brutal. I started strong. 6km
-in my breath become erratic. On the 10km mark, I developed a callus on my right
-foot. At 16km, I was running on sheer willpower, counting down every 100m till
-the end. Finally, around 2hour 55min, I reached the finish line. My feet were on
-fire.&lt;/p&gt;
-
-&lt;p&gt;But I finished it. I fucking did it!  What did I learn from this?&lt;/p&gt;
-
-&lt;h2&gt;I (you) can do much more than I (you) think&lt;/h2&gt;
-
-&lt;p&gt;There are always reasons why I feel unprepared to take on a challenge.  For
-example, &amp;ldquo;I never wrote a test. TDD is impossible.&amp;rdquo;, or &amp;ldquo;This API can&amp;rsquo;t be
-faster. It is impossible.&amp;rdquo;, or in my latest case, &amp;ldquo;I&amp;rsquo;m too fat to run a
-marathon.&amp;rdquo;.&lt;/p&gt;
-
-&lt;p&gt;I (you) are mostly much more capable than you give yourself credit. The right
-approach is to Just Do It ™. I guarantee that you will be at least 40% more
-capable than you think.&lt;/p&gt;
-
-&lt;h2&gt;Environment ≥ Willpower&lt;/h2&gt;
-
-&lt;p&gt;An important observation to make here is that I was able to complete the
-marathon. I simply didn&amp;rsquo;t do it. So what was the difference this time? First, a
-friend nudged me into it. The second is that the marathon was an organized event
-with a well-defined deadline. Third, my life partner supported me in every way.&lt;/p&gt;
-
-&lt;p&gt;Individual willpower, or discipline, fades quickly. However, with the right
-people and the right environment, everything feels natural and straightforward.
-They are there to kick you in the ass when you feel stuck, and they are there to
-heal and support you when you get burned.&lt;/p&gt;
-
-&lt;p&gt;For example, take the example of a 10x engineer. An engineer from a different
-company can feel 10x compared to you. But I can bet that he is not 10x compared
-to his peers, not even close. It is the culture that makes her 10x. Culture
-always predates individuals.&lt;/p&gt;
-
-&lt;h2&gt;Will I do it again?&lt;/h2&gt;
-
-&lt;p&gt;You bet I will. I&amp;rsquo;m already looking forward to the next one in September.&lt;/p&gt;
-
-&lt;p&gt;107km here I come! 👟&lt;/p&gt;
 </content>
   </entry>
 </feed>
