@@ -4,16 +4,92 @@
   <id>http://shiroyasha.io/</id>
   <link href="http://shiroyasha.io/"/>
   <link href="http://shiroyasha.io/feed.xml" rel="self"/>
-  <updated>2024-08-25T00:00:00+00:00</updated>
+  <updated>2024-10-06T00:00:00+00:00</updated>
   <author>
     <name>Igor Šarčević</name>
   </author>
+  <entry>
+    <title>Social Parasites</title>
+    <link rel="alternate" href="http://shiroyasha.io/social-parasites.html"/>
+    <id>http://shiroyasha.io/social-parasites.html</id>
+    <published>2024-10-06T00:00:00+00:00</published>
+    <updated>2024-10-06T18:32:13+00:00</updated>
+    <author>
+      <name>Igor Šarčević</name>
+    </author>
+    <summary type="html">&lt;p&gt;We’ve recently witnessed a perfect example of this parasitic behavior. A
+startup, freshly minted by a once-respected incubator, had the audacity to fork
+an open-source project and claim it as their own. They didn’t innovate. They
+didn’t improve. They...&lt;/p&gt;</summary>
+    <content type="html">&lt;p&gt;We&amp;rsquo;ve recently witnessed a perfect example of this parasitic behavior. A
+startup, freshly minted by a once-respected incubator, had the audacity to fork
+an open-source project and claim it as their own. They didn&amp;rsquo;t innovate. They
+didn&amp;rsquo;t improve. They simply took.&lt;/p&gt;
+
+&lt;p&gt;Let me be clear: I&amp;rsquo;m not talking about healthy competition or even inspiration
+drawn from existing ideas. I&amp;rsquo;m talking about those who shamelessly and completely
+take the hard work of others, wrapping it in a shiny new package and calling it
+their own.&lt;/p&gt;
+
+&lt;p&gt;Here&amp;rsquo;s what happened: This startup PairAI basically took an open-source project 
+called Continue, forked it, and are now passing it off as their own groundbreaking
+innovation.&lt;/p&gt;
+
+&lt;p&gt;And here&amp;rsquo;s the kick-you-in-the-balls: YC&amp;rsquo;s CEO, Garry Tan, defended this copycat
+behavior on Twitter. Talk about missing the forest for the trees. Sure, it might
+be legal, but that&amp;rsquo;s not the point. The point is that YC is funding startups 
+with zero innovation and apparently zero due diligence.&lt;/p&gt;
+
+&lt;p&gt;Being inspired by other projects is one thing. Heck, it&amp;rsquo;s how most of us get
+started. I&amp;rsquo;m even fine with copying. But taking someone else&amp;rsquo;s work, changing a 
+few lines of code, and calling it your own, and then apply to YC and get funded? 
+That&amp;rsquo;s a whole different story.&lt;/p&gt;
+
+&lt;p&gt;Now, some might argue that open-source licenses permit such actions. But let me
+ask you this: Since when did we start confusing what&amp;rsquo;s legally permissible with
+what&amp;rsquo;s ethically right? Since when did &amp;ldquo;not illegal&amp;rdquo; become the bar we&amp;rsquo;re aiming 
+for in the tech industry?&lt;/p&gt;
+
+&lt;p&gt;What message does this send to open-source projects? To the builder and the
+maintainers who pour their hearts and souls into open-source projects? It tells
+them that their work is up for grabs, ready to be exploited by the first
+opportunist who comes along.&lt;/p&gt;
+
+&lt;p&gt;Here&amp;rsquo;s the thing: Open-source isn&amp;rsquo;t just about the license. It&amp;rsquo;s about the
+community. It&amp;rsquo;s about giving back, not just taking. When we use open-source
+tools at Operately (and we use them a lot), we always look for ways to contribute
+back. Sometimes it&amp;rsquo;s code, sometimes it&amp;rsquo;s documentation, sometimes it&amp;rsquo;s just
+reporting bugs. But we contribute. Because that&amp;rsquo;s how healthy ecosystems work.&lt;/p&gt;
+
+&lt;p&gt;So what can we do about it?&lt;/p&gt;
+
+&lt;p&gt;First, if you&amp;rsquo;re an open-source maintainer or contributor, don&amp;rsquo;t let this
+discourage you. Keep building, keep sharing. The actions of a few bad actors
+don&amp;rsquo;t negate the immense value and importance of what you do. Open-source is
+still one of the most powerfull fonces for good, not only in tech, but for the
+whole world and society.&lt;/p&gt;
+
+&lt;p&gt;Second, to the folks at YC: It&amp;rsquo;s time to step on the brakes. Remember what made
+you special in the first place. It wasn&amp;rsquo;t the number of startups you funded. 
+It was the quality. The innovation. The community. You are letting it slip
+away. For what? A quick flip? A few more unicorns? Is that really worth it?&lt;/p&gt;
+
+&lt;p&gt;Building a successful project is hard. Building a successful company is even
+harder. Really hard. There are no shortcurts. And if there were, they certainly 
+wouldn&amp;rsquo;t involve ripping off the hard work of others.&lt;/p&gt;
+
+&lt;p&gt;So let&amp;rsquo;s call this behavior what it is: parasitic. And let&amp;rsquo;s make sure it has no
+place in our industry. &lt;/p&gt;
+
+&lt;p&gt;&amp;mdash; Igor&lt;/p&gt;
+</content>
+  </entry>
   <entry>
     <title>Manage Your Time or Someone Else Will Do It for You</title>
     <link rel="alternate" href="http://shiroyasha.io/manage-your-time-or-someone-else-will-do-it-for-you.html"/>
     <id>http://shiroyasha.io/manage-your-time-or-someone-else-will-do-it-for-you.html</id>
     <published>2024-08-25T00:00:00+00:00</published>
-    <updated>2024-08-25T11:29:30+00:00</updated>
+    <updated>2024-10-06T18:32:12+00:00</updated>
     <author>
       <name>Igor Šarčević</name>
     </author>
@@ -69,7 +145,7 @@ a life that’s truly yours.&lt;/p&gt;
     <link rel="alternate" href="http://shiroyasha.io/steps-we-took-to-automate-license-compatibility-verification.html"/>
     <id>http://shiroyasha.io/steps-we-took-to-automate-license-compatibility-verification.html</id>
     <published>2024-04-14T00:00:00+00:00</published>
-    <updated>2024-04-14T15:30:14+00:00</updated>
+    <updated>2024-10-06T17:48:38+00:00</updated>
     <author>
       <name>Igor Šarčević</name>
     </author>
@@ -184,7 +260,7 @@ start from here: &lt;a href="https://github.com/operately/operately/blob/main/Ma
     <link rel="alternate" href="http://shiroyasha.io/adulting-harder.html"/>
     <id>http://shiroyasha.io/adulting-harder.html</id>
     <published>2023-01-29T00:00:00+00:00</published>
-    <updated>2024-04-14T14:30:28+00:00</updated>
+    <updated>2024-10-06T17:48:38+00:00</updated>
     <author>
       <name>Igor Šarčević</name>
     </author>
@@ -259,7 +335,7 @@ that come your way.&lt;/p&gt;
     <link rel="alternate" href="http://shiroyasha.io/pull-requests-are-a-reflection-of-your-engineering-culture.html"/>
     <id>http://shiroyasha.io/pull-requests-are-a-reflection-of-your-engineering-culture.html</id>
     <published>2022-07-17T00:00:00+00:00</published>
-    <updated>2024-04-14T14:30:28+00:00</updated>
+    <updated>2024-10-06T17:48:38+00:00</updated>
     <author>
       <name>Igor Šarčević</name>
     </author>
@@ -411,7 +487,7 @@ direct first-hand experience of the bottlenecks your team is dealing with.&lt;/p
     <link rel="alternate" href="http://shiroyasha.io/proactive-cache-warming-in-a-microservice-based-architecture.html"/>
     <id>http://shiroyasha.io/proactive-cache-warming-in-a-microservice-based-architecture.html</id>
     <published>2021-07-17T00:00:00+00:00</published>
-    <updated>2024-04-14T14:30:28+00:00</updated>
+    <updated>2024-10-06T17:48:38+00:00</updated>
     <author>
       <name>Igor Šarčević</name>
     </author>
@@ -676,260 +752,6 @@ architectural choice even after several years in production.&lt;/p&gt;
 &lt;li&gt;&lt;a href="https://martinfowler.com/bliki/ReportingDatabase.html"&gt;Reporting Database&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://www.oreilly.com/library/view/microservices-antipatterns-and/9781492042716/"&gt;Microservices: AntiPatterns and Pitfalls&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://martinfowler.com/articles/201701-event-driven.html"&gt;What do you mean by “Event-Driven”?&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</content>
-  </entry>
-  <entry>
-    <title>Transactional Outbox: What is it and why you need it?</title>
-    <link rel="alternate" href="http://shiroyasha.io/what-is-a-transaction-outbox-and-why-you-need-it.html"/>
-    <id>http://shiroyasha.io/what-is-a-transaction-outbox-and-why-you-need-it.html</id>
-    <published>2021-07-02T00:00:00+00:00</published>
-    <updated>2024-04-14T14:30:28+00:00</updated>
-    <author>
-      <name>Igor Šarčević</name>
-    </author>
-    <summary type="html">&lt;p&gt;Receiving a request, saving it into a database, and finally publishing a message
-can be trickier than expected. A naive implementation can either lose messages
-or, even worse, post incorrect messages.&lt;/p&gt;
-
-&lt;p&gt;Let’s look at an example. A user registration...&lt;/p&gt;</summary>
-    <content type="html">&lt;p&gt;Receiving a request, saving it into a database, and finally publishing a message
-can be trickier than expected. A naive implementation can either lose messages
-or, even worse, post incorrect messages.&lt;/p&gt;
-
-&lt;p&gt;Let&amp;rsquo;s look at an example. A user registration service allows users to sign up.
-The backend of this system saves this request to a database and publishes a
-&amp;ldquo;user-signed-up&amp;rdquo; message on RabbitMQ. Based on this message, the User Greeter
-service sends a welcome message to the user, while the Analytics service records
-new signup and updates the business dashboards.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src="/images/transactional-outbox/architecture-example.png" alt="Transactional Outbox: Architecture Example" /&gt;&lt;/p&gt;
-
-&lt;p&gt;We will focus on the &lt;strong&gt;User Registration Service&lt;/strong&gt; and try out several ways to
-implement the registration action.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Implementation 1: Publishing after the user insert transaction finishes&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Our first attempt to implement the register action will be to open a
-transaction, save the user, close the transaction, and finally publish the
-message to RabbitMQ.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre class="highlight ruby"&gt;&lt;code&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;register_user&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;name&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="no"&gt;DB&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;transaction&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
-    &lt;span class="n"&gt;user&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;User&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;new&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;name: &lt;/span&gt;&lt;span class="nb"&gt;name&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="n"&gt;user&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;save!&lt;/span&gt;
-  &lt;span class="k"&gt;end&lt;/span&gt;
-
-  &lt;span class="no"&gt;RabbitMQ&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;publish&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"user-signed-up"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;user&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="no"&gt;ID&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="k"&gt;end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Let&amp;rsquo;s examine what can go wrong with this implementation. We need to answer
-three questions:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;What happens if RabbitMQ is temporarily unavailable?&lt;/li&gt;
-&lt;li&gt;What happens if writing to RabbitMQ fails?&lt;/li&gt;
-&lt;li&gt;What happens if the service is restarted right after the transaction finishes
-but right before the RabbitMQ message is published?&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;The answer to all three questions is: The user will be saved to the database,
-but the message will not be published to the queue. The user will not get a
-welcome message via email. Unacceptable!&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Implementation 2: Publishing before the user insert transaction finishes&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Publishing after a closed transaction leaves us in trouble. What if we try the
-opposite and publish the message right before we close the transaction?&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre class="highlight ruby"&gt;&lt;code&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;register_user&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;name&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="no"&gt;DB&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;transaction&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
-    &lt;span class="n"&gt;user&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;User&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;new&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;name: &lt;/span&gt;&lt;span class="nb"&gt;name&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="n"&gt;user&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;save!&lt;/span&gt;
-
-    &lt;span class="no"&gt;RabbitMQ&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;publish&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"user-signed-up"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;user&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="no"&gt;ID&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;user&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="no"&gt;Email&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="k"&gt;end&lt;/span&gt;
-&lt;span class="k"&gt;end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Let&amp;rsquo;s examine this approach as well. It seems that this one is also problematic.&lt;/p&gt;
-
-&lt;p&gt;If the transaction fails or rollbacks (for example, due to a uniqueness
-constraint) we will publish a message to RabbitMQ that is not correct.&lt;/p&gt;
-
-&lt;p&gt;The user was &lt;strong&gt;not created&lt;/strong&gt;, yet we still sent a &amp;ldquo;user-signed-up&amp;rdquo; message to
-upstream services. Our service is lying. Unacceptable!&lt;/p&gt;
-
-&lt;p&gt;&lt;hr style="width: 50%; margin-top: 3em; border-color: gray;"&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Problem Statement&lt;/strong&gt;: If we publish in the transaction, we can publish a fake
-message. If we publish after the transaction, we are risking that we will never
-publish the message. How to guarantee message dispatching?&lt;/p&gt;
-
-&lt;h2&gt;The transactional outbox pattern&lt;/h2&gt;
-
-&lt;p&gt;Using a transactional outbox is one way to solve this problem.&lt;/p&gt;
-
-&lt;p&gt;We will introduce a supplementary database table, called outbox, that will store
-outgoing messages from our service. A publisher service will then read from this
-table and publish messages to the queue.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src="/images/transactional-outbox/outbox.png" alt="Transactional Outbox" /&gt;&lt;/p&gt;
-
-&lt;p&gt;In code, the registration controller would do the following:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre class="highlight ruby"&gt;&lt;code&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;register_user&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;name&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="no"&gt;DB&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;transaction&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
-    &lt;span class="n"&gt;user&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;User&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;new&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;name: &lt;/span&gt;&lt;span class="nb"&gt;name&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="n"&gt;user&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;save!&lt;/span&gt;
-
-    &lt;span class="n"&gt;outbox&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;Outbox&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;new&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
-      &lt;span class="s2"&gt;"message"&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;json&lt;/span&gt;&lt;span class="p"&gt;({&lt;/span&gt;&lt;span class="ss"&gt;user_id: &lt;/span&gt;&lt;span class="n"&gt;user&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="no"&gt;ID&lt;/span&gt;&lt;span class="p"&gt;}),&lt;/span&gt;
-      &lt;span class="s2"&gt;"exchange"&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;"users"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-      &lt;span class="s2"&gt;"routing-key"&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;"user-signed-up"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-
-    &lt;span class="n"&gt;outbox&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;save!&lt;/span&gt;
-  &lt;span class="k"&gt;end&lt;/span&gt;
-&lt;span class="k"&gt;end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;In the meantime, a Publisher service polls the outbox table and publishes the
-messages to RabbitMQ.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre class="highlight ruby"&gt;&lt;code&gt;&lt;span class="k"&gt;module&lt;/span&gt; &lt;span class="nn"&gt;Publisher&lt;/span&gt;
-  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;start&lt;/span&gt;
-    &lt;span class="kp"&gt;loop&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
-      &lt;span class="n"&gt;poll_and_publish&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-      &lt;span class="nb"&gt;sleep&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;second&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="k"&gt;end&lt;/span&gt;
-  &lt;span class="k"&gt;end&lt;/span&gt;
-
-  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;poll_and_publish&lt;/span&gt;
-    &lt;span class="n"&gt;transaction&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
-      &lt;span class="c1"&gt;# SELECT * FROM outbox FOR UPDATE SKIP LOCKED LIMIT 10&lt;/span&gt;
-      &lt;span class="n"&gt;messages&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;Outbox&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;lock&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"FOR UPDATE SKIP LOCKED"&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nf"&gt;limit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nf"&gt;load&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-
-      &lt;span class="n"&gt;messages&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;each&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;msg&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;
-        &lt;span class="no"&gt;RabbitMQ&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;publish&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;msg&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-
-        &lt;span class="no"&gt;Outbox&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;delete&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;msg&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-      &lt;span class="k"&gt;end&lt;/span&gt;
-    &lt;span class="k"&gt;end&lt;/span&gt;
-  &lt;span class="k"&gt;end&lt;/span&gt;
-&lt;span class="k"&gt;end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h2&gt;Problems resolved by a transactional outbox?&lt;/h2&gt;
-
-&lt;p&gt;We had two problems in our original implementations:&lt;/p&gt;
-
-&lt;p&gt;The first attempted implementation tried to publish to the queue after a
-finished database transaction. This opened up the possibility of not publishing
-anything even if the user was persisted in the database.&lt;/p&gt;
-
-&lt;p&gt;We resolved this problem by moving the message creation inside of the
-transaction. This ensured that if a user was created, the message was persisted
-as well.&lt;/p&gt;
-
-&lt;p&gt;The second attempted implementation tried to publish inside of the transaction.
-Still, because we were trying to write to a different system, we published fake
-messages in case the user creation transaction rolled back. When I say fake
-message, I mean that the queue would contain a &amp;ldquo;user-signed-up&amp;rdquo; message, but
-the user would not be saved to the database.&lt;/p&gt;
-
-&lt;p&gt;We resolved this problem by writing both the user and the message into the
-database, which allowed us to have a clean rollback if the user creation failed.&lt;/p&gt;
-
-&lt;h2&gt;Problems not resolved by the transactional outbox?&lt;/h2&gt;
-
-&lt;p&gt;The transactional outbox has an &lt;strong&gt;at-least-once&lt;/strong&gt; message publishing guarantee,
-which means that the system guarantees that the message will be published to the
-queue at least once if a user is created. However, it can happen that this
-message is published multiple times to the queue.&lt;/p&gt;
-
-&lt;p&gt;How this happens?&lt;/p&gt;
-
-&lt;p&gt;Let&amp;rsquo;s take a look at the Publisher&amp;rsquo;s implementation and find a spot where our
-implementation produces multiple messages:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre class="highlight ruby"&gt;&lt;code&gt;&lt;span class="n"&gt;transaction&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
-  &lt;span class="c1"&gt;# SELECT * FROM outbox FOR UPDATE SKIP LOCKED LIMIT 10&lt;/span&gt;
-  &lt;span class="n"&gt;messages&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;Outbox&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;lock&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"FOR UPDATE SKIP LOCKED"&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nf"&gt;limit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nf"&gt;load&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-
-  &lt;span class="n"&gt;messages&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;each&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;msg&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;
-    &lt;span class="no"&gt;RabbitMQ&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;publish&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;msg&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-
-    &lt;span class="c1"&gt;# &amp;lt;--- HERE&lt;/span&gt;
-    &lt;span class="c1"&gt;#      Our service can crash at this moment, for example. The message&lt;/span&gt;
-    &lt;span class="c1"&gt;#      gets published but the Outbox message is not cleared up. On&lt;/span&gt;
-    &lt;span class="c1"&gt;#      restart it will re-attempt the message publishing.&lt;/span&gt;
-
-    &lt;span class="no"&gt;Outbox&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;delete&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;msg&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="k"&gt;end&lt;/span&gt;
-&lt;span class="k"&gt;end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;I&amp;rsquo;ll illustrate a possible timeline of events that causes multiple publishing in
-the following example:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre class="highlight plaintext"&gt;&lt;code&gt;event 01: messages = "select * from outbox"
-event 02: =&amp;gt; messages are now [{msg1, msg2}]
-
-event 03: RabbitMQ.publish(msg1)
-event 04: # message persisted to rabbitmq
-event 05: *** CRASH: Out of memory ***
-
-event 05: Publisher service is restarted.
-event 06: messages = "select * from outbox"
-event 07: =&amp;gt; messages are now [{msg1, msg2}]
-
-event 08: RabbitMQ.publish(msg1)              &amp;lt;--- publishing the second time
-event 09: # message persisted to rabbitmq
-event 10: Outbox.delete(msg1)
-
-...
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h2&gt;How can clients protect themselves from repeated messages?&lt;/h2&gt;
-
-&lt;p&gt;Repeated messages can be a real headache. The User Greeter service from our
-original example will send out to emails. Yikes!&lt;/p&gt;
-
-&lt;p&gt;One way to resolve this problem is to make the message receiving endpoint
-&lt;strong&gt;idempotent&lt;/strong&gt;. This means if the server receives two messages in, for example
-&lt;code&gt;({user_id: 1}, {user_id: 32}, {user_id: 1})&lt;/code&gt;, it will disregard the second
-occurrence of the &lt;code&gt;user_id: 1&lt;/code&gt; message.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src="/images/transactional-outbox/idempotent-client.png" alt="Transactional Outbox: Idempotent Client" /&gt;&lt;/p&gt;
-
-&lt;p&gt;In this case, you will notice that the receiving service needs a way to store
-the message that it receives.&lt;/p&gt;
-
-&lt;p&gt;Let&amp;rsquo;s look at the implementation:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre class="highlight ruby"&gt;&lt;code&gt;&lt;span class="no"&gt;RabbitMQ&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;subscribe&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"user-signed-up"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;message&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;
-  &lt;span class="n"&gt;email&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;Email&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;new&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;user_id: &lt;/span&gt;&lt;span class="n"&gt;message&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;user_id&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;content: &lt;/span&gt;&lt;span class="n"&gt;compose&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;user_id&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-  &lt;span class="n"&gt;result&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;email&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;save!&lt;/span&gt;
-
-  &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="n"&gt;result&lt;/span&gt;
-    &lt;span class="k"&gt;when&lt;/span&gt; &lt;span class="ss"&gt;:ok&lt;/span&gt;
-      &lt;span class="no"&gt;RabbitMQ&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;ack!&lt;/span&gt;
-
-    &lt;span class="k"&gt;when&lt;/span&gt; &lt;span class="ss"&gt;:user_id_already_exists&lt;/span&gt;
-      &lt;span class="no"&gt;RabbitMQ&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;ack!&lt;/span&gt; &lt;span class="c1"&gt;# idempotent, message was already processed&lt;/span&gt;
-
-    &lt;span class="k"&gt;else&lt;/span&gt;
-      &lt;span class="c1"&gt;# something unknown happened, we don't know what&lt;/span&gt;
-      &lt;span class="c1"&gt;# let's put back the message to the queue&lt;/span&gt;
-      &lt;span class="no"&gt;RabbitMQ&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;nack!&lt;/span&gt;
-  &lt;span class="k"&gt;end&lt;/span&gt;
-&lt;span class="k"&gt;end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;hr style="width: 50%; margin-top: 3em; border-color: gray;"&gt;&lt;/p&gt;
-
-&lt;p&gt;Distributed, multi-database systems are complicated. While working on Semaphore,
-I&amp;rsquo;ve encountered this and many other tricky problems. If we were lucky, we
-caught them in during PR reviews, but I also remember several unlucky examples
-where these bugs caused more severe problems.&lt;/p&gt;
-
-&lt;p&gt;Problems in distributed systems show up many months or even years after you
-introduced them. Usually, this happens when the system hits a critical number of
-requests. This feedback loop is slow; we must educate ourselves in advance.&lt;/p&gt;
-
-&lt;p&gt;Here are some great resources for further reading:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://dzone.com/articles/implementing-the-outbox-pattern"&gt;Implementing the Outbox Pattern&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://microservices.io/patterns/data/transactional-outbox.html"&gt;Transactional Outbox by Chris Richardson&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.amazon.com/gp/product/1617294543"&gt;Book: Microservice Patterns&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </content>
   </entry>
