@@ -13,223 +13,220 @@
 
     <!-- Place this data between the <head> tags of your website -->
 
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Raleway:900&display=swap" rel="stylesheet">
-    <link href="/stylesheets/style.css" rel="stylesheet" />
+    <link href="/stylesheets/site.css" rel="stylesheet" />
   </head>
   <body>
-    <div class="job-ad" style="padding: 10px; background: #f8f8f8; border-top: 1px solid #e0e0e0; text-align: center;">
-  Would you like to work with me? We are hiring a software engineer at <a href="https://careers.operately.com">Operately</a>.
+    <div class="bg-stone-50 py-3 border-b border-rose-500 text-center w-100">
+  Would you like to work with me? We are hiring a software engineer at <a class="link" href="https://careers.operately.com">Operately</a>.
 </div>
 
 
-    <div id="main" role="main">
-      <div style="display: flex; align-items: center; justify-content: space-between; font-size: 20px; color: black; font-weight: 400; padding: 20px 10px;">
-  <a style="display: flex; gap: 10px; color: black; text-decoration: none;" href="/">
-    <img src="/images/logo.svg" style="height: 30px; margin-top: -3px;">
-    Morning Coffee
-  </a>
+    <div id="main" role="main" class="container mx-auto max-w-2xl">
+      <div class="my-16 flex flex-col items-center block">
+  <img src="https://operately.com/_astro/igor.CWS1MLnE.jpg" class="rounded-full w-32 h-32" alt="Igor Šarčević">
 
-  <a style="text-decoration: underline; font-size: 16px; color: black;" href="/about-me.html">
-    About
-  </a>
+  <div class="text-gray-700 mt-6 text-xl font-bold mb-2">Morning Coffee by Igor Šarčević</div>
+  <div class="max-w-xl text-center">Founder of <a class="underline decoration-dotted hover:text-blue-600" href="http://operately.com">Operately</a>, Software Engineer, ex. Lead Architect at <a class="underline decoration-dotted hover:text-blue-600" href="http://semaphoreci.com">SemaphoreCI</a>. Cat & Dog person. Coffee lover. Husband of Daniela. Hiker. Writer.</div>
+</div>
+
+<div class="flex flex-col gap-8">
+    <a class="p-10 border border-gray-200 shadow rounded hover:border-gray-300" href="/social-parasites.html">
+      <div class="text-rose-500 text-sm"><time>Oct  6, 2024</time></div>
+      <div class="text-xl font-extrabold mb-2">Social Parasites</div>
+
+      <p>We’ve recently witnessed a perfect example of this parasitic behavior. A
+startup, freshly minted by a once-respected incubator, had the audacity to fork
+an open-source project and claim it as their own. They didn’t innovate. They
+didn’t improve...</p>
+    </a>
+    <a class="p-10 border border-gray-200 shadow rounded hover:border-gray-300" href="/manage-your-time-or-someone-else-will-do-it-for-you.html">
+      <div class="text-rose-500 text-sm"><time>Aug 25, 2024</time></div>
+      <div class="text-xl font-extrabold mb-2">Manage Your Time or Someone Else Will Do It for You</div>
+
+      <p>From the moment we’re born, our time isn’t really our own. Parents, schools,
+and later, employers all have a say in how our days unfold. As kids, we’re on
+someone else’s schedule. Education systems beat it into us, training us to
+march to...</p>
+    </a>
+    <a class="p-10 border border-gray-200 shadow rounded hover:border-gray-300" href="/steps-we-took-to-automate-license-compatibility-verification.html">
+      <div class="text-rose-500 text-sm"><time>Apr 14, 2024</time></div>
+      <div class="text-xl font-extrabold mb-2">Steps We Took to Automate License Compatibility Verification</div>
+
+      <p>We are actively developing Operately, an open-source software licensed under
+Apache 2.0. As such, we need to carefully consider whether our dependencies’
+licenses are compatible with ours. Starting to build features based on
+functionality...</p>
+    </a>
+    <a class="p-10 border border-gray-200 shadow rounded hover:border-gray-300" href="/pull-requests-are-a-reflection-of-your-engineering-culture.html">
+      <div class="text-rose-500 text-sm"><time>Jul 17, 2022</time></div>
+      <div class="text-xl font-extrabold mb-2">Pull Requests are a reflection of your engineering culture</div>
+
+      <p>When engineers want to introduce a change to the system, they use pull requests
+to package the change and present it to the rest of the team. A pull request
+usually contains a title, a description, and a list of commits that aim to
+change...</p>
+    </a>
+    <a class="p-10 border border-gray-200 shadow rounded hover:border-gray-300" href="/proactive-cache-warming-in-a-microservice-based-architecture.html">
+      <div class="text-rose-500 text-sm"><time>Jul 17, 2021</time></div>
+      <div class="text-xl font-extrabold mb-2">Proactive cache warming in a microservice-based architecture</div>
+
+      <p>With the microservice architecture style, services and their data are contained
+within a single bounded context. This architectural decision helps us to develop
+and deploy changes in one business unit fast and independent of other services...</p>
+    </a>
+    <a class="p-10 border border-gray-200 shadow rounded hover:border-gray-300" href="/what-is-a-transaction-outbox-and-why-you-need-it.html">
+      <div class="text-rose-500 text-sm"><time>Jul  2, 2021</time></div>
+      <div class="text-xl font-extrabold mb-2">Transactional Outbox: What is it and why you need it?</div>
+
+      <p>Receiving a request, saving it into a database, and finally publishing a message
+can be trickier than expected. A naive implementation can either lose messages
+or, even worse, post incorrect messages.</p>
+
+<p>Let’s look at an example. A user registration...</p>
+    </a>
+    <a class="p-10 border border-gray-200 shadow rounded hover:border-gray-300" href="/killing-a-process-and-all-of-its-descendants.html">
+      <div class="text-rose-500 text-sm"><time>Aug  2, 2019</time></div>
+      <div class="text-xl font-extrabold mb-2">Killing a process and all of its descendants</div>
+
+      <p>Killing processes in a Unix-like system can be trickier than expected. Last
+week I was debugging an odd issue related to job stopping on Semaphore.
+More specifically, an issue related to the killing of a running process in a
+job. </p>
+    </a>
+    <a class="p-10 border border-gray-200 shadow rounded hover:border-gray-300" href="/boolean-short-circuiting-is-not-guaranteed-in-sql.html">
+      <div class="text-rose-500 text-sm"><time>Dec  9, 2018</time></div>
+      <div class="text-xl font-extrabold mb-2">Boolean short circuiting is not guaranteed</div>
+
+      <p>Last week I was debugging a weird bug in one of our services. In the logs we
+saw an SQL error “repetition-operator operand invalid”, so I was pretty sure
+that we have a broken SQL comparison in one of our services. The weird part
+was that this error happened only occasionally, seemingly randomly.</p>
+
+<p></p>
+    </a>
+    <a class="p-10 border border-gray-200 shadow rounded hover:border-gray-300" href="/stable-pagination.html">
+      <div class="text-rose-500 text-sm"><time>Sep 13, 2018</time></div>
+      <div class="text-xl font-extrabold mb-2">Stable Pagination</div>
+
+      <p>Last week we’ve investigated a way to achieve stable pagination
+for our new API. I’ve learned some new techniques for handling
+pagination, and dig deep into the downsides of standard —
+offset based — pagination.</p>
+
+<p></p>
+    </a>
+    <a class="p-10 border border-gray-200 shadow rounded hover:border-gray-300" href="/measuring-the-strength-of-a-wifi-connection.html">
+      <div class="text-rose-500 text-sm"><time>Sep  4, 2018</time></div>
+      <div class="text-xl font-extrabold mb-2">Measuring the strength of a WiFi connection</div>
+
+      <p>Recently I switched my ISP provider and with the change I’ve got
+a new WiFi router. The download speed is incredible, 10x the compared
+to my previous subscription, but the stability got worse.</p>
+
+<p></p>
+    </a>
+    <a class="p-10 border border-gray-200 shadow rounded hover:border-gray-300" href="/the-postgresql-query-cost-model.html">
+      <div class="text-rose-500 text-sm"><time>Dec  5, 2017</time></div>
+      <div class="text-xl font-extrabold mb-2">The PostgreSQL Query Cost Model</div>
+
+      <p>Slow database queries harm your organization in many ways. They can damage the
+reputation of otherwise great applications, make background processing painfully
+slow, and drastically increase the cost of your infrastructure. As a seasoned
+web developer, it is absolutely essential to learn about optimization strategies
+for your data layer.</p>
+
+<p></p>
+    </a>
+    <a class="p-10 border border-gray-200 shadow rounded hover:border-gray-300" href="/deadlocks-in-postgresql.html">
+      <div class="text-rose-500 text-sm"><time>Nov 30, 2017</time></div>
+      <div class="text-xl font-extrabold mb-2">Deadlocks in PostgreSQL</div>
+
+      <p>In concurrent systems where resources are locked, two or more processes can end
+up in a state in which each process is waiting for the other one. This state is
+called a deadlock. Deadlocks are an important issues that can happen in any
+database and can be scary when you encounter them for the first time.</p>
+
+<p></p>
+    </a>
+    <a class="p-10 border border-gray-200 shadow rounded hover:border-gray-300" href="/multiversion-concurrency-control.html">
+      <div class="text-rose-500 text-sm"><time>Nov 29, 2017</time></div>
+      <div class="text-xl font-extrabold mb-2">Multi Version Concurrency Control</div>
+
+      <p>The most prominent feature of PostgreSQL is how it handles concurrency. Reads
+never block writes, and writes never block reads. To achieve this, PostgreSQL
+uses the Multi Version Concurrency Control (MVCC) model, an elegant solution for
+a very hard problem. If you want to design highly concurrent applications, you
+should really invest the time to understand the bits and bolts of this
+mechanism.</p>
+
+<p></p>
+    </a>
+    <a class="p-10 border border-gray-200 shadow rounded hover:border-gray-300" href="/transaction-isolation-levels-in-postgresql.html">
+      <div class="text-rose-500 text-sm"><time>Nov 19, 2017</time></div>
+      <div class="text-xl font-extrabold mb-2">Transaction Isolation Levels in PostgreSQL</div>
+
+      <p>Misunderstanding transaction isolation levels can lead to disgusting side
+effects in your application. Debugging such issues can be more than painful. The
+SQL standard defines four levels of transaction isolation. Each of these
+isolation levels defines what happens if two concurrent processes try to read
+data updated by other processes.</p>
+
+<p></p>
+    </a>
+    <a class="p-10 border border-gray-200 shadow rounded hover:border-gray-300" href="/selecting-for-share-and-update-in-postgresql.html">
+      <div class="text-rose-500 text-sm"><time>Nov 18, 2017</time></div>
+      <div class="text-xl font-extrabold mb-2">Selecting for Share and Update in PostgreSQL</div>
+
+      <p>A regular select statement does not give you enough protection if you want to
+query data and make a change in the database related to it. Other transactions
+can update or delete the data you just queried. PostgreSQL offers additional
+select statements that lock on read and provide an extra layer of safety.</p>
+
+<p></p>
+    </a>
+    <a class="p-10 border border-gray-200 shadow rounded hover:border-gray-300" href="/advisory-locks-and-how-to-use-them.html">
+      <div class="text-rose-500 text-sm"><time>Nov 16, 2017</time></div>
+      <div class="text-xl font-extrabold mb-2">Advisory Locks and How to Use Them</div>
+
+      <p>PostgreSQL provides the means for creating locks with application defined
+meaning. These locks are called <em>Advisory Locks</em> and are an ideal candidate for
+concurrency control where the standard MVCC (multiversion concurrency control)
+doesn’t fit the bill. Advisory Locks can be the perfect tool in your arsenal
+when you need to control access to a shared resource in a distributed system.</p>
+
+<p></p>
+    </a>
+    <a class="p-10 border border-gray-200 shadow rounded hover:border-gray-300" href="/understanding-postgresql-locks.html">
+      <div class="text-rose-500 text-sm"><time>Nov 12, 2017</time></div>
+      <div class="text-xl font-extrabold mb-2">Understanding PostgreSQL locks</div>
+
+      <p>Locking is an important topic in any kind of database. Without properly handling
+locks, an application might not only be slow, it might also be wrong and behave
+in some insane ways. Therefore, learning proper locking techniques is essential
+for good performance and correctness of our applications.</p>
+
+<p></p>
+    </a>
+    <a class="p-10 border border-gray-200 shadow rounded hover:border-gray-300" href="/separating-commands-and-queries.html">
+      <div class="text-rose-500 text-sm"><time>Nov  7, 2017</time></div>
+      <div class="text-xl font-extrabold mb-2">Separating Commands and Queries</div>
+
+      <p>I have learned an important lesson this year. A clear separation between queries
+and commands can bring a lot of long term benefits to your code.</p>
+
+<p></p>
+    </a>
 </div>
 
 
-      <div class=home style="margin: 10px">
-  <h2>Blog</h2>
-
-  <ul>
-    <li>
-      <div class="home-title" style="display: flex; align-items: baseline; justify-content: space-between;">
-        <div><a href="/social-parasites.html" style="text-decoration: underline">Social Parasites</a></div>
-
-        <div style="text-align: right; color: #444;">
-          <time>Oct  6, 2024</time>
-        </div>
-      </div>
-    </li>
-    <li>
-      <div class="home-title" style="display: flex; align-items: baseline; justify-content: space-between;">
-        <div><a href="/manage-your-time-or-someone-else-will-do-it-for-you.html" style="text-decoration: underline">Manage Your Time or Someone Else Will Do It for You</a></div>
-
-        <div style="text-align: right; color: #444;">
-          <time>Aug 25, 2024</time>
-        </div>
-      </div>
-    </li>
-    <li>
-      <div class="home-title" style="display: flex; align-items: baseline; justify-content: space-between;">
-        <div><a href="/steps-we-took-to-automate-license-compatibility-verification.html" style="text-decoration: underline">Steps We Took to Automate License Compatibility Verification</a></div>
-
-        <div style="text-align: right; color: #444;">
-          <time>Apr 14, 2024</time>
-        </div>
-      </div>
-    </li>
-    <li>
-      <div class="home-title" style="display: flex; align-items: baseline; justify-content: space-between;">
-        <div><a href="/pull-requests-are-a-reflection-of-your-engineering-culture.html" style="text-decoration: underline">Pull Requests are a reflection of your engineering culture</a></div>
-
-        <div style="text-align: right; color: #444;">
-          <time>Jul 17, 2022</time>
-        </div>
-      </div>
-    </li>
-    <li>
-      <div class="home-title" style="display: flex; align-items: baseline; justify-content: space-between;">
-        <div><a href="/proactive-cache-warming-in-a-microservice-based-architecture.html" style="text-decoration: underline">Proactive cache warming in a microservice-based architecture</a></div>
-
-        <div style="text-align: right; color: #444;">
-          <time>Jul 17, 2021</time>
-        </div>
-      </div>
-    </li>
-    <li>
-      <div class="home-title" style="display: flex; align-items: baseline; justify-content: space-between;">
-        <div><a href="/what-is-a-transaction-outbox-and-why-you-need-it.html" style="text-decoration: underline">Transactional Outbox: What is it and why you need it?</a></div>
-
-        <div style="text-align: right; color: #444;">
-          <time>Jul  2, 2021</time>
-        </div>
-      </div>
-    </li>
-    <li>
-      <div class="home-title" style="display: flex; align-items: baseline; justify-content: space-between;">
-        <div><a href="/killing-a-process-and-all-of-its-descendants.html" style="text-decoration: underline">Killing a process and all of its descendants</a></div>
-
-        <div style="text-align: right; color: #444;">
-          <time>Aug  2, 2019</time>
-        </div>
-      </div>
-    </li>
-    <li>
-      <div class="home-title" style="display: flex; align-items: baseline; justify-content: space-between;">
-        <div><a href="/boolean-short-circuiting-is-not-guaranteed-in-sql.html" style="text-decoration: underline">PostgreSQL: Boolean short circuiting is not guaranteed</a></div>
-
-        <div style="text-align: right; color: #444;">
-          <time>Dec  9, 2018</time>
-        </div>
-      </div>
-    </li>
-    <li>
-      <div class="home-title" style="display: flex; align-items: baseline; justify-content: space-between;">
-        <div><a href="/stable-pagination.html" style="text-decoration: underline">PostgreSQL: Stable Pagination</a></div>
-
-        <div style="text-align: right; color: #444;">
-          <time>Sep 13, 2018</time>
-        </div>
-      </div>
-    </li>
-    <li>
-      <div class="home-title" style="display: flex; align-items: baseline; justify-content: space-between;">
-        <div><a href="/measuring-the-strength-of-a-wifi-connection.html" style="text-decoration: underline">Measuring the strength of a WiFi connection</a></div>
-
-        <div style="text-align: right; color: #444;">
-          <time>Sep  4, 2018</time>
-        </div>
-      </div>
-    </li>
-    <li>
-      <div class="home-title" style="display: flex; align-items: baseline; justify-content: space-between;">
-        <div><a href="/the-postgresql-query-cost-model.html" style="text-decoration: underline">PostgreSQL: The PostgreSQL Query Cost Model</a></div>
-
-        <div style="text-align: right; color: #444;">
-          <time>Dec  5, 2017</time>
-        </div>
-      </div>
-    </li>
-    <li>
-      <div class="home-title" style="display: flex; align-items: baseline; justify-content: space-between;">
-        <div><a href="/deadlocks-in-postgresql.html" style="text-decoration: underline">PostgreSQL: Deadlocks in PostgreSQL</a></div>
-
-        <div style="text-align: right; color: #444;">
-          <time>Nov 30, 2017</time>
-        </div>
-      </div>
-    </li>
-    <li>
-      <div class="home-title" style="display: flex; align-items: baseline; justify-content: space-between;">
-        <div><a href="/multiversion-concurrency-control.html" style="text-decoration: underline">PostgreSQL: Multi Version Concurrency Control</a></div>
-
-        <div style="text-align: right; color: #444;">
-          <time>Nov 29, 2017</time>
-        </div>
-      </div>
-    </li>
-    <li>
-      <div class="home-title" style="display: flex; align-items: baseline; justify-content: space-between;">
-        <div><a href="/transaction-isolation-levels-in-postgresql.html" style="text-decoration: underline">PostgreSQL: Transaction Isolation Levels in PostgreSQL</a></div>
-
-        <div style="text-align: right; color: #444;">
-          <time>Nov 19, 2017</time>
-        </div>
-      </div>
-    </li>
-    <li>
-      <div class="home-title" style="display: flex; align-items: baseline; justify-content: space-between;">
-        <div><a href="/selecting-for-share-and-update-in-postgresql.html" style="text-decoration: underline">PostgreSQL: Selecting for Share and Update in PostgreSQL</a></div>
-
-        <div style="text-align: right; color: #444;">
-          <time>Nov 18, 2017</time>
-        </div>
-      </div>
-    </li>
-    <li>
-      <div class="home-title" style="display: flex; align-items: baseline; justify-content: space-between;">
-        <div><a href="/advisory-locks-and-how-to-use-them.html" style="text-decoration: underline">PostgreSQL: Advisory Locks and How to Use Them</a></div>
-
-        <div style="text-align: right; color: #444;">
-          <time>Nov 16, 2017</time>
-        </div>
-      </div>
-    </li>
-    <li>
-      <div class="home-title" style="display: flex; align-items: baseline; justify-content: space-between;">
-        <div><a href="/understanding-postgresql-locks.html" style="text-decoration: underline">PostgreSQL: Understanding PostgreSQL locks</a></div>
-
-        <div style="text-align: right; color: #444;">
-          <time>Nov 12, 2017</time>
-        </div>
-      </div>
-    </li>
-    <li>
-      <div class="home-title" style="display: flex; align-items: baseline; justify-content: space-between;">
-        <div><a href="/separating-commands-and-queries.html" style="text-decoration: underline">Separating Commands and Queries</a></div>
-
-        <div style="text-align: right; color: #444;">
-          <time>Nov  7, 2017</time>
-        </div>
-      </div>
-    </li>
-  </ul>
-
-  <h2>Books</h2>
-
-  <ul>
-    <li>
-      <div style="display: flex; align-items: baseline; justify-content: space-between;">
-        <div class="home-title">Rails Testing Handbook (<a href="https://semaphoreci.com/ebooks/rails-testing-handbook">PDF</a>, <a href="https://www.amazon.com/dp/B07DKFYS1Q">Kindle</a>).</div>
-
-        <div style="text-align: right; color: #444;">
-          <time>2018</time>
-        </div>
-      </div>
-    </li>
-  </ul>
-
-</div>
-
-
-      <div class="footer">
-  <div class="content">
+      <div class="w-100 my-16">
+  <div class="text-center text-lg">
     <p>
       <strong>❈</strong><br>
       <br>
 
-      Follow me on <a href="https://twitter.com/igor_sarcevic">Twitter</a> and <a href="https://rs.linkedin.com/in/igorsarcevic">LinkedIn</a>.<br>
-      Copyright ©2014-2024 Igor Šarčević. All rights reserved.</br>
-      <br>
-      Enjoy the rest of your day!
+      Follow me on <a href="https://twitter.com/igor_sarcevic" class="link">Twitter</a> and <a href="https://rs.linkedin.com/in/igorsarcevic" class="link">LinkedIn</a>.<br>
+      Copyright © 2014-2024 Igor Šarčević. All rights reserved.</br>
     </p>
   </div>
 <div>

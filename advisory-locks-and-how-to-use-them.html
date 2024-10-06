@@ -60,39 +60,26 @@ when you need to control access to a shared resource in a distributed system.
 " />
       <meta property="article:published_time" content="2017-11-16 00:00:00 UTC" />
 
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Raleway:900&display=swap" rel="stylesheet">
-    <link href="/stylesheets/style.css" rel="stylesheet" />
+    <link href="/stylesheets/site.css" rel="stylesheet" />
   </head>
   <body>
-    <div class="job-ad" style="padding: 10px; background: #f8f8f8; border-top: 1px solid #e0e0e0; text-align: center;">
-  Would you like to work with me? We are hiring a software engineer at <a href="https://careers.operately.com">Operately</a>.
+    <div class="bg-stone-50 py-3 border-b border-rose-500 text-center w-100">
+  Would you like to work with me? We are hiring a software engineer at <a class="link" href="https://careers.operately.com">Operately</a>.
 </div>
 
 
-    <div id="main" role="main">
-      <div style="display: flex; align-items: center; justify-content: space-between; font-size: 20px; color: black; font-weight: 400; padding: 20px 10px;">
-  <a style="display: flex; gap: 10px; color: black; text-decoration: none;" href="/">
-    <img src="/images/logo.svg" style="height: 30px; margin-top: -3px;">
-    Morning Coffee
-  </a>
+    <div id="main" role="main" class="container mx-auto max-w-2xl">
+        <a class="link mt-10 block" href="/">Home</a>
+  <article class="max-w-2xl mt-16">
+    <div class="mb-10">
+      <h1 class="text-5xl font-extrabold mb-2 leading-wide">Advisory Locks and How to Use Them</h1>
 
-  <a style="text-decoration: underline; font-size: 16px; color: black;" href="/about-me.html">
-    About
-  </a>
-</div>
-
-
-        <article class="article">
-    <div class="header">
-
-      <div style="display: flex; items-align: center; font-size: 18px; color: #444; padding-top: 10px; padding-bottom: 10px;">
-        November 16, 2017 <span style="padding-left: 6px; padding-right: 6px;">&middot;</span> Igor Šarčević
+      <div class="flex gap-1.5 items-center">
+        November 16, 2017 <span>&middot;</span> Igor Šarčević
       </div>
-
-      <h1 style="line-height: 70px">Advisory Locks and How to Use Them</h1>
     </div>
 
-    <div class="content">
+    <div class="content prose-lg">
       <p>PostgreSQL provides the means for creating locks with application defined
 meaning. These locks are called <em>Advisory Locks</em> and are an ideal candidate for
 concurrency control where the standard MVCC (multiversion concurrency control)
@@ -286,21 +273,17 @@ metrics.</p>
 leave it in the comment section bellow.</em></p>
 
     </div>
-
-
   </article>
 
 
-      <div class="footer">
-  <div class="content">
+      <div class="w-100 my-16">
+  <div class="text-center text-lg">
     <p>
       <strong>❈</strong><br>
       <br>
 
-      Follow me on <a href="https://twitter.com/igor_sarcevic">Twitter</a> and <a href="https://rs.linkedin.com/in/igorsarcevic">LinkedIn</a>.<br>
-      Copyright ©2014-2024 Igor Šarčević. All rights reserved.</br>
-      <br>
-      Enjoy the rest of your day!
+      Follow me on <a href="https://twitter.com/igor_sarcevic" class="link">Twitter</a> and <a href="https://rs.linkedin.com/in/igorsarcevic" class="link">LinkedIn</a>.<br>
+      Copyright © 2014-2024 Igor Šarčević. All rights reserved.</br>
     </p>
   </div>
 <div>
