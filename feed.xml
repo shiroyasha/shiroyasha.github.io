@@ -4,10 +4,66 @@
   <id>http://shiroyasha.io/</id>
   <link href="http://shiroyasha.io/"/>
   <link href="http://shiroyasha.io/feed.xml" rel="self"/>
-  <updated>2024-10-06T00:00:00+00:00</updated>
+  <updated>2024-10-08T00:00:00+00:00</updated>
   <author>
     <name>Igor Šarčević</name>
   </author>
+  <entry>
+    <title>Work can wait, your wedding can't</title>
+    <link rel="alternate" href="http://shiroyasha.io/work-can-wait-your-weddig-cant.html"/>
+    <id>http://shiroyasha.io/work-can-wait-your-weddig-cant.html</id>
+    <published>2024-10-08T00:00:00+00:00</published>
+    <updated>2024-10-08T18:45:59+00:00</updated>
+    <author>
+      <name>Igor Šarčević</name>
+    </author>
+    <summary type="html">&lt;p&gt;I saw something insane on LinkedIn today. A founder bragging about his
+co-founder about submitting a pull-request during his own wedding. Let that
+sink in for a moment.&lt;/p&gt;
+
+&lt;p&gt;When I started working in the industry, I thought I knew what hard work was.
+Working...&lt;/p&gt;</summary>
+    <content type="html">&lt;p&gt;I saw something insane on LinkedIn today. A founder bragging about his
+co-founder about submitting a pull-request during his own wedding. Let that
+sink in for a moment.&lt;/p&gt;
+
+&lt;p&gt;When I started working in the industry, I thought I knew what hard work was.
+Working until my eyes bled out and my fingers were numb. I was wrong. True
+hard work isn&amp;rsquo;t about grinding until you drop. It&amp;rsquo;s about passion, focus,
+and knowing when to step back.&lt;/p&gt;
+
+&lt;p&gt;Here&amp;rsquo;s the reality: You can always find another reason to keep working. Just
+one more line of code, one more bug to fix. But you can&amp;rsquo;t get back the moments
+you miss. You&amp;rsquo;re wedding day is once in a lifetime. No product launch, no
+matter how groundbraking will ever compare to that.&lt;/p&gt;
+
+&lt;p&gt;But this isn&amp;rsquo;t just about weddings. It is about the idea that work should consume
+every aspect of your life. That you are not commintted unless you are always on.
+Always grinding for that carrot that you put infront of yourself. Bullshit.&lt;/p&gt;
+
+&lt;p&gt;Real work - good work - doesn&amp;rsquo;t come from a place of exhaustion. It happens in
+focused burst. It happens when you are well-rested, well-fed, and well-loved. The
+bug that you are grinding for hours, you&amp;rsquo;ll probably get the right idea when you
+are out on walk.&lt;/p&gt;
+
+&lt;p&gt;Here are things that are actually impressive:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Shipping great products consistently&lt;/li&gt;
+&lt;li&gt;Building a business that respects people&amp;rsquo;s time and energy&lt;/li&gt;
+&lt;li&gt;Enjoying your wedding day with your friends and family&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;We need to stop glorifying overwork. If your business can&amp;rsquo;t survive you taking day
+off for your wedding, then you don&amp;rsquo;t have a business, you have a ticking time bomb.&lt;/p&gt;
+
+&lt;p&gt;In the end, our legacy won&amp;rsquo;t be the 2k lines of code we wrote on our wedding day.
+It will be the relationships we built, the inspiration we gave, and the innovation
+we brought to the world. That is the kind of success worth pursuing.&lt;/p&gt;
+
+&lt;p&gt;Work can wait. Your wedding can&amp;rsquo;t.&lt;/p&gt;
+</content>
+  </entry>
   <entry>
     <title>Social Parasites</title>
     <link rel="alternate" href="http://shiroyasha.io/social-parasites.html"/>
@@ -480,279 +536,6 @@ performance directly impacts its overall performance.&lt;/p&gt;
 
 &lt;p&gt;My advice is to go to your main project, take a random pull request, and get a
 direct first-hand experience of the bottlenecks your team is dealing with.&lt;/p&gt;
-</content>
-  </entry>
-  <entry>
-    <title>Proactive cache warming in a microservice-based architecture</title>
-    <link rel="alternate" href="http://shiroyasha.io/proactive-cache-warming-in-a-microservice-based-architecture.html"/>
-    <id>http://shiroyasha.io/proactive-cache-warming-in-a-microservice-based-architecture.html</id>
-    <published>2021-07-17T00:00:00+00:00</published>
-    <updated>2024-10-06T17:48:38+00:00</updated>
-    <author>
-      <name>Igor Šarčević</name>
-    </author>
-    <summary type="html">&lt;p&gt;With the microservice architecture style, services and their data are contained
-within a single bounded context. This architectural decision helps us to develop
-and deploy changes in one business unit fast and independent of other services
-in our system...&lt;/p&gt;</summary>
-    <content type="html">&lt;p&gt;With the microservice architecture style, services and their data are contained
-within a single bounded context. This architectural decision helps us to develop
-and deploy changes in one business unit fast and independent of other services
-in our system.&lt;/p&gt;
-
-&lt;p&gt;However, collecting and analyzing data from multiple services can be slow and
-much more complex than in a typical monolithic service where the caller has
-access to data from a single big database system.&lt;/p&gt;
-
-&lt;p&gt;Let&amp;rsquo;s look at an example: A web application for ordering items with a page that
-displays information about the most recent orders in a company.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src="/images/proactive-caching/architecture-example.png" alt="Proactive Cache Warming: Architecture Example" /&gt;&lt;/p&gt;
-
-&lt;p&gt;We will focus on the front service from the above architecture. More
-specifically, on its recent orders controller action.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre class="highlight ruby"&gt;&lt;code&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;recent_orders&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;company_id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="n"&gt;orders&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;OrdersService&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;get_recent_orders&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;company_id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-
-  &lt;span class="n"&gt;customer_ids&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;orders&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;map&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="ss"&gt;:customer_ids&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="n"&gt;customers&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;CustomerService&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;get_customer_details&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;customer_ids&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-
-  &lt;span class="n"&gt;render_page&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;orders&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;customers&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="k"&gt;end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Our next challenge is how to make this page fast.&lt;/p&gt;
-
-&lt;p&gt;Let&amp;rsquo;s assume for the sake of the argument that both the Orders Service and the
-Customer Services take around 200ms to respond and that we don&amp;rsquo;t have any viable
-way of making these response times faster.&lt;/p&gt;
-
-&lt;p&gt;To render the page, we need to wait 200ms for the Orders Service, then 200ms for
-the Customers Service, and finally, we need some time to generate the HTML page,
-100ms. The minimum time to render the page is 500ms, which is relatively slow.&lt;/p&gt;
-
-&lt;p&gt;Caching is a standard tool that we use to make slow things faster. Key/Value
-memory stores like Redis can easily support 1ms response times if we figure out
-how to use it effectively.&lt;/p&gt;
-
-&lt;p&gt;Let&amp;rsquo;s explore some caching strategies.&lt;/p&gt;
-
-&lt;h2&gt;Time-to-live based caching&lt;/h2&gt;
-
-&lt;p&gt;A simple-to-implement caching strategy is a time-based one. This strategy
-renders the page and keeps it in the cache for a given amount of time.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre class="highlight ruby"&gt;&lt;code&gt;&lt;span class="no"&gt;CACHE_EXPIRES_IN&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;hour&lt;/span&gt;
-
-&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;recent_orders&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;company_id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="n"&gt;key&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;cache_key&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;company_id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="n"&gt;cached_page&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;Cache&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;find&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-
-  &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;cached_page&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;present?&lt;/span&gt;
-    &lt;span class="n"&gt;cached_page&lt;/span&gt;
-  &lt;span class="k"&gt;else&lt;/span&gt;
-    &lt;span class="n"&gt;content&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;full_render&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;company_id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-
-    &lt;span class="no"&gt;Cache&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;store&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;content&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;ttl: &lt;/span&gt;&lt;span class="no"&gt;CACHE_EXPIRES_IN&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-
-    &lt;span class="n"&gt;content&lt;/span&gt;
-  &lt;span class="k"&gt;end&lt;/span&gt;
-&lt;span class="k"&gt;end&lt;/span&gt;
-
-&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;cache_key&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;company_id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="s2"&gt;"recent_orders_page_&lt;/span&gt;&lt;span class="si"&gt;#{&lt;/span&gt;&lt;span class="n"&gt;company_id&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;"&lt;/span&gt;
-&lt;span class="k"&gt;end&lt;/span&gt;
-
-&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;full_render&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;company_id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="n"&gt;orders&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;OrdersService&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;get_recent_orders&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;company_id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-
-  &lt;span class="n"&gt;customer_ids&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;orders&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;map&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="ss"&gt;:customer_ids&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="n"&gt;customers&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;CustomerService&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;get_customer_details&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;customer_ids&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-
-  &lt;span class="n"&gt;render_page&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;orders&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;customers&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="k"&gt;end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;This strategy can be the ideal one when the domain of the problem is time-bound.
-For example, if the page would display orders processed for the previous day
-instead of listing all the most recent ones.&lt;/p&gt;
-
-&lt;p&gt;The most significant downside is that the page will not refresh its content even
-if the system receives new orders. The page will be fast but stale.&lt;/p&gt;
-
-&lt;h2&gt;Signature-based caching&lt;/h2&gt;
-
-&lt;p&gt;We can use this information to optimize our rendering function.  Another way to
-improve the speed of our page is to fetch some minimal amount of data that can
-signal to our system if our cached value is stale or usable.&lt;/p&gt;
-
-&lt;p&gt;Let&amp;rsquo;s assume that in the above example, the order processing system has an
-additional endpoint that can tell us the timestamp of the last processed order
-by a given company in 100ms.&lt;/p&gt;
-
-&lt;p&gt;We can use this information to optimize our rendering function.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre class="highlight ruby"&gt;&lt;code&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;recent_orders&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;company_id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="n"&gt;last_order_at&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;OrdersService&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;get_last_order_timestamp&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;company_id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="n"&gt;key&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;cache_key&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;company_id&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;last_order_at&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-
-  &lt;span class="n"&gt;cached_page&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;Cache&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;find&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-
-  &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;cached_page&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;present?&lt;/span&gt;
-    &lt;span class="n"&gt;cached_page&lt;/span&gt;
-  &lt;span class="k"&gt;else&lt;/span&gt;
-    &lt;span class="n"&gt;content&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;full_render&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;company_id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-
-    &lt;span class="no"&gt;Cache&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;store&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;content&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;ttl: &lt;/span&gt;&lt;span class="no"&gt;CACHE_EXPIRES_IN&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-
-    &lt;span class="n"&gt;content&lt;/span&gt;
-  &lt;span class="k"&gt;end&lt;/span&gt;
-&lt;span class="k"&gt;end&lt;/span&gt;
-
-&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;cache_key&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;company_id&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;last_order_at&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="s2"&gt;"recent_orders_page_&lt;/span&gt;&lt;span class="si"&gt;#{&lt;/span&gt;&lt;span class="n"&gt;company_id&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;_&lt;/span&gt;&lt;span class="si"&gt;#{&lt;/span&gt;&lt;span class="n"&gt;md5&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;last_order_at&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;"&lt;/span&gt;
-&lt;span class="k"&gt;end&lt;/span&gt;
-
-&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;full_render&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;company_id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="n"&gt;orders&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;OrdersService&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;get_recent_orders&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;company_id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-
-  &lt;span class="n"&gt;customer_ids&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;orders&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;map&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="ss"&gt;:customer_ids&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="n"&gt;customers&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;CustomerService&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;get_customer_details&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;customer_ids&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-
-  &lt;span class="n"&gt;render_page&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;orders&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;customers&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="k"&gt;end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;The above implementation makes sure that we never have a stale state on the
-page. However, the performance gains are not so good as in our previous
-iteration.&lt;/p&gt;
-
-&lt;p&gt;If we have a cache hit, the performance will be 100ms as it takes this long to
-fetch the timestamp of the last order.&lt;/p&gt;
-
-&lt;p&gt;If we have a cache miss, the performance will be worse than it would be without
-caching. We will need 100ms to find the timestamp of the last order, plus the
-500ms duration for the full page render.&lt;/p&gt;
-
-&lt;h2&gt;Event-based caching&lt;/h2&gt;
-
-&lt;p&gt;In both of the previous implementations, the core problem was how and when to
-clear the cached values. It turns out it is pretty hard to deduce this on the
-client-side.&lt;/p&gt;
-
-&lt;p&gt;One strategy common in distributed systems is to use events to propagate
-information about state changes. We can use this architecture to have a clear
-signal of when to clear our cache.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src="/images/proactive-caching/invalidation.png" alt="Proactive Cache Warming: Event Based Cache Invalidation" /&gt;&lt;/p&gt;
-
-&lt;p&gt;In this architecture, both the order processing service and the customer service
-are publishing events when their datasets change. The cache invalidator then
-listens to those events and clears the data from the UI layer&amp;rsquo;s cache.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre class="highlight ruby"&gt;&lt;code&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;recent_orders&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;company_id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="n"&gt;key&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;cache_key&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;company_id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="n"&gt;cached_page&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;Cache&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;find&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-
-  &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;cached_page&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;present?&lt;/span&gt;
-    &lt;span class="n"&gt;cached_page&lt;/span&gt;
-  &lt;span class="k"&gt;else&lt;/span&gt;
-    &lt;span class="n"&gt;content&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;full_render&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;company_id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-
-    &lt;span class="no"&gt;Cache&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;store&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;content&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-
-    &lt;span class="n"&gt;content&lt;/span&gt;
-  &lt;span class="k"&gt;end&lt;/span&gt;
-&lt;span class="k"&gt;end&lt;/span&gt;
-
-&lt;span class="n"&gt;subscribe&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"orders_service"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"order-created"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;
-  &lt;span class="n"&gt;key&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;cache_key&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;company_id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-
-  &lt;span class="no"&gt;Cache&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;clear&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="k"&gt;end&lt;/span&gt;
-
-&lt;span class="n"&gt;subscribe&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"customers_service"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"customer-updated"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;
-  &lt;span class="n"&gt;key&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;cache_key&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;company_id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-
-  &lt;span class="no"&gt;Cache&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;clear&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="k"&gt;end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;We get pretty fast response times and up-to-date content in the cache. Neat!&lt;/p&gt;
-
-&lt;p&gt;If we have a cache hit, we can respond under 1ms, the amount of time it takes to
-fetch the data from the cache.&lt;/p&gt;
-
-&lt;p&gt;If we have a cache miss, we can respond in 500ms, the amount of data it takes to
-have a full page render.&lt;/p&gt;
-
-&lt;p&gt;The event-based cache invalidation is better in both cases from the
-signature-based caching solution we explored in the previous section.&lt;/p&gt;
-
-&lt;h2&gt;Event-based proactive caching&lt;/h2&gt;
-
-&lt;p&gt;We had a 1ms response for cached pages in that last section and 500ms for when
-the page wasn&amp;rsquo;t cached. Can we do better?&lt;/p&gt;
-
-&lt;p&gt;One approach that can guarantee a fast (1ms) response is to utilize proactive
-caching, meaning to prepare the page cache before the customers load it for the
-first time.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src="/images/proactive-caching/reactor.png" alt="Proactive Cache Warming: Event Based Cache Updater" /&gt;&lt;/p&gt;
-
-&lt;p&gt;In this architecture, the UI layer always reads responses from the cache,
-meaning that it can guarantee a fast response time for both first visits and
-repeated visits to the page.&lt;/p&gt;
-
-&lt;p&gt;The reactor maintains the cache&amp;rsquo;s content, a subsystem in the UI layer that
-reacts to various events in the system and recalculates the cached content.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre class="highlight ruby"&gt;&lt;code&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;recent_orders&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;company_id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="n"&gt;key&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;cache_key&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;company_id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="n"&gt;cached_page&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;Cache&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;find&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-
-  &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;cached_page&lt;/span&gt;
-&lt;span class="k"&gt;end&lt;/span&gt;
-
-&lt;span class="n"&gt;subscribe&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"orders_service"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"order-created"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;
-  &lt;span class="n"&gt;key&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;cache_key&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;company_id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="n"&gt;new_content&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;full_render&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;company_id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-
-  &lt;span class="no"&gt;Cache&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;store&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;new_content&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="k"&gt;end&lt;/span&gt;
-
-&lt;span class="n"&gt;subscribe&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"customers_service"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"customer-updated"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;
-  &lt;span class="n"&gt;key&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;cache_key&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;company_id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="n"&gt;new_content&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;full_render&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;company_id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-
-  &lt;span class="no"&gt;Cache&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;store&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;new_content&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="k"&gt;end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Let&amp;rsquo;s analyze this pattern. What are the shortcomings of this caching approach?&lt;/p&gt;
-
-&lt;p&gt;On the pros side, this caching approach can guarantee us fast response times for
-every page visit.&lt;/p&gt;
-
-&lt;p&gt;On the cons side, the reactor might be caching pages that our customers rarely
-visit, which leads to lots of busywork in our system. We might prepare and
-crunch an enormous amount of unused data.&lt;/p&gt;
-
-&lt;p&gt;The storage size can also drastically increase when we start using this approach
-as we are no longer storing only visited pages but all the pages in the cache.&lt;/p&gt;
-
-&lt;p&gt;If your number one priority is speed, the added storage and architectural
-complexity could be acceptable; otherwise, you might be crunching data
-needlessly. Choose carefully.&lt;/p&gt;
-
-&lt;p&gt;&lt;hr style="width: 50%; margin-top: 3em; border-color: gray;"&gt;&lt;/p&gt;
-
-&lt;p&gt;Caching is complicated, even more so in distributed systems.&lt;/p&gt;
-
-&lt;p&gt;At &lt;a href="https://semaphoreci.com"&gt;SemaphoreCI&lt;/a&gt;, we use event-based proactive caching
-to make our UI layer fast.  Over the years, we faced many challenges while using
-this system, including race conditions and high queue processing latency.
-However, while these problems were challenging, we are still happy with this
-architectural choice even after several years in production.&lt;/p&gt;
-
-&lt;p&gt;Here are some great resources for further reading:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://martinfowler.com/bliki/ReportingDatabase.html"&gt;Reporting Database&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.oreilly.com/library/view/microservices-antipatterns-and/9781492042716/"&gt;Microservices: AntiPatterns and Pitfalls&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://martinfowler.com/articles/201701-event-driven.html"&gt;What do you mean by “Event-Driven”?&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
 </content>
   </entry>
 </feed>
