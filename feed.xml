@@ -4,10 +4,94 @@
   <id>http://shiroyasha.io/</id>
   <link href="http://shiroyasha.io/"/>
   <link href="http://shiroyasha.io/feed.xml" rel="self"/>
-  <updated>2024-10-08T00:00:00+00:00</updated>
+  <updated>2025-02-16T00:00:00+00:00</updated>
   <author>
     <name>Igor Šarčević</name>
   </author>
+  <entry>
+    <title>Everything Around You Was Someone's Passion Project</title>
+    <link rel="alternate" href="http://shiroyasha.io/everything-around-you-was-someones-passion-project.html"/>
+    <id>http://shiroyasha.io/everything-around-you-was-someones-passion-project.html</id>
+    <published>2025-02-16T00:00:00+00:00</published>
+    <updated>2025-02-16T14:50:40+00:00</updated>
+    <author>
+      <name>Igor Šarčević</name>
+    </author>
+    <summary type="html">&lt;p&gt;Look around. Really look. That keyboard you’re typing on, the chair you’re
+sitting in, the room you’re in, the building you’re in, the bakery at the end
+of your street that sells that amazing bread, your freedom to walk down the
+street without fear...&lt;/p&gt;</summary>
+    <content type="html">&lt;p&gt;Look around. Really look. That keyboard you&amp;rsquo;re typing on, the chair you&amp;rsquo;re
+sitting in, the room you&amp;rsquo;re in, the building you&amp;rsquo;re in, the bakery at the end
+of your street that sells that amazing bread, your freedom to walk down the
+street without fear of being arrested, the ability to read and write, the
+ability to communicate with people on the other side of the planet. I can go on
+forever.&lt;/p&gt;
+
+&lt;p&gt;We&amp;rsquo;re surrounded by other people&amp;rsquo;s devotion and hard work.&lt;/p&gt;
+
+&lt;p&gt;That&amp;rsquo;s not hyporbole. It&amp;rsquo;s fact. Everything you see around you was someone&amp;rsquo;s
+passion project. Before the mass production, before the focus groups, before
+the value engineering. There was just someone who coudn&amp;rsquo;t let go of an idea.
+Someone who looked at the impossible problem and said &amp;ldquo;I can solve this&amp;rdquo;.&lt;/p&gt;
+
+&lt;p&gt;And they did.&lt;/p&gt;
+
+&lt;p&gt;But here&amp;rsquo;s what&amp;rsquo;s bothering me in Europe right now: We&amp;rsquo;ve become excellent at
+pointing out problems. Master critiques. Professional complainers about
+everything from government inefficiency to technological stagnation.&lt;/p&gt;
+
+&lt;p&gt;We write lengthy threads about what&amp;rsquo;s wrong. &lt;br /&gt;
+We share detailed analyses of system failures.  &lt;br /&gt;
+We craft elegant critiques of institutional problems. &lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;And then we wait.&lt;/p&gt;
+
+&lt;p&gt;Wait for someone else to fix it. Wait for solutions to come from above. Wait
+for the system to somehow reform itself. This isn&amp;rsquo;t analysis. It&amp;rsquo;s learned
+helplessness.&lt;/p&gt;
+
+&lt;p&gt;We&amp;rsquo;ve been conditioned by decades of imperial power structures to think that
+change comes from outside. That our role is to merely identify problems, 
+complain a lot, and then wait for someone else to fix them. Actual 
+implementation is someone else&amp;rsquo;s job. &lt;/p&gt;
+
+&lt;p&gt;Everything around us was built by people ignored such compaints. They didn&amp;rsquo;t 
+write treatises about why things are broken. They didn&amp;rsquo;t wait for perfect 
+conditions. They didn&amp;rsquo;t expect someone else to solve their problems. We didn&amp;rsquo;t
+wait for America to innovate for us. We didn&amp;rsquo;t wait for China to manufacture
+for us.&lt;/p&gt;
+
+&lt;p&gt;The first democracy wasn&amp;rsquo;t built by people waiting for kings to give up power.&lt;/p&gt;
+
+&lt;p&gt;In the last three months, my country is the best example of how to break this
+cycle. We&amp;rsquo;ve been through a lot in the last couple of decades. We&amp;rsquo;ve seen our 
+institutions fail us. We&amp;rsquo;ve seen our leaders betray us and divide us. We&amp;rsquo;ve 
+seen our systems collapse. We&amp;rsquo;ve seen our people suffer. We&amp;rsquo;ve seen corruption,
+incompetence, and greed. &lt;/p&gt;
+
+&lt;p&gt;But we&amp;rsquo;ve also seen something else. In the last three months, we&amp;rsquo;ve seen students
+raise their voices. We&amp;rsquo;ve seen teachers, doctors, and engineers join them. We&amp;rsquo;ve
+seen people from all walks of life come together to change things. We&amp;rsquo;ve seen
+people who were told to wait for oposition parties to fix things, take matters
+into their own hands.&lt;/p&gt;
+
+&lt;p&gt;Here&amp;rsquo;s what Europe needs to learn from this: The right time to start building
+was 30 years ago. We fucked it up. The second best time is now.&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Everything Around You Was Someone's Passion Project</title>
+    <link rel="alternate" href="http://shiroyasha.io/everything-around-you-was-someone-s-passion-project.html"/>
+    <id>http://shiroyasha.io/everything-around-you-was-someone-s-passion-project.html</id>
+    <published>2025-02-16T00:00:00+00:00</published>
+    <updated>2025-02-16T13:40:49+00:00</updated>
+    <author>
+      <name>Igor Šarčević</name>
+    </author>
+    <summary type="html"></summary>
+    <content type="html"></content>
+  </entry>
   <entry>
     <title>Work can wait, your wedding can't</title>
     <link rel="alternate" href="http://shiroyasha.io/work-can-wait-your-weddig-cant.html"/>
@@ -309,233 +393,6 @@ not promise returns in the foreseeable future.&lt;/p&gt;
 
 &lt;p&gt;Finally, if you want to look at the specifics of how we implemented this check,
 start from here: &lt;a href="https://github.com/operately/operately/blob/main/Makefile#L216"&gt;Operately Makefile&lt;/a&gt;.&lt;/p&gt;
-</content>
-  </entry>
-  <entry>
-    <title>Adulting Harder</title>
-    <link rel="alternate" href="http://shiroyasha.io/adulting-harder.html"/>
-    <id>http://shiroyasha.io/adulting-harder.html</id>
-    <published>2023-01-29T00:00:00+00:00</published>
-    <updated>2024-10-06T17:48:38+00:00</updated>
-    <author>
-      <name>Igor Šarčević</name>
-    </author>
-    <summary type="html">&lt;p&gt;One of my grandad’s best friends, Kovács János, was a talented chess player.
-They used to play chess together every week. János consistently beat my grandpa,
-but winning was not the focus of their play. It was a dedicated time to talk about
-life, women...&lt;/p&gt;</summary>
-    <content type="html">&lt;p&gt;One of my grandad&amp;rsquo;s best friends, Kovács János, was a talented chess player.
-They used to play chess together every week. János consistently beat my grandpa,
-but winning was not the focus of their play. It was a dedicated time to talk about
-life, women, and their shared admiration for Ferenc Puskás, a famous
-Hungarian football player.&lt;/p&gt;
-
-&lt;p&gt;Despite his high intellect, János was struggling to put his life together.
-He would often drink to excess and lose vast amounts of money to gambling.
-He struggled to hold down a job and had a hard time being accountable
-for his actions.&lt;/p&gt;
-
-&lt;p&gt;It all changed when his wife left him, taking away his two children.
-While he was always very persistent about how much he loved his wife,
-his actions told a different story. Frequently drunk, losing money,
-and flirting around with other married women in the town, he lost
-any remaining love his wife had for him. János hit rock bottom.
-He lost his wife, children, and most of his friends.&lt;/p&gt;
-
-&lt;p&gt;Despite his struggles, my grandad never gave up on János. He knew that
-there was a capable person beneath all of the gambling and
-irresponsibility. My grandpa gave János a stern but loving speech at one
-of their weekly chess sessions. &amp;ldquo;Look, János, I like you as a friend
-and respect you as a chess player, but you need to learn to be an adult.
-You need to be able to take responsibility.&amp;rdquo; His intellect was undeniable,
-but his habits were more akin to a teenager than a grown, responsible man.&lt;/p&gt;
-
-&lt;p&gt;My grandpa repeated the same message to János for years, but he was
-ready to change this time. He changed his life around almost overnight.
-He stopped drinking and gambling and separated himself from a group of
-friends who only supported him while living a reckless, irresponsible life.&lt;/p&gt;
-
-&lt;p&gt;My grandpa found a mechanical support position for him at the local
-military unit, where he slowly learned how to act and behave like a
-grownup. Several years later, János opened up a side business in his
-backyard where he was working as a car mechanic.&lt;/p&gt;
-
-&lt;p&gt;In his retirement, János was my chess teacher for a brief period,
-sharing stories about my late grandad and the lessons they learned
-during their life. János&amp;rsquo;s story is a reminder that no matter how
-hard life gets, it&amp;rsquo;s never too late to turn things around. With the
-right mindset, determination, and support, anyone can overcome their
-struggles and build a better life for themselves, their family,
-and their friends.&lt;/p&gt;
-
-&lt;p&gt;János, despite being an adult, was still a teenager in his late thirties.
-The lesson I learned from János was that real success requires us to adult
-harder. Take challenges head-on, build a system of accountability,
-forge strong friendships, and strongly believe in people and yourself
-despite any mistake in the past.&lt;/p&gt;
-
-&lt;h2&gt;What can we learn from János about adulting harder?&lt;/h2&gt;
-
-&lt;p&gt;Despite literally being the definition of adulthood, adulthood
-doesn&amp;rsquo;t start by turning 18 or 21. It begins by taking responsibility.
-Responsibility to hold down a stable job, provide for your family, and
-become a positive force for your community.&lt;/p&gt;
-
-&lt;p&gt;Adulting harder goes beyond just paying bills. It&amp;rsquo;s also about
-taking on challenges and making the most of the opportunities
-that come your way.&lt;/p&gt;
-</content>
-  </entry>
-  <entry>
-    <title>Pull Requests are a reflection of your engineering culture</title>
-    <link rel="alternate" href="http://shiroyasha.io/pull-requests-are-a-reflection-of-your-engineering-culture.html"/>
-    <id>http://shiroyasha.io/pull-requests-are-a-reflection-of-your-engineering-culture.html</id>
-    <published>2022-07-17T00:00:00+00:00</published>
-    <updated>2024-10-06T17:48:38+00:00</updated>
-    <author>
-      <name>Igor Šarčević</name>
-    </author>
-    <summary type="html">&lt;p&gt;When engineers want to introduce a change to the system, they use pull requests
-to package the change and present it to the rest of the team. A pull request
-usually contains a title, a description, and a list of commits that aim to
-change the system...&lt;/p&gt;</summary>
-    <content type="html">&lt;p&gt;When engineers want to introduce a change to the system, they use pull requests
-to package the change and present it to the rest of the team. A pull request
-usually contains a title, a description, and a list of commits that aim to
-change the system.&lt;/p&gt;
-
-&lt;p&gt;They are the core communication mechanism in your team. More precise than Jira
-tickets, more pragmatic than any meeting, and more direct than any design
-document. Take a random pull request from your team, and it will tell me more
-about your engineering culture than any other metric.&lt;/p&gt;
-
-&lt;h2&gt;Comparing Good and Bad pull requests&lt;/h2&gt;
-
-&lt;p&gt;A pull request should be easy to understand. It should be reasonably short. It
-should be backed by clear, objective quality signals like green CI build and
-code quality metrics.&lt;/p&gt;
-
-&lt;p&gt;Bad pull requests are unclear. They don&amp;rsquo;t have clear answers to &amp;ldquo;why are we
-doing this?&amp;rdquo; and &amp;ldquo;why are we doing it like this?&amp;rdquo;. They are usually unreasonable
-in size and include multiple changes to multiple subsystems. The reader is
-typically unsure if the pull request is mergeable, nor does he have any metric
-to help answer this question.&lt;/p&gt;
-
-&lt;h2&gt;Write clear titles&lt;/h2&gt;
-
-&lt;p&gt;Clear titles that signal what this pull request is about to
-introduce. Typically, this is a combination of business needs and concrete
-implementation approaches.&lt;/p&gt;
-
-&lt;p&gt;As with other forms of writing, there is no precise formula for titles. It is
-one of those things that you recognize when you see it.&lt;/p&gt;
-
-&lt;p&gt;Let&amp;rsquo;s look at some examples:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&amp;ldquo;Change src/scheduler.go&amp;rdquo; - A good indication of poor communication patterns in
-the team. Usually, these are individual contributors who rarely work in a
-structured group.&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&amp;ldquo;Update the for loop in the scheduler implementation by counting in reverse and
-visiting memory objects in a FIFO order&amp;rdquo; - Technically precise, but low
-information about the reason for this change. Usually, an indication of poor
-communication in the team and can be a signal of superhero culture.&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&amp;ldquo;Optimization of the scheduling strategy&amp;rdquo; - Good high-level technical overview,
-but still low information about the reason for this change. Typically, it arises
-in teams disconnected from the company&amp;rsquo;s business decisions.&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&amp;ldquo;Optimization of the scheduling strategy to reduce server hosting costs -
-Excellent! Good technical description and direct reason for this change. &lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2&gt;Focus on the reason for change in the description&lt;/h2&gt;
-
-&lt;p&gt;Every change to the system has two parts: the &lt;em&gt;why?&lt;/em&gt; and the &lt;em&gt;how?&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;The &lt;em&gt;how?&lt;/em&gt; should be clear from the code. Either write clean and understandable
-code or supplement the code with documentation that describes the implementation
-details.&lt;/p&gt;
-
-&lt;p&gt;As the code focuses on the &lt;em&gt;how?&lt;/em&gt;, there is little reason to supplement this
-same information in the pull request description. The description should
-describe the details of why we are introducing this change.&lt;/p&gt;
-
-&lt;p&gt;For example, here is how a good PR description should look like. &lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;We have noticed increased server hosting costs in the previous
-quarter that were not matched directly by increased demand on the system. We
-have noticed that the scheduling system is introducing delays by not efficiently
-visiting the objects. This PR addresses this concern and aims to reduce the
-server hosting costs by up to 5%.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Notice that it focuses on the reason and not the implementation.&lt;/p&gt;
-
-&lt;h2&gt;Supplement PRs with results and visual proof&lt;/h2&gt;
-
-&lt;p&gt;Pull Request reviewers will typically question your approach to solving the 
-problem or might be unsure of the results.&lt;/p&gt;
-
-&lt;p&gt;Provide results or visual proof when submitting pull requests. In our previous
-scheduling example, provide metric data that supports your argument. In visually
-centered systems, like updates in the UI, provide screenshots or videos of the
-new design. &lt;/p&gt;
-
-&lt;h2&gt;Keep the Pull Requests short and to the point&lt;/h2&gt;
-
-&lt;p&gt;I have a rule of thumb in my team. Pull requests should be short in length 
-(typically around ~300loc), short in age (0-3 days to write), and focused on one change.&lt;/p&gt;
-
-&lt;p&gt;Typically, a pull request starts by updating tests, followed by several commits
-that attempt to implement the new system specification.&lt;/p&gt;
-
-&lt;p&gt;Long pull requests are typically a signal of either young engineers who are
-still learning the value of short and safe iterative changes or overly eager
-changes to the system that is impossible to review and approve.&lt;/p&gt;
-
-&lt;p&gt;The actual number of line changes depends on multiple factors. The previously
-mentioned ~300loc fits my team and our design. Some languages are less
-expressive, and some changes require more work and cannot be broken down. &lt;/p&gt;
-
-&lt;p&gt;Breaking these guidelines once in a while is not a problem. The problem arises
-when suboptimal patterns take over and degrade your engineering culture.&lt;/p&gt;
-
-&lt;h2&gt;Keep the coding style uniform and objective&lt;/h2&gt;
-
-&lt;p&gt;Young engineering teams tend to put a lot of emphasis on how the code looks and 
-how it is formatted. Older teams usually have a shared understanding of what 
-good code looks like and spend less time discussing it.&lt;/p&gt;
-
-&lt;p&gt;Keeping the code clean has clear benefits. But discussing this in every pull
-request degrades the quality of discussion and exhausts the energy that remains
-for vital topics.&lt;/p&gt;
-
-&lt;p&gt;Use a linter, codify your rules, and make it part of the CI process. There
-should be no reason to check the code style in every pull request manually.&lt;/p&gt;
-
-&lt;h2&gt;Don&amp;rsquo;t review pull requests before CI&lt;/h2&gt;
-
-&lt;p&gt;The CI should be your first reviewer. There is no reason to involve other humans
-before you get a green build from your CI system.&lt;/p&gt;
-
-&lt;p&gt;Teams that lack fast CI, or even worse, lack CI entirely, tend to lose a lot of
-time repeating and manually validating the same problem areas over and over.&lt;/p&gt;
-
-&lt;p&gt;An engineering culture that lacks automated Pull Request reviews is an insane
-amount of energy and money on entirely automatable problems.&lt;/p&gt;
-
-&lt;h2&gt;Tips for engineering leadership&lt;/h2&gt;
-
-&lt;p&gt;It is understandably hard to step out from thinking about long-term strategy and 
-zoom in on a single pull request. However, by missing to do this occasionally 
-(once a quartal, for example), you are missing out on valuable insights about
-your engineering culture that are hard to reproduce in any other way.&lt;/p&gt;
-
-&lt;p&gt;After all, it has been repeatably shown that your organization&amp;rsquo;s operational
-performance directly impacts its overall performance.&lt;/p&gt;
-
-&lt;p&gt;My advice is to go to your main project, take a random pull request, and get a
-direct first-hand experience of the bottlenecks your team is dealing with.&lt;/p&gt;
 </content>
   </entry>
 </feed>
