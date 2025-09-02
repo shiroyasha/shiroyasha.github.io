@@ -4,10 +4,359 @@
   <id>http://shiroyasha.io/</id>
   <link href="http://shiroyasha.io/"/>
   <link href="http://shiroyasha.io/feed.xml" rel="self"/>
-  <updated>2025-03-30T00:00:00+00:00</updated>
+  <updated>2025-09-02T00:00:00+00:00</updated>
   <author>
     <name>Igor Šarčević</name>
   </author>
+  <entry>
+    <title>Parallel AI Agents Are a Game Changer</title>
+    <link rel="alternate" href="http://shiroyasha.io/parallel-ai-agents-are-a-game-changer.html"/>
+    <id>http://shiroyasha.io/parallel-ai-agents-are-a-game-changer.html</id>
+    <published>2025-09-02T00:00:00+00:00</published>
+    <updated>2025-09-02T22:36:49+00:00</updated>
+    <author>
+      <name>Igor Šarčević</name>
+    </author>
+    <summary type="html">&lt;p&gt;I’ve been in this industry long enough to watch technologies come and go. I’ve
+seen the excitement around new frameworks, the promises of revolutionary tools,
+and the breathless predictions about what would “change everything.” Most of the
+time, these...&lt;/p&gt;</summary>
+    <content type="html">&lt;p&gt;I&amp;rsquo;ve been in this industry long enough to watch technologies come and go. I&amp;rsquo;ve
+seen the excitement around new frameworks, the promises of revolutionary tools,
+and the breathless predictions about what would &amp;ldquo;change everything.&amp;rdquo; Most of the
+time, these technologies turned out to be incremental improvements wrapped in
+marketing hyperbole.&lt;/p&gt;
+
+&lt;p&gt;But parallel agents? This is different. This is the first time I can say,
+without any exaggeration, that I&amp;rsquo;m witnessing technology that will fundamentally
+transform how we develop software.&lt;/p&gt;
+
+&lt;h2&gt;How We Got Here&lt;/h2&gt;
+
+&lt;p&gt;To understand where we are today, we need to look at the full history of AI-assisted
+coding. It started with GitHub Copilot, which introduced the concept of AI pair
+programming. Copilot could autocomplete code as you typed, suggesting functions,
+completing implementations, and helping with repetitive tasks.&lt;/p&gt;
+
+&lt;p&gt;Then came the AI-powered editors like Windsurf and Cursor. These took the concept
+further by integrating AI deeply into the development environment. Instead of just
+autocomplete, you could have conversations with AI about your code, ask for
+refactoring suggestions, and get help with debugging. The AI understood your
+entire codebase and could provide contextual assistance.&lt;/p&gt;
+
+&lt;p&gt;This year, we&amp;rsquo;ve been working with what&amp;rsquo;s called &amp;ldquo;vibe coding&amp;rdquo; — AI tools where you
+describe what you want in natural language, and the AI generates complete functions,
+classes, or implementations from scratch. You tell it &amp;ldquo;create a sign up form with
+google, github, and microsoft login options&amp;rdquo; and it produces working code that
+captures the vibe of what you asked for.&lt;/p&gt;
+
+&lt;p&gt;The term &amp;ldquo;vibe coding&amp;rdquo; was coined by Andrej Karpathy in
+&lt;a href="https://x.com/karpathy/status/1886192184808149383"&gt;this tweet&lt;/a&gt;, which perfectly
+captured what this new way of programming felt like.&lt;/p&gt;
+
+&lt;blockquote&gt;&lt;p lang="en" dir="ltr"&gt;There&amp;rsquo;s a new kind of coding I call &amp;ldquo;vibe coding&amp;rdquo;, where you fully give in to the vibes, embrace exponentials, and forget that the code even exists. It&amp;rsquo;s possible because the LLMs (e.g. Cursor Composer w Sonnet) are getting too good. Also I just talk to Composer with SuperWhisper…&lt;/p&gt;&amp;mdash; Andrej Karpathy (@karpathy) &lt;a href="https://twitter.com/karpathy/status/1886192184808149383?ref_src=twsrc%5Etfw"&gt;February 2, 2025&lt;/a&gt;&lt;/blockquote&gt;
+
+&lt;p&gt;This was genuinely revolutionary. Suddenly, you could generate boilerplate code,
+build simple functions, create UI components, and even tackle complex implementations
+just by describing them. Many engineers adopted these tools and found them
+incredibly useful for certain types of work.&lt;/p&gt;
+
+&lt;p&gt;The technology worked well enough that it changed how many of us approached
+coding. Instead of starting from a blank file, you could start with a working
+implementation and refine from there. It made prototyping faster, reduced the
+tedium of writing repetitive code, and opened up possibilities for rapid
+development.&lt;/p&gt;
+
+&lt;h2&gt;Running Agents in Parallel&lt;/h2&gt;
+
+&lt;p&gt;Here&amp;rsquo;s what&amp;rsquo;s different now: you can run multiple AI agents at the same time,
+each working on different problems. Instead of waiting for one agent to finish
+a task before starting the next one, you can have several agents running
+simultaneously - one building a user interface, another writing API endpoints,
+and a third creating database schemas.&lt;/p&gt;
+
+&lt;p&gt;The core advantage is simple: you can do multiple things at once. This isn&amp;rsquo;t
+about smarter AI or better algorithms - it&amp;rsquo;s about parallelization. The same
+vibe coding tools we had before, just running multiple instances simultaneously.&lt;/p&gt;
+
+&lt;p&gt;The first company that offered a good solution for this was GitHub, with their
+GitHub Co-Pilots that were running in the cloud. You basically go to an issue
+and describe it on GitHub. When you are ready with all the descriptions that
+you think should be able to describe the function, you assign it to Co-Pilot
+and then wait for the result.&lt;/p&gt;
+
+&lt;p&gt;In practice, this means that you can go to your existing issues, check if
+they have enough context to be handed over to AI. And then you wait
+for the system to send you a notification that you can review the results.&lt;/p&gt;
+
+&lt;p&gt;This transforms the way you write code, and instead of focusing on the microsteps,
+you are playing the role of a senior engineer who is guiding and providing context
+to multiple agents who are implementing the features in your codebase. Your job as an
+engineer now becomes reviewing the code for correctness, ensuring that proper
+architectural decisions were taken, that a feature makes sense from the user&amp;rsquo;s
+perspective, and that the code meets all the security and compliance standards
+that you need.&lt;/p&gt;
+
+&lt;p&gt;The agent itself has the same limitations as you would when you&amp;rsquo;re vibe coding,
+which means that they will have the same tendency to make bugs, to lack enough
+context, to not understand the code. But you are as an engineer, and I would say
+partly a product owner and designer, would guide the system to implement it
+for you.&lt;/p&gt;
+
+&lt;h2&gt;How to work with multiple parallel agents&lt;/h2&gt;
+
+&lt;p&gt;Parallel agents are changing the way engineers work. Instead of focusing on one
+task at a time, you can now coordinate several agents working on different
+features or bug fixes in parallel. You’re actively managing multiple streams
+of development, reviewing code, and providing feedback as each agent completes
+its work.&lt;/p&gt;
+
+&lt;p&gt;With this approach, I can manage to have 10–20 pull requests open at once, each
+handled by a dedicated agent.&lt;/p&gt;
+
+&lt;p&gt;Here are some practical steps to take:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;1. Prepare issues with sufficient context&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Start by ensuring each GitHub issue contains enough context for agents to
+understand what needs to be built and how it integrates with the system. This
+might include details about feature behavior, file locations, database
+structure, or specific requirements such as displaying certain fields or
+handling edge cases.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;2. Assign agents in batches&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Once issues are ready, assign them to AI agents (such as @copilot). Each
+assignment typically starts a new pull request, where the agent creates a plan,
+builds a checklist, and begins implementation. Multiple issues can be assigned
+at once, allowing agents to work in parallel. Each individual agent takes
+around 5-20 minutes to complete its work.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;3. Review and iterate locally&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;After an agent completes its tasks, review the resulting pull requests locally.
+Testing features and verifying correctness is essential. If changes are needed,
+leave comments or feedback on the pull request, and the agent will continue
+refining the solution.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;4. Maintain flow between reviews&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Unlike traditional workflows, parallel agent orchestration keeps me engaged
+and focused. Instead of waiting for one agent to finish, it&amp;rsquo;s possible to move
+between active pull requests—reviewing, testing, and providing feedback
+as needed. This enables simultaneous progress on multiple tasks without
+significant mental overhead.&lt;/p&gt;
+
+&lt;p&gt;Here is a recording of how this works in practice:&lt;/p&gt;
+
+&lt;div class="flex items-center justify-center"&gt;
+&lt;blockquote class="twitter-tweet" data-media-max-width="720"&gt;&lt;p lang="en" dir="ltr"&gt;I&amp;rsquo;m having an amazing time with delegated copilot agents, driving 10 pull-requests in parallel. Great work &lt;a href="https://twitter.com/github?ref_src=twsrc%5Etfw"&gt;@github&lt;/a&gt; 👏 &lt;a href="https://t.co/T6sCIBg6bH"&gt;pic.twitter.com/T6sCIBg6bH&lt;/a&gt;&lt;/p&gt;&amp;mdash; Igor Šarčević (@igor_sarcevic) &lt;a href="https://twitter.com/igor_sarcevic/status/1958565202883957193?ref_src=twsrc%5Etfw"&gt;August 21, 2025&lt;/a&gt;&lt;/blockquote&gt; &lt;script async src="https://platform.twitter.com/widgets.js" charset="utf-8"&gt;&lt;/script&gt;
+&lt;/div&gt;
+
+&lt;h2&gt;What to Expect from Parallel Agents&lt;/h2&gt;
+
+&lt;p&gt;Working with parallel agents requires a different mindset than traditional or
+vibe coding. The shift is as significant as moving from traditional coding to
+AI-assisted development in the first place.&lt;/p&gt;
+
+&lt;h3&gt;Mental Model Changes&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;Control shifts from precision to orchestration.&lt;/strong&gt; Instead of controlling every
+line of code, you&amp;rsquo;re managing multiple problems simultaneously. Think like a
+system engineer managing Kubernetes pods rather than babysitting individual
+servers - each task is expendable and replaceable.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Everything becomes asynchronous.&lt;/strong&gt; Unlike vibe coding where you wait and
+watch, parallel agents work asynchronously by default. The context you provide
+upfront determines the result 30 minutes later. You can&amp;rsquo;t do half-hearted
+prompts and fix as you go, because those fixes come an hour later.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Batch thinking replaces linear thinking.&lt;/strong&gt; Instead of picking one perfect task
+from the backlog, identify several problems you could tackle in a day. A good
+approach is focusing on 2 critical deliverables while running 5-10 small
+background tasks - copy changes, UI fixes, minor bugs that can process while
+you focus on important work.&lt;/p&gt;
+
+&lt;h3&gt;Realistic Success Rates&lt;/h3&gt;
+
+&lt;p&gt;Don&amp;rsquo;t expect 100% success rates. Here&amp;rsquo;s what typically happens based on my personal
+observation while writing code.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;10%&lt;/strong&gt;: Perfect one-shot solution, ready to ship.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;20%&lt;/strong&gt;: Almost there, needs 10 minutes of local refinement.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;40%&lt;/strong&gt;: Needs manual intervention.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;20%&lt;/strong&gt;: Completely wrong. Close the issue and write down learnings.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;10%&lt;/strong&gt;: Bad product idea.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Even if only 10% of the issues are solved perfectly by the agent, the process is
+still valuable. Agents reliably handle the initial setup—finding the right
+files, writing boilerplate, and adding tests. By the time you review, much of
+the groundwork is done, so you can focus on investigating and fixing specific
+problems.&lt;/p&gt;
+
+&lt;p&gt;The frustration of engineers comes when they don&amp;rsquo;t have a properly aligned
+expectation of what they should expect from a coding agent. Some engineers
+simply give up if they don&amp;rsquo;t get the perfect 100% solution. I think you should
+move past this limitation and just learn to extract the goodness while jumping
+in with proper engineering knowledge where it needs to be.&lt;/p&gt;
+
+&lt;h3&gt;What Works Well vs. What Doesn&amp;rsquo;t&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;Parallel agents excel at:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Bug fixes and race conditions&lt;/li&gt;
+&lt;li&gt;Backend logic, controllers, validations&lt;/li&gt;
+&lt;li&gt;Database changes and migrations&lt;/li&gt;
+&lt;li&gt;Package version bumps and code transformations&lt;/li&gt;
+&lt;li&gt;Small, well-defined implementation tasks&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;They struggle with:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;New UI development (you need to see changes as you build)&lt;/li&gt;
+&lt;li&gt;Tasks requiring real-time visual feedback&lt;/li&gt;
+&lt;li&gt;Implementing undocumented additions to existing PRs&lt;/li&gt;
+&lt;li&gt;Complex architectural decisions requiring context beyond the issue&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3&gt;Skills That Become More Important&lt;/h3&gt;
+
+&lt;p&gt;Several traditional skills become even more valuable with parallel agents:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Full-stack understanding&lt;/strong&gt; is valuable when working with parallel agents. If
+your expertise is limited to either frontend or backend, you&amp;rsquo;ll quickly
+encounter roadblocks. Agents often need guidance across the entire stack, from
+database migrations to UI updates, so being able to navigate both worlds
+ensures smoother collaboration and better results.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Problem decomposition&lt;/strong&gt; becomes a critical skill. Large, complex issues are
+difficult for agents to tackle effectively. Breaking down big problems into
+smaller, well-defined tasks allows agents to work independently and in
+parallel, increasing the overall throughput and making it easier to review and
+integrate their work.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Good writting skills&lt;/strong&gt; are important. Agents rely on the clarity and detail of your
+issue descriptions to produce accurate results. Avoid vague language, unnecessary
+jargon, or ambiguous requirements. The more specific and structured your
+instructions, the higher the quality of the agent&amp;rsquo;s output.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;QA and Code Review skills&lt;/strong&gt; take center stage in this workflow. Since the
+review cycle is the main bottleneck, being able to quickly assess code quality,
+spot bugs, and verify that requirements are met is crucial. Efficient testing
+and validation ensure that parallel development doesn&amp;rsquo;t lead to a backlog of
+unreviewed or faulty code.&lt;/p&gt;
+
+&lt;p&gt;When you are working with parallel agents, you should optimize for review speed.
+You can start 50 issues, but you still need to review, understand, and verify
+each one. Making that review cycle fast—ideally under 10 seconds to check out,
+rebuild, and test—becomes critical to the entire workflow.&lt;/p&gt;
+
+&lt;div class="flex items-center justify-center"&gt;
+  &lt;blockquote class="twitter-tweet" data-media-max-width="560"&gt;&lt;p lang="en" dir="ltr"&gt;Learned a lot while using parallel &lt;a href="https://twitter.com/github?ref_src=twsrc%5Etfw"&gt;@github&lt;/a&gt; agents yesterday:&lt;br&gt;&lt;br&gt;1/ My mental model was not prepared for parallel async work with agents&lt;br&gt;2/ You can&amp;rsquo;t expect 100% success, but you can make a series of small bets&lt;br&gt;3/ Strategies to overcome blocking issues&lt;br&gt;4/ When to use Claude Code and… &lt;a href="https://t.co/yKNNkNZnby"&gt;pic.twitter.com/yKNNkNZnby&lt;/a&gt;&lt;/p&gt;&amp;mdash; Igor Šarčević (@igor_sarcevic) &lt;a href="https://twitter.com/igor_sarcevic/status/1958895080166559749?ref_src=twsrc%5Etfw"&gt;August 22, 2025&lt;/a&gt;&lt;/blockquote&gt; &lt;script async src="https://platform.twitter.com/widgets.js" charset="utf-8"&gt;&lt;/script&gt;
+&lt;/div&gt;
+
+&lt;h2&gt;Engineering Practices That Enable Parallel Agents&lt;/h2&gt;
+
+&lt;p&gt;Working with parallel agents requires a well-structured engineering environment
+that supports rapid iteration and review.&lt;/p&gt;
+
+&lt;h3&gt;Fast CI/CD Pipeline&lt;/h3&gt;
+
+&lt;p&gt;A robust CI/CD flow makes it easy to test and verify results. When agents
+complete their work, you need to quickly validate that the changes work
+correctly without manual deployment overhead. Automated testing, fast builds,
+and seamless deployment processes remove friction from the review cycle. Without
+this foundation, the bottleneck shifts from agent completion time to deployment
+and testing time.&lt;/p&gt;
+
+&lt;h3&gt;System Documentation&lt;/h3&gt;
+
+&lt;p&gt;System architecture documentation helps when multiple agents work on different
+parts of your codebase. Agents need to understand how components interact, where
+files are located, what conventions are followed, and how different systems
+integrate. Well-documented APIs, architectural decisions, coding standards, and
+system boundaries help agents make better decisions and reduce the need for
+manual corrections.&lt;/p&gt;
+
+&lt;h3&gt;Preview and Staging Environments&lt;/h3&gt;
+
+&lt;p&gt;A reliable staging environment where you can manually test features is required.
+Since agents work asynchronously, you need a consistent place to validate their
+output without affecting production systems. This environment should mirror
+production, deploy quickly, and allow easy testing of multiple concurrent
+changes. The ability to spin up isolated environments for different branches or
+pull requests streamlines the parallel review process.&lt;/p&gt;
+
+&lt;h3&gt;Monorepo Architecture Benefits&lt;/h3&gt;
+
+&lt;p&gt;Keeping related services and components in a single monorepo works better when
+working with parallel agents. A monorepo gives agents context about the entire
+system within a single codebase.&lt;/p&gt;
+
+&lt;p&gt;When agents work across multiple repositories, they lose context about service
+interactions, shared libraries, and dependencies. This leads to solutions that
+work in isolation but break integration points. With a monorepo, agents
+understand the full scope of changes needed - updating API contracts, adjusting
+client code, and modifying shared utilities all in one pull request.&lt;/p&gt;
+
+&lt;p&gt;The unified view enables better architectural decisions. Agents can see existing
+patterns, reuse common components, and maintain consistency across the system.
+Code reviews are more effective because all related changes are visible in one
+place, making it easier to verify that agents haven&amp;rsquo;t introduced integration
+issues.&lt;/p&gt;
+
+&lt;p&gt;Monorepos simplify deployment and testing for parallel development. Instead of
+coordinating releases across multiple repositories, you can test complete system
+changes together and deploy atomically. This reduces complexity when managing
+multiple concurrent agent-generated changes across service boundaries.&lt;/p&gt;
+
+&lt;h2&gt;Tools That Support Parallel Agents&lt;/h2&gt;
+
+&lt;p&gt;Several development tools now support running parallel agents, each with
+different strengths and maturity levels.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;GitHub Agents&lt;/strong&gt; offer the most polished experience. They&amp;rsquo;re integrated
+directly into GitHub Issues and work seamlessly with VSCode. You assign issues
+to @copilot, and agents create pull requests that you can review locally. There
+are still some rough edges, but GitHub is addressing these issues one by one
+with regular improvements.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Cursor&lt;/strong&gt; is currently experimenting with parallel agent support through a beta
+program. They&amp;rsquo;ve invited select users to test this functionality, and early
+reports suggest it&amp;rsquo;s a promising implementation. If you&amp;rsquo;re already using Cursor
+for vibe coding, their parallel agents might be worth exploring once they open
+up broader access.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;OpenAI&amp;rsquo;s Codex CLI&lt;/strong&gt; also supports running agents in the cloud, which enables
+this type of parallel development workflow. The CLI lets you start agents that
+continue running remotely, allowing you to manage multiple concurrent coding
+tasks without keeping your local environment tied up.&lt;/p&gt;
+
+&lt;p&gt;Each tool takes a slightly different approach to parallel execution, so the best
+choice depends on your existing development workflow and tool preferences.&lt;/p&gt;
+
+&lt;h2&gt;Wrapping Up&lt;/h2&gt;
+
+&lt;p&gt;I&amp;rsquo;ve been working with parallel agents for a few weeks now, and it&amp;rsquo;s changed
+how I approach development. The ability to work on multiple problems
+simultaneously, rather than sequentially, makes a real difference in
+productivity.&lt;/p&gt;
+
+&lt;p&gt;The technology isn&amp;rsquo;t perfect - you&amp;rsquo;ll spend time reviewing and fixing
+agent-generated code. But when you can kick off 10 tasks and have most of them
+move forward without your direct involvement, it frees up mental bandwidth for
+the problems that actually need human judgment.&lt;/p&gt;
+
+&lt;p&gt;If you&amp;rsquo;re curious about trying this approach, start with small, well-defined
+issues in your backlog. Write clear descriptions and see what happens. The worst
+case is you spend a few minutes reviewing code that doesn&amp;rsquo;t work. The best case
+is you discover a new way of working that fits your development style.&lt;/p&gt;
+</content>
+  </entry>
   <entry>
     <title>Riding the waves of history</title>
     <link rel="alternate" href="http://shiroyasha.io/riding-the-waves-of-history.html"/>
@@ -367,63 +716,6 @@ into their own hands.&lt;/p&gt;
 
 &lt;p&gt;Here&amp;rsquo;s what Europe needs to learn from this: The right time to start building
 was 30 years ago. We fucked it up. The second best time is now.&lt;/p&gt;
-</content>
-  </entry>
-  <entry>
-    <title>Work can wait, your wedding can't</title>
-    <link rel="alternate" href="http://shiroyasha.io/work-can-wait-your-weddig-cant.html"/>
-    <id>http://shiroyasha.io/work-can-wait-your-weddig-cant.html</id>
-    <published>2024-10-08T00:00:00+00:00</published>
-    <updated>2025-09-02T13:30:31+00:00</updated>
-    <author>
-      <name>Igor Šarčević</name>
-    </author>
-    <summary type="html">&lt;p&gt;I saw something insane on LinkedIn today. A founder bragging about his
-co-founder about submitting a pull-request during his own wedding. Let that
-sink in for a moment.&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;</summary>
-    <content type="html">&lt;p&gt;I saw something insane on LinkedIn today. A founder bragging about his
-co-founder about submitting a pull-request during his own wedding. Let that
-sink in for a moment.&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;When I started working in the industry, I thought I knew what hard work was.
-Working until my eyes bled out and my fingers were numb. I was wrong. True
-hard work isn&amp;rsquo;t about grinding until you drop. It&amp;rsquo;s about passion, focus,
-and knowing when to step back.&lt;/p&gt;
-
-&lt;p&gt;Here&amp;rsquo;s the reality: You can always find another reason to keep working. Just
-one more line of code, one more bug to fix. But you can&amp;rsquo;t get back the moments
-you miss. You&amp;rsquo;re wedding day is once in a lifetime. No product launch, no
-matter how groundbraking will ever compare to that.&lt;/p&gt;
-
-&lt;p&gt;But this isn&amp;rsquo;t just about weddings. It is about the idea that work should consume
-every aspect of your life. That you are not commintted unless you are always on.
-Always grinding for that carrot that you put infront of yourself. Bullshit.&lt;/p&gt;
-
-&lt;p&gt;Real work - good work - doesn&amp;rsquo;t come from a place of exhaustion. It happens in
-focused burst. It happens when you are well-rested, well-fed, and well-loved. The
-bug that you are grinding for hours, you&amp;rsquo;ll probably get the right idea when you
-are out on walk.&lt;/p&gt;
-
-&lt;p&gt;Here are things that are actually impressive:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Shipping great products consistently&lt;/li&gt;
-&lt;li&gt;Building a business that respects people&amp;rsquo;s time and energy&lt;/li&gt;
-&lt;li&gt;Enjoying your wedding day with your friends and family&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;We need to stop glorifying overwork. If your business can&amp;rsquo;t survive you taking day
-off for your wedding, then you don&amp;rsquo;t have a business, you have a ticking time bomb.&lt;/p&gt;
-
-&lt;p&gt;In the end, our legacy won&amp;rsquo;t be the 2k lines of code we wrote on our wedding day.
-It will be the relationships we built, the inspiration we gave, and the innovation
-we brought to the world. That is the kind of success worth pursuing.&lt;/p&gt;
-
-&lt;p&gt;Work can wait. Your wedding can&amp;rsquo;t.&lt;/p&gt;
 </content>
   </entry>
 </feed>
