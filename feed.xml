@@ -4,10 +4,318 @@
   <id>http://shiroyasha.io/</id>
   <link href="http://shiroyasha.io/"/>
   <link href="http://shiroyasha.io/feed.xml" rel="self"/>
-  <updated>2025-09-02T00:00:00+00:00</updated>
+  <updated>2025-10-12T00:00:00+00:00</updated>
   <author>
     <name>Igor Šarčević</name>
   </author>
+  <entry>
+    <title>Hiring in the Age of AI</title>
+    <link rel="alternate" href="http://shiroyasha.io/hiring-in-the-age-of-ai.html"/>
+    <id>http://shiroyasha.io/hiring-in-the-age-of-ai.html</id>
+    <published>2025-10-12T00:00:00+00:00</published>
+    <updated>2025-10-12T16:43:52+00:00</updated>
+    <author>
+      <name>Igor Šarčević</name>
+    </author>
+    <summary type="html">&lt;p&gt;I’ve been in this industry long enough to watch hiring trends come and go.
+There was a time when interviews were all about clever puzzles. Later, it was
+all about whiteboards. Then came the era of algorithm questions, and after that,
+take-home assignments...&lt;/p&gt;</summary>
+    <content type="html">&lt;p&gt;I&amp;rsquo;ve been in this industry long enough to watch hiring trends come and go.
+There was a time when interviews were all about clever puzzles. Later, it was
+all about whiteboards. Then came the era of algorithm questions, and after that,
+take-home assignments. The process keeps evolving, yet the underlying goal of
+finding people who can actually build things remains the same.&lt;/p&gt;
+
+&lt;p&gt;There’s always been a gap between what companies test for and what actually
+matters once you’re hired. Sometimes the gap is wide, sometimes it’s narrow, but
+it’s always there. The industry keeps inventing new ways to measure programmers,
+yet the things that make someone good at the job rarely fit neatly into a test.&lt;/p&gt;
+
+&lt;p&gt;Right now, the gap is wider than ever. LLMs have transformed how we work, but
+hiring hasn’t caught up in most places. Companies still interview as if nothing’s
+changed, asking the same old questions, looking for the same signals. It’s as
+if they’re trying to hire for 2019, a world that no longer exists.&lt;/p&gt;
+
+&lt;h2&gt;Signals That Don&amp;rsquo;t Matter Anymore&lt;/h2&gt;
+
+&lt;p&gt;Some signals that used to matter are now mostly noise.&lt;/p&gt;
+
+&lt;h3&gt;Memorizing Algorithms&lt;/h3&gt;
+
+&lt;p&gt;Being able to implement quicksort from memory doesn&amp;rsquo;t predict much when the
+person will have an LLM that can write sorting algorithms faster than they can
+think. These interviews reward the wrong mental model entirely. I once watched a
+candidate ace a whiteboard quicksort, then reach for it blindly in production
+against nearly sorted data and ship something slower than the built in &lt;code&gt;sort&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;They select for people who approach problems by retrieving pre-stored solutions
+rather than reasoning from first principles. In the LLM era, the valuable skill
+is knowing when quicksort is the wrong choice, not being able to implement it
+perfectly. The person who memorized the algorithm might not notice when the data
+has special properties that make a different approach better.&lt;/p&gt;
+
+&lt;h3&gt;Language Trivia&lt;/h3&gt;
+
+&lt;p&gt;Knowing the exact syntax for language features is less important when
+AI can fill in the gaps. Syntax memorization was always a proxy for
+something else: how much time someone had spent in the language ecosystem.&lt;/p&gt;
+
+&lt;p&gt;But now that expertise often points in the wrong direction. Someone who spent
+years mastering Ruby&amp;rsquo;s method_missing might struggle to adapt when the team
+switches to Go, while someone with great programming fundamentals can pick up
+any language with AI assistance. Deep specialization in one tool can actually
+become a liability when the landscape shifts quickly.&lt;/p&gt;
+
+&lt;p&gt;The real shift is that deep language knowledge matters less when LLMs can
+translate between languages almost fluently. The person who spent years
+mastering Python&amp;rsquo;s metaclasses isn&amp;rsquo;t necessarily more valuable than someone
+who understands systems thinking and can quickly adapt to any language. Domain
+knowledge now decays faster than it can be accumulated through traditional
+experience.&lt;/p&gt;
+
+&lt;h3&gt;Coding Without Tools&lt;/h3&gt;
+
+&lt;p&gt;The insistence on coding without internet access, without autocomplete, without
+any AI assistance creates an artificial constraint that selects for the wrong
+skills. Real work happens with tools. The constraint doesn&amp;rsquo;t make the test more
+pure. It makes it test for something completely different from the job.&lt;/p&gt;
+
+&lt;p&gt;Someone who&amp;rsquo;s excellent at whiteboard coding might struggle with the messy
+reality of debugging a distributed system, while someone who&amp;rsquo;s mediocre at
+whiteboard coding might be incredibly effective at orchestrating AI tools to
+solve complex problems.&lt;/p&gt;
+
+&lt;h3&gt;System Design Numbers&lt;/h3&gt;
+
+&lt;p&gt;Every system design trivia, like memorizing that Redis can handle 100k ops/sec
+or that Postgres has certain transaction isolation guarantees, matters less
+when current benchmarks are instantly available. But this goes beyond just
+looking up numbers.&lt;/p&gt;
+
+&lt;p&gt;The deeper issue is that these memorized facts often encode assumptions about
+how systems should be built. Someone who&amp;rsquo;s internalized that &amp;ldquo;databases are
+slow&amp;rdquo; might over-engineer around that constraint, not realizing that modern
+tooling has changed the performance characteristics entirely. The memorized
+wisdom becomes technical debt in their mental model.&lt;/p&gt;
+
+&lt;p&gt;I still remember a review where a senior engineer insisted on sharding Cassandra
+for a workload a single regional Postgres cluster handled at half the latency.&lt;/p&gt;
+
+&lt;h2&gt;Signals That Matter Today&lt;/h2&gt;
+
+&lt;p&gt;The signals we use to judge programmers are often proxies for deeper qualities.&lt;/p&gt;
+
+&lt;p&gt;Years ago, knowing obscure algorithms or being able to recite language trivia
+was a signal that someone cared enough to study. Now, with LLMs at everyone’s
+fingertips, those signals have faded. What matters isn’t whether you can recall
+the details of a sorting algorithm, but whether you know when to reach for one,
+and whether you can tell if the answer you get makes sense.&lt;/p&gt;
+
+&lt;p&gt;Here are the qualities that might be the most reliable signals for someone who
+can actually build things.&lt;/p&gt;
+
+&lt;h3&gt;Good Judgment&lt;/h3&gt;
+
+&lt;p&gt;If you look at what actually matters now, it’s judgment. Not just the ability to
+write code, but the ability to tell when code is good, and when it’s nonsense.
+LLMs will confidently hand you plausible-looking answers, and sometimes they’re
+right, but sometimes they’re not. The hard part is knowing which is which.&lt;/p&gt;
+
+&lt;p&gt;You can’t really test for judgment directly. If you ask someone “do you have
+good judgment?” they’ll say yes, and so would you. The only way to see it is to
+watch people work. Give them a real problem, let them use whatever tools they
+want, and see what happens. Do they blindly accept the first thing the LLM spits
+out, or do they notice when something’s off? Can they explain why a solution is
+wrong, or do they just shrug and try something else?&lt;/p&gt;
+
+&lt;p&gt;You can learn a lot from watching someone debug a piece of code that almost works
+but doesn&amp;rsquo;t quite.&lt;/p&gt;
+
+&lt;p&gt;Good judgment is learned by doing: you must build a lot of things that are
+slightly too hard, fail at them, and then notice why they broke. Each repair
+teaches which assumptions mattered and which were noise. Read widely and talk to
+people with different perspectives. Books and varied experience give you the
+vocabulary to recognize recurring patterns and the humility to distrust any
+single model.&lt;/p&gt;
+
+&lt;h3&gt;Curiosity&lt;/h3&gt;
+
+&lt;p&gt;We are experiencing a true paradigm shift in software engineering right now.
+Engineers are adapting to it in various ways. I&amp;rsquo;m observing two kinds:&lt;/p&gt;
+
+&lt;p&gt;One kind adopted LLMs wholeheartedly. They&amp;rsquo;ve integrated them into their daily
+workflow, from sketching out designs to debugging deployment issues. They
+experiment with different models, figure out what works and what doesn&amp;rsquo;t, and
+keep pushing the boundaries.&lt;/p&gt;
+
+&lt;p&gt;The other kind tried ChatGPT once in 2023, asked it to solve some impossible
+problem, got a bad answer, and concluded that LLMs are useless. They&amp;rsquo;ve been
+frozen in that moment ever since, missing what might be the biggest shift in how
+software gets built since the invention of high-level languages.&lt;/p&gt;
+
+&lt;p&gt;The gap between these two groups is widening every day.&lt;/p&gt;
+
+&lt;p&gt;Curiosity is the trait that separates people who survive a paradigm shift from
+those who merely survive it briefly. It is a habit of the mind: making small
+experiments, trying out new things, and following answers until you find a
+solution or clear signals what is yet not possible.&lt;/p&gt;
+
+&lt;h3&gt;Systematic Thinking&lt;/h3&gt;
+
+&lt;p&gt;Systematic thinking keeps an LLM from feeling like luck. You break problems into
+steps, write down what you know, list what you need, and decide how you will
+check the answer. That habit turns guesswork into work.&lt;/p&gt;
+
+&lt;p&gt;Engineers with this streak treat a prompt the way they treat a function. They
+define the goal, note the constraints, and sketch how to confirm the output. They
+run the loop, look at the result, and test it. When it fails, they change one
+variable at a time.&lt;/p&gt;
+
+&lt;p&gt;You can spot systematic thinking when someone takes an open-ended task and leaves
+breadcrumbs. They say the plan out loud, capture notes you can inspect later, and
+mark the assumptions they could not verify. They measure whenever they can, and
+they follow up when measurement is impossible.&lt;/p&gt;
+
+&lt;p&gt;Hiring for this means giving candidates a messy problem and letting them use
+their tools. Watch for a repeatable process. See whether they prove the answer
+before they ship it. That pattern scales even while the ground keeps shifting.&lt;/p&gt;
+
+&lt;h2&gt;A Framework for Hiring&lt;/h2&gt;
+
+&lt;p&gt;Given all this, what might an interview process look like?
+I&amp;rsquo;m betting on the following format:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Round 1:&lt;/strong&gt; Initial screening (curiosity baseline)&lt;br /&gt;
+&lt;strong&gt;Round 2:&lt;/strong&gt; Build together (judgment in action)&lt;br /&gt;
+&lt;strong&gt;Round 3:&lt;/strong&gt; System review (systematic thinking + curiosity)&lt;br /&gt;
+&lt;strong&gt;Round 4:&lt;/strong&gt; Experience deep dive (learning velocity)&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;Each round leans on one of the core signals. Taken together, they trace how a
+person exercises judgment with modern tools, how they impose structure on messy
+systems, and how quickly they absorb new ideas.&lt;/p&gt;
+
+&lt;h3&gt;Round 1: Initial screening (curiosity baseline)&lt;/h3&gt;
+
+&lt;p&gt;A brief conversation to understand their background and motivations. No
+technical questions yet, just getting a sense of who they are, what they&amp;rsquo;ve
+built, and what kind of problems interest them. This is also where you explain
+the role and see if there&amp;rsquo;s mutual interest. Keep it short, maybe 30 minutes.&lt;/p&gt;
+
+&lt;p&gt;This part remains largely the same as before; no big changes needed here. The
+goal is still to have a human conversation and establish basic fit.&lt;/p&gt;
+
+&lt;p&gt;You can still learn something about curiosity: the strongest candidates turn the
+screening around and ask for context, constraints, and why the role exists.
+People who treat the call like a formality rarely switch gears later.&lt;/p&gt;
+
+&lt;p&gt;HR typically owns this round, so equip them with a rubric that maps to the same
+three signals. Have them ask how the candidate keeps skills current, what tools
+they reach for when a project shifts under them, and whether they experiment
+with AI on their own. Ask them to capture quotes and specific examples instead
+of gut feelings so the hiring manager reviews raw signal, not folklore.&lt;/p&gt;
+
+&lt;h3&gt;Round 2: Build together (judgment in action)&lt;/h3&gt;
+
+&lt;p&gt;Here the process has to change. Instead of whiteboard coding or algorithm
+puzzles, give them a real problem that&amp;rsquo;s relevant to your work. Let them use
+whatever tools they normally would: their IDE, Google, LLMs, documentation,
+whatever.&lt;/p&gt;
+
+&lt;p&gt;The key is to pick a problem that&amp;rsquo;s just hard enough to be interesting but not
+so hard that it takes hours. Maybe it&amp;rsquo;s debugging a piece of code that has a
+subtle bug, or implementing a small feature that requires understanding how
+different parts of a system fit together.&lt;/p&gt;
+
+&lt;p&gt;What you&amp;rsquo;re looking for isn&amp;rsquo;t whether they get the perfect answer. You&amp;rsquo;re
+watching how they think through the problem. Do they ask good questions? When
+they get stuck, do they know how to get unstuck? When they use an LLM, do they
+understand what it&amp;rsquo;s telling them? Can they explain their reasoning?&lt;/p&gt;
+
+&lt;p&gt;Judgment shows up fast here. You&amp;rsquo;ll see whether they blindly accept LLM
+suggestions or carefully evaluate them, whether they can spot when something
+looks wrong, and how they validate their solutions.&lt;/p&gt;
+
+&lt;p&gt;This is also a great opportunity to see how they collaborate. You as the
+interviewer should collaborate on the solution, not just silently judge. See
+how they communicate about code, how they handle feedback, and whether they&amp;rsquo;re
+someone you&amp;rsquo;d want to pair with on a difficult problem.&lt;/p&gt;
+
+&lt;p&gt;Keep this to about an hour. If they need more time, that&amp;rsquo;s probably a signal in
+itself.&lt;/p&gt;
+
+&lt;h3&gt;Round 3: System review (systematic thinking + curiosity)&lt;/h3&gt;
+
+&lt;p&gt;Give them a system design or codebase to review. This could be something they&amp;rsquo;ve
+built before, or a simplified version of something your team has built. Ask them
+to walk through it and explain how it works, what they&amp;rsquo;d change, and what
+questions they&amp;rsquo;d ask if they had to maintain it.&lt;/p&gt;
+
+&lt;p&gt;This round puts systematic thinking under the microscope. Can they map a new
+system quickly? Do they understand the tradeoffs? When they don&amp;rsquo;t know something,
+do they ask thoughtful questions or make assumptions?&lt;/p&gt;
+
+&lt;p&gt;Curiosity should be obvious too. Do they dive deeper when something seems
+interesting? Do they ask about edge cases, failure modes, or how the system
+evolved over time? Or do they just skim the surface and move on?&lt;/p&gt;
+
+&lt;p&gt;You also see how they think about maintenance and evolution. Building software is
+one thing, but most of our time is spent working with systems that already exist.
+Someone who can quickly understand existing code and reason about how to improve
+it is incredibly valuable.&lt;/p&gt;
+
+&lt;p&gt;The conversation should feel collaborative, not interrogative. You&amp;rsquo;re exploring
+the system together, not testing whether they know some specific fact. This
+approach tends to bring out people&amp;rsquo;s natural curiosity and gives you a much
+better sense of how they&amp;rsquo;d actually work on your team.&lt;/p&gt;
+
+&lt;p&gt;Keep this to about an hour. If they&amp;rsquo;re engaged and asking good questions,
+that&amp;rsquo;s usually a better signal than having all the &amp;ldquo;right&amp;rdquo; answers.&lt;/p&gt;
+
+&lt;h3&gt;Round 4: Experience deep dive (learning velocity)&lt;/h3&gt;
+
+&lt;p&gt;The last round finishes the loop by probing curiosity and learning velocity.
+Instead of asking hypothetical questions, dig into their actual experience. Pick
+something they&amp;rsquo;ve built that they&amp;rsquo;re proud of, and go deep.&lt;/p&gt;
+
+&lt;p&gt;How did they approach problems they&amp;rsquo;d never solved before? When they got stuck,
+what did they do? What would they do differently if they built it again? The
+best engineers have stories about projects that went sideways, mistakes that
+taught them something important, or moments when they had to learn an entire
+domain just to ship a feature.&lt;/p&gt;
+
+&lt;p&gt;What you&amp;rsquo;re really measuring is learning velocity, how quickly someone can go
+from not knowing something to being productive with it. In a world where the
+tools and best practices change every few years, this might be the most important
+trait of all.&lt;/p&gt;
+
+&lt;p&gt;You&amp;rsquo;ll also get a sense of their curiosity from these stories. Do they stop when
+something works, or do they keep digging to understand why? When they encounter
+new technologies, do they just cargo-cult the tutorials, or do they understand
+the principles underneath?&lt;/p&gt;
+
+&lt;p&gt;The conversation should feel more like two engineers sharing war stories than an
+interview. Ask about the hardest bug they&amp;rsquo;ve debugged, the most complex system
+they&amp;rsquo;ve had to understand, or the biggest technical mistake they&amp;rsquo;ve made. Their
+answers will tell you more about their potential than any coding exercise could.&lt;/p&gt;
+
+&lt;p&gt;Keep this to about 45 minutes. The goal isn&amp;rsquo;t to cover everything they&amp;rsquo;ve ever
+built, but to understand how they think about learning and problem-solving
+through the lens of real experience.&lt;/p&gt;
+
+&lt;h2&gt;Closing the Loop&lt;/h2&gt;
+
+&lt;p&gt;Most companies still screen for a world where the hardest part of programming
+was remembering syntax. Today the job is steering the firehose: noticing when
+the machine is wrong, stitching together incomplete answers, and staying
+curious enough to keep exploring.&lt;/p&gt;
+
+&lt;p&gt;Pilot this interview loop on the next three candidates you meet. Record what you
+learn in each round, then compare it with the notes from whatever process you
+run today. If you end up with clearer signals, keep the experiment and strip out
+the theater. Either way you stop hiring for a world that no longer exists.&lt;/p&gt;
+</content>
+  </entry>
   <entry>
     <title>Parallel AI Agents Are a Game Changer</title>
     <link rel="alternate" href="http://shiroyasha.io/parallel-ai-agents-are-a-game-changer.html"/>
@@ -644,78 +952,6 @@ critical path forward.&lt;/p&gt;
 &lt;p&gt;The cost of silence is too high. The cost of not asking questions is too great.
 The cost of assuming is your job, your company, and your future.
 Dare to ask. Be stupid for 5 minutes. Learn. Repeat.&lt;/p&gt;
-</content>
-  </entry>
-  <entry>
-    <title>Everything Around You Was Someone's Passion Project</title>
-    <link rel="alternate" href="http://shiroyasha.io/everything-around-you-was-someones-passion-project.html"/>
-    <id>http://shiroyasha.io/everything-around-you-was-someones-passion-project.html</id>
-    <published>2025-02-16T00:00:00+00:00</published>
-    <updated>2025-09-02T13:30:31+00:00</updated>
-    <author>
-      <name>Igor Šarčević</name>
-    </author>
-    <summary type="html">&lt;p&gt;Look around. Really look. That keyboard you’re typing on, the chair you’re
-sitting in, the room you’re in, the building you’re in, the bakery at the end
-of your street that sells that amazing bread, your freedom to walk down the
-street without fear...&lt;/p&gt;</summary>
-    <content type="html">&lt;p&gt;Look around. Really look. That keyboard you&amp;rsquo;re typing on, the chair you&amp;rsquo;re
-sitting in, the room you&amp;rsquo;re in, the building you&amp;rsquo;re in, the bakery at the end
-of your street that sells that amazing bread, your freedom to walk down the
-street without fear of being arrested, the ability to read and write, the
-ability to communicate with people on the other side of the planet. I can go on
-forever.&lt;/p&gt;
-
-&lt;p&gt;We&amp;rsquo;re surrounded by other people&amp;rsquo;s devotion and hard work.&lt;/p&gt;
-
-&lt;p&gt;That&amp;rsquo;s not hyporbole. It&amp;rsquo;s fact. Everything you see around you was someone&amp;rsquo;s
-passion project. Before the mass production, before the focus groups, before
-the value engineering. There was just someone who coudn&amp;rsquo;t let go of an idea.
-Someone who looked at the impossible problem and said &amp;ldquo;I can solve this&amp;rdquo;.&lt;/p&gt;
-
-&lt;p&gt;And they did.&lt;/p&gt;
-
-&lt;p&gt;But here&amp;rsquo;s what&amp;rsquo;s bothering me in Europe right now: We&amp;rsquo;ve become excellent at
-pointing out problems. Master critiques. Professional complainers about
-everything from government inefficiency to technological stagnation.&lt;/p&gt;
-
-&lt;p&gt;We write lengthy threads about what&amp;rsquo;s wrong. &lt;br /&gt;
-We share detailed analyses of system failures.  &lt;br /&gt;
-We craft elegant critiques of institutional problems. &lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;And then we wait.&lt;/p&gt;
-
-&lt;p&gt;Wait for someone else to fix it. Wait for solutions to come from above. Wait
-for the system to somehow reform itself. This isn&amp;rsquo;t analysis. It&amp;rsquo;s learned
-helplessness.&lt;/p&gt;
-
-&lt;p&gt;We&amp;rsquo;ve been conditioned by decades of imperial power structures to think that
-change comes from outside. That our role is to merely identify problems, 
-complain a lot, and then wait for someone else to fix them. Actual 
-implementation is someone else&amp;rsquo;s job. &lt;/p&gt;
-
-&lt;p&gt;Everything around us was built by people ignored such compaints. They didn&amp;rsquo;t 
-write treatises about why things are broken. They didn&amp;rsquo;t wait for perfect 
-conditions. They didn&amp;rsquo;t expect someone else to solve their problems. We didn&amp;rsquo;t
-wait for America to innovate for us. We didn&amp;rsquo;t wait for China to manufacture
-for us.&lt;/p&gt;
-
-&lt;p&gt;The first democracy wasn&amp;rsquo;t built by people waiting for kings to give up power.&lt;/p&gt;
-
-&lt;p&gt;In the last three months, my country is the best example of how to break this
-cycle. We&amp;rsquo;ve been through a lot in the last couple of decades. We&amp;rsquo;ve seen our 
-institutions fail us. We&amp;rsquo;ve seen our leaders betray us and divide us. We&amp;rsquo;ve 
-seen our systems collapse. We&amp;rsquo;ve seen our people suffer. We&amp;rsquo;ve seen corruption,
-incompetence, and greed. &lt;/p&gt;
-
-&lt;p&gt;But we&amp;rsquo;ve also seen something else. In the last three months, we&amp;rsquo;ve seen students
-raise their voices. We&amp;rsquo;ve seen teachers, doctors, and engineers join them. We&amp;rsquo;ve
-seen people from all walks of life come together to change things. We&amp;rsquo;ve seen
-people who were told to wait for oposition parties to fix things, take matters
-into their own hands.&lt;/p&gt;
-
-&lt;p&gt;Here&amp;rsquo;s what Europe needs to learn from this: The right time to start building
-was 30 years ago. We fucked it up. The second best time is now.&lt;/p&gt;
 </content>
   </entry>
 </feed>

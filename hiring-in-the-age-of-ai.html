@@ -1,0 +1,421 @@
+<!doctype html>
+<html itemscope itemtype="http://schema.org/Article">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
+    <link rel="alternate" type="application/atom+xml" title="Morning Coffee" href="/feed.xml" />
+
+    <link rel="shortcut icon" href="favicon.svg">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+      <title>Hiring in the Age of AI &mdash; by Igor Šarčević</title>
+
+    <!-- Place this data between the <head> tags of your website -->
+      <meta name="description" content="I’ve been in this industry long enough to watch hiring trends come and go.
+There was a time when interviews were all about clever puzzles. Later, it..." />
+
+      <!-- Schema.org markup for Google+ -->
+      <meta itemprop="name" content="Hiring in the Age of AI">
+      <meta itemprop="description" content="I’ve been in this industry long enough to watch hiring trends come and go.
+There was a time when interviews were all about clever puzzles. Later, it...">
+      <meta itemprop="image" content="http://morningcoffee.io/images/2025-10-12-hiring-in-the-age-of-ai.png">
+
+      <!-- Twitter Card data -->
+      <meta name="twitter:card" content="summary_large_image">
+      <meta name="twitter:site" content="@igor_sarcevic">
+      <meta name="twitter:title" content="Hiring in the Age of AI">
+      <meta name="twitter:description" content="I’ve been in this industry long enough to watch hiring trends come and go.
+There was a time when interviews were all about clever puzzles. Later, it...">
+      <meta name="twitter:creator" content="@igor_sarcevic">
+      <!-- Twitter summary card with large image must be at least 280x150px -->
+      <meta name="twitter:image:src" content="http://morningcoffee.io/images/2025-10-12-hiring-in-the-age-of-ai.png">
+
+      <!-- Open Graph data -->
+      <meta property="og:title" content="Hiring in the Age of AI" />
+      <meta property="og:type" content="article" />
+      <meta property="og:url" content="http://" />
+      <meta property="og:image" content="http://morningcoffee.io/images/2025-10-12-hiring-in-the-age-of-ai.png" />
+      <meta property="og:description" content="I’ve been in this industry long enough to watch hiring trends come and go.
+There was a time when interviews were all about clever puzzles. Later, it..." />
+      <meta property="article:published_time" content="2025-10-12 00:00:00 UTC" />
+
+    <link href="/stylesheets/site.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div id="main" role="main" class="px-4">
+        <div class="max-w-2xl mx-auto">
+
+    <a class="block flex flex-col items-center justify-center mt-10" href="/">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M3 14c.83 .642 2.077 1.017 3.5 1c1.423 .017 2.67 -.358 3.5 -1c.83 -.642 2.077 -1.017 3.5 -1c1.423 -.017 2.67 .358 3.5 1" />
+        <path d="M8 3a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2" />
+        <path d="M12 3a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2" />
+        <path d="M3 10h14v5a6 6 0 0 1 -6 6h-2a6 6 0 0 1 -6 -6v-5z" />
+        <path d="M16.746 16.726a3 3 0 1 0 .252 -5.555" />
+      </svg>
+      <div class="text-center mt-2 text-sm">
+        <span class="uppercase tracking-widest text-xs bg-yellow-200 px-2.5 py-1 font-semibold">Morning Coffee</span>
+      </div>
+    </a>
+
+    <article class="mt-10">
+      <div class="mb-10">
+        <h1 class="text-[30px] font-extrabold mb-2 text-center leading-[1.2]">Hiring in the Age of AI</h1>
+
+        <div class="flex gap-1.5 items-center justify-center text-stone-500 text-sm">
+          October 12, 2025 <span>&bull;</span> Igor Šarčević
+        </div>
+      </div>
+
+      <div class="content prose md:prose-lg prose-zinc prose-p:leading-[1.5] mx-auto">
+        <p>I&rsquo;ve been in this industry long enough to watch hiring trends come and go.
+There was a time when interviews were all about clever puzzles. Later, it was
+all about whiteboards. Then came the era of algorithm questions, and after that,
+take-home assignments. The process keeps evolving, yet the underlying goal of
+finding people who can actually build things remains the same.</p>
+
+<p>There’s always been a gap between what companies test for and what actually
+matters once you’re hired. Sometimes the gap is wide, sometimes it’s narrow, but
+it’s always there. The industry keeps inventing new ways to measure programmers,
+yet the things that make someone good at the job rarely fit neatly into a test.</p>
+
+<p>Right now, the gap is wider than ever. LLMs have transformed how we work, but
+hiring hasn’t caught up in most places. Companies still interview as if nothing’s
+changed, asking the same old questions, looking for the same signals. It’s as
+if they’re trying to hire for 2019, a world that no longer exists.</p>
+
+<h2>Signals That Don&rsquo;t Matter Anymore</h2>
+
+<p>Some signals that used to matter are now mostly noise.</p>
+
+<h3>Memorizing Algorithms</h3>
+
+<p>Being able to implement quicksort from memory doesn&rsquo;t predict much when the
+person will have an LLM that can write sorting algorithms faster than they can
+think. These interviews reward the wrong mental model entirely. I once watched a
+candidate ace a whiteboard quicksort, then reach for it blindly in production
+against nearly sorted data and ship something slower than the built in <code>sort</code>.</p>
+
+<p>They select for people who approach problems by retrieving pre-stored solutions
+rather than reasoning from first principles. In the LLM era, the valuable skill
+is knowing when quicksort is the wrong choice, not being able to implement it
+perfectly. The person who memorized the algorithm might not notice when the data
+has special properties that make a different approach better.</p>
+
+<h3>Language Trivia</h3>
+
+<p>Knowing the exact syntax for language features is less important when
+AI can fill in the gaps. Syntax memorization was always a proxy for
+something else: how much time someone had spent in the language ecosystem.</p>
+
+<p>But now that expertise often points in the wrong direction. Someone who spent
+years mastering Ruby&rsquo;s method_missing might struggle to adapt when the team
+switches to Go, while someone with great programming fundamentals can pick up
+any language with AI assistance. Deep specialization in one tool can actually
+become a liability when the landscape shifts quickly.</p>
+
+<p>The real shift is that deep language knowledge matters less when LLMs can
+translate between languages almost fluently. The person who spent years
+mastering Python&rsquo;s metaclasses isn&rsquo;t necessarily more valuable than someone
+who understands systems thinking and can quickly adapt to any language. Domain
+knowledge now decays faster than it can be accumulated through traditional
+experience.</p>
+
+<h3>Coding Without Tools</h3>
+
+<p>The insistence on coding without internet access, without autocomplete, without
+any AI assistance creates an artificial constraint that selects for the wrong
+skills. Real work happens with tools. The constraint doesn&rsquo;t make the test more
+pure. It makes it test for something completely different from the job.</p>
+
+<p>Someone who&rsquo;s excellent at whiteboard coding might struggle with the messy
+reality of debugging a distributed system, while someone who&rsquo;s mediocre at
+whiteboard coding might be incredibly effective at orchestrating AI tools to
+solve complex problems.</p>
+
+<h3>System Design Numbers</h3>
+
+<p>Every system design trivia, like memorizing that Redis can handle 100k ops/sec
+or that Postgres has certain transaction isolation guarantees, matters less
+when current benchmarks are instantly available. But this goes beyond just
+looking up numbers.</p>
+
+<p>The deeper issue is that these memorized facts often encode assumptions about
+how systems should be built. Someone who&rsquo;s internalized that &ldquo;databases are
+slow&rdquo; might over-engineer around that constraint, not realizing that modern
+tooling has changed the performance characteristics entirely. The memorized
+wisdom becomes technical debt in their mental model.</p>
+
+<p>I still remember a review where a senior engineer insisted on sharding Cassandra
+for a workload a single regional Postgres cluster handled at half the latency.</p>
+
+<h2>Signals That Matter Today</h2>
+
+<p>The signals we use to judge programmers are often proxies for deeper qualities.</p>
+
+<p>Years ago, knowing obscure algorithms or being able to recite language trivia
+was a signal that someone cared enough to study. Now, with LLMs at everyone’s
+fingertips, those signals have faded. What matters isn’t whether you can recall
+the details of a sorting algorithm, but whether you know when to reach for one,
+and whether you can tell if the answer you get makes sense.</p>
+
+<p>Here are the qualities that might be the most reliable signals for someone who
+can actually build things.</p>
+
+<h3>Good Judgment</h3>
+
+<p>If you look at what actually matters now, it’s judgment. Not just the ability to
+write code, but the ability to tell when code is good, and when it’s nonsense.
+LLMs will confidently hand you plausible-looking answers, and sometimes they’re
+right, but sometimes they’re not. The hard part is knowing which is which.</p>
+
+<p>You can’t really test for judgment directly. If you ask someone “do you have
+good judgment?” they’ll say yes, and so would you. The only way to see it is to
+watch people work. Give them a real problem, let them use whatever tools they
+want, and see what happens. Do they blindly accept the first thing the LLM spits
+out, or do they notice when something’s off? Can they explain why a solution is
+wrong, or do they just shrug and try something else?</p>
+
+<p>You can learn a lot from watching someone debug a piece of code that almost works
+but doesn&rsquo;t quite.</p>
+
+<p>Good judgment is learned by doing: you must build a lot of things that are
+slightly too hard, fail at them, and then notice why they broke. Each repair
+teaches which assumptions mattered and which were noise. Read widely and talk to
+people with different perspectives. Books and varied experience give you the
+vocabulary to recognize recurring patterns and the humility to distrust any
+single model.</p>
+
+<h3>Curiosity</h3>
+
+<p>We are experiencing a true paradigm shift in software engineering right now.
+Engineers are adapting to it in various ways. I&rsquo;m observing two kinds:</p>
+
+<p>One kind adopted LLMs wholeheartedly. They&rsquo;ve integrated them into their daily
+workflow, from sketching out designs to debugging deployment issues. They
+experiment with different models, figure out what works and what doesn&rsquo;t, and
+keep pushing the boundaries.</p>
+
+<p>The other kind tried ChatGPT once in 2023, asked it to solve some impossible
+problem, got a bad answer, and concluded that LLMs are useless. They&rsquo;ve been
+frozen in that moment ever since, missing what might be the biggest shift in how
+software gets built since the invention of high-level languages.</p>
+
+<p>The gap between these two groups is widening every day.</p>
+
+<p>Curiosity is the trait that separates people who survive a paradigm shift from
+those who merely survive it briefly. It is a habit of the mind: making small
+experiments, trying out new things, and following answers until you find a
+solution or clear signals what is yet not possible.</p>
+
+<h3>Systematic Thinking</h3>
+
+<p>Systematic thinking keeps an LLM from feeling like luck. You break problems into
+steps, write down what you know, list what you need, and decide how you will
+check the answer. That habit turns guesswork into work.</p>
+
+<p>Engineers with this streak treat a prompt the way they treat a function. They
+define the goal, note the constraints, and sketch how to confirm the output. They
+run the loop, look at the result, and test it. When it fails, they change one
+variable at a time.</p>
+
+<p>You can spot systematic thinking when someone takes an open-ended task and leaves
+breadcrumbs. They say the plan out loud, capture notes you can inspect later, and
+mark the assumptions they could not verify. They measure whenever they can, and
+they follow up when measurement is impossible.</p>
+
+<p>Hiring for this means giving candidates a messy problem and letting them use
+their tools. Watch for a repeatable process. See whether they prove the answer
+before they ship it. That pattern scales even while the ground keeps shifting.</p>
+
+<h2>A Framework for Hiring</h2>
+
+<p>Given all this, what might an interview process look like?
+I&rsquo;m betting on the following format:</p>
+
+<p><strong>Round 1:</strong> Initial screening (curiosity baseline)<br />
+<strong>Round 2:</strong> Build together (judgment in action)<br />
+<strong>Round 3:</strong> System review (systematic thinking + curiosity)<br />
+<strong>Round 4:</strong> Experience deep dive (learning velocity)<br /></p>
+
+<p>Each round leans on one of the core signals. Taken together, they trace how a
+person exercises judgment with modern tools, how they impose structure on messy
+systems, and how quickly they absorb new ideas.</p>
+
+<h3>Round 1: Initial screening (curiosity baseline)</h3>
+
+<p>A brief conversation to understand their background and motivations. No
+technical questions yet, just getting a sense of who they are, what they&rsquo;ve
+built, and what kind of problems interest them. This is also where you explain
+the role and see if there&rsquo;s mutual interest. Keep it short, maybe 30 minutes.</p>
+
+<p>This part remains largely the same as before; no big changes needed here. The
+goal is still to have a human conversation and establish basic fit.</p>
+
+<p>You can still learn something about curiosity: the strongest candidates turn the
+screening around and ask for context, constraints, and why the role exists.
+People who treat the call like a formality rarely switch gears later.</p>
+
+<p>HR typically owns this round, so equip them with a rubric that maps to the same
+three signals. Have them ask how the candidate keeps skills current, what tools
+they reach for when a project shifts under them, and whether they experiment
+with AI on their own. Ask them to capture quotes and specific examples instead
+of gut feelings so the hiring manager reviews raw signal, not folklore.</p>
+
+<h3>Round 2: Build together (judgment in action)</h3>
+
+<p>Here the process has to change. Instead of whiteboard coding or algorithm
+puzzles, give them a real problem that&rsquo;s relevant to your work. Let them use
+whatever tools they normally would: their IDE, Google, LLMs, documentation,
+whatever.</p>
+
+<p>The key is to pick a problem that&rsquo;s just hard enough to be interesting but not
+so hard that it takes hours. Maybe it&rsquo;s debugging a piece of code that has a
+subtle bug, or implementing a small feature that requires understanding how
+different parts of a system fit together.</p>
+
+<p>What you&rsquo;re looking for isn&rsquo;t whether they get the perfect answer. You&rsquo;re
+watching how they think through the problem. Do they ask good questions? When
+they get stuck, do they know how to get unstuck? When they use an LLM, do they
+understand what it&rsquo;s telling them? Can they explain their reasoning?</p>
+
+<p>Judgment shows up fast here. You&rsquo;ll see whether they blindly accept LLM
+suggestions or carefully evaluate them, whether they can spot when something
+looks wrong, and how they validate their solutions.</p>
+
+<p>This is also a great opportunity to see how they collaborate. You as the
+interviewer should collaborate on the solution, not just silently judge. See
+how they communicate about code, how they handle feedback, and whether they&rsquo;re
+someone you&rsquo;d want to pair with on a difficult problem.</p>
+
+<p>Keep this to about an hour. If they need more time, that&rsquo;s probably a signal in
+itself.</p>
+
+<h3>Round 3: System review (systematic thinking + curiosity)</h3>
+
+<p>Give them a system design or codebase to review. This could be something they&rsquo;ve
+built before, or a simplified version of something your team has built. Ask them
+to walk through it and explain how it works, what they&rsquo;d change, and what
+questions they&rsquo;d ask if they had to maintain it.</p>
+
+<p>This round puts systematic thinking under the microscope. Can they map a new
+system quickly? Do they understand the tradeoffs? When they don&rsquo;t know something,
+do they ask thoughtful questions or make assumptions?</p>
+
+<p>Curiosity should be obvious too. Do they dive deeper when something seems
+interesting? Do they ask about edge cases, failure modes, or how the system
+evolved over time? Or do they just skim the surface and move on?</p>
+
+<p>You also see how they think about maintenance and evolution. Building software is
+one thing, but most of our time is spent working with systems that already exist.
+Someone who can quickly understand existing code and reason about how to improve
+it is incredibly valuable.</p>
+
+<p>The conversation should feel collaborative, not interrogative. You&rsquo;re exploring
+the system together, not testing whether they know some specific fact. This
+approach tends to bring out people&rsquo;s natural curiosity and gives you a much
+better sense of how they&rsquo;d actually work on your team.</p>
+
+<p>Keep this to about an hour. If they&rsquo;re engaged and asking good questions,
+that&rsquo;s usually a better signal than having all the &ldquo;right&rdquo; answers.</p>
+
+<h3>Round 4: Experience deep dive (learning velocity)</h3>
+
+<p>The last round finishes the loop by probing curiosity and learning velocity.
+Instead of asking hypothetical questions, dig into their actual experience. Pick
+something they&rsquo;ve built that they&rsquo;re proud of, and go deep.</p>
+
+<p>How did they approach problems they&rsquo;d never solved before? When they got stuck,
+what did they do? What would they do differently if they built it again? The
+best engineers have stories about projects that went sideways, mistakes that
+taught them something important, or moments when they had to learn an entire
+domain just to ship a feature.</p>
+
+<p>What you&rsquo;re really measuring is learning velocity, how quickly someone can go
+from not knowing something to being productive with it. In a world where the
+tools and best practices change every few years, this might be the most important
+trait of all.</p>
+
+<p>You&rsquo;ll also get a sense of their curiosity from these stories. Do they stop when
+something works, or do they keep digging to understand why? When they encounter
+new technologies, do they just cargo-cult the tutorials, or do they understand
+the principles underneath?</p>
+
+<p>The conversation should feel more like two engineers sharing war stories than an
+interview. Ask about the hardest bug they&rsquo;ve debugged, the most complex system
+they&rsquo;ve had to understand, or the biggest technical mistake they&rsquo;ve made. Their
+answers will tell you more about their potential than any coding exercise could.</p>
+
+<p>Keep this to about 45 minutes. The goal isn&rsquo;t to cover everything they&rsquo;ve ever
+built, but to understand how they think about learning and problem-solving
+through the lens of real experience.</p>
+
+<h2>Closing the Loop</h2>
+
+<p>Most companies still screen for a world where the hardest part of programming
+was remembering syntax. Today the job is steering the firehose: noticing when
+the machine is wrong, stitching together incomplete answers, and staying
+curious enough to keep exploring.</p>
+
+<p>Pilot this interview loop on the next three candidates you meet. Record what you
+learn in each round, then compare it with the notes from whatever process you
+run today. If you end up with clearer signals, keep the experiment and strip out
+the theater. Either way you stop hiring for a world that no longer exists.</p>
+
+      </div>
+    </article>
+  </div>
+
+
+      <div class="w-100 my-16">
+  <div class="text-center text-lg">
+    <p>
+      <strong>❈</strong><br>
+      <br>
+
+      Follow me on <a href="https://twitter.com/igor_sarcevic" class="link">X</a> and <a href="https://rs.linkedin.com/in/igorsarcevic" class="link">LinkedIn</a>.<br>
+      © 2025 Igor Šarčević.
+    </p>
+  </div>
+<div>
+
+    </div>
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+           })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-57223799-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+
+    <script>
+      /**
+      * Function that tracks a click on an outbound link in Analytics.
+      * This function takes a valid URL string as an argument, and uses that URL string
+      * as the event label. Setting the transport method to 'beacon' lets the hit be sent
+      * using 'navigator.sendBeacon' in browser that support it.
+      */
+      var trackOutboundLink = function(url) {
+        ga('send', 'event', 'outbound', 'click', url, {
+          'transport': 'beacon',
+          'hitCallback': function(){document.location = url;}
+        });
+      }
+    </script>
+
+  </body>
+</html>
